@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- See https://www.audiokinetic.com/en/library/edge/?source=SDK&id=globalviewsids.html for the list of all available view names. -->
+<Layout Name="SoundBank">
+	<StackPanel Name="StackPanel" ID="{15D36CEB-3A8A-4C8B-AA60-A8414399AD83}" Width="1633" Height="734" Orientation="Vertical">
+		<StackPanel Name="StackPanel" ID="{C96C643A-2BEC-4CE5-BEF4-DB030EBE5E0F}" Width="1633" Height="731" Orientation="Horizontal">
+			<StackPanel Name="StackPanel" ID="{C89A6C3D-D985-42CA-B592-C6FFD9AF3266}" Width="283" Height="791" Orientation="Vertical">
+				<View Name="ProjectExplorer" ID="{403CE576-A52B-4629-A94E-AEDE063BC1DF}" Width="283" Height="557" SelectionChannel="2"/>
+				<Splitter/>
+				<View Name="EventViewer" ID="{879C2A96-54A5-4401-8436-E4352121396B}" Width="283" Height="227" SelectionChannel="2">
+					<ViewData>
+						<EventViewer ActiveTab="0" Filter="2"/>
+					</ViewData>
+				</View>
+			</StackPanel>
+			<Splitter/>
+			<StackPanel Name="StackPanel" ID="{0ABFD6CC-F4BE-400A-A324-534483ACF229}" Width="1353" Height="791" Orientation="Vertical">
+				<View Name="SoundBankManager" ID="{434A49D9-BC0B-4350-8A3A-2AA637E57110}" Width="1218" Height="349"/>
+				<Splitter/>
+				<ObjectTabPanel Name="ObjectTabPanel" ID="{031E1E2C-DC25-4332-80C3-FFCC371AC803}" Width="1218" Height="366" SelectionChannel="1"/>
+			</StackPanel>
+		</StackPanel>
+	</StackPanel>
+</Layout>

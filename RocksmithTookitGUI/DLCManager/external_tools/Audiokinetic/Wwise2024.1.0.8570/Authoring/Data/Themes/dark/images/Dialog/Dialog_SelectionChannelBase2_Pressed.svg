@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-145,-28)">
+        <g transform="matrix(0.75,0,0,0.75,-596.75,192.5)">
+            <g transform="matrix(1,0,0,1,-94.6667,32)">
+                <g id="Dialog_SelectionChannelBase2_Pressed">
+                    <g id="Dialog_SyncGroups">
+                        <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(1.33333,0,0,1.33333,1083.67,-251.333)">
+                            <rect x="0" y="0" width="20" height="20" style="fill:none;"/>
+                        </g>
+                        <g transform="matrix(1.5,0,0,1.5,572,-293.5)">
+                            <path d="M358,31.88C358,30.29 356.71,29 355.12,29L344.88,29C343.29,29 342,30.29 342,31.88L342,42.12C342,43.71 343.29,45 344.88,45L355.12,45C356.71,45 358,43.71 358,42.12L358,31.88Z" style="fill:rgb(24,95,163);"/>
+                        </g>
+                        <g id="Outline" transform="matrix(1.5,0,0,1.5,572,-293.5)">
+                            <path d="M358,31.88L358,42.12C358,43.71 356.71,45 355.12,45L344.88,45C343.29,45 342,43.71 342,42.12L342,31.88C342,30.29 343.29,29 344.88,29L355.12,29C356.71,29 358,30.29 358,31.88ZM357.111,31.88C357.111,30.781 356.219,29.889 355.12,29.889L344.88,29.889C343.781,29.889 342.889,30.781 342.889,31.88L342.889,42.12C342.889,43.219 343.781,44.111 344.88,44.111L355.12,44.111C356.219,44.111 357.111,43.219 357.111,42.12L357.111,31.88Z" style="fill:white;fill-opacity:0.15;"/>
+                        </g>
+                        <g id="Hover" transform="matrix(1.33333,0,0,1.33333,630.333,-287.333)">
+                            <g transform="matrix(1,-0,-0,1,340,27)">
+                                <use xlink:href="#_Image1" x="2" y="2" width="16px" height="16px"/>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+    <defs>
+        <image id="_Image1" width="16px" height="16px" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAW0lEQVQ4je3TsQGAIBQD0csfgAGodR2nciln0ZoB6CVWDACNDenvddFxXt5zQhIjs81dKjETA0hiy4mYiftCIqbrjixgAb8DEoTtaeBtJu5SaTYjn5Kg2Tyl8gG9Lhqs+pUKhQAAAABJRU5ErkJggg=="/>
+    </defs>
+</svg>

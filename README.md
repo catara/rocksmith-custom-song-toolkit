@@ -1,9 +1,9 @@
-﻿		# Date: 09.05.2024
+﻿		# Date: 05.10.2024
 		# Document Name: Rocksmith 2014 RM DLC Management tool README
 						(fork of rocksmith-custom-song-toolkit)
 		# Document purpose: To describe the project and capture a developmental history
 
-## Rocksmith 2014 RM DLC Library Manager v1 b7 r1 (compiled beta available in https://github.com/catara/rocksmith-custom-song-toolkit/tree/Main/RocksmithTookitGUI/bin/Debug_Lite.7z )
+## Rocksmith 2014 RM DLC Library Manager v1 b7 (compiled beta available in https://github.com/catara/rocksmith-custom-song-toolkit/tree/Main/RocksmithTookitGUI/bin/Debug_Lite.7z )
 *(forever to be unreleased version- for my own sake)*
 # App Description: MASS Manipulation of Rocksmith 2014 RM DLC Library
 
@@ -15,7 +15,7 @@
 		- Preview
 		- Cover
 		- Lyrics
-		- the standard sufficient Audio qualiity (>128kb bitrate)
+		- the standard sufficient Audio quality (>128kb bitrate)
 	- Listen to songs Audio / Preview
 	- Gathers Track No./Cover/Year from Spotify & original video and playthrough from Youtube (NEW: not working due to multiple spotify api updates and youtube qouta policies :))
 - Mass Modify SongDetails / Metadata @repack per each Rocksmith song
@@ -26,10 +26,11 @@
 - Read Current Game Library and match it to the DLCManager Library (incl. PS3)
 - Mass rename songs (Standardization) e.g. Black Keys->The Black Keys and maintain changes in a local DB
 - Manipulates the Retail songs list of Rocksmith (Rocksmith 2014 disc, or Rocksmith 2012 DLC, or Rocksmith 2012 Import disc)
-	NEW ability to insert CDLC in (PC atm; PS3&PS4 later) Retail version core files
-- NEW: when building new DLC save some links to source files/todo/release notes etc
+	NEW-beta: ability to insert CDLC in (PC atm; PS3&PS4 later) Retail version core files
+- NEW'23: when building new DLC save some links to source files/todo/release notes etc
 - Export HTML (web server ready) setlist
-- Shift Notes (NEW: Manipulate Arrangements to be distributed along a specific timeline from a GuitarPro file that is not time-synced)
+- Shift Notes (NEW'24: Manipulate Arrangements to be distributed along a specific timeline from a GuitarPro file that is not time-synced)
+- NEW-latest: Export all metadata in HTML format for CustomFoge Upload
 
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot1.png" alt="Rocksmith DLC Library Manager Import&Pack"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot2.png" alt="Song Metadata DB Screen"/>
@@ -37,144 +38,153 @@
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot4.png" alt="Rocksmith Retail Manipulation Screen"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot5.png" alt="Duplicate Management Import Screen"/>
 
+## Explainers:
+'-' / '[]' / '[ ]' = 'to work on'
+'- [-]' = 'not fully tested but in a prod like mode'
+'- [+]' = 'almost done'
+'- [x]' = 'done'
 
 ## Known Issues:
 - PS3 Packing of Rocksmith 2014 Retail manipulated files has 1 manual step
-- when using ACCDB 64b 3rdparty Access DB viewer not available unless 32b plugin is installed(.msi) using /passive
-- no yb parsing of links due to "no quota" Corona ggl lockdown
-- no spofity track&cover retrieval due to api change and not yet catchup w latest 3rdparty implementation
-- inserting songs directly in game files is still beta (PC shuold work, ps3/ps4/iOS pending)
-- SQLITE3 is beta (not tested the import as there might be 1-2 more functions not ported to be compatible with both ACCDB & DB formats)
+- when using ACCDB 64b 3rd-party Access DB viewer not available unless 32b plugin is installed(.msi) using /passive
+- no Youtube parsing of links due to "no quota" Corona ggl lockdown
+- no Spotify track&cover retrieval due to api change and not yet catchup w latest 3rd-party implementation
+- inserting songs directly in game files is still beta (PC should work, ps3/ps4/iOS pending)
+- SQLITE3 is beta (there might be 1-2 more functions not ported to be compatible with both ACCDB & DB formats)
+
 ## ACCDB to SQL-Lite3 migration steps:
-	- add missing columns with ALTER TABLE Main ADD Is_Deluxe; ALTER TABLE Main DROP Trial983; VACUUM;
+	- add missing columns with ALTER TABLE Main ADD Has_Alternate_Track varchar(255); ALTER TABLE Main DROP/RENAME Trial983; VACUUM;
+	- check fields PRAGMA table_info(Main);
 	- clean manually 	DELETE FROM Arrangements;	DELETE FROM Cache;	DELETE FROM Groups;	DELETE FROM Import;	DELETE FROM Import_AuditTrail;	DELETE FROM LogImporting;	DELETE FROM LogImportingError;	DELETE FROM LogPacking;	DELETE FROM LogPackingError;	DELETE FROM Main;	DELETE FROM Pack_AuditTrail;	DELETE FROM Tones;	DELETE FROM Tones_GearList;	DELETE FROM OfficialSongs;	DELETE FROM Standardization;	DELETE FROM WEM2OGGCorrespondence;	DELETE FROM ODLC;	VACUUM;
 	- Windows 64 bits: migrate ACCDB to SQLLite with LinkDB.accdb VBS script (activate immediate window and increase size): clean_DBlog()
 
 # Official tool / Master Branch bugs:
-[ ] CICAGO 26 25 original SONG FAILS AT PACK
-[ ] to open ticket for the dlcpackagedata crash for 311 down in
-[-] official DDC remover does not work correctly breaking the songs  (removal is not endorsed by community4remastered version)
-[-] usage of old old wwise 2013 vs /2019 (no known benefits for upgrading)
+- [ ] old: CICAGO 26 25 original SONG FAILS AT PACK
+- [ ] old: to open ticket for the dlcpackagedata crash for 311 down in
+- [ ] official DDC remover does not work correctly breaking the songs  (removal is not endorsed by community4remastered version)
+	- [x] Internal DDC removal works well. not sure how to keep DD and use master mode in game to make this feature irrelevant 
+- [ ] usage of old old wwise 2013 vs /2023 (no known benefits for upgrading)
+	- [x] as PS3 seems to fail with most version (2019 is a little more stable) for PS3 pacakges original AUDIO is extracted at packing and used
 
 ## ToDos list/bugs/features/dump-catchall-list:
-[ ] feat:		 Alternate No for duplicates logic
-[-] feat:		 Include Standardization names into duplication checks
-[ ] big feature: get the volume of the audio file and then compare against the rest or a norm
-[ ] medium feature: add DLCs into cache.psarc to speed up the game startup
-[ ] big feature [ ]For the tagging add the info to the Preview Image/Album Art
-[ ] make a custom song out of retail
-[ ] progress bar update
-	[ ] improve progress bar of repacks
--[ ] reorder main db fields
-	[ ] size
-	[ ] save /offer the chance to reorder
-[ ] rename the Options and use the xml code inside the tool (removing the 03 14 35 dependency)
-[ ] add info box with folders sizes
-[ ] if cover was from someone else please compare against that (save old cover)
-[ ] duplicate window reformat not to sent backand forth 1mio variables but on dataset
-[ ] consider live when searching for the track NO or dont :)
-[ ] Repack only repack Initial or LAst only one platform 
-[ ] Repack only copy and ftp,  Initial or LAst only one platform 
-[ ] check originals vs original dbb
-[ ] search using ignition
-[ ] add convert multitone to single tone
-[ ] duplicate lead to Rhythm
-[ ] each platform should have its own remote location
-[ ] Add repair option
-[ ] why album id is the same as artist id
-[ ] if no delete then dont delete DBscocnvert and ftp is it working at mass packing
-[ ] mantra cannot be imported
-[-] test replace ....
-[-] add copy last and initial to mass pack
-[-] prepare the rebuild option
-[x] delete lib (gather lib from ps3-ftp/mac/pc 1. save 2. copy new)
-	[-] Delete All
-	[ ] add simple logic to add sections
-	[ ] check and fix the Sections flag
-[-] mac song gen errors at read dlc library
+- [ ] feat:		 Alternate No for duplicates logic
+- [ ] feat:		 Include Standardization names into duplication checks
+- [ ] big feature: get the volume of the audio file and then compare against the rest or a norm
+- [ ] medium feature: add DLCs into cache.psarc to speed up the game startup
+- [ ] big feature [ ]For the tagging add the info to the Preview Image/Album Art
+- [ ] make a custom song out of retail
+- [ ] progress bar update
+	- [ ] improve progress bar of repacks
+- [-] reorder main db fields
+	- [ ] size
+	- [ ] save /offer the chance to reorder
+- [ ] rename the Options and use the xml code inside the tool (removing the 03 14 35 dependency)
+- [ ] add info box with folders sizes
+- [ ] if cover was from someone else please compare against that (save old cover)
+- [ ] duplicate window reformat not to sent backand forth 1mio variables but on dataset
+- [ ] consider live when searching for the track NO or dont :)
+- [ ] Repack only repack Initial or LAst only one platform 
+- [ ] Repack only copy and ftp,  Initial or LAst only one platform 
+- [ ] check originals vs original dbb
+- [ ] search using ignition
+- [ ] add convert multitone to single tone
+- [ ] duplicate lead to Rhythm
+- [ ] each platform should have its own remote location
+- [ ] Add repair option
+- [ ] why album id is the same as artist id
+- [ ] if no delete then don't delete DBs convert and ftp is it working at mass packing
+- [ ] mantra cannot be imported
+- [ ] test replace ....
+- [ ] add copy last and initial to mass pack
+- [ ] prepare the rebuild option
+- [x] delete lib (gather lib from ps3-ftp/mac/pc 1. save 2. copy new)
+	- [ ] Delete All
+	- [ ] add simple logic to add sections
+	- [ ] check and fix the Sections flag
+- [ ] mac song gen errors at read dlc library
 [+] remove all dd in Cache/Retails screen
-[-] generate a garageband _(curently the mp3 is converted to wav for GB Import)
-[ ] make processing static
-[ ] add a 4 sec timestamp in each song
-[x] clean up the saving settings logic
-    [ ] at open it gets records for 3 times
-[ ] progress bar having it overelayed text overlayered bug error
-[ ] add some free space statistics
-[ ] clean pack_audit trail duplicates
-[ ] change profile saves old setting on new profile
-[ ] if 89 selected the show right no in stats
-[ ] kids orig was not replaced
-[ ] korn for you arrangement insert break
-[ ] pack as a group (incl. ps3)
-[ ] ps3 decompression fail cause json manifest missing
-[ ] standardization suggest similar album names based on capitalisation
-[ ] think of adding that ref point for all tracks to be synced
-[ ] version is not being saved?
-[ ] what does audio mean in name "( audio)"
-[ ] check rape me no bass
-[ ] MAMAS AND PAPASE LEAD and back vocal split
-[ ] can we have a dupli assement window :) (all 5 dupli what happened if automated)
-[ ] MAke Sure CHANGIN D THE AUDIO/PREVIEW DOES NOT deletes the old info useful for duplication comparison
-[ ] the rover preview issue , file gets a weird name
-[ ] consider multitasking DDC style
-[ ] report change in the house of flies remove ddd issue
-[ ] use memory disk for audio operations, access DB, what else?
-[ ] take me now baby weird timing in lyric
-[ ] "C:\\t\\0\\0_repacked\\PS3\\CDLC-ACDC-1986-Who_Made_Who-00-D_T_"
-[ ] too many oggs check and workaround celannup
-[ ] add list of copies
-[ ] fix dont show lyrics 
-[ ] add tooltip that older newr is incomplete
-[ ] dupli author duplis spaces
-[ ] new tag at pack add older or year
-[ ] clean songs w text(duplic..) after _p
-[ ] if old is found bbut no entr copy to import and archive
-[ ] if old is not found clean record raise alarm
-[-] check broken
-[ ] CFSM.AudioTools
-[ ] PSARC packer refactored, 1:1 to offical compression ratio, but code n…
-[ ] 1700 songs wo vocals
-[-] find workaround for remote folders
-[-] saving remote not working
-[ ] fix on leave folders
-[ ] duplicate add old values as tooltip
-[ ] add export to excel (maybe not as u could simply export from access :) )
-[ ] multiple repacks still occur
-	[ ] single pack sometimes runs multiple times
-[ ] add manualy modified same lyrics change flag (maybe based on hash)
-[ ] preview starts twice bug
-[ ] at import gather info and display
-[ ] Feeling Good_158, Rape Me_3573, Pixies_1987_Come on Pilgrim_0_Nimrod's Son_3793
-	[ ] "C:\\t\\f\\0\\0_data\\Pc_CDLC_Elton John_1983_Too Low for Zero_0_I'm Still Standing_16\\gfxassets\\album_art\\album_reaejimstillstanding_256.dds"
+- [ ] generate a garageband _(currently the mp3 is converted to wav for GB Import)
+- [ ] make processing static
+- [ ] add a 4 sec timestamp in each song
+- [x] clean up the saving settings logic
+    - [ ] at open it gets records for 3 times
+- [ ] progress bar having it overlayed text overlayered bug error
+- [ ] add some free space statistics
+- [ ] clean pack_audit trail duplicates
+- [ ] change profile saves old setting on new profile
+- [ ] if 89 selected the show right no in stats
+- [ ] kids orig was not replaced
+- [ ] korn for you arrangement insert break
+- [ ] pack as a group (incl. ps3)
+- [ ] ps3 decompression fail cause json manifest missing
+- [ ] standardization suggest similar album names based on capitalisation
+- [ ] think of adding that ref point for all tracks to be synced
+- [ ] version is not being saved?
+- [ ] what does audio mean in name "( audio)"
+- [ ] check rape me no bass
+- [ ] MAMAS AND PAPASE LEAD and back vocal split
+- [ ] can we have a dupli assessment window :) (all 5 dupli what happened if automated)
+- [ ] MAke Sure CHANGIN D THE AUDIO/PREVIEW DOES NOT deletes the old info useful for duplication comparison
+- [ ] the rover preview issue , file gets a weird name
+- [ ] consider multitasking DDC style
+- [ ] report change in the house of flies remove ddd issue
+- [ ] use memory disk for audio operations, access DB, what else?
+- [ ] take me now baby weird timing in lyric
+- [ ] "C:\\t\\0\\0_repacked\\PS3\\CDLC-ACDC-1986-Who_Made_Who-00-D_T_"
+- [ ] too many oggs check and workaround clean-up
+- [ ] add list of copies
+- [ ] fix dont show lyrics 
+- [ ] add tooltip that older newer is incomplete
+- [ ] dupli author duplis spaces
+- [ ] new tag at pack add older or year
+- [ ] clean songs w text(duplic..) after _p
+- [ ] if old is found bbut no entr copy to import and archive
+- [ ] if old is not found clean record raise alarm
+- [ ] check broken
+- [ ] CFSM.AudioTools
+- [ ] PSARC packer refactored, 1:1 to offcial compression ratio, but code n…
+- [ ] 1700 songs wo vocals
+- [ ] find workaround for remote folders
+- [ ] saving remote not working
+- [ ] fix on leave folders
+- [ ] duplicate add old values as tooltip
+- [ ] add export to excel (maybe not as u could simply export from access :) )
+- [ ] multiple repacks still occur
+	- [ ] single pack sometimes runs multiple times
+- [ ] add manualy modified same lyrics change flag (maybe based on hash)
+- [ ] preview starts twice bug
+- [ ] at import gather info and display
+- [ ] Feeling Good_158, Rape Me_3573, Pixies_1987_Come on Pilgrim_0_Nimrod's Son_3793
+	- [ ] "C:\\t\\f\\0\\0_data\\Pc_CDLC_Elton John_1983_Too Low for Zero_0_I'm Still Standing_16\\gfxassets\\album_art\\album_reaejimstillstanding_256.dds"
 	[] var attribute = new Attributes2014(arrangementFileName, arr, info, platform);
 	[] C:\GitHub\rocksmith-custom-song-toolkit\RocksmithToolkitLib\DLCPackage\DLCPackageCreator.cs
 	[] 543
-[ ] add text to audio fixing on progress ar
-[ ] mass dont copy single do
-[ ] update screenshots
-[ ] is combo lead track in lyrics?
-[ ] reubild s0ngds.psarc
-[ ] db change doesnt not db change when leaving cell
-[ ] to finish spotify status and yb status at geenraste?
-[ ] at exxport diff tunnings should be displayed if avail
-[ ] reduced update selected? in mai db as nnot to run more than once (or five times :) )
-[ ] fix pack id?
-[ ] antthenum pneuma issues wwitth hash but still it should have been up to assement
-[ ] make all folders remote 0_temp=c("0_temp")
-[ ] fix import moves to archive not old
-[ ] add read only
-[ ] https://explore.amd.com/e/659533/m-medium-email-utm-term-btn-tp/9mcnp/237446456?h=sGd69neOaxNCEXHNo4reoAoV2gv6Rm-q2kv1Cph14bk
-[ ] copy latest meta from db to xml
-[ ] same files not recog as dupli in the import file
+- [ ] add text to audio fixing on progress ar
+- [ ] mass dont copy single do
+- [ ] update screenshots
+- [ ] is combo lead track in lyrics?
+- [ ] rebuild s0ngds.psarc
+- [ ] db change doesnt not db change when leaving cell
+- [ ] to finish spotify status and yb status at generate?
+- [ ] at export diff tunnings should be displayed if avail
+- [ ] reduced update selected? in mai db as nnot to run more than once (or five times :) )
+- [ ] fix pack id?
+- [ ] antthenum pneuma issues with hash but still it should have been up to assessment
+- [ ] make all folders remote 0_temp=c("0_temp")
+- [ ] fix import moves to archive not old
+- [ ] add read only
+- [ ] https://explore.amd.com/e/659533/m-medium-email-utm-term-btn-tp/9mcnp/237446456?h=sGd69neOaxNCEXHNo4reoAoV2gv6Rm-q2kv1Cph14bk
+- [ ] copy latest meta from db to xml
+- [ ] same files not recog as dupli in the import file
 [] fix fix not saving current record
-[] fix (manual) search yb buton
+[] fix (manual) search yb button
 [] check 10 audio not downsized
 [] check search normal search song yb link
 [] groups cdlc id not incresed correctly as string
 [] main db duplicate needs to saves the other cdlc id in dupi field
-[ ] fixed delete on maindb duplicate checking
-[ ] use external executable nice windo from main
-[ ] fixed saving or yb main/arrangement not to have https:\\yb.comhttps:\\yb.com
+- [ ] fixed delete on maindb duplicate checking
+- [ ] use external executable nice windo from main
+- [ ] fixed saving or yb main/arrangement not to have https:\\yb.comhttps:\\yb.com
 [] check arangements and thones as maybe not all have
 	[] when checking files also check arangements and tones
 	[] 3 dupli assesment does not save left side of 1/3 recs
@@ -185,41 +195,41 @@
 [] export html add download artist and add download album
 [] improve check for file issues final window reporting
 [] save sections count additionally
-[ ] Add option not to import CDLC packed 'by Catara/DLCMANAGER
-[ ] open folder in the root of the input text box
-[ ] audio slave bring back alive error when moving something
-[ ] euology 10.3 1.02 is not detected as duplix
-[ ] clean pack audio ...copy path folder instad of full path
-[ ] when autom deciding something is not a duplicate dont continue maybe
-[ ] INCUBUS REDEFINE MULTI SHOWS IN RED AT DUPLICATION MANAGEMENT SCREEN
-[ ] cannot find sick sick sic (override)
-[ ] audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
-[ ] add checks to packed..remember to ask if they wanna clean ups or notification
-[ ] ask if you wanna have the packing folder deleted
-[ ] cause it doesnt pick up version it cannot diff shiro astronau
-[ ] other platforms do not have official flag correctly detected
-[ ] Repair broken CDLC (lost track of this)
-[ ] overrite rename buttons
-[ ] replace all does not exist
-  [ ] ps3 long names sogs(149char)(cannot be read)
-  [ ] fix official set alternate 4392
-[ ] when copying maybe consider updating any existing packed &copy link
-[ ] Viva la Vida or Death and All His Friends did not get into standardization with all its different spellings
-[ ] make all unique check(02-05 look the same) at mass pack
-[ ] check db also checks arrangements, standardization, tones,
-[ ] orion changed cover
-[ ] fixed a vocal at dupli missing 
-[ ] When setting a (base) tone copy json(&manifest?) too
+- [ ] Add option not to import CDLC packed 'by Catara/DLCMANAGER
+- [ ] open folder in the root of the input text box
+- [ ] audio slave bring back alive error when moving something
+- [ ] euology 10.3 1.02 is not detected as duplix
+- [ ] clean pack audio ...copy path folder instad of full path
+- [ ] when autom deciding something is not a duplicate dont continue maybe
+- [ ] INCUBUS REDEFINE MULTI SHOWS IN RED AT DUPLICATION MANAGEMENT SCREEN
+- [ ] cannot find sick sick sic (override)
+- [ ] audioslave sections missing maybe cause its an original and i used my own logic to strip the DD
+- [ ] add checks to packed..remember to ask if they wanna clean ups or notification
+- [ ] ask if you wanna have the packing folder deleted
+- [ ] cause it doesnt pick up version it cannot diff shiro astronau
+- [ ] other platforms do not have official flag correctly detected
+- [ ] Repair broken CDLC (lost track of this)
+- [ ] overrite rename buttons
+- [ ] replace all does not exist
+  - [ ] ps3 long names sogs(149char)(cannot be read)
+  - [ ] fix official set alternate 4392
+- [ ] when copying maybe consider updating any existing packed &copy link
+- [ ] Viva la Vida or Death and All His Friends did not get into standardization with all its different spellings
+- [ ] make all unique check(02-05 look the same) at mass pack
+- [ ] check db also checks arrangements, standardization, tones,
+- [ ] orion changed cover
+- [ ] fixed a vocal at dupli missing 
+- [ ] When setting a (base) tone copy json(&manifest?) too
 	[] recreate sng
-[ ] make latest x.2.x wwise to work
-[ ] java  can work if offline? (done & wwise)
-[ ] add release noteas at pack ...if normAL INPUT BOX..IF repack..default
-[ ] improving allow dlc in win (copy dll if missing)
-[ ] shift track in Arrangment or in main db should use the same code :)
-[ ] check how many imported dont have an audit trail
-[ ] check if hash doesnt match file hash
-[ ] perfect day merge lyrics&bass  
-[ ] fixing add standard in duplcaite was not removing older or adding doub along new id
+- [ ] make latest x.2.x wwise to work
+- [ ] java  can work if offline? (done & wwise)
+- [ ] add release noteas at pack ...if normAL INPUT BOX..IF repack..default
+- [ ] improving allow dlc in win (copy dll if missing)
+- [ ] shift track in Arrangment or in main db should use the same code :)
+- [ ] check how many imported dont have an audit trail
+- [ ] check if hash doesnt match file hash
+- [ ] perfect day merge lyrics&bass  
+- [ ] fixing add standard in duplcaite was not removing older or adding doub along new id
 calculate all drop down options using pitch shifting systems and display it in maindb infobox
 multi lyrics files (i wanna be your dog)
 check improv sections
@@ -329,6 +339,7 @@ script create slim version
 standardise debug (profile or compiled as debug)
 
 [] VACUUM;
+PRAGMA table_info(table_name);
 [] delete sqlite
 	DELETE  FROM Arrangements;
 	DELETE  FROM Cache;
@@ -422,109 +433,132 @@ filter by date (aded, packed)
 		  FROM Groupsu;
 	no sections quite a lot..can we add some..? :)
 	
-## WiP:
-(this release)
-1.0 b7 (18.04.2024) (rel1-regression) b6 regression
-[-] upgraded version of rocksmth2 tab2lib, added rocksmithprevlib regression fix from other fork, added assembly
-[-] 2 Main.db new fields found CF upload and existence
-[-] odd:amator,gamecover flgs on (db claned as part of a regression)(regression also on field order)
-[-] some new flags cant be edited (action added to button/fhckboxes)
-[-] dont add [] in filename (not the case)
-[-] where are [] in metadata manually added in the meta field templates (regression)
-[-] regression on grp no of order added to sorted data
-[-] regression on multiselect
-[-] regression tenacious fails cause album has a weid name (hopefulyl fixed behavior when editing meta to be cleansed)
+Bugs:
+- [ ] add frecvencies for exiting songs as not showing at duplicates
+- [ ] planning to skipp (0/1 why did i get it typos issues?)
+- [ ] wwise changes every start?
+- [ ] add export in saved values
+- [ ] improve import self packed songs
+	- already packed are they checked at import?
+- [ ] pack by artist
+- [ ] grp try gives erorr
+- [ ] tracks no are -1
+- [ ] when adding to hot if not playable then make try as well
+- [ ] if adding files inconsistencies remove word error (remove blacksabbath broken flag)
+- [ ] update programs
+	- [ ] 21.04 arm64 open jave
+	- [ ] access/sqllite/dotnet needs to be installed? add additional check/mss
+- [ ] add run local installer if avail. (e.g. audiokinetic)
+- [ ] improve no accdb found mss (also add sqlite default if indicated as such)
+- [ ] improve audikinetik discov as stanrad instal is missed
+- [ ] improve dlc builder opening ()
+- [ ] make track -1 into blank?
+- [ ] fix standardization
+- [ ] fix custom standard fields
+- [ ] redo monthly as last best played songs
+- [ ] what's in album correction
+- [ ] copy capi to stef profile
+- [ ] Mark/remove CF existing songs from export
+- [ ] improve Export to CF
+	- [ ] why if fails when using uloadedFields for export to cf 
+	- [ ] ARM has issue with packing more than 2 formats or at checking w Thread abort is not supported on this platform. Source=System.Private.CoreLib
+- [ ] cleanup Pack section in MainDB (rearrange a bit plus updating some options)
+	- [ ] add fTP info in DLCManager main window too
+	- [ ] add other folder ok/NOK flags too
+	- [ ] fred durts failed
+	- [ ] radwimps jap letter failed
+	- [ ] add song import counter to all updatelog :)
+	- [ ] add group check why running up hill son
+	- [ ] nirvana fails when multi platform is selected (mac worcs : ) (not use same error field)
+	- [] save manual favorite flag back toa rrangements 
 
-[] develop Export to CF
-[] Improve cross-track alignment for Distribution of Notes Feature
-[] Further stabilise Standardisation screen
-[] Clean Rocksmith (mac) for OBS recording (no showlights, no guitar, ..)
-[] prepare a package for all officails integratio in cache.psarc
-improve import self packed songs
-pack by artist
-prototype mac os MAUI list songs and meta..and pack
-grp try gives eror
-tracks no are -1
-when adding to hot if not playable then make try as well
-nirvana fails
+Big topics:
+- [ ] prototype mac os MAUI list songs and meta..and pack
+- [ ] add sections automatically
+- [ ] package official retail songs as single items
+- [ ] Further stabilise Standardisation screen
+- [ ] Clean Rocksmith (mac) for OBS recording (no showlights, no guitar, ..)
+- [ ] prepare a package for all officials integration in cache.psarc
+- [ ] redo read library (incxl song comparison and hash for all files incl ftp)
+- [ ] add volume control/CHECK/correction
+
+- [ ] think to elongate all lyrics
+- [ ] think to check if guitar and bass notes align :)
+- [ ] improve copy eof song folder copy if imported from psarc song or from eof
+
+## WiP:
+(this release) 
+1.0 b7 (05.10.2024) (rel2) Export to CF HTML hosting package + PoC ASCI notes display and auto section setting
+- [-] Improve cross-track alignment for Distribution of Notes Feature
+- [x] Add ASCII tab processer that takes and ascii tab from guitar uiltimate and prepares it for Guotar Pro imort, to be thzem used in EoF
+- [-] develop Export to CF
+	- [ ] why if fails when using uloadedFields for export to cf 
+	- [ ] ARM has issue with packing more than 2 formats or at checking w Thread abort is not supported on this platform. Source=System.Private.CoreLib
+- [x] added a mss if first select is empty (profile select) :)
+- [x] improved clean DB/Create folders (and fixed regressions)
+- [x] if audiokinetic empty trigegred the window to dwld 
+- [x] added CF author
+	- [x] missing new fields of sqlite in link.db
+	- [x] empty .db (missing grps,.standard?)
+- [x] removed  dependency on flag to use sqlite at technical selecting/updating/deleting/importing/UpdateDBbyExecuteNonQuery of records
+- [x] add save (existing) button in duplicate
+- [x] add add DD at pack
+- [x] improved meata clanup when atributes found (incl now any editable txt previously coded but not working)
+- [x] increased no of packs to more than 100 :)
+- [x] improv packing (added xbox check and copy)
+- [x] added missing column to search fields
+- [x] added selfhost
+- [x] make sort data lower capitaliation
+- [x] fixed ignoring song warning due to float integer bad comparison
+- [x] fixed adding lyrics old checkbox ref for imprtov w DM
+- [x] align duplicate manag vs and other fields
+- [x] added artist,album,songtitle into package comment maybe to use later when importing self gen diffatpack meta to ref to pure values
+- [x] cleanup Pack section in MainDB (rearrange a bit plus updating some options)
+	- [x] impl a FTP visual OK/NOK availabiltiy flag :)
+	- [x] ps3 loads first?(rererefix worked)
+- [-] add duplicate dropdown
+- [-] further improve duplicate screen 
+- [x] develop PoC Display ASCII track all in currier
+- [x] readded toolkit to BPM (for quick start)
+- [x] fix issue at assessing conflict ukulele metal cover switched in a pram sending receiving
+- [x] add duplicate of id in duplicate management screen
+- [x] add song info in replace txt/meta discov engine
+- [x] improved load of rec from main ...using field name
+- [x] improved gp5 export for vocals (txt)
+- [-] slide(? param: no)
+- [x] added logic to ensrure no packed file name is the same :) (or dlc name is the same evar :))
+- [x] improved the attributes setting checkbox/buttons (added a dropdown to be able to check new attributes)
+- [-] add ghost song names w the grp name
+- [x] add dont work grp
+- [-]  check/add Alternate/Bonus in the album names
+- [x] add flab p is playable (favorite already in)
+- [x] add to default and ps3 incubus, u2, tears for fears, sting
+- [x] check why grp is packing
+- [x] if mlti track dont use orig audio
+- [x] fixed search by author
+- [x] improve duplicates show some thigns are the same and add attributes fi different
+- [-] add alternate in arrangements and bring arangements scree up2date
+- [-] a440 is not in db/corectly determined
+- [-] add and recalc alternate, slide, a440
+- [-] added song info fields to Pack_AuditTRail_
+- [-] why one wo guitar and one simple cant coexist (made muti songs unique and also added a check for artist sort + song title sort)
+- [-] add manually favorites
+	- [] save manual flag 
+- [x] import (pc first) sorting (doenstwork :( )
+- [ ] moved bin to c:\github
 
 ## done:
 (prev release)
-1.0 b6 (04.03.2024) (pre3) Prototyping GuitarPro simple time distribution for new songs
-[x] fix improvedimport no eof no gp5
-[x] improved getfirst note, also added get last
-[x] fix move of buttons import selection of param screen
-[x] fix new attribute to always give if songs match standardization rule
-[x] fix some empty/broken audio/album paths
-[x] fix some original album paths & code at path fix (not sure where the code issues is)
-[x] why there are no Packing details in db
-[x] standardise the get records specialyl since SQL-Lite might return an empty record=1 if tableempty
-[x] save setting doesnt seem to work
-[x] 3rd extension was not cleaned (psarc from celand folders
-[x] fixes on cleanups
-[x] further sqlite improve impl strcom,switch,ucase etc.
-	[x] weird pack no
-	[x] why zero packed songs
-	[x] sqlite dlcmnanger 1700 also made theser calls avaiul in sqlite
-[x] where is sample (not the case on single processing as anyway sumamry at end)
-[x] sqlite other windows (not required as now selects etc standardized only in utilities fuction files)
-[x] improved packing no detection at single and harmogenised with mass same function
-[x] harmonised generate param list same function, and added general to all (still to do put it sec :))
-[x] generate packing stats ignores platform case
-[x] workaround sqlite table with id not null contrains not being able to insert in even if not inserting id
-[-] add instrumntal AI split https://github.com/stemrollerapp/stemroller
-[-] fix search 2-3times
-[-] full album not detected
-[-] setting attribute no displayed
-[-] fix acdc
-[-] check full files
-[-] check for file size zero
-[-] if preview missing check add full song as
-[-] add weird char from file name to path an
-[-] add remove doublefiled wems
-[-] check twhat wems i deleted
-[-] check wehat bnk still are after cleanup
-[x] Has_Alternate_Lyrics
-[x] Has_Alternate_Audio
-[x] a440
-[x] ukulele
-[x] Metallcover
-[x] mix
-[x]  make attributes dynamically position  themselves
-[x] when changig metadata give a change to edit
-[x] remaster not detected on album (added)
-[-] dont add packing grp to meta
-[x] fix last meta
-[x] check digitec on torn cover by neck
-[x] strech few maindb
-[x] increse font in error window
-[x] fix pack regress issue
-[x] move call to proced as to show progress
-[x] fixstandardization screen zoom 
-[x] fixstandardization screen load
-[x] open standard doesnt getsu top the artist&album
-[x] pack no doenst increase(failed pack is the same untill increased) (maybe get max and insease then)its ok as isO)
-[x] fix add attribute through right click
-[x] if indiv repack is not in failed dont mark as broken :)
-[x] reinforced packing audio file using logic (mostly cause of ps3 issues) and error reporting out of it
-[x] enhance right clicks on the 3 right click menu grps
-[x] fix duplicate groups
-[x] if you dont add stuff to lyrics display a warning :)(ConfigRepository.Instance()["dlcm_AdditionalManipul73"] == "Yes" && filez.Has_Vocals == "Yes" && c("dlcm_AdditionalManipul102") != "Yes") 
-[x] increase song details to max-1 in lyrics
-[x] add def dlc_id_
-[x] dlcname should be part of getmeta
-[x] (qnap modif file) fix bass dankoC:\t\0\0_data\Pc_CDLC_Danko Jones_2015_Fire Music_0_Gonna Be A Fight Tonight_12128\songs\arr\fakk_djtgbaft_bass.xml
-[x] add title to error window
-[x] 	Failed at packing (1010970) :4 (inprov clean path of umlaut chars)
-[x] fix sections not being gathered since 2021 :( :( :( :( :( 
-[x] add regather attributes (tunning frecv, sections++later)
-[x] fixed no doubt sunda qnap broken bass
-[x] C:\t\0\0_data\Pc_CDLC_Tommy Johansson_2022_I'm Still Standing_0_I'm Still Standing_14244 fixed missin audio and bnk
-[x] C:\t\0\0_data\Pc_CDLC_Rise Against_2001_The Unraveling_0_Faint Resemblance_7583\manifests\songs_dlc_cusrafaintresemblance fixed empty json
-[x] fix dlcm opening
-[-] fix import when w duplic doenst import new
-[] why grp is not correct for smnoko
-[] whatsw eof
+1.0 b6 (18.04.2024) (rel2-regression) b6 regression
+- [x] upgraded version of rocksmth2 tab2lib, added rocksmithprevlib regression fix from other fork, added assembly
+- [x] 2 Main.db new fields found CF upload and existence
+- [x] odd:amator,gamecover flgs on (db claned as part of a regression)(regression also on field order)
+- [x] some new flags cant be edited (action added to button/fhckboxes)
+- [x] dont add [] in filename (not the case)
+- [x] where are [] in metadata manually added in the meta field templates (regression)
+- [x] regression on grp no of order added to sorted data
+- [x] regression on multiselect
+- [x] regression tenacious fails cause album has a weid name (hopefulyl fixed behavior when editing meta to be cleansed)
 
 
 # Version History(release date):
@@ -566,8 +600,9 @@ nirvana fails
 	1.0 b3 (29.05.2021) Add DLCs directyly intro GAmes fiels (songs.psarc and implicitely the hsan into cache.psarc)
 	1.0 b4 (29.07.2021) moved to .NET6 as to allow development in windows for ARM (Apple,etc.)added SQLite capabiltites (removes dependency on ACCESS on Windows for ARM as sometimes not being detected)
 	1.0 b5 (09.10.2022) startup/dependencies improvements, weekly dyanmic last 5 in monthly hot list and sqlite further integration
-	1.0 b6 (12.02.2024) (pre3) Prototyping GuitarPro to Rocksmith workflow for simple time distribution for new songs
-	1.0 b7 (9.05.2024) Finalising addings songs directly to CACHE (Pc works, targetting Ps3 and Ps4)
+	1.0 b6 (12.04.2024) Prototyping GuitarPro to Rocksmith workflow for simple time distribution for new songs
+	1.0 b7 (06.10.2024) Improvements to Audio conversion, audio trailExport for cusomForge and HTML page, ai track splitter better integration
+	1.0 (18.04.2025) (Pre1) Finalising addings songs directly to CACHE (Pc works, targetting Ps3 and Ps4)
 	1.0 b8(xx.11.2024) Released on Customforge and GitHub Release "tab" (2 versions one w all 3rd party software, one without; can be installed/decompressed and quickly used; 1 60sec video describing why you should use this)
 	1.1 (xx.12.2024) Reactivating Spotify checks
 
@@ -736,6 +771,9 @@ of this folder should be directed to the respective developer.
 		- PKG Linker - WEBServer for PS3 HAN enabled delivered packages
 		http://www.psx-place.com/threads/pkg-linker-2-0-serve-packages-to-your-ps3-han-cfw.17252/page-20#post-125162
 
+		- Sound eXchange sox-14.4.2-win32.exe - Mix (single instrument) tracks 
+		https://sourceforge.net/projects/sox
+
 		- Microsoft Access 2016 driver - for usage on x32 x64 xARM(when and if working) to use and access .accdb file format to store meta-data info on each song
 			https://www.microsoft.com/en-us/download/details.aspx?id=54920
 			https://www.microsoft.com/en-us/download/details.aspx?id=13255
@@ -758,8 +796,8 @@ of this folder should be directed to the respective developer.
 			Custom DLC enabler OSX - only way to play songs not sold by Ubioft/Rocksmith-store on Mac https://github.com/aik002/RSBypass
 			Custom DLC enabler PC - only way to play songs not sold by Ubioft/Rocksmith-store on Windows https://customsforge.com/index.php?/topic/901-how-to-use-custom-dlcs-in-rs2014-remastered/
 			SQLite3 driver x64-for reading .db slq-lite-3 (windows 64 ONLY) database by commandLine or ODBC through Microsoft Access UI http://www.ch-werner.de/sqliteodbc/
-			DLC builder 1.62 - usefuly for generating a notes/EoF-file out a psarc https://github.com/iminashi/Rocksmith2014.NET
-			StemRoller 2.0.2 - AI splitting of tracks https://github.com/stemrollerapp
+			DLC builder 3.11 - usefuly for generating a notes/EoF-file out a psarc https://github.com/iminashi/Rocksmith2014.NET
+			StemRoller 2.0.7 - AI splitting of tracks https://github.com/stemrollerapp
 ## Contact
 
 mailto:bogdan@capi.ro  

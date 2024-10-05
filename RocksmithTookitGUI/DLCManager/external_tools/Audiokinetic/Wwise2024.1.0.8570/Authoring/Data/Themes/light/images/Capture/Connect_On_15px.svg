@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-58,-4)">
+        <g transform="matrix(0.75,0,0,0.75,-586.75,192.5)">
+            <g transform="matrix(1.33333,0,0,1.33333,863.667,-247.333)">
+                <g id="Connect">
+                    <g id="Off_15px">
+                        <g id="BG-Transparent" serif:id="BG Transparent" transform="matrix(1,0,0,1,-3,-3)">
+                            <rect x="0" y="0" width="20" height="20" style="fill:none;"/>
+                        </g>
+                        <path d="M1,5.203L1,3C1,1.731 1.731,1 3,1L13,1C14.269,1 15,1.731 15,3L15,11C15,12.269 14.269,13 13,13L8.796,13C8.653,12.305 8.437,11.635 8.154,11L13,11L13,3L3,3L3,5.842C2.365,5.561 1.696,5.345 1,5.203ZM4,6.353L4,4L12,4L12,10L7.644,10C6.769,8.493 5.51,7.23 4,6.353Z"/>
+                        <g transform="matrix(1.06534,0,0,1.06534,-54.267,-8.4375)">
+                            <path d="M50,15C53.87,15 57,18.173 57,22" style="fill:none;stroke:black;stroke-width:1.41px;"/>
+                        </g>
+                        <g transform="matrix(0.619191,0,0,0.619191,-31.9595,1.37781)">
+                            <path d="M50,15C53.87,15 57,18.173 57,22" style="fill:none;stroke:black;stroke-width:2.42px;"/>
+                        </g>
+                        <g transform="matrix(0.309196,0,0,0.309196,-16.4598,8.19769)">
+                            <path d="M50,15C53.869,15 56.999,18.174 57,22C57,22 50,21.999 50,22"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

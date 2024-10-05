@@ -25,6 +25,9 @@ using static Gpif.Rhythm;
 using X360.Other;
 using RocksmithToolkitLib.DLCPackage.XBlock;
 using WinRT;
+using System.Linq.Expressions;
+using System.Security.Cryptography;
+using Swan;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -64,21 +67,42 @@ namespace RocksmithToolkitGUI.DLCManager
             components = new Container();
             helpProvider1 = new HelpProvider();
             splitContainer1 = new SplitContainer();
+            btn_GotoRockband = new Button();
+            txt_RockBand = new CueTextBox();
+            lbl_Descri = new Label();
+            txt_Descriptions = new RichTextBox();
             label3 = new Label();
             btn_EoFPath = new Button();
-            btn_DBFolder = new Button();
+            btn_GP5 = new Button();
             btn_DefaultAuthor = new Button();
-            btn_Spotify = new Button();
             label2 = new Label();
             txt_ToneDetails = new RichTextBox();
-            button3 = new Button();
-            button2 = new Button();
-            button1 = new Button();
+            btn_GoToGuitarUltimate = new Button();
+            btn_GoToCustomforge = new Button();
+            btn_GoToYoutube = new Button();
             btn_Album2SortA = new Button();
             label1 = new Label();
             lbl_Settings = new Label();
             txt_toDos = new RichTextBox();
             txt_Description = new RichTextBox();
+            txt_TabLinks = new CueTextBox();
+            txt_BasedOnYB = new CueTextBox();
+            txt_YBLink = new CueTextBox();
+            txt_Author = new CueTextBox();
+            txt_BasedOnCF = new CueTextBox();
+            txt_CDLC_Name = new CueTextBox();
+            txt_CDLCID = new CueTextBox();
+            txt_Version = new CueTextBox();
+            btn_Spotify = new Button();
+            txt_TrackNo = new CueTextBox();
+            txt_Spotify = new CueTextBox();
+            txt_GPFilePath = new CueTextBox();
+            txt_UpdateDate = new CueTextBox();
+            txt_PackageDate = new CueTextBox();
+            txt_EoFPath = new CueTextBox();
+            txt_PrevDate = new CueTextBox();
+            chbx_RequiresSlide = new CheckBox();
+            txt_RemoteFolder = new TextBox();
             btn_Cancel = new Button();
             lbl_LinkTN = new LinkLabel();
             lbl_LinkS = new LinkLabel();
@@ -89,25 +113,8 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_SaveInVerisonInfo = new CheckBox();
             lbl_LinkYB = new LinkLabel();
             btn_B3 = new Button();
-			
-			txt_PrevDate = new CueTextBox();
-			txt_GPFilePath = new CueTextBox();
-            txt_UpdateDate = new CueTextBox();
-            txt_PackageDate = new CueTextBox();
-            txt_EoFPath = new CueTextBox();
-			            txt_CDLCID = new CueTextBox();
-            txt_Version = new CueTextBox();
-			            txt_TrackNo = new CueTextBox();
-            txt_Spotify = new CueTextBox();
-			            txt_ToneDetails = new RichTextBox();
-            txt_CDLC_Name = new CueTextBox();
-			            txt_BasedOnCF = new CueTextBox();
-			            txt_TabLinks = new CueTextBox();
-            txt_BasedOnYB = new CueTextBox();
-            txt_YBLink = new CueTextBox();
-            txt_Author = new CueTextBox();
-			
             toolTip1 = new ToolTip(components);
+            this.txt_CF_Author = new CueTextBox();
             ((ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -125,41 +132,46 @@ namespace RocksmithToolkitGUI.DLCManager
             // splitContainer1.Panel1
             // 
             splitContainer1.Panel1.AutoScroll = true;
+            splitContainer1.Panel1.Controls.Add(this.txt_CF_Author);
+            splitContainer1.Panel1.Controls.Add(btn_GotoRockband);
+            splitContainer1.Panel1.Controls.Add(txt_RockBand);
+            splitContainer1.Panel1.Controls.Add(lbl_Descri);
+            splitContainer1.Panel1.Controls.Add(txt_Descriptions);
             splitContainer1.Panel1.Controls.Add(label3);
             splitContainer1.Panel1.Controls.Add(btn_EoFPath);
-            splitContainer1.Panel1.Controls.Add(btn_DBFolder);
+            splitContainer1.Panel1.Controls.Add(btn_GP5);
             splitContainer1.Panel1.Controls.Add(btn_DefaultAuthor);
-            splitContainer1.Panel1.Controls.Add(btn_Spotify);
             splitContainer1.Panel1.Controls.Add(label2);
             splitContainer1.Panel1.Controls.Add(txt_ToneDetails);
-            splitContainer1.Panel1.Controls.Add(button3);
-            splitContainer1.Panel1.Controls.Add(button2);
-            splitContainer1.Panel1.Controls.Add(button1);
+            splitContainer1.Panel1.Controls.Add(btn_GoToGuitarUltimate);
+            splitContainer1.Panel1.Controls.Add(btn_GoToCustomforge);
+            splitContainer1.Panel1.Controls.Add(btn_GoToYoutube);
             splitContainer1.Panel1.Controls.Add(btn_Album2SortA);
             splitContainer1.Panel1.Controls.Add(label1);
             splitContainer1.Panel1.Controls.Add(lbl_Settings);
             splitContainer1.Panel1.Controls.Add(txt_toDos);
             splitContainer1.Panel1.Controls.Add(txt_Description);
-			
-			            splitContainer1.Panel1.Controls.Add(txt_TabLinks);
+            splitContainer1.Panel1.Controls.Add(txt_TabLinks);
             splitContainer1.Panel1.Controls.Add(txt_BasedOnYB);
             splitContainer1.Panel1.Controls.Add(txt_YBLink);
             splitContainer1.Panel1.Controls.Add(txt_Author);
-			            splitContainer1.Panel1.Controls.Add(txt_BasedOnCF);
-						            splitContainer1.Panel1.Controls.Add(txt_CDLC_Name);
-									            splitContainer1.Panel1.Controls.Add(txt_CDLCID);
+            splitContainer1.Panel1.Controls.Add(txt_BasedOnCF);
+            splitContainer1.Panel1.Controls.Add(txt_CDLC_Name);
+            splitContainer1.Panel1.Controls.Add(txt_CDLCID);
             splitContainer1.Panel1.Controls.Add(txt_Version);
             splitContainer1.Panel1.Controls.Add(btn_Spotify);
             splitContainer1.Panel1.Controls.Add(txt_TrackNo);
             splitContainer1.Panel1.Controls.Add(txt_Spotify);
-			            splitContainer1.Panel1.Controls.Add(txt_GPFilePath);
+            splitContainer1.Panel1.Controls.Add(txt_GPFilePath);
             splitContainer1.Panel1.Controls.Add(txt_UpdateDate);
             splitContainer1.Panel1.Controls.Add(txt_PackageDate);
             splitContainer1.Panel1.Controls.Add(txt_EoFPath);
-			            splitContainer1.Panel1.Controls.Add(txt_PrevDate);
+            splitContainer1.Panel1.Controls.Add(txt_PrevDate);
             // 
             // splitContainer1.Panel2
             // 
+            splitContainer1.Panel2.Controls.Add(chbx_RequiresSlide);
+            splitContainer1.Panel2.Controls.Add(txt_RemoteFolder);
             splitContainer1.Panel2.Controls.Add(btn_Cancel);
             splitContainer1.Panel2.Controls.Add(lbl_LinkTN);
             splitContainer1.Panel2.Controls.Add(lbl_LinkS);
@@ -170,29 +182,342 @@ namespace RocksmithToolkitGUI.DLCManager
             splitContainer1.Panel2.Controls.Add(chbx_SaveInVerisonInfo);
             splitContainer1.Panel2.Controls.Add(lbl_LinkYB);
             splitContainer1.Panel2.Controls.Add(btn_B3);
-            splitContainer1.Size = new Size(471, 530);
-            splitContainer1.SplitterDistance = 359;
+            splitContainer1.Size = new Size(471, 640);
+            splitContainer1.SplitterDistance = 450;
             splitContainer1.SplitterWidth = 2;
             splitContainer1.TabIndex = 336;
-			            // 
-            // txt_PrevDate
             // 
-            txt_PrevDate.Cue = "Prev Update date";
-            txt_PrevDate.Font = new Font("Microsoft Sans Serif", 8.25F);
-            txt_PrevDate.ForeColor = Color.Gray;
-            txt_PrevDate.Location = new Point(398, 25);
-            txt_PrevDate.Margin = new Padding(2);
-            txt_PrevDate.Name = "txt_PrevDate";
-            txt_PrevDate.ReadOnly = true;
-            txt_PrevDate.Size = new Size(73, 20);
-            txt_PrevDate.TabIndex = 448;
-			// 
+            // btn_GotoRockband
+            // 
+            btn_GotoRockband.Font = new Font("Microsoft Sans Serif", 6F);
+            btn_GotoRockband.Location = new Point(444, 123);
+            btn_GotoRockband.Margin = new Padding(1);
+            btn_GotoRockband.Name = "btn_GotoRockband";
+            btn_GotoRockband.Size = new Size(20, 17);
+            btn_GotoRockband.TabIndex = 453;
+            btn_GotoRockband.Text = ">";
+            toolTip1.SetToolTip(btn_GotoRockband, "Go To tab Link");
+            btn_GotoRockband.UseVisualStyleBackColor = true;
+            btn_GotoRockband.Click += btn_GotoRockband_Click;
+            // 
+            // txt_RockBand
+            // 
+            txt_RockBand.Cue = "Rockband (Based on) Link";
+            txt_RockBand.Font = new Font("Microsoft Sans Serif", 8.25F);
+            txt_RockBand.ForeColor = Color.Gray;
+            txt_RockBand.Location = new Point(2, 122);
+            txt_RockBand.Margin = new Padding(2);
+            txt_RockBand.Name = "txt_RockBand";
+            txt_RockBand.Size = new Size(439, 20);
+            txt_RockBand.TabIndex = 452;
+            // 
+            // lbl_Descri
+            // 
+            lbl_Descri.ForeColor = SystemColors.ControlText;
+            lbl_Descri.Location = new Point(4, 205);
+            lbl_Descri.Margin = new Padding(1, 0, 1, 0);
+            lbl_Descri.Name = "lbl_Descri";
+            lbl_Descri.Size = new Size(49, 49);
+            lbl_Descri.TabIndex = 451;
+            lbl_Descri.Text = "Description";
+            // 
+            // txt_Descriptions
+            // 
+            txt_Descriptions.BorderStyle = BorderStyle.None;
+            txt_Descriptions.Location = new Point(59, 207);
+            txt_Descriptions.Margin = new Padding(2);
+            txt_Descriptions.Name = "txt_Descriptions";
+            txt_Descriptions.Size = new Size(405, 62);
+            txt_Descriptions.TabIndex = 450;
+            txt_Descriptions.Text = "";
+            // 
+            // label3
+            // 
+            label3.ForeColor = SystemColors.ControlText;
+            label3.Location = new Point(369, 27);
+            label3.Margin = new Padding(1, 0, 1, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(30, 15);
+            label3.TabIndex = 449;
+            label3.Text = "Prev";
+            // 
+            // btn_EoFPath
+            // 
+            btn_EoFPath.Location = new Point(444, 42);
+            btn_EoFPath.Margin = new Padding(0);
+            btn_EoFPath.Name = "btn_EoFPath";
+            btn_EoFPath.Size = new Size(22, 20);
+            btn_EoFPath.TabIndex = 447;
+            btn_EoFPath.Text = "...";
+            toolTip1.SetToolTip(btn_EoFPath, "Manually add EoF Path");
+            btn_EoFPath.UseVisualStyleBackColor = true;
+            btn_EoFPath.Click += btn_EoFPath_Click;
+            // 
+            // btn_GP5
+            // 
+            btn_GP5.Location = new Point(443, 161);
+            btn_GP5.Margin = new Padding(0);
+            btn_GP5.Name = "btn_GP5";
+            btn_GP5.Size = new Size(22, 20);
+            btn_GP5.TabIndex = 16;
+            btn_GP5.Text = "...";
+            toolTip1.SetToolTip(btn_GP5, "Manually Add GP files used in generating the project");
+            btn_GP5.UseVisualStyleBackColor = true;
+            btn_GP5.Click += btn_DBFolder_Click;
+            // 
+            // btn_DefaultAuthor
+            // 
+            btn_DefaultAuthor.Font = new Font("Microsoft Sans Serif", 6F);
+            btn_DefaultAuthor.Location = new Point(203, 5);
+            btn_DefaultAuthor.Margin = new Padding(1);
+            btn_DefaultAuthor.Name = "btn_DefaultAuthor";
+            btn_DefaultAuthor.Size = new Size(20, 17);
+            btn_DefaultAuthor.TabIndex = 1;
+            btn_DefaultAuthor.Text = "<";
+            toolTip1.SetToolTip(btn_DefaultAuthor, "Default value from general_defaultauthor");
+            btn_DefaultAuthor.UseVisualStyleBackColor = true;
+            btn_DefaultAuthor.Click += btn_DefaultAuthor_Click;
+            // 
+            // label2
+            // 
+            label2.ForeColor = SystemColors.ControlText;
+            label2.Location = new Point(3, 385);
+            label2.Margin = new Padding(1, 0, 1, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(49, 49);
+            label2.TabIndex = 436;
+            label2.Text = "Tone Details";
+            // 
+            // txt_ToneDetails
+            // 
+            txt_ToneDetails.BorderStyle = BorderStyle.None;
+            txt_ToneDetails.Location = new Point(59, 387);
+            txt_ToneDetails.Margin = new Padding(2);
+            txt_ToneDetails.Name = "txt_ToneDetails";
+            txt_ToneDetails.Size = new Size(405, 62);
+            txt_ToneDetails.TabIndex = 21;
+            txt_ToneDetails.Text = "";
+            // 
+            // btn_GoToGuitarUltimate
+            // 
+            btn_GoToGuitarUltimate.Font = new Font("Microsoft Sans Serif", 6F);
+            btn_GoToGuitarUltimate.Location = new Point(444, 146);
+            btn_GoToGuitarUltimate.Margin = new Padding(1);
+            btn_GoToGuitarUltimate.Name = "btn_GoToGuitarUltimate";
+            btn_GoToGuitarUltimate.Size = new Size(20, 16);
+            btn_GoToGuitarUltimate.TabIndex = 433;
+            btn_GoToGuitarUltimate.Text = ">";
+            toolTip1.SetToolTip(btn_GoToGuitarUltimate, "Go To tab Link");
+            btn_GoToGuitarUltimate.UseVisualStyleBackColor = true;
+            // 
+            // btn_GoToCustomforge
+            // 
+            btn_GoToCustomforge.Font = new Font("Microsoft Sans Serif", 6F);
+            btn_GoToCustomforge.Location = new Point(444, 99);
+            btn_GoToCustomforge.Margin = new Padding(1);
+            btn_GoToCustomforge.Name = "btn_GoToCustomforge";
+            btn_GoToCustomforge.Size = new Size(20, 17);
+            btn_GoToCustomforge.TabIndex = 14;
+            btn_GoToCustomforge.Text = ">";
+            toolTip1.SetToolTip(btn_GoToCustomforge, "Go To tab Link");
+            btn_GoToCustomforge.UseVisualStyleBackColor = true;
+            btn_GoToCustomforge.Click += btn_GoToCustomforge_Click;
+            // 
+            // btn_GoToYoutube
+            // 
+            btn_GoToYoutube.Font = new Font("Microsoft Sans Serif", 6F);
+            btn_GoToYoutube.Location = new Point(444, 78);
+            btn_GoToYoutube.Margin = new Padding(1);
+            btn_GoToYoutube.Name = "btn_GoToYoutube";
+            btn_GoToYoutube.Size = new Size(20, 18);
+            btn_GoToYoutube.TabIndex = 12;
+            btn_GoToYoutube.Text = ">";
+            toolTip1.SetToolTip(btn_GoToYoutube, "Go To youtube Link");
+            btn_GoToYoutube.UseVisualStyleBackColor = true;
+            btn_GoToYoutube.Click += btn_GoToYoutube_Click;
+            // 
+            // btn_Album2SortA
+            // 
+            btn_Album2SortA.Font = new Font("Microsoft Sans Serif", 6F);
+            btn_Album2SortA.Location = new Point(444, 60);
+            btn_Album2SortA.Margin = new Padding(1);
+            btn_Album2SortA.Name = "btn_Album2SortA";
+            btn_Album2SortA.Size = new Size(20, 17);
+            btn_Album2SortA.TabIndex = 10;
+            btn_Album2SortA.Text = ">";
+            toolTip1.SetToolTip(btn_Album2SortA, "Go To youtube Link");
+            btn_Album2SortA.UseVisualStyleBackColor = true;
+            btn_Album2SortA.Click += btn_Album2SortA_Click;
+            // 
+            // label1
+            // 
+            label1.ForeColor = SystemColors.ControlText;
+            label1.Location = new Point(2, 325);
+            label1.Margin = new Padding(1, 0, 1, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(45, 16);
+            label1.TabIndex = 408;
+            label1.Text = "ToDo-s";
+            // 
+            // lbl_Settings
+            // 
+            lbl_Settings.ForeColor = SystemColors.ControlText;
+            lbl_Settings.Location = new Point(2, 271);
+            lbl_Settings.Margin = new Padding(1, 0, 1, 0);
+            lbl_Settings.Name = "lbl_Settings";
+            lbl_Settings.Size = new Size(54, 35);
+            lbl_Settings.TabIndex = 407;
+            lbl_Settings.Text = "Version Changes";
+            // 
+            // txt_toDos
+            // 
+            txt_toDos.BorderStyle = BorderStyle.None;
+            txt_toDos.Location = new Point(59, 325);
+            txt_toDos.Margin = new Padding(2);
+            txt_toDos.Name = "txt_toDos";
+            txt_toDos.Size = new Size(405, 58);
+            txt_toDos.TabIndex = 20;
+            txt_toDos.Text = "";
+            // 
+            // txt_Description
+            // 
+            txt_Description.BorderStyle = BorderStyle.None;
+            txt_Description.Location = new Point(59, 273);
+            txt_Description.Margin = new Padding(2);
+            txt_Description.Name = "txt_Description";
+            txt_Description.Size = new Size(405, 48);
+            txt_Description.TabIndex = 19;
+            txt_Description.Text = "";
+            // 
+            // txt_TabLinks
+            // 
+            txt_TabLinks.Cue = "Tab Link (s; separated by commas)";
+            txt_TabLinks.Font = new Font("Microsoft Sans Serif", 8.25F);
+            txt_TabLinks.ForeColor = Color.Gray;
+            txt_TabLinks.Location = new Point(2, 144);
+            txt_TabLinks.Margin = new Padding(2);
+            txt_TabLinks.Name = "txt_TabLinks";
+            txt_TabLinks.Size = new Size(439, 20);
+            txt_TabLinks.TabIndex = 15;
+            // 
+            // txt_BasedOnYB
+            // 
+            txt_BasedOnYB.Cue = "YB (Based on) Link(s; separated by commas)";
+            txt_BasedOnYB.Font = new Font("Microsoft Sans Serif", 8.25F);
+            txt_BasedOnYB.ForeColor = Color.Gray;
+            txt_BasedOnYB.Location = new Point(2, 78);
+            txt_BasedOnYB.Margin = new Padding(2);
+            txt_BasedOnYB.Name = "txt_BasedOnYB";
+            txt_BasedOnYB.Size = new Size(439, 20);
+            txt_BasedOnYB.TabIndex = 11;
+            // 
+            // txt_YBLink
+            // 
+            txt_YBLink.Cue = "YB Link (s; separated by commas)";
+            txt_YBLink.Font = new Font("Microsoft Sans Serif", 8.25F);
+            txt_YBLink.ForeColor = Color.Gray;
+            txt_YBLink.Location = new Point(2, 58);
+            txt_YBLink.Margin = new Padding(2);
+            txt_YBLink.Name = "txt_YBLink";
+            txt_YBLink.Size = new Size(439, 20);
+            txt_YBLink.TabIndex = 9;
+            // 
+            // txt_Author
+            // 
+            txt_Author.Cue = "Author";
+            txt_Author.Font = new Font("Microsoft Sans Serif", 8.25F);
+            txt_Author.ForeColor = Color.Gray;
+            txt_Author.Location = new Point(2, 6);
+            txt_Author.Margin = new Padding(2);
+            txt_Author.Name = "txt_Author";
+            txt_Author.Size = new Size(200, 20);
+            txt_Author.TabIndex = 0;
+            // 
+            // txt_BasedOnCF
+            // 
+            txt_BasedOnCF.Cue = "CF (Based on) Link(; separated by commas)";
+            txt_BasedOnCF.Font = new Font("Microsoft Sans Serif", 8.25F);
+            txt_BasedOnCF.ForeColor = Color.Gray;
+            txt_BasedOnCF.Location = new Point(2, 98);
+            txt_BasedOnCF.Margin = new Padding(2);
+            txt_BasedOnCF.Name = "txt_BasedOnCF";
+            txt_BasedOnCF.Size = new Size(439, 20);
+            txt_BasedOnCF.TabIndex = 13;
+            // 
+            // txt_CDLC_Name
+            // 
+            txt_CDLC_Name.Cue = "DLC Name";
+            txt_CDLC_Name.Font = new Font("Microsoft Sans Serif", 8.25F);
+            txt_CDLC_Name.ForeColor = Color.Gray;
+            txt_CDLC_Name.Location = new Point(369, 5);
+            txt_CDLC_Name.Margin = new Padding(2);
+            txt_CDLC_Name.Name = "txt_CDLC_Name";
+            txt_CDLC_Name.Size = new Size(95, 20);
+            txt_CDLC_Name.TabIndex = 2;
+            // 
+            // txt_CDLCID
+            // 
+            txt_CDLCID.Cue = "CDLC ID";
+            txt_CDLCID.Font = new Font("Microsoft Sans Serif", 8.25F);
+            txt_CDLCID.ForeColor = Color.Gray;
+            txt_CDLCID.Location = new Point(152, 25);
+            txt_CDLCID.Margin = new Padding(2);
+            txt_CDLCID.Name = "txt_CDLCID";
+            txt_CDLCID.Size = new Size(73, 20);
+            txt_CDLCID.TabIndex = 5;
+            // 
+            // txt_Version
+            // 
+            txt_Version.Cue = "Version";
+            txt_Version.Font = new Font("Microsoft Sans Serif", 8.25F);
+            txt_Version.ForeColor = Color.Gray;
+            txt_Version.Location = new Point(54, 25);
+            txt_Version.Margin = new Padding(2);
+            txt_Version.Name = "txt_Version";
+            txt_Version.Size = new Size(97, 20);
+            txt_Version.TabIndex = 4;
+            // 
+            // btn_Spotify
+            // 
+            btn_Spotify.Font = new Font("Microsoft Sans Serif", 6F);
+            btn_Spotify.Location = new Point(444, 184);
+            btn_Spotify.Margin = new Padding(1);
+            btn_Spotify.Name = "btn_Spotify";
+            btn_Spotify.Size = new Size(20, 16);
+            btn_Spotify.TabIndex = 18;
+            btn_Spotify.Text = ">";
+            toolTip1.SetToolTip(btn_Spotify, "Spotify");
+            btn_Spotify.UseVisualStyleBackColor = true;
+            btn_Spotify.Click += btn_Spotify_Click;
+            // 
+            // txt_TrackNo
+            // 
+            txt_TrackNo.Cue = "Track No.";
+            txt_TrackNo.Font = new Font("Microsoft Sans Serif", 8.25F);
+            txt_TrackNo.ForeColor = Color.Gray;
+            txt_TrackNo.Location = new Point(2, 25);
+            txt_TrackNo.Margin = new Padding(2);
+            txt_TrackNo.Name = "txt_TrackNo";
+            txt_TrackNo.Size = new Size(50, 20);
+            txt_TrackNo.TabIndex = 3;
+            // 
+            // txt_Spotify
+            // 
+            txt_Spotify.Cue = "Spotify ID";
+            txt_Spotify.Font = new Font("Microsoft Sans Serif", 8.25F);
+            txt_Spotify.ForeColor = Color.Gray;
+            txt_Spotify.Location = new Point(2, 181);
+            txt_Spotify.Margin = new Padding(2);
+            txt_Spotify.Name = "txt_Spotify";
+            txt_Spotify.Size = new Size(439, 20);
+            txt_Spotify.TabIndex = 17;
+            // 
             // txt_GPFilePath
             // 
             txt_GPFilePath.Cue = "GP file (s; separated by commas;will be coppied in EoF path if not already there)";
             txt_GPFilePath.Font = new Font("Microsoft Sans Serif", 8.25F);
             txt_GPFilePath.ForeColor = Color.Gray;
-            txt_GPFilePath.Location = new Point(2, 136);
+            txt_GPFilePath.Location = new Point(2, 163);
             txt_GPFilePath.Margin = new Padding(2);
             txt_GPFilePath.Name = "txt_GPFilePath";
             txt_GPFilePath.Size = new Size(439, 20);
@@ -232,287 +557,47 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_EoFPath.Name = "txt_EoFPath";
             txt_EoFPath.Size = new Size(439, 20);
             txt_EoFPath.TabIndex = 8;
-			// 
-            // txt_CDLCID
             // 
-            txt_CDLCID.Cue = "CDLC ID";
-            txt_CDLCID.Font = new Font("Microsoft Sans Serif", 8.25F);
-            txt_CDLCID.ForeColor = Color.Gray;
-            txt_CDLCID.Location = new Point(152, 25);
-            txt_CDLCID.Margin = new Padding(2);
-            txt_CDLCID.Name = "txt_CDLCID";
-            txt_CDLCID.Size = new Size(73, 20);
-            txt_CDLCID.TabIndex = 5;
+            // txt_PrevDate
             // 
-            // txt_Version
+            txt_PrevDate.Cue = "Prev Update date";
+            txt_PrevDate.Font = new Font("Microsoft Sans Serif", 8.25F);
+            txt_PrevDate.ForeColor = Color.Gray;
+            txt_PrevDate.Location = new Point(398, 25);
+            txt_PrevDate.Margin = new Padding(2);
+            txt_PrevDate.Name = "txt_PrevDate";
+            txt_PrevDate.ReadOnly = true;
+            txt_PrevDate.Size = new Size(73, 20);
+            txt_PrevDate.TabIndex = 448;
             // 
-            txt_Version.Cue = "Version";
-            txt_Version.Font = new Font("Microsoft Sans Serif", 8.25F);
-            txt_Version.ForeColor = Color.Gray;
-            txt_Version.Location = new Point(54, 25);
-            txt_Version.Margin = new Padding(2);
-            txt_Version.Name = "txt_Version";
-            txt_Version.Size = new Size(97, 20);
-            txt_Version.TabIndex = 4;
-			// 
-            // txt_TrackNo
+            // chbx_RequiresSlide
             // 
-            txt_TrackNo.Cue = "Track No.";
-            txt_TrackNo.Font = new Font("Microsoft Sans Serif", 8.25F);
-            txt_TrackNo.ForeColor = Color.Gray;
-            txt_TrackNo.Location = new Point(2, 25);
-            txt_TrackNo.Margin = new Padding(2);
-            txt_TrackNo.Name = "txt_TrackNo";
-            txt_TrackNo.Size = new Size(50, 20);
-            txt_TrackNo.TabIndex = 3;
+            chbx_RequiresSlide.Location = new Point(275, 60);
+            chbx_RequiresSlide.Margin = new Padding(2);
+            chbx_RequiresSlide.Name = "chbx_RequiresSlide";
+            chbx_RequiresSlide.Size = new Size(144, 18);
+            chbx_RequiresSlide.TabIndex = 440;
+            chbx_RequiresSlide.Text = "Requires slide";
+            toolTip1.SetToolTip(chbx_RequiresSlide, "Copy folder to remote location");
+            chbx_RequiresSlide.UseVisualStyleBackColor = true;
             // 
-            // txt_Spotify
+            // txt_RemoteFolder
             // 
-            txt_Spotify.Cue = "Spotify ID";
-            txt_Spotify.Font = new Font("Microsoft Sans Serif", 8.25F);
-            txt_Spotify.ForeColor = Color.Gray;
-            txt_Spotify.Location = new Point(2, 154);
-            txt_Spotify.Margin = new Padding(2);
-            txt_Spotify.Name = "txt_Spotify";
-            txt_Spotify.Size = new Size(439, 20);
-            txt_Spotify.TabIndex = 17;
-			// 
-            // txt_CDLC_Name
-            // 
-            txt_CDLC_Name.Cue = "DLC Name";
-            txt_CDLC_Name.Font = new Font("Microsoft Sans Serif", 8.25F);
-            txt_CDLC_Name.ForeColor = Color.Gray;
-            txt_CDLC_Name.Location = new Point(226, 6);
-            txt_CDLC_Name.Margin = new Padding(2);
-            txt_CDLC_Name.Name = "txt_CDLC_Name";
-            txt_CDLC_Name.Size = new Size(197, 20);
-            txt_CDLC_Name.TabIndex = 2;
-			// 
-            // txt_TabLinks
-            // 
-            txt_TabLinks.Cue = "Tab Link (s; separated by commas)";
-            txt_TabLinks.Font = new Font("Microsoft Sans Serif", 8.25F);
-            txt_TabLinks.ForeColor = Color.Gray;
-            txt_TabLinks.Location = new Point(2, 117);
-            txt_TabLinks.Margin = new Padding(2);
-            txt_TabLinks.Name = "txt_TabLinks";
-            txt_TabLinks.Size = new Size(439, 20);
-            txt_TabLinks.TabIndex = 15;
-            // 
-            // txt_BasedOnYB
-            // 
-            txt_BasedOnYB.Cue = "YB (Based on) Link(s; separated by commas)";
-            txt_BasedOnYB.Font = new Font("Microsoft Sans Serif", 8.25F);
-            txt_BasedOnYB.ForeColor = Color.Gray;
-            txt_BasedOnYB.Location = new Point(2, 78);
-            txt_BasedOnYB.Margin = new Padding(2);
-            txt_BasedOnYB.Name = "txt_BasedOnYB";
-            txt_BasedOnYB.Size = new Size(439, 20);
-            txt_BasedOnYB.TabIndex = 11;
-            // 
-            // txt_YBLink
-            // 
-            txt_YBLink.Cue = "YB Link (s; separated by commas)";
-            txt_YBLink.Font = new Font("Microsoft Sans Serif", 8.25F);
-            txt_YBLink.ForeColor = Color.Gray;
-            txt_YBLink.Location = new Point(2, 58);
-            txt_YBLink.Margin = new Padding(2);
-            txt_YBLink.Name = "txt_YBLink";
-            txt_YBLink.Size = new Size(439, 20);
-            txt_YBLink.TabIndex = 9;
-            // 
-            // txt_Author
-            // 
-            txt_Author.Cue = "Author";
-            txt_Author.Font = new Font("Microsoft Sans Serif", 8.25F);
-            txt_Author.ForeColor = Color.Gray;
-            txt_Author.Location = new Point(2, 6);
-            txt_Author.Margin = new Padding(2);
-            txt_Author.Name = "txt_Author";
-            txt_Author.Size = new Size(200, 20);
-            txt_Author.TabIndex = 0;
-			            // 
-            // txt_BasedOnCF
-            // 
-            txt_BasedOnCF.Cue = "CF (Based on) Link(; separated by commas)";
-            txt_BasedOnCF.Font = new Font("Microsoft Sans Serif", 8.25F);
-            txt_BasedOnCF.ForeColor = Color.Gray;
-            txt_BasedOnCF.Location = new Point(2, 98);
-            txt_BasedOnCF.Margin = new Padding(2);
-            txt_BasedOnCF.Name = "txt_BasedOnCF";
-            txt_BasedOnCF.Size = new Size(439, 20);
-            txt_BasedOnCF.TabIndex = 13;
-            // 
-            // label3
-            // 
-            label3.ForeColor = SystemColors.ControlText;
-            label3.Location = new Point(369, 27);
-            label3.Margin = new Padding(1, 0, 1, 0);
-            label3.Name = "label3";
-            label3.Size = new Size(30, 15);
-            label3.TabIndex = 449;
-            label3.Text = "Prev";
-            // 
-            // btn_EoFPath
-            // 
-            btn_EoFPath.Location = new Point(444, 42);
-            btn_EoFPath.Margin = new Padding(0);
-            btn_EoFPath.Name = "btn_EoFPath";
-            btn_EoFPath.Size = new Size(22, 20);
-            btn_EoFPath.TabIndex = 447;
-            btn_EoFPath.Text = "...";
-            toolTip1.SetToolTip(btn_EoFPath, "Manually add EoF Path");
-            btn_EoFPath.UseVisualStyleBackColor = true;
-            // 
-            // btn_DBFolder
-            // 
-            btn_DBFolder.Location = new Point(443, 134);
-            btn_DBFolder.Margin = new Padding(0);
-            btn_DBFolder.Name = "btn_DBFolder";
-            btn_DBFolder.Size = new Size(22, 20);
-            btn_DBFolder.TabIndex = 16;
-            btn_DBFolder.Text = "...";
-            toolTip1.SetToolTip(btn_DBFolder, "Manually Add GP files used in generating the project");
-            btn_DBFolder.UseVisualStyleBackColor = true;
-            btn_DBFolder.Click += btn_DBFolder_Click;
-            // 
-            // btn_DefaultAuthor
-            // 
-            btn_DefaultAuthor.Font = new Font("Microsoft Sans Serif", 6F);
-            btn_DefaultAuthor.Location = new Point(203, 5);
-            btn_DefaultAuthor.Margin = new Padding(1);
-            btn_DefaultAuthor.Name = "btn_DefaultAuthor";
-            btn_DefaultAuthor.Size = new Size(20, 17);
-            btn_DefaultAuthor.TabIndex = 1;
-            btn_DefaultAuthor.Text = "<";
-            toolTip1.SetToolTip(btn_DefaultAuthor, "Default value from general_defaultauthor");
-            btn_DefaultAuthor.UseVisualStyleBackColor = true;
-            btn_DefaultAuthor.Click += btn_DefaultAuthor_Click;
-            // 
-            // btn_Spotify
-            // 
-            btn_Spotify.Font = new Font("Microsoft Sans Serif", 6F);
-            btn_Spotify.Location = new Point(444, 157);
-            btn_Spotify.Margin = new Padding(1);
-            btn_Spotify.Name = "btn_Spotify";
-            btn_Spotify.Size = new Size(20, 16);
-            btn_Spotify.TabIndex = 18;
-            btn_Spotify.Text = ">";
-            toolTip1.SetToolTip(btn_Spotify, "Spotify");
-            btn_Spotify.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            label2.ForeColor = SystemColors.ControlText;
-            label2.Location = new Point(3, 290);
-            label2.Margin = new Padding(1, 0, 1, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(49, 49);
-            label2.TabIndex = 436;
-            label2.Text = "Tone Details";
-            // 
-            // txt_ToneDetails
-            // 
-            txt_ToneDetails.BorderStyle = BorderStyle.None;
-            txt_ToneDetails.Location = new Point(54, 292);
-            txt_ToneDetails.Margin = new Padding(2);
-            txt_ToneDetails.Name = "txt_ToneDetails";
-            txt_ToneDetails.Size = new Size(410, 62);
-            txt_ToneDetails.TabIndex = 21;
-            txt_ToneDetails.Text = "";
-            // 
-            // button3
-            // 
-            button3.Font = new Font("Microsoft Sans Serif", 6F);
-            button3.Location = new Point(444, 119);
-            button3.Margin = new Padding(1);
-            button3.Name = "button3";
-            button3.Size = new Size(20, 16);
-            button3.TabIndex = 433;
-            button3.Text = ">";
-            toolTip1.SetToolTip(button3, "Go To tab Link");
-            button3.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            button2.Font = new Font("Microsoft Sans Serif", 6F);
-            button2.Location = new Point(444, 99);
-            button2.Margin = new Padding(1);
-            button2.Name = "button2";
-            button2.Size = new Size(20, 17);
-            button2.TabIndex = 14;
-            button2.Text = ">";
-            toolTip1.SetToolTip(button2, "Go To tab Link");
-            button2.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            button1.Font = new Font("Microsoft Sans Serif", 6F);
-            button1.Location = new Point(444, 78);
-            button1.Margin = new Padding(1);
-            button1.Name = "button1";
-            button1.Size = new Size(20, 18);
-            button1.TabIndex = 12;
-            button1.Text = ">";
-            toolTip1.SetToolTip(button1, "Go To youtube Link");
-            button1.UseVisualStyleBackColor = true;
-            // 
-            // btn_Album2SortA
-            // 
-            btn_Album2SortA.Font = new Font("Microsoft Sans Serif", 6F);
-            btn_Album2SortA.Location = new Point(444, 60);
-            btn_Album2SortA.Margin = new Padding(1);
-            btn_Album2SortA.Name = "btn_Album2SortA";
-            btn_Album2SortA.Size = new Size(20, 17);
-            btn_Album2SortA.TabIndex = 10;
-            btn_Album2SortA.Text = ">";
-            toolTip1.SetToolTip(btn_Album2SortA, "Go To youtube Link");
-            btn_Album2SortA.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            label1.ForeColor = SystemColors.ControlText;
-            label1.Location = new Point(2, 230);
-            label1.Margin = new Padding(1, 0, 1, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(45, 16);
-            label1.TabIndex = 408;
-            label1.Text = "ToDo-s";
-            // 
-            // lbl_Settings
-            // 
-            lbl_Settings.ForeColor = SystemColors.ControlText;
-            lbl_Settings.Location = new Point(2, 176);
-            lbl_Settings.Margin = new Padding(1, 0, 1, 0);
-            lbl_Settings.Name = "lbl_Settings";
-            lbl_Settings.Size = new Size(54, 35);
-            lbl_Settings.TabIndex = 407;
-            lbl_Settings.Text = "Version Changes";
-            // 
-            // txt_toDos
-            // 
-            txt_toDos.BorderStyle = BorderStyle.None;
-            txt_toDos.Location = new Point(54, 230);
-            txt_toDos.Margin = new Padding(2);
-            txt_toDos.Name = "txt_toDos";
-            txt_toDos.Size = new Size(410, 58);
-            txt_toDos.TabIndex = 20;
-            txt_toDos.Text = "";
-            // 
-            // txt_Description
-            // 
-            txt_Description.BorderStyle = BorderStyle.None;
-            txt_Description.Location = new Point(54, 178);
-            txt_Description.Margin = new Padding(2);
-            txt_Description.Name = "txt_Description";
-            txt_Description.Size = new Size(410, 48);
-            txt_Description.TabIndex = 19;
-            txt_Description.Text = "";
+            txt_RemoteFolder.Font = new Font("Microsoft Sans Serif", 8.25F);
+            txt_RemoteFolder.ForeColor = Color.Gray;
+            txt_RemoteFolder.Location = new Point(392, 38);
+            txt_RemoteFolder.Margin = new Padding(2);
+            txt_RemoteFolder.Name = "txt_RemoteFolder";
+            txt_RemoteFolder.ReadOnly = true;
+            txt_RemoteFolder.Size = new Size(49, 20);
+            txt_RemoteFolder.TabIndex = 439;
+            txt_RemoteFolder.Text = "NOKs";
+            toolTip1.SetToolTip(txt_RemoteFolder, "OK/NOK state of the FTP/Repack folder");
             // 
             // btn_Cancel
             // 
             btn_Cancel.Dock = DockStyle.Bottom;
-            btn_Cancel.Location = new Point(0, 84);
+            btn_Cancel.Location = new Point(0, 103);
             btn_Cancel.Margin = new Padding(2);
             btn_Cancel.Name = "btn_Cancel";
             btn_Cancel.Size = new Size(471, 27);
@@ -618,7 +703,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_B3
             // 
             btn_B3.Dock = DockStyle.Bottom;
-            btn_B3.Location = new Point(0, 111);
+            btn_B3.Location = new Point(0, 130);
             btn_B3.Margin = new Padding(2);
             btn_B3.Name = "btn_B3";
             btn_B3.Size = new Size(471, 58);
@@ -627,18 +712,31 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_B3.UseVisualStyleBackColor = true;
             btn_B3.Click += btn_OK_Click;
             // 
+            // txt_CF_Author
+            // 
+            this.txt_CF_Author.Cue = "CF Author-s";
+            this.txt_CF_Author.Font = new Font("Microsoft Sans Serif", 8.25F);
+            this.txt_CF_Author.ForeColor = Color.Gray;
+            this.txt_CF_Author.Location = new Point(224, 5);
+            this.txt_CF_Author.Margin = new Padding(2);
+            this.txt_CF_Author.Name = "txt_CF_Author";
+            this.txt_CF_Author.Size = new Size(141, 20);
+            this.txt_CF_Author.TabIndex = 454;
+            // 
             // PackNew
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             AutoSize = true;
-            ClientSize = new Size(471, 530);
+            ClientSize = new Size(471, 640);
             Controls.Add(splitContainer1);
             Margin = new Padding(2);
             Name = "PackNew";
             Load += PackNew_Load;
             splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel1.PerformLayout();
             splitContainer1.Panel2.ResumeLayout(false);
+            splitContainer1.Panel2.PerformLayout();
             ((ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
             ResumeLayout(false);
@@ -652,34 +750,50 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_OK_Click(object sender, EventArgs e)
         {
-            if (chbx_SaveInVerisonInfo.Checked) ConfigRepository.Instance()["dlcm_GlobalTempVariable"] =
+            if (chbx_SaveInVerisonInfo.Checked) ConfigRepository.Instance()["dlcm_GlobalTempVariable"] = CleanInvalidXmlChars(
                 txt_Author.Text + ";" + txt_CDLC_Name.Text + ";" + txt_TrackNo.Text + ";" + //0-2
                 txt_Version.Text + ";" + txt_CDLCID.Text + ";" + txt_EoFPath.Text + ";" + //3-5
                 txt_YBLink.Text.Replace(";", ",") + ";" + txt_BasedOnYB.Text.Replace(";", ",") + ";" + txt_BasedOnCF.Text.Replace(";", ",") + ";" + //6-8
                 txt_TabLinks.Text.Replace(";", ",") + ";" + txt_Spotify.Text.Replace(";", ",") + ";" + txt_Description.Text.Replace(";", ",") + ";" +//9-11
                  txt_toDos.Text.Replace(";", ",") + ";" + txt_ToneDetails.Text.Replace(";", ",") + ";" + (chbx_SaveInVerisonInfo.Checked ? "Yes" : "No") + ";" +//12-14
                  (chbx_SaveInDB.Checked ? "Yes" : "No") + ";" + (chbx_SaveRemotely.Checked ? "Yes" : "No") + ";" + ConfigRepository.Instance()["dlcm_EoFPath"] + ";" + //15-17
-                txt_PackageDate.Text + ";" + txt_UpdateDate.Text + ";" + txt_GPFilePath.Text + ";"//18-20                
+                txt_PackageDate.Text + ";" + txt_UpdateDate.Text + ";" + txt_GPFilePath.Text + ";" +//18-20
+               info.SongInfo.SongDisplayName + ";" + info.SongInfo.Artist + ";" + info.SongInfo.Album + ";" +//21-23                                                                                                           //  
+                txt_Descriptions.Text + ";" + txt_RockBand.Text + ";" + (chbx_RequiresSlide.Checked ? "Yes" : "No") + ";" + txt_CF_Author.Text + ";"
                 + "Author,DLC_Name,TrackNo," +
                 "Version,CDLCID,txt_EoFPath," +
                 "YBLink,BasedOnYB,BasedOnCF," +
                 "TabLinks,Spotify,Description," +
                 "toDo,ToneDetails,SaveInVerisonInfo," +
                 "SaveInDB,SaveRemotely,SaveRemotelyPath," +
-                "PackageDate,UpdateDate,BasedOn_GP;";
+                "PackageDate,UpdateDate,BasedOn_GP,Songtitle,Artist,Album,PackageDetails,BaseOnRB,Has_Slide,CF_Author;");
 
             if (chbx_SaveRemotely.Checked)
             {
-                var ccrf = c("dlcm_0_temp") + "\\0_intheworks\\"
-                    + txt_EoFPath.Text.Replace("\\notes.eof", "").Replace(Path.GetDirectoryName(txt_EoFPath.Text.Replace("\\notes.eof", "")) + "\\", "");
+                var pth = "";
+                if (Path.GetDirectoryName(txt_EoFPath.Text) != Path.GetDirectoryName(info.AlbumArtPath))
+                {
+                    if (txt_EoFPath.Text.Contains("\\notes.eof")) pth = Path.GetDirectoryName(txt_EoFPath.Text);
+                    else pth = txt_EoFPath.Text;
+                }
+                else if (txt_EoFPath.Text.Contains("\\notes.eof")) pth = Path.GetDirectoryName(txt_EoFPath.Text);
+                else pth = txt_EoFPath.Text;
+
+                //copy to remote lib(192.168.1.100\\0/0_in_the_work folder
+                var ccrf = c("dlcm_0_temp") + "\\0_intheworks\\" + pth.Replace("\\notes.eof", "").Replace(Path.GetDirectoryName(txt_EoFPath.Text.Replace("\\notes.eof", "")) + "\\", "");
                 ccrf = ccrf.Replace("\\0_temp\\", "\\");/*.Replace("\\\\", "\\")*/
-                var er = CopyFolder(txt_EoFPath.Text, ccrf);
-                MessageBox.Show("Also Copied: " + Directory.Exists(ccrf) + " - " + ccrf);
-                //timestamp = UpdateLog(timestamp, ccrf + " Remote copied zip: " + File.Exists(ccrf), true, c("dlcm_TempPath"), "", "DLCManager", null, null);
+                var er = CopyFolder(pth, ccrf);
+
+                //copy to local lib(0/0_in_the_work folder)
+                var ccr = c("dlcm_TempPath") + "\\0_intheworks\\" + pth.Replace("\\notes.eof", "").Replace(Path.GetDirectoryName(txt_EoFPath.Text.Replace("\\notes.eof", "")) + "\\", "");
+                ccr = ccr.Replace("\\0_temp\\", "\\");/*.Replace("\\\\", "\\")*/
+                var ew = pth != ccr ? CopyFolder(pth, ccr) : "";
+
+                MessageBox.Show("Also Copied:\n\n\t1." + Directory.Exists(ccrf) + " - " + ccrf + "\n\n\t2. " + Directory.Exists(ccr) + " - " + ccr);
             }
             if (chbx_SaveInDB.Checked)
             {
-                //var ccrf = c("dlcm_0_temp") + "\\0_temp\\" + Path.GetDirectoryName(txt_EoFPath.Text);
+                //var ccrf = c("dlcm_0_temp") + "\\0_temp\\" + Path.GetDirectoryName(txt_E		endt	144	floatoFPath.Text);
                 //var er=CopyFolder(txt_EoFPath.Text, ccrf);
                 //MessageBox.Show("Also Copied: " + Directory.Exists(ccrf) + " - " + ccrf);
                 ////timestamp = UpdateLog(timestamp, ccrf + " Remote copied zip: " + File.Exists(ccrf), true, c("dlcm_TempPath"), "", "DLCManager", null, null);
@@ -720,30 +834,35 @@ namespace RocksmithToolkitGUI.DLCManager
                         txt_Author.Text = ag[0].Replace("Repacked by ", "");//\" Value=\"Repacked by catara\"
                         if (ag.Length >= 20)
                         {
-                            if (!ag[21].ToLower().Contains("author") || ag[0].Contains("Yes"))
+                            if (!ag[ag.Length - 2].ToLower().Contains("author") || ag[0].Contains("Yes"))
                             {
-                                string[] a = ag[21].Split(',');
-                                MessageBox.Show("There is something wrong with the NEW Song Metadata saved in the project XML PackageComment tag. Please fix and reload" + "\n:\n\n" +
-                                    a[0] + ": " + ag[0] + "\n" + a[1] + ": " + ag[1] + "\n" + a[2] + ": " + ag[2] + "\n" + a[3] + ": " + ag[3] + "\n" + a[4] + ": " + ag[4] + "\n" + a[5] + ": " + ag[5] + "\n" + a[6] + ": " + ag[6] + "\n" + ag[7] + "\n" + a[8] + ": " + ag[8] + "\n" + a[9] + ": " + ag[9] + "\n" +
-                                    a[10] + ": " + ag[10] + "\n" + a[11] + ": " + ag[11] + "\n" + a[12] + ": " + ag[12] + "\n" + a[13] + ": " + ag[13] + "\n" + a[14] + ": " + ag[14] + "\n" + a[15] + ": " + ag[15] + "\n" + a[16] + ": " + ag[16] + "\n" + a[17] + ": " + ag[17] + "\n" + a[19] + ": " + ag[18] + "\n" + ag[19] + "\n" + a[20] + ": " + ag[20]);
-                                return;
+                                string[] a = ag[ag.Length - 2].Split(',');
+                                var a1 = ""; var a2 = ""; var a3 = ""; var a4 = ""; var a5 = "";
+                                try { a1 = a[0] + ": " + ag[0] + "\n" + a[1] + ": " + ag[1] + "\n" + a[2] + ": " + ag[2] + "\n" + a[3] + ": " + ag[3] + "\n" + a[4] + ": " + ag[4] + "\n" + a[5] + ": " + ag[5] + "\n" + a[6] + ": " + ag[6] + "\n" + ag[7] + "\n" + a[8] + ": " + ag[8] + "\n" + a[9] + ": " + ag[9] + "\n"; } catch (Exception e1) { MessageBox.Show("error 9-"); }
+                                try { a2 = a[10] + ": " + ag[10] + "\n" + a[11] + ": " + ag[11] + "\n" + a[12] + ": " + ag[12] + "\n" + a[13] + ": " + ag[13] + "\n" + a[14] + ": " + ag[14] + "\n" + a[15] + ": " + ag[15] + "\n" + a[16] + ": " + ag[16] + "\n" + a[17]; } catch (Exception e1) { MessageBox.Show("error 17-"); }
+                                try { a3 = ": " + ag[17] + "\n" + a[18] + ": " + ag[18] + "\n" + a[19] + ": " + ag[19] + "\n" + a[20] + ": " + ag[20] + "\n"; } catch (Exception e1) { MessageBox.Show("error 20-"); }
+                                try { a4 = a[21] + ": " + ag[21] + "\n" + a[22] + ": " + a[22] + "\n" + a[23] + ": " + ag[23]; } catch (Exception e1) { MessageBox.Show("error 21+"); }
+                                try { a5 = a[24] + ": " + ag[25] + "\n" + a[26] + "\n" + a[27]; } catch (Exception e1) { MessageBox.Show("error 24+"); }
+                                MessageBox.Show("There is something wrong with the NEW Song Metadata saved in the project XML PackageComment tag. Please fix and reload" + "\n:\n\n" + a1 + a2 + a3 + a4 + a5);
+                                return;/*+ "\n" + a[28]; */
                             }
-                            ud = ag[18];
-                            txt_CDLC_Name.Text = ag[1] == "" ? info.Name : ag[1]; txt_TrackNo.Text = ag[2];
-                            decimal d = decimal.Parse(ag[3]);
-                            d = IncrementLastDigit(d);
-                            txt_Version.Text = d.ToString(); txt_CDLCID.Text = ag[4];
-                            txt_EoFPath.Text = Path.GetDirectoryName(info.Arrangements[0].SongXml.File.ToString()); txt_YBLink.Text = ag[6]; txt_BasedOnYB.Text = ag[7];
-                            txt_BasedOnCF.Text = ag[8]; txt_TabLinks.Text = ag[9]; txt_Spotify.Text = ag[10]; txt_Description.Text = ag[11]; txt_toDos.Text = ag[12]; txt_ToneDetails.Text = ag[13];
-                            chbx_SaveInVerisonInfo.Checked = ag[14] == "Yes" ? true : false; chbx_SaveInDB.Checked = ag[15] == "Yes" ? true : false; chbx_SaveRemotely.Checked = ag[16] == "Yes" ? true : false;
-                            //txt_PackageDate.Text = ag[18];
-                            txt_GPFilePath.Text = ag[20];//ConfigRepository.Instance()["dlcm_EoFPath"] + ";"
-                                                         //"Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate,BasedOn_GP;"
-
-                            if (!Directory.Exists(txt_EoFPath.Text)) chbx_SaveRemotely.Checked = false;
-                            var ccrf = c("dlcm_0_temp") + "\\0_intheworks\\";
-                            ccrf = ccrf.Replace("\\0_temp\\", "\\");/*.Replace("\\\\", "\\")*/
-                            toolTip1.SetToolTip(chbx_SaveRemotely, "Copy folder to remote location:" + ccrf);
+                            try
+                            {
+                                ud = ag[18];
+                                txt_CDLC_Name.Text = ag[1] == "" ? info.Name : ag[1]; txt_TrackNo.Text = ag[2];
+                                decimal d = decimal.Parse(ag[3]);
+                                d = IncrementLastDigit(d);
+                                txt_Version.Text = d.ToString(); txt_CDLCID.Text = ag[4];
+                                txt_EoFPath.Text = Path.GetDirectoryName(info.Arrangements[0].SongXml.File.ToString()); txt_YBLink.Text = ag[6]; txt_BasedOnYB.Text = ag[7];
+                                txt_BasedOnCF.Text = ag[8]; txt_TabLinks.Text = ag[9]; txt_Spotify.Text = ag[10]; txt_Description.Text = ag[11]; txt_toDos.Text = ag[12]; txt_ToneDetails.Text = ag[13];
+                                chbx_SaveInVerisonInfo.Checked = ag[14] == "Yes" ? true : false; chbx_SaveInDB.Checked = ag[15] == "Yes" ? true : false; chbx_SaveRemotely.Checked = ag[16] == "Yes" ? true : false;
+                                //txt_PackageDate.Text = ag[18];
+                                txt_GPFilePath.Text = ag[20];txt_CF_Author.Text = ag[27]; 
+                                txt_Descriptions.Text = ag[24]; txt_RockBand.Text = ag[25]; chbx_RequiresSlide.Checked = ag[26] == "Yes" ? true : false;
+                                //ConfigRepository.Instance()["dlcm_EoFPath"] + ";"
+                                //"Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate,BasedOn_GP;"
+                            }
+                            catch (Exception e1) { MessageBox.Show("error at read meta in comment"); }
 
                             var sel = "SELECT ID FROM Main WHERE LCASE(DLC_Name)=LCASE(\"" + info.Name + "\");";
                             DataSet dds = new DataSet(); if (txt_CDLCID.Text == "") dds = SelectFromDB("Main", sel, c("dlcm_DBFolder"), cnb, cnc);
@@ -775,6 +894,25 @@ namespace RocksmithToolkitGUI.DLCManager
                             emt = true;
                         }
                         if (txt_GPFilePath.Text == "") txt_GPFilePath.Text = GetGPfile();
+
+                        //Check if Remote copying folder is accessible
+                        var pth = "";
+                        if (Path.GetDirectoryName(txt_EoFPath.Text) != Path.GetDirectoryName(info.AlbumArtPath))
+                        {
+                            if (pth.Contains("\\notes.eof")) pth = Path.GetDirectoryName(txt_EoFPath.Text);
+                            else pth = txt_EoFPath.Text;
+                        }
+                        else if (pth.Contains("\\notes.eof")) pth = Path.GetDirectoryName(txt_EoFPath.Text);
+                        else pth = txt_EoFPath.Text;
+
+                        var ccrf = c("dlcm_0_temp") + "\\0_intheworks\\" + pth.Replace("\\notes.eof", "").Replace(Path.GetDirectoryName(txt_EoFPath.Text.Replace("\\notes.eof", "")) + "\\", "");
+                        ccrf = ccrf.Replace("\\0_temp\\", "\\");/*.Replace("\\\\", "\\")*/
+                        if (Directory.Exists(ccrf)) txt_RemoteFolder.Text = "OK";
+                        else txt_RemoteFolder.Text = "NOK";
+                        //if (!Directory.Exists(txt_EoFPath.Text))chbx_SaveRemotely.Checked = false; 
+                        //var ccr = c("dlcm_0_temp") + "\\0_intheworks\\";
+                        //ccr = ccr.Replace("\\0_temp\\", "\\");/*.Replace("\\\\", "\\")*/
+                        toolTip1.SetToolTip(chbx_SaveRemotely, "Copy folder to remote location:" + ccrf);
                     }
                     if (txt_CDLCID.Text != "")
                     {
@@ -787,7 +925,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         txt_Version.Text = info.ToolkitInfo.PackageVersion;
                         //txt_CDLCID.Text = ag[4];
                         txt_EoFPath.Text = Path.Combine(Path.GetDirectoryName(info.Arrangements[0].SongXml.File), "notes.eof");
-                        txt_Author.Text = info.ToolkitInfo.PackageAuthor == null || info.ToolkitInfo.PackageAuthor.Contains("CDLC Creator") ? ConfigRepository.Instance()["general_defaultauthor"] : info.ToolkitInfo.PackageAuthor;
+                        txt_Author.Text = info.ToolkitInfo.PackageAuthor == null || info.ToolkitInfo.PackageAuthor.Contains("CDLC Creator") ? ConfigRepository.Instance()["general_defaultauthor"].Replace("Repacked by ", "") : info.ToolkitInfo.PackageAuthor.Replace("Repacked by ", "");
                         //"Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate"
 
                         //if (txt_PackageDate.Text == "")
@@ -828,20 +966,31 @@ namespace RocksmithToolkitGUI.DLCManager
                     files += template + ",";
                 }
             }
-            return files.Substring(0, files.Length-2);
+            files = files.Length > 0 ? files.Substring(0, files.Length - 2) : files;
+            return files;
         }
         private void btn_DBFolder_Click(object sender, EventArgs e)
         {
-            var result1 = MessageBox.Show("chose file.", "GuitarPro file", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
-            if (result1 == DialogResult.OK)
-                using (var fbd = new VistaFolderBrowserDialog())
-                    if (fbd.ShowDialog() == DialogResult.OK)
-                    {
-                        if (fbd.SelectedPath == Path.Combine(Path.GetDirectoryName(info.Arrangements[0].SongXml.File)))
-                            FileCopy(fbd.SelectedPath, Path.Combine(Path.GetDirectoryName(info.Arrangements[0].SongXml.File), Path.GetFileName(fbd.SelectedPath))
-                                , true, 0, false);
-                        txt_GPFilePath.Text = Path.Combine(Path.GetDirectoryName(info.Arrangements[0].SongXml.File), Path.GetFileName(fbd.SelectedPath));
-                    }
+            using (var fbd = new OpenFileDialog())
+            {
+                fbd.Title = "Select you GuitarPro5 file";
+                fbd.Filter = "GP-5 file (*.gp5)|*.gp5";
+                fbd.Multiselect = false;
+                //fbd.FileOk += OpenFileDialog_FileLimit; // Event handler
+                if (fbd.ShowDialog() != DialogResult.OK)
+                    return;
+                //if (fbd.FileName == Path.Combine(Path.GetDirectoryName(info.Arrangements[0].SongXml.File)))
+                string[] filePaths = fbd.FileNames;
+
+                foreach (var filePath in filePaths)
+                {
+                    var tard = "";
+                    if (txt_EoFPath.Text == "") tard = Path.GetDirectoryName(info.Arrangements[0].SongXml.File);
+                    else tard = Path.GetDirectoryName(txt_EoFPath.Text);
+                    FileCopy(fbd.InitialDirectory + "\\" + filePath, Path.Combine(tard, fbd.FileName), true, 0, false);
+                    txt_GPFilePath.Text += fbd.InitialDirectory + "\\" + filePath; //Path.Combine(Path.GetDirectoryName(info.Arrangements[0].SongXml.File), Path.GetFileName(fbd.SelectedPath));
+                }
+            }
         }
 
         private void lbl_LinkUG_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -869,6 +1018,24 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Cancel_Click(object sender, EventArgs e)
         {
+            if (chbx_SaveInVerisonInfo.Checked) ConfigRepository.Instance()["dlcm_GlobalTempVariable"] = CleanInvalidXmlChars(
+    txt_Author.Text + ";" + txt_CDLC_Name.Text + ";" + txt_TrackNo.Text + ";" + //0-2
+    txt_Version.Text + ";" + txt_CDLCID.Text + ";" + txt_EoFPath.Text + ";" + //3-5
+    txt_YBLink.Text.Replace(";", ",") + ";" + txt_BasedOnYB.Text.Replace(";", ",") + ";" + txt_BasedOnCF.Text.Replace(";", ",") + ";" + //6-8
+    txt_TabLinks.Text.Replace(";", ",") + ";" + txt_Spotify.Text.Replace(";", ",") + ";" + txt_Description.Text.Replace(";", ",") + ";" +//9-11
+     txt_toDos.Text.Replace(";", ",") + ";" + txt_ToneDetails.Text.Replace(";", ",") + ";" + (chbx_SaveInVerisonInfo.Checked ? "Yes" : "No") + ";" +//12-14
+     (chbx_SaveInDB.Checked ? "Yes" : "No") + ";" + (chbx_SaveRemotely.Checked ? "Yes" : "No") + ";" + ConfigRepository.Instance()["dlcm_EoFPath"] + ";" + //15-17
+    txt_PackageDate.Text + ";" + txt_UpdateDate.Text + ";" + txt_GPFilePath.Text + ";" +//18-20
+   info.SongInfo.SongDisplayName + ";" + info.SongInfo.Artist + ";" + info.SongInfo.Album + ";" +//21-23    
+   txt_Descriptions.Text + ";" + txt_RockBand.Text + ";" + (chbx_RequiresSlide.Checked ? "Yes" : "No") + ";"+ txt_CF_Author +";"// 
+                + "Author,DLC_Name,TrackNo," +
+    "Version,CDLCID,txt_EoFPath," +
+    "YBLink,BasedOnYB,BasedOnCF," +
+    "TabLinks,Spotify,Description," +
+    "toDo,ToneDetails,SaveInVerisonInfo," +
+    "SaveInDB,SaveRemotely,SaveRemotelyPath," +
+    "PackageDate,UpdateDate,BasedOn_GP,Songtitle,Artist,Album,PackageDetails,BaseOnRB,Has_Slide,CF_Author;");
+
             StopPack = true;
             this.Hide();
         }
@@ -881,6 +1048,45 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_DefaultAuthor_Click(object sender, EventArgs e)
         {
             txt_Author.Text = c("general_defaultauthor").Replace("Repacked by ", "");
+        }
+
+        private void btn_EoFPath_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new OpenFileDialog())
+            {
+                fbd.Title = "Select the Editor on Fire file path";
+                fbd.Filter = "EoF file (*.eof)|*.eof";
+                fbd.Multiselect = false;
+                //fbd.FileOk += OpenFileDialog_FileLimit; // Event handler
+                if (fbd.ShowDialog() != DialogResult.OK)
+                    return;
+                txt_EoFPath.Text = fbd.FileName;
+            }
+        }
+
+        private void btn_Album2SortA_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_Spotify_Click(object sender, EventArgs e)
+        {
+            StartProcesss(txt_Spotify.Text.Split(',')[0], null);
+        }
+
+        private void btn_GotoRockband_Click(object sender, EventArgs e)
+        {
+            StartProcesss(txt_RockBand.Text.Split(',')[0], null);
+        }
+
+        private void btn_GoToCustomforge_Click(object sender, EventArgs e)
+        {
+            StartProcesss(txt_BasedOnCF.Text.Split(',')[0], null);
+        }
+
+        private void btn_GoToYoutube_Click(object sender, EventArgs e)
+        {
+            StartProcesss(txt_BasedOnYB.Text.Split(',')[0], null);
         }
     }
 }

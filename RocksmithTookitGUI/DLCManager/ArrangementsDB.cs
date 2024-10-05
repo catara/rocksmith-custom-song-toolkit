@@ -405,6 +405,9 @@ namespace RocksmithToolkitGUI.DLCManager
             DataGridViewTextBoxColumn Official = new DataGridViewTextBoxColumn { DataPropertyName = "Official", HeaderText = "Official " };
             DataGridViewTextBoxColumn PersistentID = new DataGridViewTextBoxColumn { DataPropertyName = "PersistentID", HeaderText = "PersistentID " };
             DataGridViewTextBoxColumn CapoFret = new DataGridViewTextBoxColumn { DataPropertyName = "CapoFret", HeaderText = "CapoFret " };
+            DataGridViewTextBoxColumn A40tunningFrecv = new DataGridViewTextBoxColumn { DataPropertyName = "A40tunningFrecv", HeaderText = "A40tunningFrecv " };
+            DataGridViewTextBoxColumn Slide = new DataGridViewTextBoxColumn { DataPropertyName = "Slide", HeaderText = "Slide " };
+            DataGridViewTextBoxColumn Alternate = new DataGridViewTextBoxColumn { DataPropertyName = "Alternate", HeaderText = "Alternate " };
 
             //bsPositions.DataSource = ds.Tables["Main"];
             //bsBadges.DataSource = ds.Tables["Badge"];
@@ -751,6 +754,9 @@ namespace RocksmithToolkitGUI.DLCManager
                 txt_Part.Text = databox.Rows[i].Cells["Part"].Value.ToString();
                 txt_MaxDifficulty.Text = databox.Rows[i].Cells["MaxDifficulty"].Value.ToString();
 
+                txt_A440.Text = databox.Rows[i].Cells["A440TunningFrecv"].Value.ToString(); ;
+                txt_CapoFret.Text= databox.Rows[i].Cells["CapoFret"].Value.ToString(); ;
+
                 if (databox.Rows[i].Cells["Bonus"].Value.ToString().ToLower() == "true") chbx_Bonus.Checked = true;
                 else chbx_Bonus.Checked = false;
                 if (databox.Rows[i].Cells["OrigSongTrack"].Value.ToString() == "Yes") chbx_Default.Checked = true;
@@ -761,6 +767,13 @@ namespace RocksmithToolkitGUI.DLCManager
                 else chbx_Broken.Checked = false;
                 if (databox.Rows[i].Cells["Favorite"].Value.ToString() == "Yes") chbx_Favorite.Checked = true;
                 else chbx_Favorite.Checked = false;
+                if (databox.Rows[i].Cells["Slide"].Value.ToString() == "Yes") chbx_Has_Slide.Checked = true;
+                else chbx_Has_Slide.Checked = false;
+                if (databox.Rows[i].Cells["Alternate"].Value.ToString() == "Yes") chbx_Alternate.Checked = true;
+                else chbx_Alternate.Checked = false;
+                if (databox.Rows[i].Cells["Official"].Value.ToString() == "Yes") chbx_Official.Checked = true;
+                else chbx_Official.Checked = false;
+
                 var f = databox.Rows[i].Cells["Has_Sections"].Value.ToString();
                 if (databox.Rows[i].Cells["Has_Sections"].Value.ToString().IndexOf("Yes") >= 0)
                 {
@@ -880,6 +893,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 databox.Rows[i].Cells["Start_Time"].Value = txt_StartTime.Text;
                 databox.Rows[i].Cells["Part"].Value = txt_Part.Text;
                 databox.Rows[i].Cells["MaxDifficulty"].Value = txt_MaxDifficulty.Text;
+                databox.Rows[i].Cells["A440TunningFrecv"].Value = txt_A440.Text;
+                databox.Rows[i].Cells["CapoFret"].Value = txt_CapoFret.Text;
                 if (chbx_Default.Checked) databox.Rows[i].Cells["OrigSongTrack"].Value = "Yes";
                 else databox.Rows[i].Cells["OrigSongTrack"].Value = "No";
                 if (chbx_Primary.Checked) databox.Rows[i].Cells["PrimaryTrack"].Value = "Yes";
@@ -890,6 +905,12 @@ namespace RocksmithToolkitGUI.DLCManager
                 else databox.Rows[i].Cells["Favorite"].Value = "No";
                 if (chbx_Bonus.Checked) databox.Rows[i].Cells["Bonus"].Value = "True";
                 else databox.Rows[i].Cells["Bonus"].Value = "False";
+                if (chbx_Has_Slide.Checked) databox.Rows[i].Cells["Slide"].Value = "Yes";
+                else databox.Rows[i].Cells["Slide"].Value = "No";
+                if (chbx_Alternate.Checked) databox.Rows[i].Cells["Alternate"].Value = "Yes";
+                else databox.Rows[i].Cells["Alternate"].Value = "No";
+                if (chbx_Official.Checked) databox.Rows[i].Cells["Official"].Value = "Yes";
+                else databox.Rows[i].Cells["Official"].Value = "No";
 
 
                 //var DB_Path = "../../../../tmp\\AccessDB.accdb;";
@@ -950,8 +971,12 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandText += "OrigSongTrack = @param39, ";
                 command.CommandText += "PrimaryTrack = @param40, ";
                 command.CommandText += "Broken = @param41, ";
-                command.CommandText += "Favorite = @param42 ";
-                //command.CommandText += "Bonus = @param43 ";
+                command.CommandText += "Favorite = @param42, ";
+                command.CommandText += "Slide = @param43, ";
+                command.CommandText += "Alternate = @param44, ";
+                command.CommandText += "A440TuningFrecv = @param45, ";
+                command.CommandText += "CapoFret = @param46,";
+                command.CommandText += "Official = @param47 ";
 
                 command.CommandText += " WHERE ID = " + txt_ID.Text;
 
@@ -986,7 +1011,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param40", databox.Rows[i].Cells["PrimaryTrack"].Value.ToString() ?? DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param41", databox.Rows[i].Cells["Broken"].Value.ToString() ?? DBNull.Value.ToString());
                 command.Parameters.AddWithValue("@param42", databox.Rows[i].Cells["Favorite"].Value.ToString() ?? DBNull.Value.ToString());
-                //command.Parameters.AddWithValue("@param43", databox.Rows[i].Cells["Bonus"].Value.ToString() ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param43", databox.Rows[i].Cells["Slide"].Value.ToString() ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param44", databox.Rows[i].Cells["Alternate"].Value.ToString() ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param45", databox.Rows[i].Cells["A440TunningFrecv"].Value.ToString() ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param46", databox.Rows[i].Cells["CapoFret"].Value.ToString() ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param47", databox.Rows[i].Cells["Official"].Value.ToString() ?? DBNull.Value.ToString());
                 command.CommandType = CommandType.Text;
                 UpdateDBbyExecuteNonQuery(command, cnb, cnc);
                 //try
@@ -1504,6 +1533,11 @@ namespace RocksmithToolkitGUI.DLCManager
             //cmb_Filter.Text = "";
             //SearchON = false;
             //Update_Selected();
+        }
+
+        private void databox_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

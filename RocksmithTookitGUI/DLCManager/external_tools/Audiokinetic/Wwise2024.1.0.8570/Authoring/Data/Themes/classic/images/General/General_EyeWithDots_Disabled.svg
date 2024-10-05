@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-256,-48)">
+        <g id="General_EyeWithDots_Disabled" transform="matrix(1,0,0,1,208,44)">
+            <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(1,0,0,1,48,4)">
+                <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+            </g>
+            <g id="Eye" transform="matrix(0.625,0,0,0.625,50,7)">
+                <rect x="0" y="0" width="24" height="24" style="fill:none;fill-rule:nonzero;"/>
+                <g id="dot" transform="matrix(1.6,0,0,1.6,-2716.8,-216)">
+                    <rect x="1709" y="150" width="1" height="1" style="fill:white;"/>
+                </g>
+                <g id="dot1" serif:id="dot" transform="matrix(1.6,0,0,1.6,-2713.6,-216)">
+                    <rect x="1709" y="150" width="1" height="1" style="fill:white;"/>
+                </g>
+                <g id="dot2" serif:id="dot" transform="matrix(1.6,0,0,1.6,-2710.4,-216)">
+                    <rect x="1709" y="150" width="1" height="1" style="fill:white;"/>
+                </g>
+                <g transform="matrix(1.6,0,0,1.6,-412.8,-81.6)">
+                    <path d="M265,52C261.364,52 258.258,54.281 257,57.5C258.258,60.719 261.364,63 265,63C268.636,63 271.742,60.719 273,57.5C271.742,54.281 268.636,52 265,52ZM264.986,53.47C267.218,53.47 269.03,55.276 269.03,57.5C269.03,59.724 267.218,61.53 264.986,61.53C262.754,61.53 260.942,59.724 260.942,57.5C260.942,55.276 262.754,53.47 264.986,53.47ZM263.762,55C264.449,55 265.007,55.558 265.007,56.245C265.007,56.933 264.449,57.491 263.762,57.491C263.075,57.491 262.517,56.933 262.517,56.245C262.517,55.558 263.075,55 263.762,55Z" style="fill:white;fill-rule:nonzero;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

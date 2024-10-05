@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 13 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-91,-89)">
+        <g transform="matrix(1,0,0,1,12,13)">
+            <rect id="Artboard1" x="-12" y="-13" width="423" height="296" style="fill:none;"/>
+            <clipPath id="_clip1">
+                <rect id="Artboard11" serif:id="Artboard1" x="-12" y="-13" width="423" height="296"/>
+            </clipPath>
+            <g clip-path="url(#_clip1)">
+                <g transform="matrix(15.7778,0,0,12.4,-15,-15)">
+                    <rect x="0" y="0" width="27" height="25" style="fill:rgb(36,36,36);"/>
+                </g>
+                <g id="CheckBox" transform="matrix(1,0,0,1,-12,-13)">
+                    <g id="Normal" opacity="0.7">
+                        <g transform="matrix(1,0,0,1,-4,0)">
+                            <path d="M108,90.43C108,89.641 107.359,89 106.57,89L96.43,89C95.641,89 95,89.641 95,90.43L95,100.57C95,101.359 95.641,102 96.43,102L106.57,102C107.359,102 108,101.359 108,100.57L108,90.43Z" style="fill:none;"/>
+                            <clipPath id="_clip2">
+                                <path d="M108,90.43C108,89.641 107.359,89 106.57,89L96.43,89C95.641,89 95,89.641 95,90.43L95,100.57C95,101.359 95.641,102 96.43,102L106.57,102C107.359,102 108,101.359 108,100.57L108,90.43Z"/>
+                            </clipPath>
+                            <g clip-path="url(#_clip2)">
+                                <g transform="matrix(1,0,0,1,4,0)">
+                                    <rect x="92" y="90" width="11" height="11" style="fill:none;"/>
+                                    <g transform="matrix(0.818182,0,0,0.818182,17.7273,17.3636)">
+                                        <path d="M103,90L103,101L92,101L92,90L103,90ZM101.778,91.222L93.222,91.222L93.222,99.778L101.778,99.778L101.778,91.222Z" style="fill:rgb(49,49,49);"/>
+                                    </g>
+                                    <path d="M103,90L103,101L92,101L92,90L103,90ZM102,91C102,91 93,91 93,91C93,91 93,100 93,100C93,100 102,100 102,100L102,91Z" style="fill:rgb(215,215,215);"/>
+                                </g>
+                            </g>
+                            <path d="M108,90.43L108,100.57C108,101.359 107.359,102 106.57,102L96.43,102C95.641,102 95,101.359 95,100.57L95,90.43C95,89.641 95.641,89 96.43,89L106.57,89C107.359,89 108,89.641 108,90.43ZM107,90.43C107,90.193 106.807,90 106.57,90L96.43,90C96.193,90 96,90.193 96,90.43L96,100.57C96,100.807 96.193,101 96.43,101L106.57,101C106.807,101 107,100.807 107,100.57L107,90.43Z" style="fill:rgb(97,97,97);"/>
+                        </g>
+                    </g>
+                    <g id="Disabled">
+                    </g>
+                    <g id="Hovered">
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-8,-107)">
+        <g id="General_Panel_Restore_Normal" transform="matrix(1,0,0,1,-174,27)">
+            <g opacity="0.45">
+                <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(0.95,0,0,0.95,182,80)">
+                    <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+                </g>
+                <g transform="matrix(1,2.77556e-17,2.77556e-17,1,8,8)">
+                    <path d="M191,85L187,85L187,89L185,89L185,83L191,83L191,85Z"/>
+                </g>
+                <g transform="matrix(-1,2.77556e-17,-2.77556e-17,1,375,8)">
+                    <path d="M191,85L187,85L187,89L185,89L185,83L191,83L191,85Z"/>
+                </g>
+                <g transform="matrix(1,0,0,-1,8,171)">
+                    <path d="M191,85L187,85L187,89L185,89L185,83L191,83L191,85Z"/>
+                </g>
+                <g transform="matrix(-1,0,0,-1,375,171)">
+                    <path d="M191,85L187,85L187,89L185,89L185,83L191,83L191,85Z"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

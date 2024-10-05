@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 7 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-48,-137)">
+        <g transform="matrix(1,0,0,1,36,54)">
+            <g id="Modulator_mix_13px" transform="matrix(1,0,0,1,0,26)">
+                <g transform="matrix(1,0,0,0.47619,1,55.619)">
+                    <path d="M17,7.1C17,5.941 16.552,5 16,5L13,5C12.448,5 12,5.941 12,7.1L12,26L17,26L17,7.1Z" style="fill:rgb(216,141,70);"/>
+                </g>
+                <g transform="matrix(1,0,0,0.428571,1,65.8571)">
+                    <path d="M17,5L12,5L12,23.667C12,24.954 12.448,26 13,26L16,26C16.552,26 17,24.954 17,23.667L17,5Z" style="fill:rgb(13,166,252);"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-36,-80)">
+                    <path d="M55,139.24C55,138.004 53.996,137 52.76,137L50.24,137C49.004,137 48,138.004 48,139.24L48,155.76C48,156.996 49.004,158 50.24,158L52.76,158C53.996,158 55,156.996 55,155.76L55,139.24ZM49,156C49,156.552 49.448,157 50,157L53,157C53.552,157 54,156.552 54,156L54,139C54,138.448 53.552,138 53,138L50,138C49.448,138 49,138.448 49,139L49,156Z" style="fill-opacity:0.5;"/>
+                </g>
+                <g transform="matrix(1,0,0,1,9,-27)">
+                    <path d="M9,94L8.006,94L7,95L7,89L6,89L5,94L4,94L4,95L5,95L6,94L6,100L7,100L8,95L9,95L9,94Z"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

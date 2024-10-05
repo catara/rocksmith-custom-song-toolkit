@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-76,-4)">
+        <g id="View3dToolbar_FrameAll_Disabled" transform="matrix(1,0,0,1,51,-1)">
+            <g opacity="0.45">
+                <g id="Base-Icon" serif:id="Base Icon">
+                    <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(0.95,0,0,0.95,25,5)">
+                        <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+                    </g>
+                    <g id="Expand-Icon" serif:id="Expand Icon" transform="matrix(1,0,0,1,-1216,-157)">
+                        <g transform="matrix(0.625,0,0,0.625,1243,164)">
+                            <rect x="0" y="0" width="24" height="24" style="fill:none;fill-rule:nonzero;"/>
+                        </g>
+                        <g transform="matrix(1.15385,0,0,1.15385,1151.85,155.923)">
+                            <path d="M79,17.4L78.133,17.4L78.133,20.867L81.6,20.867L81.6,20L79,20L79,17.4ZM78.133,9.6L79,9.6L79,7L81.6,7L81.6,6.133L78.133,6.133L78.133,9.6ZM92,20L89.4,20L89.4,20.867L92.867,20.867L92.867,17.4L92,17.4L92,20ZM89.4,6.133L89.4,7L92,7L92,9.6L92.867,9.6L92.867,6.133L89.4,6.133ZM82.016,12.2L85.067,10.957L85.067,8.959L82.072,9.973L80.739,8.665L80.733,10.979L82.016,12.2ZM87.091,18.267L91.133,16.254L91.133,12.994L87.078,14.91L84.2,12.623L84.212,15.796L87.091,18.267Z" style="fill-rule:nonzero;"/>
+                        </g>
+                        <g transform="matrix(1.15385,0,0,1.15385,1151.85,155.923)">
+                            <path d="M82.016,12.2L85.067,10.957L85.067,8.959L82.072,9.973L82.016,12.2ZM87.091,18.267L91.133,16.254L91.133,12.994L87.078,14.91L87.091,18.267Z" style="fill-rule:nonzero;"/>
+                        </g>
+                        <g transform="matrix(1.15385,0,0,1.15385,1151.85,155.923)">
+                            <path d="M82.101,9.985L85.067,8.959L83.769,7.864L80.739,8.665L82.101,9.985ZM87.068,14.945L91.133,12.994L88.22,11.333L84.2,12.623L87.068,14.945Z" style="fill-opacity:0.5;fill-rule:nonzero;"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- See https://www.audiokinetic.com/en/library/edge/?source=SDK&id=globalviewsids.html for the list of all available view names. -->
+<Layout Name="Mixer">
+	<StackPanel Name="StackPanel" ID="{0BE5A23C-02C3-44EC-A89F-5556F60D0F29}" Width="1633" Height="734" Orientation="Vertical">
+		<StackPanel Name="StackPanel" ID="{707C9B38-9C9B-406B-A83A-E6D25F52B929}" Width="1633" Height="731" Orientation="Horizontal">
+			<StackPanel Name="StackPanel" ID="{6923C36F-DAD0-4646-875D-A499FD1CEB53}" Width="1488" Height="791" Orientation="Horizontal">
+				<StackPanel Name="StackPanel" ID="{2DE05E93-39A3-450B-8D59-27C6A6CC3252}" Width="283" Height="791" Orientation="Vertical">
+					<View Name="ProjectExplorer" ID="{DEA53C67-CFD0-4ACF-851C-1E9ACB95943F}" Width="283" Height="557" SelectionChannel="1"/>
+					<Splitter/>
+					<View Name="EventViewer" ID="{F87BE0E7-7A80-41EA-9B7E-F9400D733A0E}" Width="283" Height="227" SelectionChannel="1">
+						<ViewData>
+							<EventViewer ActiveTab="0" Filter="2"/>
+						</ViewData>
+					</View>
+				</StackPanel>
+				<Splitter/>
+				<StackPanel Name="StackPanel" ID="{0E1D7D8C-4401-4C78-9593-09437D4A33F0}" Width="1176" Height="791" Orientation="Vertical">
+					<View Name="MixingDesk" ID="{62E8459A-5203-483B-BE5B-F11366D161D1}" Width="653" Height="273"/>
+					<Splitter/>
+					<View Name="Soundcaster" ID="{8A15CFAA-1FB1-4CBA-BD6C-CA55677B320F}" Width="653" Height="286"/>
+				</StackPanel>
+			</StackPanel>
+			<Splitter/>
+			<View Name="Meter" ID="{E132F5C2-7B9E-4FA6-B198-B46E55BEE4EB}" Width="150" Height="791" SelectionChannel="1"/>
+		</StackPanel>
+	</StackPanel>
+</Layout>

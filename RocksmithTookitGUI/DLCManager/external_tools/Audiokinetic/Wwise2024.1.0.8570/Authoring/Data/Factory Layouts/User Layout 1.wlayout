@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- See https://www.audiokinetic.com/en/library/edge/?source=SDK&id=globalviewsids.html for the list of all available view names. -->
+<Layout Name="User Layout 1">
+	<StackPanel Name="StackPanel" ID="{79A98775-B864-4EC5-9646-4C5C5067292A}" Width="1615" Height="781" Orientation="Vertical">
+		<StackPanel Name="StackPanel" ID="{A497C36E-33FB-4DA3-8CC1-826CA987C6F2}" Width="1179" Height="566" Orientation="Horizontal">
+			<StackPanel Name="StackPanel" ID="{B1F7A08F-BC7E-4CFD-86F7-D1D93FC6B2AB}" Width="324" Height="566" Orientation="Vertical">
+				<View Name="ProjectExplorer" ID="{2EA7AAFF-F6DA-4FD9-945D-BA941B7235B5}" Width="389" Height="501" SelectionChannel="1">					<ViewData/>
+				</View>
+				<Splitter/>
+				<View Name="Transport" ID="{33EC5C14-FA6E-486E-ADF9-49C24FAA724E}" Width="389" Height="59" SelectionChannel="1"/>
+			</StackPanel>
+			<Splitter/>
+			<ObjectTabPanel Name="ObjectTabPanel" ID="{826CEF9F-ACB3-45D2-8319-9C9994E4CA5C}" Width="849" Height="566"/>
+		</StackPanel>
+	</StackPanel>
+</Layout>

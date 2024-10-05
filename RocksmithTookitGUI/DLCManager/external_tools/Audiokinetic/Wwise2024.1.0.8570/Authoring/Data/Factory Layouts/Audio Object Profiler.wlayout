@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- See https://www.audiokinetic.com/en/library/edge/?source=SDK&id=globalviewsids.html for the list of all available view names. -->
+<Layout Name="Audio Object Profiler">
+	<StackPanel Name="StackPanel" ID="{329D8460-0649-4BD0-B907-674890B32C3D}" Width="1633" Height="902" Orientation="Vertical">
+		<StackPanel Name="StackPanel" ID="{634FB60F-8955-4DFB-943F-0DB313DEE6A7}" Width="1633" Height="898" Orientation="Vertical">
+			<StackPanel Name="StackPanel" ID="{4F04E3DF-5F44-406D-A8F2-D53F333AA766}" Width="1096" Height="455" Orientation="Horizontal">
+				<StackPanel Name="StackPanel" ID="{2508D8EA-DC44-4818-B419-BCE178CA8E0E}" Width="976" Height="455" Orientation="Vertical">
+					<StackPanel Name="StackPanel" ID="{3DBF30F5-F191-41C4-8C76-CAF2C2485C3E}" Width="976" Height="315" Orientation="Horizontal">
+						<View Name="AudioObjectList" ID="{6F902377-F5E4-4114-A528-FD995923C040}" Width="712" Height="326"/>
+						<Splitter/>
+						<View Name="AudioObject3DViewer" ID="{476BC3E5-A383-4D64-92FB-76D469072AE0}" Width="258" Height="326"/>
+					</StackPanel>
+					<Splitter/>
+					<StackPanel Name="StackPanel" ID="{4A612EB0-BD21-42D0-9E3F-52218B97BF01}" Width="976" Height="134" Orientation="Horizontal">
+						<View Name="AdvancedProfiler" ID="{05D72BD0-02D2-45BE-B130-FEB679FB5DB8}" Width="845" Height="124"/>
+						<Splitter/>
+						<View Name="AudioObjectMetadata" ID="{90F68070-F535-4477-B900-1293CE587A4C}" Width="126" Height="124"/>
+					</StackPanel>
+				</StackPanel>
+				<Splitter/>
+				<View Name="AudioObjectMeter" ID="{9E69BB1A-0989-4EC3-8FE4-B681F326C39A}" Width="114" Height="455"/>
+			</StackPanel>
+			<Splitter/>
+			<View Name="VoiceMonitor" ID="{D5A2C222-3BF4-410E-8D6D-9EC69C9B4F6B}" Width="1096" Height="103"/>
+		</StackPanel>
+	</StackPanel>
+</Layout>

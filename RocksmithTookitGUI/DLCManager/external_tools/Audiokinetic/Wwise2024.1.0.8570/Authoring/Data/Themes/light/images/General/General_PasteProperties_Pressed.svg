@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-104,-28)">
+        <g id="General_PasteProperties_Pressed" transform="matrix(1,0,0,1,56,24)">
+            <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(1,0,0,1,48,4)">
+                <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+            </g>
+            <path d="M56,19L56,14L63,14L63,11.019C63,10.457 62.452,10 61.777,10L61.008,10L61,11.167C60.976,11.657 60.674,11.956 60,12L54,12C53.414,11.978 53.073,11.708 53,11.167L52.995,10L52.223,10C51.548,10 51,10.457 51,11.019L51,17.981C51,18.543 51.548,19 52.223,19L56,19Z"/>
+            <path d="M62,18L62,15L57,15L57,21L65,21L65,18L62,18ZM64,19L58,19L58,20L64,20L64,19ZM61,17L58,17L58,18L61,18L61,17Z"/>
+            <g transform="matrix(1,0,0,0.666667,-394,-30.3333)">
+                <path d="M459,71L459,70.526L457.292,68L457,68L457,71L459,71Z"/>
+            </g>
+            <g transform="matrix(0.5,0,1.85037e-17,0.166667,4.5,7.66667)">
+                <path d="M107,5.445L107,2L103,2L103,5.445C103,5.445 98.982,6.185 99,8L99,20L111,20L111,8C110.992,6.642 107,5.445 107,5.445Z"/>
+            </g>
+        </g>
+    </g>
+</svg>

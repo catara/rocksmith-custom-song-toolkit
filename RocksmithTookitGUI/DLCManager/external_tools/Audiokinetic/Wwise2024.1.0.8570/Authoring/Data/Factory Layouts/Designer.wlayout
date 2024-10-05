@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- See https://www.audiokinetic.com/en/library/edge/?source=SDK&id=globalviewsids.html for the list of all available view names. -->
+<Layout Name="Designer">
+	<StackPanel Name="StackPanel" ID="{79A98775-B864-4EC5-9646-4C5C5067292A}" Width="1617" Height="783" Orientation="Vertical">
+		<StackPanel Name="StackPanel" ID="{C4AFB57B-D1F3-414D-8EBC-BCDC94C79E0B}" Width="1074" Height="702" Orientation="Horizontal">
+			<StackPanel Name="StackPanel" ID="{39949670-A96A-47C5-8EEF-F8AD26BD6B34}" Width="283" Height="790" Orientation="Vertical">
+				<View Name="ProjectExplorer" ID="{E773AA9A-2F00-45F1-BD61-3C13C321BE6C}" Width="360" Height="553" SelectionChannel="1"/>
+				<Splitter/>
+				<StackPanel Name="StackPanel" ID="{306478FB-2A2D-47BB-AC5A-CB82AC5D64E9}" Width="360" Height="227" Orientation="Vertical">
+					<View Name="EventViewer" ID="{05A10896-F086-49E4-8E17-B6755B8061D2}" Width="360" Height="141" SelectionChannel="1">
+						<ViewData>
+							<EventViewer ActiveTab="0" Filter="2"/>
+						</ViewData>
+					</View>
+					<Splitter/>
+					<View Name="ContextualHelp" ID="{9B1406AD-1EB0-47B6-94E9-B6BAB022C4E8}" Width="360" Height="77"/>
+				</StackPanel>
+			</StackPanel>
+			<Splitter/>
+			<StackPanel Name="StackPanel" ID="{F8C66865-0FF7-49DA-B570-C0097B4DAA76}" Width="1351" Height="790" Orientation="Horizontal">
+				<StackPanel Name="StackPanel" ID="{EDF85D47-2C46-4720-8593-59CFDB508200}" Width="651" Height="564" Orientation="Vertical">
+					<ObjectTabPanel Name="ObjectTabPanel" ID="{D5805147-985E-4C5B-B817-369AF1B7184D}" Width="1122" Height="727"/>
+					<Splitter/>
+					<View Name="Transport" ID="{43D54130-63C0-4034-A41C-B7B8161708CD}" Width="1122" Height="53"/>
+				</StackPanel>
+				<Splitter/>
+				<View Name="Meter" ID="{30014862-C726-4292-B045-5C47FDB894A1}" Width="150" Height="564" SelectionChannel="1"/>
+			</StackPanel>
+		</StackPanel>
+	</StackPanel>
+</Layout>

@@ -1,0 +1,70 @@
+{
+  "ak.dlg.AudioFilesClearCache": {
+    "Version": 1,
+    "Type": "Dialog",
+    "RootWidget": "MainDialog",
+    "Metadata": {},
+    "Widgets": [
+      {
+        "Name": "RemoveOrphanRadio",
+        "Type": "RadioButton",
+        "Text": "Only orphan files",
+        "MainButton": true
+      },
+      {
+        "Name": "RemoveAllRadio",
+        "Type": "RadioButton",
+        "Text": "All converted files",
+        "LastButton": true
+      },
+      {
+        "Name": "OkButton",
+        "Type": "PushButton",
+        "Text": "Clear Cache",
+        "TooltipText": "Clear Cache",
+        "ModalResult": "Ok"
+      },
+      {
+        "Name": "CancelButton",
+        "Type": "PushButton",
+        "Text": "Cancel",
+        "TooltipText": "Cancel the dialog",
+        "ModalResult": "Cancel"
+      }
+    ],
+    "Layouts": {
+      "Settings": [
+        {
+          "Name": "MainDialog",
+          "Type": "AnchorLayout",
+          "Width": 220,
+          "Height": 100,
+          "MinWidth": 220,
+          "MinHeight": 100,
+          "Children": [
+            {
+              "Name": "RemoveOrphanRadio",
+              "Positions": [ 12,12,146,20 ],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "RemoveAllRadio",
+              "Positions": [ 12,36,146,20 ],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "OkButton",
+              "Positions": [ 32,70,80,28 ],
+              "AnchorSets": ["side-right", "side-bottom"]
+            },
+            {
+              "Name": "CancelButton",
+              "Positions": [ 120,70,80,28 ],
+              "AnchorSets": ["side-right", "side-bottom"]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

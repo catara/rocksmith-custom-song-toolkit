@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-214,-4)">
+        <g transform="matrix(0.75,0,0,0.75,-596.75,192.5)">
+            <g id="Dialog_Restore_Disabled" transform="matrix(1.33333,0,0,1.33333,1049,-256.667)">
+                <g opacity="0.3">
+                    <g id="Restore" transform="matrix(1.09141,0,0,1.05754,-1295.55,127.941)">
+                        <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(0.916242,0,0,0.945586,1209.03,-117.197)">
+                            <rect x="0" y="0" width="20" height="20" style="fill:none;"/>
+                        </g>
+                        <g transform="matrix(0.916242,0,0,0.945586,1187.95,-120.979)">
+                            <path d="M32,16L32,10L38,10L38,16L32,16ZM32,12L32,16L36,16L36,15L37,15.011L37,12L32,12Z" style="fill:rgb(21,21,21);"/>
+                        </g>
+                        <g transform="matrix(0.916242,0,0,0.945586,1187.95,-120.979)">
+                            <path d="M29,13L35,13L35,19L29,19L29,13ZM34,15L30,15L30,18L34,18L34,15Z" style="fill:rgb(21,21,21);"/>
+                        </g>
+                        <g transform="matrix(0.916242,0,0,0.945586,1187.95,-120.979)">
+                            <path d="M32,16L32,10L38,10L38,16L32,16ZM32,12L32,16L36,16L36,15L37,15.011L37,12L32,12Z" style="fill:white;fill-opacity:0.7;"/>
+                        </g>
+                        <g transform="matrix(0.916242,0,0,0.945586,1187.95,-120.979)">
+                            <path d="M29,13L35,13L35,19L29,19L29,13ZM34,15L30,15L30,18L34,18L34,15Z" style="fill:white;fill-opacity:0.7;"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

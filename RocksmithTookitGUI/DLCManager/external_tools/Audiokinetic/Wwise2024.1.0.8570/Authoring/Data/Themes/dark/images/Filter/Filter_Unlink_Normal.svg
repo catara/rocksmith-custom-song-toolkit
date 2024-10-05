@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-29,-4)">
+        <g id="Filter_Unlink_Normal" transform="matrix(2.28048,0,0,3.27478,-298.674,-964.872)">
+            <g opacity="0.45">
+                <g transform="matrix(0.490092,0,0,0.341289,-26.8659,-49.1847)">
+                    <rect x="348" y="1011" width="17" height="17" style="fill-opacity:0;"/>
+                </g>
+                <g id="Link-Icon" serif:id="Link Icon" transform="matrix(0.328878,0,0,0.246792,143.905,296.21)">
+                    <path d="M3.167,11C3.167,9.29 3.957,7.237 5.667,7.237L10,7.237L10,4.763L5.667,4.763C2.907,4.763 0.667,7.587 0.667,11C0.667,14.413 2.907,17.136 5.667,17.136L10,17.136L10,14.661L5.667,14.661C3.957,14.661 3.167,12.71 3.167,11ZM7.333,12.187L16.667,12.187L16.667,9.712L7.333,9.712L7.333,12.187ZM18.333,4.763L14,4.763L14,7.237L18.333,7.237C20.043,7.237 20.833,9.29 20.833,11C20.833,12.71 20.043,14.661 18.333,14.661L14,14.661L14,17.136L18.333,17.136C21.093,17.136 23.333,14.435 23.333,11C23.333,7.565 21.469,4.763 18.333,4.763Z" style="fill:white;fill-rule:nonzero;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

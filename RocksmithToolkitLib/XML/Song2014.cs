@@ -538,8 +538,14 @@ namespace RocksmithToolkitLib.XML
         {
             using (XmlReader reader = XmlReader.Create(xmlFile))
             {
-                reader.MoveToContent();
-
+                
+                if (reader.ReadState.ToString() == "Error") 
+                    return ArrangementType.Unknown;
+                try
+                {
+                    reader.MoveToContent();
+                }
+                catch (Exception ex) { return ArrangementType.Unknown; }
                 if (reader.LocalName == "vocals")
                     return ArrangementType.Vocal;
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-341,-24)">
+        <g id="General_SmallAddTransition_Normal" transform="matrix(1,0,0,1,66,-41)">
+            <g id="Base-Block" serif:id="Base Block" transform="matrix(1,0,0,1,278,68)">
+                <g transform="matrix(1,0,0,1,-40,-25)">
+                    <path d="M55,27.1C55,25.941 54.059,25 52.9,25L42.1,25C40.941,25 40,25.941 40,27.1L40,37.9C40,39.059 40.941,40 42.1,40L52.9,40C54.059,40 55,39.059 55,37.9L55,27.1Z" style="fill-opacity:0;"/>
+                </g>
+                <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(1,0,0,1,-3,-3)">
+                    <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+                </g>
+            </g>
+            <g>
+                <g transform="matrix(1,0,0,1,1,1)">
+                    <path d="M293,77.75C293,76.784 292.216,76 291.25,76L287.75,76C286.784,76 286,76.784 286,77.75L286,81.25C286,82.216 286.784,83 287.75,83L291.25,83C292.216,83 293,82.216 293,81.25L293,77.75ZM290,79L292,79L292,80L290,80L290,82L289,82L289,80L287,80L287,79L289,79L289,77L290,77L290,79Z" style="fill:rgb(241,241,241);"/>
+                </g>
+                <g transform="matrix(-5,0,0,1,290,67)">
+                    <rect x="1" y="7" width="1" height="1" style="fill:white;"/>
+                </g>
+                <g transform="matrix(-0.8,0,0,0.777778,285,78)">
+                    <path d="M0,-9L0,0L-5,-4.5L0,-9Z" style="fill:white;fill-rule:nonzero;"/>
+                </g>
+                <g transform="matrix(-2,0,0,4,286,49)">
+                    <rect x="1" y="7" width="1" height="1" style="fill:white;fill-opacity:0.5;"/>
+                </g>
+                <g transform="matrix(-1,0,0,2,286,65)">
+                    <rect x="1" y="7" width="1" height="1" style="fill:white;fill-opacity:0.5;"/>
+                </g>
+                <g transform="matrix(-6,0,0,4,290,40)">
+                    <rect x="1" y="7" width="1" height="1" style="fill:white;fill-opacity:0.5;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

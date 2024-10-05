@@ -213,12 +213,12 @@ namespace RocksmithToolkitLib.Extensions
             // -ClearAudioFileCache force re-generate for wem's also deletes old and creates fresh new file.
             // -Save should help with updating project to new schema (may loose quality factor field)
             var cmdArgs = "";
-            if (!(ConfigRepository.Instance()["dlcm_wwise"].Contains("2022") || ConfigRepository.Instance()["dlcm_wwise"].Contains("2023")))
+            if (!(ConfigRepository.Instance()["dlcm_wwise"].Contains("2022") || ConfigRepository.Instance()["dlcm_wwise"].Contains("2023") || ConfigRepository.Instance()["dlcm_wwise"].Contains("2024")))
                 cmdArgs = String.Format("\"{0}\" -GenerateSoundBanks -Platform Windows -Language English(US) -NoWwiseDat -ClearAudioFileCache -Save", templatePath);
             else
             { //WwiseConsole.exe generate-soundbank "C:\\GitHub\\x\\Template\\Template.wproj" --platform "Windows" --language "English(US)" --no-wwise-dat --clear-audio-file-cache --save
-                cmdArgs = String.Format("generate-soundbank \"{0}\" --platform \"Windows\" --language \"English(US)\" --no-wwise-dat --clear-audio-file-cache --save", templatePath);
-                wwiseCLIPath = wwiseCLIPath.Replace("WwiseCLI.exe", "WwiseConsole.exe");
+                cmdArgs = String.Format("generate-soundbank \"{0}\" --platform \"Windows\" --language \"English(US)\" --clear-audio-file-cache --save", templatePath);
+                wwiseCLIPath = wwiseCLIPath.Replace("WwiseCLI.exe", "WwiseConsole.exe");/* --no-wwise-dat*/
             }
             var output = "";// GeneralExtension.RunExternalExecutable(wwiseCLIPath, true, true, true, cmdArgs);//bcapi 2nd param hidding conversion windows-Cache -ContinueOnError", te
             StartProcesss(wwiseCLIPath, cmdArgs);
@@ -229,6 +229,8 @@ namespace RocksmithToolkitLib.Extensions
                 magicDust--;
                 Wav2Wem(wwiseCLIPath, wwiseTemplateDir, magicDust);
             }
+            else if (output != "") 
+                ;
         }
 
         public static void StartProcesss(string procez, string attbute)
@@ -251,7 +253,7 @@ namespace RocksmithToolkitLib.Extensions
                     if (Directory.Exists(procez) || File.Exists(procez))
                     {
                         DDC.StartInfo = startInfo;
-                        DDC.Start(); DDC.WaitForExit(1000 * 60 * 1); //wait 1min"Error ..." + 
+                        DDC.Start(); DDC.WaitForExit(1000 * 60 * 2); //wait 1min"Error ..." + 
                                                                      // if (DDC.ExitCode > 0) starttmp = UpdateLog(starttmp, DDC.ExitCode.ToString(), false, c("dlcm_TempPath"), "", "", null, null);
                     }
                 }

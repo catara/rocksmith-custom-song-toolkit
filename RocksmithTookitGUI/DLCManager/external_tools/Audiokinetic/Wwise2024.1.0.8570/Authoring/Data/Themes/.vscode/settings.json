@@ -1,0 +1,4 @@
+{
+    "scss.lint.unknownProperties": "ignore",
+    "cmake.configureOnOpen": false
+}

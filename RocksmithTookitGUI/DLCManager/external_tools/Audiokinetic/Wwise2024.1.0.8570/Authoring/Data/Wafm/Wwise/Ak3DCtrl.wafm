@@ -1,0 +1,35 @@
+// Ak3DCtrl.wafm
+
+{
+  "ak.dlg.Ak3DCtrl": {
+    "Version": 1,
+    "Type": "Dialog",
+    "RootWidget": "MainDialog",
+    "Metadata": {},
+    "Widgets": [
+      {
+        "Name": "View3D",
+        "Type": "Scene3DView"
+      }
+    ],
+    "Layouts": {
+      "Settings": [
+        {
+          "Name": "MainDialog",
+          "Type": "AnchorLayout",
+          "Width": 500,
+          "Height": 500,
+          "MinWidth": 50,
+          "MinHeight": 50,
+          "Children": [
+            {
+              "Name": "View3D",
+              "Positions": [0, 0, 500, 500],
+              "AnchorSets": ["side-all"]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

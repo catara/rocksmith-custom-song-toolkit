@@ -1,0 +1,77 @@
+{
+    "bundle": {
+        "id": "wwise.2023_1_6_8555",
+        "type": "wwise",
+        "name": "",
+        "tag": "",
+        "description": "",
+        "vendor": "",
+        "version": {
+            "year": 2023,
+            "major": 1,
+            "minor": "6",
+            "build": 8555
+        },
+        "labels": [],
+        "links": [],
+        "productDependentData": {},
+        "documentation": [],
+        "displayName": " 2023.1.6.8555",
+        "image": "",
+        "redistributables": [],
+        "eulas": [],
+        "groups": [],
+        "files": [],
+        "children": []
+    },
+    "installType": "normal",
+    "installed": {
+        "date": 1725909507431,
+        "files": [
+            "Authoring.tar.xz",
+            "Authoring.x64.tar.xz",
+            "FilePackager.x64.tar.xz",
+            "Authoring.MacExcludes.x64.tar.xz",
+            "Authoring.Documentation.tar.xz"
+        ],
+        "groups": [
+            {
+                "id": "Packages",
+                "valueId": "Authoring"
+            },
+            {
+                "id": "AuthoringPlatforms",
+                "valueId": "Win32"
+            },
+            {
+                "id": "AuthoringPlatforms",
+                "valueId": "x64"
+            },
+            {
+                "id": "AuthoringPlatforms",
+                "valueId": "macosx_gmake"
+            },
+            {
+                "id": "AuthoringOS",
+                "valueId": "Windows"
+            },
+            {
+                "id": "AuthoringOS",
+                "valueId": "OSX"
+            },
+            {
+                "id": "SourceCodeLevel",
+                "valueId": "Level2"
+            },
+            {
+                "id": "SourceCodeLevel",
+                "valueId": "Level3"
+            }
+        ]
+    },
+    "targetDir": "C:\\Program Files (x86)\\Audiokinetic\\Wwise2023.1.6.8555",
+    "children": [],
+    "sampleFiles": [],
+    "unpackedFiles": [],
+    "parentId": null
+}

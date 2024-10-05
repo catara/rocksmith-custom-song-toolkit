@@ -1,0 +1,77 @@
+{
+    "bundle": {
+        "id": "wwise.2021_1_14_8108",
+        "type": "wwise",
+        "name": "",
+        "tag": "",
+        "description": "",
+        "vendor": "",
+        "version": {
+            "year": 2021,
+            "major": 1,
+            "minor": "14",
+            "build": 8108
+        },
+        "labels": [],
+        "links": [],
+        "productDependentData": {},
+        "documentation": [],
+        "displayName": " 2021.1.14.8108",
+        "image": "",
+        "redistributables": [],
+        "eulas": [],
+        "groups": [],
+        "files": [],
+        "children": []
+    },
+    "installType": "normal",
+    "installed": {
+        "date": 1725910288515,
+        "files": [
+            "Authoring.tar.xz",
+            "Authoring.x64.tar.xz",
+            "FilePackager.x64.tar.xz",
+            "Authoring.MacExcludes.x64.tar.xz",
+            "Authoring.Documentation.tar.xz"
+        ],
+        "groups": [
+            {
+                "id": "Packages",
+                "valueId": "Authoring"
+            },
+            {
+                "id": "AuthoringPlatforms",
+                "valueId": "Win32"
+            },
+            {
+                "id": "AuthoringPlatforms",
+                "valueId": "x64"
+            },
+            {
+                "id": "AuthoringPlatforms",
+                "valueId": "macosx_gmake"
+            },
+            {
+                "id": "AuthoringOS",
+                "valueId": "Windows"
+            },
+            {
+                "id": "AuthoringOS",
+                "valueId": "OSX"
+            },
+            {
+                "id": "SourceCodeLevel",
+                "valueId": "Level2"
+            },
+            {
+                "id": "SourceCodeLevel",
+                "valueId": "Level3"
+            }
+        ]
+    },
+    "targetDir": "C:\\Program Files (x86)\\Audiokinetic\\Wwise2021.1.14.8108",
+    "children": [],
+    "sampleFiles": [],
+    "unpackedFiles": [],
+    "parentId": null
+}

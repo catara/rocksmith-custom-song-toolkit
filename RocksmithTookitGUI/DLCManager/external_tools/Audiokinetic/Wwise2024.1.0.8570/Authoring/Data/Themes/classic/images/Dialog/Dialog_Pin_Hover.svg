@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-41,-7)">
+        <g transform="matrix(0.75,0,0,0.75,-596.75,192.5)">
+            <g transform="matrix(1.33333,0,0,1.33333,590.333,-256.667)">
+                <g id="Dialog_Pin_Hover">
+                    <path d="M199.343,15.983L199.984,16.624L195.641,20.967L195.639,20.966L195.003,20.966L195.003,20.33L195,20.326L199.343,15.983ZM202.881,9.794C202.699,8.855 202.817,7.732 203.655,7.148L208.855,12.348C208.357,13.035 207.372,13.294 206.237,13.171L203.524,15.884C204.011,17.659 203.951,18.356 202.765,19.405L196.601,13.241C197.413,12.09 198.142,11.888 200.15,12.525L202.881,9.794Z"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

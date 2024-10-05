@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 13 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-107,-121)">
+        <g transform="matrix(1,0,0,1,12,13)">
+            <rect id="Artboard1" x="-12" y="-13" width="423" height="296" style="fill:none;"/>
+            <clipPath id="_clip1">
+                <rect id="Artboard11" serif:id="Artboard1" x="-12" y="-13" width="423" height="296"/>
+            </clipPath>
+            <g clip-path="url(#_clip1)">
+                <g transform="matrix(15.7778,0,0,12.4,-15,-15)">
+                    <rect x="0" y="0" width="27" height="25" style="fill:rgb(36,36,36);"/>
+                </g>
+                <g id="CheckBox" transform="matrix(1,0,0,1,-12,-13)">
+                    <g id="Normal">
+                    </g>
+                    <g id="Disabled">
+                    </g>
+                    <g id="Hovered" transform="matrix(1,-0,-0,1,107,121)">
+                        <use xlink:href="#_Image2" x="0" y="0" width="13px" height="13px"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+    <defs>
+        <image id="_Image2" width="13px" height="13px" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABEUlEQVQokZXSMaqDQBSF4d8hA7GwiNZpsoKswx2ISNAdpEmZkJQ2dilTZglZh2sQLFWIwggDzquUJz6Qd8rLfMNh7lj3+920bYvWmrVIKXEch03btlwuF2zbXkVKKdI0RWitV8EwDADYto3WGrF2e9/3RFHE6XSa8CrKsoyiKPh+vwgh5sgYgzFmBvI85/P5AHC73aa5GEEcxwRBQF3XU63r9QqA7/scj8c5Gg+VZUmSJNR1TZZlNE3DbrfjfD7PGggAy7J4Pp94nkdVVYRhONV6PB5st9slAnBdl9frhed5dF33Z60F+g33+z2Hw2FRa8xGSolSalqw67q832+GYZieeIxSCiklG8dxSNP0X3/vB5yJd4dDk9nEAAAAAElFTkSuQmCC"/>
+    </defs>
+</svg>

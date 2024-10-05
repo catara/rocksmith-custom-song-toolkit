@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-102,-4)">
+        <g id="General_Paste_Normal" transform="matrix(1,0,0,1,54,5.40901e-13)">
+            <g opacity="0.45">
+                <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(1,0,0,1,48,4)">
+                    <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+                </g>
+                <g transform="matrix(1.2,0,0,1,-69.2,1)">
+                    <path d="M111,9.223C111,8.548 110.543,8 109.981,8L109.34,8L109.333,9C109.314,9.588 109.062,9.947 108.5,10L103.5,10C103.012,9.973 102.727,9.65 102.667,9L102.663,8L102.019,8C101.457,8 101,8.548 101,9.223L101,18.777C101,19.452 101.457,20 102.019,20L109.981,20C110.543,20 111,19.452 111,18.777L111,9.223Z"/>
+                </g>
+                <g transform="matrix(0.5,0,1.85037e-17,0.166667,5.5,6.66667)">
+                    <path d="M107,5.445L107,2L103,2L103,5.445C103,5.445 98.982,6.185 99,8L99,20L111,20L111,8C110.992,6.642 107,5.445 107,5.445Z"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

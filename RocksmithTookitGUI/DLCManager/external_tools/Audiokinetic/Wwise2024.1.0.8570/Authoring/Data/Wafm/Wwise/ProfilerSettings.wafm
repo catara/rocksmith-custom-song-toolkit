@@ -1,0 +1,121 @@
+{
+  "ak.dlg.ProfilerSettings": {
+    "Version": 1,
+    "Type": "Dialog",
+    "RootWidget": "MainDialog",
+    "Metadata": {},
+    "Widgets": [
+      {
+        "Name": "ProfilerSettingsLabel",
+        "Type": "Label",
+        "Text": "Specify the type of data you want to capture. \nSelecting too many types may affect Wwise's performance."
+      },
+      {
+        "Name": "ProfilerSettingsTree",
+        "Type": "Tree"
+      },
+      {
+        "Name": "CaptureLogLabel",
+        "Type": "Label",
+        "Text": "Capture Log"
+      },
+      {
+        "Name": "MaxFileSizeLabel",
+        "Type": "Label",
+        "Text": "Maximum File Size (MB)",
+        "TextStyle": [ "JustifyRight", "VerticallyCentered" ]
+      },
+      {
+        "Name": "MaxFileSizeSpinner",
+        "Type": "Spinner",
+        "Range": [10, 32000],
+        "Value": 2000
+      },
+      {
+        "Name": "SessionsCountLabel",
+        "Type": "Label",
+        "Text": "Number of Sessions Kept",
+        "TextStyle": [ "JustifyRight", "VerticallyCentered" ]
+      },
+      {
+        "Name": "SessionsCountSpinner",
+        "Type": "Spinner",
+        "Range": [1, 1000],
+        "Value": 5
+      },
+      {
+        "Name": "OkButton",
+        "Type": "PushButton",
+        "Text": "OK",
+        "TooltipText": "Accept the dialog",
+        "ModalResult": "Ok"
+      },
+      {
+        "Name": "CancelButton",
+        "Type": "PushButton",
+        "Text": "Cancel",
+        "TooltipText": "Cancel the dialog",
+        "ModalResult": "Cancel"
+      }
+    ],
+    "Layouts": {
+      "Settings": [
+        {
+          "Name": "MainDialog",
+          "Type": "AnchorLayout",
+          "Width": 488,
+          "Height": 511,
+          "MinWidth": 488,
+          "MinHeight": 511,
+          "Children": [
+            {
+              "Name": "ProfilerSettingsLabel",
+              "Positions": [ 4, 7, 479, 35 ],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "ProfilerSettingsTree",
+              "Positions": [ 0, 46, 488, 376 ],
+              "AnchorSets": ["side-all"]
+            },
+            {
+              "Name": "CaptureLogGroupBox",
+              "Type": "GroupBox",
+              "Positions": [ 0, 427, 266, 84 ],
+              "AnchorSets": ["side-left", "side-bottom"],
+              "LabelWidget": "CaptureLogLabel",
+              "Children": [
+                {
+                  "Name": "MaxFileSizeLabel",
+                  "Positions": [ 10, 5, 172, 14 ]
+                },
+                {
+                  "Name": "MaxFileSizeSpinner",
+                  "Positions": [ 187, 0, 67, 24 ]
+                },
+                {
+                  "Name": "SessionsCountLabel",
+                  "Positions": [ 10, 32, 172, 14 ]
+                },
+                {
+                  "Name": "SessionsCountSpinner",
+                  "Positions": [ 187, 28, 67, 24 ]
+                }
+              ]
+            },
+            {
+              "Name": "OkButton",
+              "Positions": [ 306, 486, 88, 25 ],
+              "AnchorSets": ["side-right", "side-bottom"]
+            },
+            {
+              "Name": "CancelButton",
+              "Positions": [ 401, 486, 87, 25 ],
+              "AnchorSets": ["side-right", "side-bottom"]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

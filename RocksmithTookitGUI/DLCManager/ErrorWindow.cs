@@ -22,6 +22,7 @@ namespace RocksmithToolkitGUI.DLCManager
     {
         public bool IgnoreSong { get; set; }
         public bool StopImport { get; set; }
+        public string erorrfeedback { get; set; }
         public ErrorWindow(string mss, string link, string Title, bool B1Visi, bool B2Visi, bool B3Visi, string B1Txt, string B2Txt, string B3Txt, bool wordwrap)//string txt_DBFolder,string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete
         {
             InitializeComponent();
@@ -166,18 +167,21 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_Close_Click(object sender, EventArgs e)
         {
             StopImport = true;
+erorrfeedback= txt_Description.Text.ToString();
             this.Hide();
         }
 
         private void btn_OK_Click(object sender, EventArgs e)
         {
             ConfigRepository.Instance()["dlcm_Global2TempVariable"] = txt_Description.Text;
+            erorrfeedback= txt_Description.Text.ToString();            
             this.Hide();
         }
 
         private void btn_StopImport_Click(object sender, EventArgs e)
         {
             IgnoreSong = true;
+            erorrfeedback= txt_Description.Text.ToString();
             this.Hide();
         }
 

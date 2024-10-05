@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-36,-30)">
+        <g transform="matrix(1.63235,0,0,1.96875,3.26471,3.9375)">
+            <g id="Visibility_Eye_Off" transform="matrix(0.612613,0,0,0.507937,-9.35135,10.6984)">
+                <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(0.95,0,0,0.95,48,5)">
+                    <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+                </g>
+                <g id="Eye" transform="matrix(0.625,0,0,0.625,50,7)">
+                    <rect x="0" y="0" width="24" height="24" style="fill:none;fill-rule:nonzero;"/>
+                </g>
+                <g id="Eye1" serif:id="Eye" transform="matrix(0.708333,0,0,0.708333,49,6)">
+                    <g opacity="0.15">
+                        <g id="Transparent-BG1" serif:id="Transparent BG" transform="matrix(1.2,0,0,0.776471,-2.78e-13,4.23529)">
+                            <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+                        </g>
+                        <path d="M8.138,5.342L9.686,6.89C7.728,7.764 6.363,9.724 6.363,12C6.363,15.091 8.881,17.6 11.982,17.6C14.258,17.6 16.22,16.247 17.101,14.304L19.354,16.558C17.28,18.129 14.695,19.5 12,19.5C5.76,19.5 0,12 0,12C0,12 3.495,7.3 8.138,5.342ZM11.803,4.503L12,4.5C18.529,4.5 24,12 24,12C24,12 23.16,13.106 21.767,14.468L17.183,9.884C16.616,8.5 15.508,7.392 14.121,6.822L11.803,4.503ZM10.098,8.397C11.186,8.397 12.069,9.295 12.069,10.402C12.069,11.508 11.186,12.406 10.098,12.406C9.01,12.406 8.127,11.508 8.127,10.402C8.127,9.295 9.01,8.397 10.098,8.397Z" style="fill:white;"/>
+                        <g transform="matrix(0.939342,-0.939342,1.26915,1.26915,-87.6748,-2.22683)">
+                            <rect x="45" y="38" width="2" height="14" style="fill:white;"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,11 @@
+
+<h2>Virtual voice behavior</h2>
+<p>オブジェクトのボリュームが、ボリューム閾値未満まで下がった時、またはオブジェクトの数が再生制限を超えた時の、オブジェクトの動作。次のオプションのいずれかを選択可能:</p>
+<ul>
+<li><strong>Continue to play</strong> そのオブジェクトは聞こえなくなるが、再生を続ける。</li>
+<li><strong>Kill voice</strong> オブジェクトの再生を停止する。本オプションにフェードアウトは適用しない。</li>
+<li><strong>Send to virtual voice</strong> オブジェクトをバーチャルボイスリストに送る。オブジェクトをバーチャルボイスリストに送ると、サウンドエンジンが特定パラメータをモニターするものの、オーディオやモーションの処理は全く行われない。</li>
+<li><strong>Kill if finite else virtual</strong> 無限ループしていなければオブジェクトの再生を止め、 無限ループしていればバーチャルボイスリストにオブジェクトを送信する。</li>
+</ul>
+<p>ミュージックオブジェクトで<strong>Send to virtual voice</strong>または<strong>Kill if finite else virtual</strong>が選択されている場合、オブジェクトがフィジカルボイスに戻った時、すでに経過した時間から再生される。</p>
+<p>Default value: Continue to play<br/></p>

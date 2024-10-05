@@ -1,6 +1,0 @@
-e---xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx----xxxxxxxxxxxxxxxx----xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-
-h---xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx----xxxxxxxxxxxxxxxx----xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-
-g---xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx----xxxxxxxxxxxxxxxx----xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-
-d---22222222000000005555555555555555----2223333355577777----4-4-4-4-4-4-4-4-8-8-8-8-8-8-8-8--1o1o1o1o1o1o1o1o-7--55-5--33-
-a---22222222000000005555555555555555----2223333355577777----4-4-4-4-4-4-4-4-8-8-8-8-8-8-8-8--1o1o1o1o1o1o1o1o-7--55-5--33-
-d---22222222000000005555555555555555----2223333355577777----0-0-0-0-0-0-0-0-8-8-8-8-8-8-8-8--8-8-8-8-8-8-8-8--5--55-3--33-

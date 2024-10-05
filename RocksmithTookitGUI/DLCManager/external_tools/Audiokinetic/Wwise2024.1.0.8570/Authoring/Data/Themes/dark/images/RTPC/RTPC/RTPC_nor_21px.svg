@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 7 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-48,-111)">
+        <g transform="matrix(1,0,0,1,36,54)">
+            <g id="RTPC_nor_21px">
+                <g transform="matrix(1,0,0,0.142857,1,57.2857)">
+                    <path d="M17,11.51C17,7.917 16.583,5 16.07,5L12.96,5C12.43,5 12,8.011 12,11.72L12,26L17,26L17,11.51Z" style="fill:rgb(25,25,25);"/>
+                </g>
+                <g transform="matrix(1,0,0,0.142857,1,73.2857)">
+                    <path d="M17,5L12,5L12,17.6C12,22.236 12.538,26 13.2,26L15.8,26C16.462,26 17,22.236 17,17.6L17,5Z" style="fill:rgb(25,25,25);"/>
+                </g>
+                <g transform="matrix(0.4,0,0,0.571429,11.2,59.1429)">
+                    <rect x="12" y="5" width="5" height="21" style="fill:rgb(25,25,25);"/>
+                </g>
+                <g transform="matrix(0.4,0,0,0.571429,8.2,58.1429)">
+                    <rect x="12" y="5" width="5" height="21" style="fill:rgb(25,25,25);"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-36,-54)">
+                    <path d="M55,113.24C55,112.004 53.996,111 52.76,111L50.24,111C49.004,111 48,112.004 48,113.24L48,129.76C48,130.996 49.004,132 50.24,132L52.76,132C53.996,132 55,130.996 55,129.76L55,113.24ZM49,129.8C49,130.462 49.538,131 50.2,131L52.8,131C53.462,131 54,130.462 54,129.8L54,112.93C54,112.417 53.583,112 53.07,112L49.96,112C49.43,112 49,112.43 49,112.96L49,129.8Z" style="fill:rgb(65,65,65);"/>
+                </g>
+                <g transform="matrix(1,0,0,1,15,74)">
+                    <path d="M0,-13L0,-1L-2,-1L-2,0L1,0L1,-12L3,-12L3,-13L0,-13Z" style="fill:rgb(65,65,65);fill-rule:nonzero;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

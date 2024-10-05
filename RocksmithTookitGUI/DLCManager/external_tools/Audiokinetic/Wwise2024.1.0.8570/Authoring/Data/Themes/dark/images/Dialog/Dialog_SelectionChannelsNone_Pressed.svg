@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-76,-51)">
+        <g transform="matrix(0.75,0,0,0.75,-596.75,192.5)">
+            <g id="Dialog_SelectionChannelsNone_Pressed" transform="matrix(3.65566,0,0,4.301,-73.9722,-2389.01)">
+                <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(0.364731,0,0,0.310005,265.608,511.589)">
+                    <rect x="0" y="0" width="20" height="20" style="fill:none;"/>
+                </g>
+                <g id="Dialog_Pin" transform="matrix(2.55321,0,0,0.303816,217.061,512.169)">
+                    <g id="Transparent-BG1" serif:id="Transparent BG" transform="matrix(0.0857113,0,0,0.612224,19.5853,2.17141)">
+                        <path d="M20,1.8C20,0.807 19.193,0 18.2,0L1.8,0C0.807,0 0,0.807 0,1.8L0,18.2C0,19.193 0.807,20 1.8,20L18.2,20C19.193,20 20,19.193 20,18.2L20,1.8Z" style="fill:white;fill-opacity:0;"/>
+                    </g>
+                    <g transform="matrix(0.1269,0,0,0.911787,-5.20417,-4.17263)">
+                        <path d="M200.373,14.277L201.485,15.389L197.634,19.268L196.508,19.268L196.508,18.167L196.504,18.164L200.373,14.277ZM203.491,10.019C203.309,9.079 202.627,7.542 203.464,6.958L208.855,12.348C208.357,13.035 206.984,12.521 205.849,12.398L204.676,14.3C205.162,16.074 205.319,16.989 204.133,18.037L197.969,11.873C198.781,10.722 199.542,10.551 201.55,11.189L203.491,10.019Z" style="fill:white;"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

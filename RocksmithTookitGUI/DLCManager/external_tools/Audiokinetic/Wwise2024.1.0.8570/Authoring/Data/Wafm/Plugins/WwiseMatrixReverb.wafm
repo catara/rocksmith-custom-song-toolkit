@@ -1,0 +1,412 @@
+// WwiseMatrixReverb.wafm
+
+{
+  "ak.dlg.WwiseMatrixReverb": {
+    "Version": 1,
+    "Type": "Dialog",
+    "RootWidget": "MainDialog",
+    "Metadata": {},
+    "Widgets": [
+      {
+        "Name": "preDelayLabel",
+        "Type": "Label",
+        "Text": "Pre-delay",
+        "TextStyle": [ "JustifyRight", "VerticallyCentered" ]
+      },
+      {
+        "Name": "preDelaySuperRange",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "reverbTimeLabel",
+        "Type": "Label",
+        "Text": "Reverb-time",
+        "TextStyle": [ "JustifyRight", "VerticallyCentered" ]
+      },
+      {
+        "Name": "reverbTimeSuperRange",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "hfRatioLabel",
+        "Type": "Label",
+        "Text": "HF ratio",
+        "TextStyle": [ "JustifyRight", "VerticallyCentered" ]
+      },
+      {
+        "Name": "hfRatioSuperRange",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "wetLevelLabel",
+        "Type": "Label",
+        "Text": "Wet level",
+        "TextStyle": [ "JustifyRight", "VerticallyCentered" ]
+      },
+      {
+        "Name": "wetLevelSuperRange",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "dryLevelLabel",
+        "Type": "Label",
+        "Text": "Dry level",
+        "TextStyle": [ "JustifyRight", "VerticallyCentered" ]
+      },
+      {
+        "Name": "dryLevelSuperRange",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "processLFECheckbox",
+        "PropertyType": "bool",
+        "Text": "Process LFE"
+      },
+      {
+        "Name": "qualityLabel",
+        "Type": "Label",
+        "Text": "Quality vs. Performance",
+        "TextStyle": [ "VerticallyCentered" ]
+      },
+      {
+        "Name": "qualityComboBox",
+        "PropertyType": "int32",
+        "Items": [
+          "Favor performance",
+          "Balance quality and performance",
+          "Favor quality",
+          "Maximize quality"
+        ],
+        "ActiveItem": 2
+      },
+      {
+        "Name": "defaultDelayRadioButton",
+        "Type": "RadioButton",
+        "Text": "Default delay lengths",
+        "MainButton": true
+      },
+      {
+        "Name": "customDelayRadioButton",
+        "Type": "RadioButton",
+        "Text": "Custom delay lengths",
+        "LastButton": true
+      },
+      {
+        "Name": "customDelaySuperRange1",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "customDelaySuperRange2",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "customDelaySuperRange3",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "customDelaySuperRange4",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "customDelaySuperRange5",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "customDelaySuperRange6",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "customDelaySuperRange7",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "customDelaySuperRange8",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "customDelaySuperRange9",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "customDelaySuperRange10",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "customDelaySuperRange11",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "customDelaySuperRange12",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "customDelaySuperRange13",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "customDelaySuperRange14",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "customDelaySuperRange15",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "customDelaySuperRange16",
+        "PropertyType": "Real32",
+        "Range": [-100.0, 100.0],
+        "Increments": [1.0, 0.1],
+        "Precision": 2,
+        "Value": 0.0
+      },
+      {
+        "Name": "memoryUsageLabel",
+        "Type": "Label",
+        "Text": "Estimated memory usage (at 48 kHz): X     KB",
+        "TextStyle": [ "VerticallyCentered" ]
+      }
+    ],
+    "Layouts": {
+      "Settings": [
+        {
+          "Name": "MainDialog",
+          "Type": "AnchorLayout",
+          "Width": 800,
+          "Height": 600,
+          "MinWidth": 780,
+          "MinHeight": 590,
+          "Children": [
+            {
+              "Name": "preDelayLabel",
+              "Positions": [15, 15, 100, 25],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "preDelaySuperRange",
+              "Positions": [125, 15, 100, 21],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "reverbTimeLabel",
+              "Positions": [15, 45, 100, 25],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "reverbTimeSuperRange",
+              "Positions": [125, 45, 100, 21],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "hfRatioLabel",
+              "Positions": [15, 75, 100, 25],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "hfRatioSuperRange",
+              "Positions": [125, 75, 100, 21],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "wetLevelLabel",
+              "Positions": [15, 105, 100, 25],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "wetLevelSuperRange",
+              "Positions": [125, 105, 100, 21],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "dryLevelLabel",
+              "Positions": [15, 135, 100, 25],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "dryLevelSuperRange",
+              "Positions": [125, 135, 100, 21],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "processLFECheckbox",
+              "Positions": [15, 165, 100, 25],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "qualityLabel",
+              "Positions": [280, 15, 150, 25],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "qualityComboBox",
+              "Positions": [415, 15, 200, 25],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "defaultDelayRadioButton",
+              "Positions": [265, 45, 150, 25],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "CustomDelayGroupBox",
+              "Type": "GroupBox",
+              "Positions": [265, 70, 355, 125],
+              "AnchorSets": ["side-left", "side-top"],
+              "LabelWidget": "customDelayRadioButton",
+              "Children": [
+                {
+                  "Name": "customDelaySuperRange1",
+                  "Positions": [10, 0, 80, 21]
+                },
+                {
+                  "Name": "customDelaySuperRange2",
+                  "Positions": [10, 25, 80, 21]
+                },
+                {
+                  "Name": "customDelaySuperRange3",
+                  "Positions": [10, 50, 80, 21]
+                },
+                {
+                  "Name": "customDelaySuperRange4",
+                  "Positions": [10, 75, 80, 21]
+                },
+                {
+                  "Name": "customDelaySuperRange5",
+                  "Positions": [95, 0, 80, 21]
+                },
+                {
+                  "Name": "customDelaySuperRange6",
+                  "Positions": [95, 25, 80, 21]
+                },
+                {
+                  "Name": "customDelaySuperRange7",
+                  "Positions": [95,50, 80, 21]
+                },
+                {
+                  "Name": "customDelaySuperRange8",
+                  "Positions": [95, 75, 80, 21]
+                },
+                {
+                  "Name": "customDelaySuperRange9",
+                  "Positions": [180, 0, 80, 21]
+                },
+                {
+                  "Name": "customDelaySuperRange10",
+                  "Positions": [180, 25, 80, 21]
+                },
+                {
+                  "Name": "customDelaySuperRange11",
+                  "Positions": [180, 50, 80, 21]
+                },
+                {
+                  "Name": "customDelaySuperRange12",
+                  "Positions": [180, 75, 80, 21]
+                },
+                {
+                  "Name": "customDelaySuperRange13",
+                  "Positions": [265, 0, 80, 21]
+                },
+                {
+                  "Name": "customDelaySuperRange14",
+                  "Positions": [265, 25, 80, 21]
+                },
+                {
+                  "Name": "customDelaySuperRange15",
+                  "Positions": [265, 50, 80, 21]
+                },
+                {
+                  "Name": "customDelaySuperRange16",
+                  "Positions": [265, 75, 80, 21]
+                }
+              ]
+            },
+            {
+              "Name": "memoryUsageLabel",
+              "Positions": [270, 210, 355, 25],
+              "AnchorSets": ["side-left", "side-top"]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

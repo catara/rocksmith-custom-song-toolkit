@@ -24,7 +24,6 @@ using static RocksmithToolkitGUI.DLCManager.UtilitiesFunctions;
 //using RocksmithToolkitLib.Extensions; //most likely cue text
 using System.Data.SQLite;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Data.OleDb;
 using SQLite;
 using System.Net;
 
@@ -108,6 +107,8 @@ namespace RocksmithToolkitGUI.DLCManager
         public string isMetalCover { get; set; }
         public string isUkulele { get; set; }
         public string tuningFrecv { get; set; }
+        public string duplic { get; set; }
+        public string hasSlide { get; set; }
         //public bool newold { get; set; }
         //public string clist { get; set; }
         //public DuplicatesManagement(string txt_DBFolder, Files eXisting, DLCPackageData dataNew, string author, string tkversion, string DD, string Bass, string Guitar, string Combo, string Rhythm, string Lead, string tunnings, int i, int norows, string original_FileName, string art_hash, string audio_hash, string audioPreview_hash, List<string> xmlhlist, List<string> jsonhlist)
@@ -125,12 +126,12 @@ namespace RocksmithToolkitGUI.DLCManager
             string art_hash, string audio_hash, string audioPreview_hash, List<string> xmlhlist, List<string> jsonhlist, string DBPath, List<string> clist,
             List<string> dlist, bool newold, string Is_Original, string altvert, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete,
             string FileSize, string unpackedDir, string Is_MultiTrack, string MultiTrack_Version, string FileDate, string title_duplic,
-            string original_Platform, string IsLive, string LiveDetails, string IsAcoustic, OleDbConnection cnnb, string dupli_reasons
+            string original_Platform, string IsLive, string LiveDetails, string IsAcoustic, string dupli_reasons
             , string lengty, string allothers, int reff, List<string> cxmlhlist, List<string> snghlist, string filehash
             , string IsInstrumental, string IsSoundtrack, string IsFullAlbum, string IsSingle, string IsEP, string IsUncensored, string IsRemastered, string InTheWorks
             , string IsKaraoke, string IsDemo, string HasFeaturing, string IsRemix, string IsCover, string IsMedley, string IsMultiStrings, string IsDeluxe
             , string IsGretestHits, string IsMidi, string IsGameSoundtrack, string IsTVTheme, string IsAmateurCover, string IsMetalCover, string IsUkulele
-            , string HasCapo, string description, string tuningfrecv, SQLite.SQLiteConnection cnnc)
+            , string HasCapo, string description, string tuningfrecv, string HasSlide, int duplicateofid, OleDbConnection cnnb, SQLite.SQLiteConnection cnnc)
         {
             //Text = text;
             //MessageBox.Show("test2");
@@ -215,6 +216,8 @@ namespace RocksmithToolkitGUI.DLCManager
             this.xmlhlist = xmlhlist;
             this.jsonhlist = jsonhlist;
             this.filehash = filehash;
+            this.hasSlide = HasSlide;
+            this.duplic = duplicateofid.ToString();
             //this.yearalbum = yeara;
             //this.albumsort = albums;
 
@@ -257,7 +260,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //    return a;
         //}
 
-        private string Filename = System.IO.Path.Combine(Application.StartupPath, "Text.txt");
+        private string Filename = Path.Combine(Application.StartupPath, "Text.txt");/*System.IO.*/
 
         public DateTime myOldDate;
         public DateTime myNewDate;
@@ -345,6 +348,7 @@ namespace RocksmithToolkitGUI.DLCManager
             else if (dataNew.SongInfo.Album == "" && "" == eXisting.Album) lbl_Album.Text = "";
             txt_AlbumNew.Text = dataNew.SongInfo.Album; //eXisting.    
             txt_AlbumExisting.Text = eXisting.Album; //
+            txt_ExistingDuplicateOfID.Text = duplic;
 
             lbl_IDExisting.Text = eXisting.ID;
             //lbl_IDNew.Text = eXisting.ID;
@@ -400,13 +404,19 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_LiveDetailsExisting.Text = (eXisting.Live_Details == "") ? "" : eXisting.Live_Details;
 
             //if (arg.CapoFret != null && arg.CapoFret.ToString() != "" && arg.CapoFret > 0) Has_Capo = "Yes";
-            if (hasCapo != (eXisting.Has_Capo == "No" ? "" : eXisting.Has_Capo)) lbl_AvailableTracks.ForeColor = lbl_Reference.ForeColor;
-            else if ((hasCapo == "" || hasCapo == "No") && ("" == eXisting.Has_Capo || "No" == eXisting.Has_Capo)) lbl_AvailableTracks.Text = "";
+            if (hasCapo != (eXisting.Has_Capo == "No" ? "" : eXisting.Has_Capo)) chbx_CapoNew.ForeColor = lbl_Reference.ForeColor;
+            //else if ((hasCapo == "" || hasCapo == "No") && ("" == eXisting.Has_Capo || "No" == eXisting.Has_Capo)) chbx_MultiStringsNew.ForeColor = Color.Green;// lbl_AvailableTracks.Text = "";
             chbx_CapoNew.Checked = hasCapo == "Yes" ? true : false;
             chbx_CapoExisting.Checked = eXisting.Has_Capo == "Yes" ? true : false;
 
-            if (isMultiStrings != (eXisting.Is_MultiStrings == "No" ? "" : eXisting.Is_MultiStrings)) lbl_DD.ForeColor = lbl_Reference.ForeColor;
-            else if ((isMultiStrings == "" || isMultiStrings == "No") && ("" == eXisting.Is_MultiStrings || "No" == eXisting.Is_MultiStrings)) lbl_DD.Text = "";
+            //if (arg.CapoFret != null && arg.CapoFret.ToString() != "" && arg.CapoFret > 0) Has_Capo = "Yes";
+            if (hasSlide != (eXisting.Has_Slide == "No" ? "" : eXisting.Has_Slide)) chbx_SlideNew.ForeColor = lbl_Reference.ForeColor;
+            //else if ((hasCapo == "" || hasCapo == "No") && ("" == eXisting.Has_Capo || "No" == eXisting.Has_Capo)) chbx_MultiStringsNew.ForeColor = Color.Green;// lbl_AvailableTracks.Text = "";
+            chbx_SlideNew.Checked = hasSlide == "Yes" ? true : false;
+            chbx_SlideExisting.Checked = eXisting.Has_Slide == "Yes" ? true : false;
+
+            if (isMultiStrings != (eXisting.Is_MultiStrings == "No" ? "" : eXisting.Is_MultiStrings)) chbx_MultiStringsNew.ForeColor = lbl_Reference.ForeColor;
+            //else if ((isMultiStrings == "" || isMultiStrings == "No") && ("" == eXisting.Is_MultiStrings || "No" == eXisting.Is_MultiStrings)) chbx_MultiStringsNew.ForeColor = Color.Green; ;
             chbx_MultiStringsNew.Checked = isMultiStrings == "Yes" ? true : false;
             chbx_MultiStringsExisting.Checked = eXisting.Is_MultiStrings == "Yes" ? true : false;
 
@@ -533,9 +543,9 @@ namespace RocksmithToolkitGUI.DLCManager
             Art_Hash = eXisting.AlbumArt_Hash;
 
             txt_YouTube_LinkExisting.Text = eXisting.YouTube_Link;
-            txt_CustomsForge_LinkExisting.Text = eXisting.YouTube_Link;
-            txt_CustomsForge_LikeExisting.Text = eXisting.YouTube_Link;
-            txt_CustomsForge_ReleaseNotesExisting.Text = eXisting.YouTube_Link;
+            txt_CustomsForge_LinkExisting.Text = eXisting.CustomsForge_Link;
+            txt_CustomsForge_LikeExisting.Text = eXisting.CustomsForge_Like;
+            txt_CustomsForge_ReleaseNotesExisting.Text = eXisting.CustomsForge_ReleaseNotes;
 
             // string altver = GetAlternateNo();
 
@@ -590,8 +600,8 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_FileNameNew.Text = original_FileName;
             txt_FileNameExisting.Text = eXisting.Original_FileName;
 
-            if (original_FileName != eXisting.Original_FileName) { txt_PlatformNew.ForeColor = lbl_Reference.ForeColor; /*Color.Red;*/ txt_PlatformExisting.ForeColor = lbl_Reference.ForeColor;/*Color.Red;*/ }
-            //else if (original_FileName == "" && "" == eXisting.Original_Platform) txt_PlatformNew.ForeColor= Color.Red;
+            if (original_Platform != eXisting.Platform) { txt_PlatformNew.ForeColor = lbl_Reference.ForeColor; lbl_Platfdormtoolkit.ForeColor = lbl_Reference.ForeColor; } /*{Color.Red; txt_PlatformExisting.ForeColor = lbl_Reference.ForeColor;/*Color.Red;}*/
+            else if (original_Platform == "" && "" == eXisting.Platform) lbl_Author.Text = ""; ;// txt_PlatformNew.ForeColor = Color.Green;/*if (eXisting.Platform == "" && "" == eXisting.Original_Platform)*/
             txt_PlatformNew.Text = original_Platform;
             txt_PlatformExisting.Text = eXisting.Platform;//.original_Platform;
 
@@ -604,12 +614,12 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_DescriptionExisting.Text = eXisting.Description;
 
             if (tunnings != eXisting.Tunning) lbl_Tuning.ForeColor = lbl_Reference.ForeColor;
-            else if (tunnings == "" && "" == eXisting.Tunning) lbl_Tuning.Text = "";
+            else if (tunnings == "" && "" == eXisting.Tunning) lbl_Tuning.ForeColor = Color.Green;
             txt_TuningNew.Text = tunnings;
             txt_TuningExisting.Text = eXisting.Tunning;
 
             if (tuningFrecv != eXisting.A440TunningFrecv) lbl_Tuning.ForeColor = lbl_Reference.ForeColor;
-            else if (tuningFrecv == "" && "" == eXisting.A440TunningFrecv) lbl_Tuning.Text = "";
+            else if (tuningFrecv == "" && "" == eXisting.A440TunningFrecv) lbl_Tuning.ForeColor = Color.Green;
             txt_TuningFrecvNew.Text = tuningFrecv;
             txt_TuningFrecvExisting.Text = eXisting.A440TunningFrecv;
 
@@ -621,7 +631,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_FileDateExisting.Text = eXisting.File_Creation_Date;
 
             if (dD != eXisting.Has_DD) lbl_DD.ForeColor = lbl_Reference.ForeColor;
-            else if (dD == "" && "" == eXisting.Has_DD) lbl_DD.Text = "";
+            else if (dD == "" && "" == eXisting.Has_DD) lbl_DD.ForeColor = Color.Green;
             txt_DDNew.Text = dD;
             txt_DDExisting.Text = eXisting.Has_DD;
 
@@ -703,8 +713,17 @@ namespace RocksmithToolkitGUI.DLCManager
 
 
             if (lbl_Covers.ForeColor == System.Drawing.Color.Green || lbl_AudioPreview.ForeColor == System.Drawing.Color.Green
-                || lbl_Audio.ForeColor == System.Drawing.Color.Green || lbl_LenghtExisting.ForeColor == System.Drawing.Color.Green) lbl_Attention.Visible = true;
+                || lbl_Audio.ForeColor == System.Drawing.Color.Green || lbl_LenghtExisting.ForeColor == System.Drawing.Color.Green
+                || Math.Round(float.Parse(txt_LenghtExisting.Text), 1) == Math.Round(float.Parse(txt_LenghtNew.Text), 1)) lbl_Attention.Visible = true;
             else lbl_Attention.Visible = false;
+            if (lbl_Covers.ForeColor == System.Drawing.Color.Green) lbl_Attention.Text=lbl_Attention.Text.Replace("some-things", " Cover_Hash,");
+            if (lbl_AudioPreview.ForeColor == System.Drawing.Color.Green) lbl_Attention.Text = lbl_Attention.Text.Replace("some-things", " AudioPreview_Hash;").Replace(",", " AudioPreview_Hash;");
+            if (lbl_Audio.ForeColor == System.Drawing.Color.Green) lbl_Attention.Text = lbl_Attention.Text.Replace("some-things", " Audio_Hash-").Replace(";", " Audio_Hash-").Replace(",", " Audio_Hash-");
+            if (float.Parse(txt_LenghtNew.Text) == float.Parse(txt_LenghtExisting.Text)) lbl_Attention.Text = lbl_Attention.Text.Replace("some-things", " Song_Lenght'").Replace("-", " Song_Lenght'").Replace(",", " Song_Lenght'").Replace(";", " Song_Lenght'");
+            else if (Math.Round(float.Parse(txt_LenghtExisting.Text), 1) == Math.Round(float.Parse(txt_LenghtNew.Text), 1) && lbl_LenghtExisting.ForeColor != System.Drawing.Color.Green)
+                lbl_Attention.Text = lbl_Attention.Text.Replace("some-things", "song_ApproxLenght^").Replace("-", " song_ApproxLenght^").Replace(",", " song_ApproxLenght^").Replace(";", " song_ApproxLenght^").Replace("'",  "song_ApproxLenght^");
+            //lbl_Attention.Text = lbl_Attention.Text.Replace(", ", " ").Replace(",-", " ").Replace("' ", " ").Replace(" ", " ").Replace(", ", " ");
+
 
             //    btn_NotADuplicate.Visible = true;
             //else btn_NotADuplicate.Visible = false;
@@ -1184,6 +1203,8 @@ namespace RocksmithToolkitGUI.DLCManager
             isDeluxe = chbx_DeluxeNew.Checked ? "Yes" : "No";
             isMultiStrings = chbx_MultiStringsNew.Checked ? "Yes" : "No";
             inTheWorks = chbx_InTheWorksNew.Checked ? "Yes" : "No";
+            hasCapo = chbx_CapoNew.Checked ? "Yes" : "No";
+            hasSlide = chbx_SlideNew.Checked ? "Yes" : "No";
             yearalbum = txt_YearNew.Text; ;
             albumsort = txt_AlbumSortNew.Text;
 
@@ -2002,18 +2023,6 @@ namespace RocksmithToolkitGUI.DLCManager
             this.Hide();
         }
 
-        private void btn_AddStandard_Click(object sender, EventArgs e)
-        {
-            if (txt_AuthorExisting.Text != txt_AuthorNew.Text) btn_AddAuthor_Click(null, null);
-            if (txt_TuningExisting.Text != txt_TuningNew.Text) btn_AddTunning_Click(null, null);
-            if (txt_DDExisting.Text != txt_DDNew.Text) btn_AddDD_Click(null, null);
-            if (txt_AvailTracksExisting.Text != txt_AvailTracksNew.Text) btn_AddInstruments_Click(null, null);
-            if (lbl_Existing.Text != lbl_New.Text) btn_AddAge_Click(null, null);
-
-            if (eXisting.Audio_OrigHash == audio_hash || eXisting.Audio_OrigPreviewHash == audioPreview_hash || eXisting.AlbumArt_OrigHash == art_hash) btn_CommentSimilar_Click(null, null);
-
-        }
-
         private void txt_XMLBassNew_TextChanged(object sender, EventArgs e)
         {
 
@@ -2053,7 +2062,8 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_ShowInfoOthers_Click(object sender, EventArgs e)
         {
-            ErrorWindow frm1 = new ErrorWindow(this.allothers, "", "List of all other Duplicates being assesed", false, false, true, "", "", "", false);
+            ErrorWindow frm1 = new ErrorWindow(this.allothers, "", "List of all other Duplicates being assessed (# + Original_FileName + Artist + Album " +
+                "+ Song_Title + Author + Version + Duplicate_Of_ID)", false, false, true, "", "", "", false);
             frm1.ShowDialog();
         }
 
@@ -2151,7 +2161,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private void btn_CommentSimilar_Click(object sender, EventArgs e)
         {
             var tst = "Same Hashed ";
-            if (eXisting.Audio_OrigHash == audio_hash) tst += "Audio";
+            if (eXisting.Audio_OrigHash == audio_hash) tst += "Audio ";
             if (eXisting.Audio_OrigPreviewHash == audioPreview_hash) tst += ", Preview ";
             if (eXisting.AlbumArt_OrigHash == art_hash) tst += ", Album Art ";
             tst += "file(s),";
@@ -2162,7 +2172,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 txt_DescriptionNew.Text += tst + " similar to " + (txt_AuthorExisting.Text == "" || txt_AuthorExisting.Text is null ? txt_FileNameExisting.Text : txt_AuthorExisting.Text);
                 txt_DescriptionExisting.Text += tst + " similar to " + (txt_AuthorNew.Text == "" || txt_AuthorNew.Text is null ? txt_FileNameNew.Text : txt_AuthorNew.Text);
             }
-            else
+            else if (tst!= "Same Hashed file(s),")
             {
                 txt_DescriptionNew.Text += tst + " similar to " + txt_FileNameExisting.Text;
                 txt_DescriptionExisting.Text += tst + " similar to " + txt_FileNameNew.Text;
@@ -2221,6 +2231,156 @@ namespace RocksmithToolkitGUI.DLCManager
         private void label20_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button6_Click_4(object sender, EventArgs e)
+        {
+            UpdateExisting();
+        }
+
+        private void bt_AddP5_Click(object sender, EventArgs e)
+        {
+            var cn = chbx_GreatestHitsNew.Checked ? "Greatest Hits" : "";
+            var ce = chbx_GreatestHitsExisting.Checked ? "Greatest Hits" : "";
+            txt_TitleNew.Text = cn != ce && sender is null ? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn != ce && sender is null ? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            cn = chbx_DeluxeNew.Checked ? "Deluxe" : "";
+            ce = chbx_DeluxeExisting.Checked ? "Deluxe" : "";
+            txt_TitleNew.Text = cn != ce && sender is null ? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn != ce && sender is null ? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            cn = chbx_MidiNew.Checked ? "Midi" : "";
+            ce = chbx_MidiExisting.Checked ? "Midi" : "";
+            txt_TitleNew.Text = cn != ce && sender is null ? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn != ce && sender is null ? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            cn = chbx_GameSoundtrackNew.Checked ? "Game Soundtrack" : "";
+            ce = chbx_GameSoundtrackExisting.Checked ? "Game Soundtrack" : "";
+            txt_TitleNew.Text = cn != ce && sender is null ? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn != ce && sender is null ? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_P5.ForeColor = lbl_Reference.ForeColor;
+            else lbl_P5.ForeColor = lbl_Artist.ForeColor;
+        }
+
+
+        private void btn_AddStandard_Click(object sender, EventArgs e)
+        {
+            if (txt_AuthorExisting.Text != txt_AuthorNew.Text) btn_AddAuthor_Click(null, null);
+            if (txt_TuningExisting.Text != txt_TuningNew.Text) btn_AddTunning_Click(null, null);
+            if (txt_DDExisting.Text != txt_DDNew.Text) btn_AddDD_Click(null, null);
+            if (txt_AvailTracksExisting.Text != txt_AvailTracksNew.Text) btn_AddInstruments_Click(null, null);
+            if (lbl_Existing.Text != lbl_New.Text) btn_AddAge_Click(null, null);
+
+            if (chbx_UkuleleNew.Checked != chbx_UkuleleExisting.Checked || chbx_DemoNew.Checked != chbx_DemoExisting.Checked ||
+                chbx_InstrumentalNew.Checked != chbx_InstrumentalExisting.Checked || chbx_SingleNew.Checked != chbx_SingleExisting.Checked) bt_AddP1_Click(null, null);
+            if (chbx_AmateurCoverNew.Checked != chbx_AmateurCoverExisting.Checked || chbx_FeaturingNew.Checked != chbx_FeaturingExisting.Checked ||
+                chbx_RemixNew.Checked != chbx_RemixExisting.Checked || chbx_FullAlbumNew.Checked != chbx_FullAlbumExisting.Checked ||
+                chbx_AcousticNew.Checked != chbx_AcousticExisting.Checked) bt_AddP2_Click(null, null);
+            if (chbx_MetalNew.Checked != chbx_MetalExisting.Checked || chbx_MedleyNew.Checked != chbx_MedleyExisting.Checked ||
+                chbx_InTheWorksNew.Checked != chbx_InTheWorksExisting.Checked || chbx_RemasteredNew.Checked != chbx_RemasteredExisting.Checked
+                || chbx_EPNew.Checked != chbx_EPExisting.Checked) bt_AddP3_Click(null, null);
+            if (chbx_TVThemeNew.Checked != chbx_TVThemeExisting.Checked || chbx_KaraokeNew.Checked != chbx_KaraokeExisting.Checked ||
+                chbx_UncensoredNew.Checked != chbx_UncensoredExisting.Checked || chbx_SoundtrackNew.Checked != chbx_SoundtrackExisting.Checked) bt_AddP5_Click(null, null);
+            if (chbx_GreatestHitsNew.Checked != chbx_GreatestHitsExisting.Checked || chbx_DeluxeNew.Checked != chbx_DeluxeExisting.Checked ||
+                chbx_MidiNew.Checked != chbx_MidiExisting.Checked || chbx_GameSoundtrackNew.Checked != chbx_GameSoundtrackExisting.Checked) bt_AddP4_Click(null, null);
+
+            if (eXisting.Audio_OrigHash == audio_hash || eXisting.Audio_OrigPreviewHash == audioPreview_hash || eXisting.AlbumArt_OrigHash == art_hash) btn_CommentSimilar_Click(null, null);
+
+        }
+
+
+        private void bt_AddP4_Click(object sender, EventArgs e)
+        {
+            var cn = chbx_TVThemeNew.Checked ? "TV Theme" : "";
+            var ce = chbx_TVThemeExisting.Checked ? "TV Theme" : "";
+            txt_TitleNew.Text = cn != ce && sender is null ? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn != ce && sender is null ? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " "): txt_TitleExisting.Text;
+            cn = chbx_KaraokeNew.Checked ? "Karaoke" : "";
+            ce = chbx_KaraokeExisting.Checked ? "Karaoke" : "";
+            txt_TitleNew.Text = cn != ce && sender is null ? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn != ce && sender is null ? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " "): txt_TitleExisting.Text;
+            cn = chbx_UncensoredNew.Checked ? "Uncensored" : "";
+            ce = chbx_UncensoredExisting.Checked ? "Uncensored" : "";
+            txt_TitleNew.Text = cn != ce && sender is null ? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn != ce && sender is null ? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " "): txt_TitleExisting.Text;
+            cn = chbx_SoundtrackNew.Checked ? "Movie Soundtrack" : "";
+            ce = chbx_SoundtrackExisting.Checked ? "Movie Soundtrack" : "";
+            txt_TitleNew.Text = cn != ce && sender is null ? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn != ce && sender is null ? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_P4.ForeColor = lbl_Reference.ForeColor;
+            else lbl_P4.ForeColor = lbl_Artist.ForeColor;
+        }
+
+        private void bt_AddP3_Click(object sender, EventArgs e)
+        {
+            var cn = chbx_MetalNew.Checked ? "Metal" : "";
+            var ce = chbx_MetalExisting.Checked ? "Metal" : "";
+            txt_TitleNew.Text = cn != ce && sender is null ? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn != ce && sender is null ? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            cn = chbx_MedleyNew.Checked ? "Medley" : "";
+            ce = chbx_MedleyExisting.Checked ? "Medley" : "";
+            txt_TitleNew.Text = cn != ce && sender is null ? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn != ce && sender is null ? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            cn = chbx_InTheWorksNew.Checked ? "In The Works" : "";
+            ce = chbx_InTheWorksExisting.Checked ? "In The Works" : "";
+            txt_TitleNew.Text = cn != ce && sender is null ? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn != ce && sender is null ? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            cn = chbx_RemasteredNew.Checked ? "Remastered" : "";
+            ce = chbx_RemasteredExisting.Checked ? "Remastered" : "";
+            txt_TitleNew.Text = cn != ce && sender is null ? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn != ce && sender is null ? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            cn = chbx_EPNew.Checked ? "EP" : "";
+            ce = chbx_EPExisting.Checked ? "EP" : "";
+            txt_TitleNew.Text = cn != ce && sender is null ? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " "): txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn != ce && sender is null ? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_P3.ForeColor = lbl_Reference.ForeColor;
+            else lbl_P3.ForeColor = lbl_Artist.ForeColor;
+         }
+
+        private void bt_AddP2_Click(object sender, EventArgs e)
+        {
+            var cn = chbx_AmateurCoverNew.Checked ? "Amateur Cover" : "";
+            var ce = chbx_AmateurCoverExisting.Checked ? "Amateur Cover" : "";
+            txt_TitleNew.Text = cn != ce && sender is null ? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " "): txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn != ce && sender is null ? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            cn = chbx_FeaturingNew.Checked ? "Featuring" : "";
+            ce = chbx_FeaturingExisting.Checked ? "Featuring" : "";
+            txt_TitleNew.Text = cn != ce && sender is null ? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " "): txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn != ce && sender is null ? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            cn = chbx_RemixNew.Checked ? "Remix" : "";
+            ce = chbx_RemixExisting.Checked ? "Remix" : "";
+            txt_TitleNew.Text = cn != ce && sender is null ? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " "): txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn != ce && sender is null ? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            cn = chbx_FullAlbumNew.Checked ? "Full Album" : "";
+            ce = chbx_FullAlbumExisting.Checked ? "Full Album" : "";
+            txt_TitleNew.Text = cn != ce && sender is null ? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " "): txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn != ce && sender is null ? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            cn = chbx_AcousticNew.Checked ? "Acoustic" : "";
+            ce = chbx_AcousticExisting.Checked ? "Acoustic" : "";
+            txt_TitleNew.Text = cn != ce && sender is null ? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " "): txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn != ce && sender is null ? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_P2.ForeColor = lbl_Reference.ForeColor;
+            else lbl_P2.ForeColor = lbl_Artist.ForeColor;
+        }
+
+        private void bt_AddP1_Click(object sender, EventArgs e)
+        {
+            var cn = chbx_UkuleleNew.Checked ? "Ukulele" : "";
+            var ce = chbx_UkuleleExisting.Checked ? "Ukulele" : "";
+            txt_TitleNew.Text = cn!=ce && sender is null? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " "): txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn!=ce && sender is null? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            cn = chbx_DemoNew.Checked ? "Demo" : "";
+            ce = chbx_DemoExisting.Checked ? "Demo" : "";
+            txt_TitleNew.Text = cn!=ce && sender is null? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn!=ce && sender is null? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            cn = chbx_InstrumentalNew.Checked ? "Instrumental" : "";
+            ce = chbx_InstrumentalExisting.Checked ? "Instrumental" : "";
+            txt_TitleNew.Text = cn!=ce && sender is null? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn!=ce && sender is null? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            cn = chbx_SingleNew.Checked ? "Single" : "";
+            ce = chbx_SingleExisting.Checked ? "Single" : "";
+            txt_TitleNew.Text = cn!=ce && sender is null? (txt_TitleNew.Text.Replace(" " + cn, " ").Replace("[" + cn, "[").Replace("]", "") + (txt_TitleNew.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + cn + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleNew.Text;
+            txt_TitleExisting.Text = cn!=ce && sender is null? (txt_TitleExisting.Text.Replace(" " + ce, " ").Replace("[" + ce, "[").Replace("]", "") + (txt_TitleExisting.Text.IndexOf("[") > 0 && chbx_UseBrakets.Checked ? " " : " [") + ce + (chbx_UseBrakets.Checked ? "]" : "")).Replace("[ ", "[").Replace("  ", " ") : txt_TitleExisting.Text;
+            if (txt_TitleExisting.Text == txt_TitleNew.Text) lbl_P2.ForeColor = lbl_Reference.ForeColor;
+            else lbl_P2.ForeColor = lbl_Artist.ForeColor;
         }
     }
 }

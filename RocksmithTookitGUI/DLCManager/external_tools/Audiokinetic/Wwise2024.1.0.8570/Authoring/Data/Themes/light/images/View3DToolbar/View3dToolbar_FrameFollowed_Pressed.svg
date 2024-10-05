@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-52,-4)">
+        <g id="View3dToolbar_FrameFollowed_Pressed" transform="matrix(2.28048,0,0,3.27478,-275.674,-964.872)">
+            <g transform="matrix(0.490092,0,0,0.341289,-26.8659,-49.1847)">
+                <rect x="348" y="1011" width="17" height="17" style="fill-opacity:0;"/>
+            </g>
+            <g id="Expand-Icon" serif:id="Expand Icon" transform="matrix(0.438504,0,0,0.305364,-400.497,246.389)">
+                <g transform="matrix(0.625,0,0,0.625,1243,164)">
+                    <rect x="0" y="0" width="24" height="24" style="fill:none;fill-rule:nonzero;"/>
+                </g>
+                <g transform="matrix(1,0,0,1,1189,158)">
+                    <path d="M54,18L53,18L53,22L57,22L57,21L54,21L54,18ZM69,21L66,21L66,22L70,22L70,18L69,18L69,21ZM53,9L54,9L54,6L57,6L57,5L53,5L53,9ZM66,5L66,6L69,6L69,9L70,9L70,5L66,5Z"/>
+                </g>
+                <g transform="matrix(4.394e-17,-0.777778,0.576923,3.72628e-17,1187.5,1454.22)">
+                    <path d="M1649.37,111.8L1651.61,111.8L1655,117L1646,117L1649.37,111.8Z"/>
+                </g>
+                <g transform="matrix(0.5,0,-1.44445e-33,0.625,439,101.75)">
+                    <path d="M1624,107.36C1624,106.609 1623.24,106 1622.3,106L1615.7,106C1614.76,106 1614,106.609 1614,107.36L1614,112.64C1614,113.391 1614.76,114 1615.7,114L1622.3,114C1623.24,114 1624,113.391 1624,112.64L1624,107.36Z"/>
+                </g>
+                <g transform="matrix(0.1,0,-3.85186e-34,0.125,1085.6,161.75)">
+                    <rect x="1614" y="106" width="10" height="8"/>
+                </g>
+                <g transform="matrix(0.1,0,-3.85186e-34,0.125,1087.6,161.75)">
+                    <rect x="1614" y="106" width="10" height="8"/>
+                </g>
+                <g transform="matrix(0.1,0,-3.85186e-34,0.125,1089.6,161.75)">
+                    <rect x="1614" y="106" width="10" height="8"/>
+                </g>
+                <g id="ObjectIcons_GameObject_nor">
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

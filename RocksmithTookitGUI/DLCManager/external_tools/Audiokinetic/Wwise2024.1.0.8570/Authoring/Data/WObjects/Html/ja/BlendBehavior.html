@@ -1,0 +1,5 @@
+
+<h2>Play mode</h2>
+<p><strong>Step</strong>:Blend Container は Play 時にすべての子を再生し始めなっている。一度すべての子ボイスの再生を停止した場合（またはStop Actionを受けた場合）、Blend Container の再生が終了したと考えられなっている。</p>
+<p><strong>Continuous</strong>:Blend Containerは積極的にクロスフェード領域（RTPC値がクリップ領域内にあるときには子を再生し、RTPC値がクリップ領域外にあるときには子を停止する。）に基づいて、子オブジェクトのPlay と Stopを管理する。コンテナはStop Actionで停止する必要がある；そうしないと動作したままで、声がまったく再生されていない場合でもRTPCの変化を監視する。</p>
+<p>Default value: Step<br/></p>

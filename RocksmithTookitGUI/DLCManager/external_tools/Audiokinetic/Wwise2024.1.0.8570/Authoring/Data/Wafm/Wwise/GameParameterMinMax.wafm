@@ -1,0 +1,140 @@
+{
+  "ak.dlg.GameParameterMinMax": {
+    "Version": 1,
+    "Type": "Dialog",
+    "RootWidget": "MainDialog",
+    "Metadata": {},
+    "Widgets": [
+      {
+        "Name": "PropertyMin",
+        "Type": "TextEdit",
+        "Text": ""
+      },
+      {
+        "Name": "PropertyMinLabel",
+        "Type": "Label",
+        "Text": "Min"
+      },
+      {
+        "Name": "PropertyMax",
+        "Type": "TextEdit",
+        "Text": ""
+      },
+      {
+        "Name": "PropertyMaxLabel",
+        "Type": "Label",
+        "Text": "Max"
+      },
+      {
+        "Name": "ExplanationsLabel",
+        "Type": "Label",
+        "Text": "Modifying the Min or Max value of a Game Parameter affects the RTPC curves and blend tracks that use that Game Parameter for their X axis."
+      },
+      {
+        "Name": "ExplanationStretchLabel",
+        "Type": "Label",
+        "Text": "All items are kept but their X positions might change as the curve/blend track is stretched or compressed to match the new range in X. Values of Set Game Parameter actions are also scaled."
+      },
+      {
+        "Name": "ExplanationPreserveLabel",
+        "Type": "Label",
+        "Text": "Maintains the X position of all the items, but those that fall outside the new range are deleted. Values of Set Game Parameter actions are clamped."
+      },
+      {
+        "Name": "StretchRadio",
+        "Type": "RadioButton",
+        "Text": "Stretch",
+        "MainButton": true
+      },
+      {
+        "Name": "PreserveRadio",
+        "Type": "RadioButton",
+        "Text": "Preserve X",
+        "LastButton": true
+      },
+      {
+        "Name": "OkButton",
+        "Type": "PushButton",
+        "Text": "OK",
+        "TooltipText": "Save the settings",
+        "ModalResult": "Ok"
+      },
+      {
+        "Name": "CancelButton",
+        "Type": "PushButton",
+        "Text": "Cancel",
+        "TooltipText": "Cancel the dialog",
+        "ModalResult": "Cancel"
+      }
+    ],
+    "Layouts": {
+      "Settings": [
+        {
+          "Name": "MainDialog",
+          "Type": "AnchorLayout",
+          "Width": 500,
+          "Height": 320,
+          "MinWidth": 500,
+          "MinHeight": 320,
+          "Children": [
+            {
+              "Name": "PropertyMin",
+              "Positions": [ 64,62,172,20 ],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "PropertyMinLabel",
+              "Positions": [ 12,62,24,20 ],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "PropertyMax",
+              "Positions": [ 64,88,172,20 ],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "PropertyMaxLabel",
+              "Positions": [ 12,88,24,20 ],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "ExplanationsLabel",
+              "Positions": [ 12,12,476,40 ],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "ExplanationStretchLabel",
+              "Positions": [ 108,130,380,60 ],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "ExplanationPreserveLabel",
+              "Positions": [ 108,202,380,60 ],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "StretchRadio",
+              "Positions": [ 12,130,60,20 ],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "PreserveRadio",
+              "Positions": [ 12,202,80,20 ],
+              "AnchorSets": ["side-left", "side-top"]
+            },
+            {
+              "Name": "OkButton",
+              "Positions": [ 316,280,80,28 ],
+              "AnchorSets": ["side-right", "side-bottom"]
+            },
+            {
+              "Name": "CancelButton",
+              "Positions": [ 408,280,80,28 ],
+              "AnchorSets": ["side-right", "side-bottom"]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

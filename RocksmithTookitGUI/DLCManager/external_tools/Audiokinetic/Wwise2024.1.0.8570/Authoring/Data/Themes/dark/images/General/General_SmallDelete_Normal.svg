@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-130,-26)">
+        <g id="General_SmallDelete_Normal" transform="matrix(1,0,0,1,83,21)">
+            <g opacity="0.45">
+                <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(1,0,0,1,47,5)">
+                    <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+                </g>
+                <g transform="matrix(0.736111,0,0,0.722222,48.3194,6.83333)">
+                    <path d="M6.358,19C6.358,20.1 7.318,21 8.492,21L15.093,21C16.266,21 17.226,20.1 17.226,19L17.226,8.538L6.358,8.538L6.358,19ZM18.585,4.385L15.085,4.385L14.085,3L9.5,3L8.5,4.385L5,4.385L5,7.154L18.585,7.154L18.585,4.385Z" style="fill:white;fill-rule:nonzero;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

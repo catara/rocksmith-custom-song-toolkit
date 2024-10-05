@@ -1,0 +1,9 @@
+
+<h2>3D Position</h2>
+<p>3D 定位。定义如何计算位置，以便进行 3D 定位（衰减和空间化）。</p>
+<p>– Emitter：游戏定义的定位。
+– Emitter + Automation：基于“发声体”游戏对象位置的 User-Defined 自动化定位。使用 <strong>Automation</strong> 按钮进行编辑。</p>
+<p><strong>备注</strong>:对于使用 Emitter + Automation 的声音，Wwise Spatial Audio 功能存在一定限制。对于这样的声音，会禁用衍射和透射处理。而且，自动化偏置不适用于早期反射处理。对此，会使用基准 Game Object 位置来计算反射。</p>
+<p>– Listener + Automation：基于“听者”游戏对象的 User-Defined 自动化定位。使用 <strong>Automation</strong> 按钮进行编辑。</p>
+<p><strong>备注</strong>:对于使用 Listener + Automation 的声音，Wwise Spatial Audio 功能会被禁用。其中包括早期反射处理、衍射和透射以及 Room 发送。</p>
+<p>Default value: Emitter<br/></p>

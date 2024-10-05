@@ -5,7 +5,7 @@
       <DataSource DefaultConnectionIndex="1" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
           <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="LocalDB" IsAppSettingsProperty="true" Modifier="Assembly" Name="LocalDB (Settings)" PropertyReference="ApplicationSettings.RocksmithToolkitGUI.Properties.Settings.GlobalReference.Default.LocalDB" Provider="System.Data.OleDb" />
-          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="AccessDBConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="AccessDBConnectionString (Settings)" PropertyReference="ApplicationSettings.RocksmithToolkitGUI.Properties.Settings.GlobalReference.Default.AccessDBConnectionString" Provider="System.Data.OleDb" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="AccessDBConnectionString" IsAppSettingsProperty="true" Modifier="Assembly" Name="AccessDBConnectionString (Settings)" PropertyReference="ApplicationSettings.RocksmithToolkitGUI.Properties.Settings.GlobalReference.Default.AccessDBConnectionString" Provider="System.Data.OleDb" />
         </Connections>
         <Tables />
         <Sources />

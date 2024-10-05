@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-370,-4)">
+        <g id="General_SmallSelectAll_Normal" transform="matrix(3.58891,0,0,2.39241,-2846.99,-2499.46)">
+            <g opacity="0.45">
+                <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(0.278636,0,0,0.417989,896.367,1046.42)">
+                    <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-0.278636,-0.417989)">
+                    <g transform="matrix(0.278636,0,0,0.417989,868.225,1024.26)">
+                        <path d="M115,61L109,61L109,67L115,67L115,61ZM114,62L110,62L110,66L114,66L114,62Z" style="fill:white;"/>
+                    </g>
+                    <g transform="matrix(0.78018,0,0,0.265993,544.841,592.177)">
+                        <path d="M452.357,1736L452,1736L452,1731.29L452.357,1731.29L452.357,1736ZM452.714,1736L452.357,1736L452.357,1734.43L452.714,1734.43L452.714,1736ZM453.786,1736L453.071,1736L453.071,1734.43L453.786,1734.43L453.786,1736ZM455.214,1736L454.5,1736L454.5,1734.43L455.214,1734.43L455.214,1736ZM457,1736L455.929,1736L455.929,1734.43L456.643,1734.43L456.643,1732.86L457,1732.86L457,1736ZM457,1728.14L457,1731.29L456.643,1731.29L456.643,1728.14L457,1728.14ZM452,1725L452.357,1725L452.357,1728.14L452,1728.14L452,1725ZM457,1721.86L457,1725L456.643,1725L456.643,1721.86L457,1721.86ZM452,1718.71L452.357,1718.71L452.357,1721.86L452,1721.86L452,1718.71ZM457,1714L457,1718.71L456.643,1718.71L456.643,1715.57L456.286,1715.57L456.286,1714L457,1714ZM453.071,1714L453.071,1715.57L452.357,1715.57L452.357,1717.14L452,1717.14L452,1714L453.071,1714ZM455.929,1714L455.929,1715.57L455.214,1715.57L455.214,1714L455.929,1714ZM454.5,1714L454.5,1715.57L453.786,1715.57L453.786,1714L454.5,1714Z" style="fill:white;"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web" Project="Sdk.targets">
   <PropertyGroup>
-    <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+    <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>WinExe</OutputType>
     <StartupObject>RocksmithToolkitGUI.Program</StartupObject>
@@ -238,6 +238,549 @@
     <None Update="app.manifest">
       <SubType>Designer</SubType>
     </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\7z.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\7z.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\authors">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\bass.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\Bass.Net.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\bassenc.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\bassmix.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\bass_fx.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\config\extractor.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\config\main410.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\cudart32_30_14.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\cyggcc_s-1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\cygpng15-15.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\cygwin1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\cygz.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\DevComponents.DotNetBar2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\DevIL.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\DocumentFormat.OpenXml.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\dummy.milo_wii">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\edattool.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\BLITZ_1024x1024_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\BLITZ_256x256_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\BLITZ_512x32_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\BLITZ_512x32_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\BLITZ_512x512_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\DC3_1024x512_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\DC3_128x128_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\DC3_128x64_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\DC3_256x512_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\DC3_512x128_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\DC3_512x512_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\DC3_64x64_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_1024x1024_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_1024x1024_NORMAL.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_1024x256_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_1024x256_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_1024x32_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_1024x512_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_1024x512_DXT5_NOMIP.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_1024x512_NORMAL.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_128x128_DXT5_NOMIP.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_128x32_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_128x512_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_128x64_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_128x64_NORMAL.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_16x128_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_16x16_DXT5_NOMIP.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_16x32_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_2048x2048_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_256x1024_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_256x256_NORMAL.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_256x32_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_256x512_NORMAL.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_256x64_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_32x128_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_32x32_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_32x32_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_32x64_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_512x1024_DXT5_NOMIP.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_512x128_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_512x128_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_512x128_DXT5_B.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_512x256_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_512x256_DXT5_NOMIP.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_512x256_NORMAL.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_512x512_NORMAL.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_512x64_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_512x8_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_64x128_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_64x16_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_64x256_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_64x32_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH2_64x64_DXT5_NOMIP.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\GH_32x16_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_1024x1024_DXT1_NOMIP.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_1024x1024_DXT5_NOMIP.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_1024x1024_DXT5_NOMIP_B.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_1024x512_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_1024x512_DXT5_B.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_128x128_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_128x128_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_128x256_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_128x64_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_256x256_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_256x256_DXT5_NOMIP.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_512x1024_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_512x256_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_512x512_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_512x512_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_512x512_DXT5_NOMIP.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_512x64_DXT5_NOMIP.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_64x512_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_64x64_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\LEGO_64x64_DXT1_B.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\NEMO_1024x1024_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\NEMO_2048x2048_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_1024x128_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_1024x512_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_128x128_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_128x128_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_128x128_NORMAL.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_128x256_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_128x64_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_256x128_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_256x128_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_256x256_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_256x256_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_256x256_DXT5_NOMIP.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_256x512_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_256x512_DXT5_NOMIP.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_256x64_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_32x256_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_512x256_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_512x512_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_512x512_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_64x256_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_64x64_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\RB3_64x64_DXT5_BW.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\TBRB_1024x256_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\TBRB_1024x256_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\TBRB_1024x512_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\TBRB_1024x512_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\TBRB_2048x1024_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\TBRB_512x512_DXT1.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\TBRB_512x512_DXT5.header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\headers\_README.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\aa">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\aac">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\about">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\em">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\fi">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\ma">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\mc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\pc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\ps3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\psc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\pub">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\qde">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\qpe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\rba">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\sfie">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\si">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\sm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\usb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\vi">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\vn">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\vp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\help\wii">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\ILU.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\IPAddressControlLib.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\jpeg62.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\klic.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\KV.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\libgcc_s_dw2-1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\libpng12.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\libtiff3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\make_npdata.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\midishrink.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\mogg_header">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\NAudio.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\nautilus.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\nemoedat.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\nvcompress.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\nvdecompress.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\nvtt.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\oggenc2.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\PdfFileWriter.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\PDFLibNet.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\raps\ntsc.rap">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\raps\pal.rap">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\Rar.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\rb3dta">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\rebuilder.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\System.Net.FtpClient.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\tool\core.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\tool\core.jar">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\tool\sfk.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\tu4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\wii.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\wimgt.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\bin\zlib1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="DLCManager\external_tools\C3Tools\C3Tools.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -304,6 +847,102 @@
     <None Update="DLCManager\external_tools\C3Tools\res\harm3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\circle\bass.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\circle\drums.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\circle\guitar.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\circle\harm2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\circle\harm3.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\circle\keys.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\circle\nobass.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\circle\nodrums.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\circle\noguitar.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\circle\nokeys.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\circle\novocals.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\circle\probass.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\circle\prodrums.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\circle\proguitar.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\circle\prokeys.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\circle\vocals.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\cube\bass.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\cube\drums.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\cube\guitar.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\cube\harm2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\cube\harm3.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\cube\keys.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\cube\nobass.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\cube\nodrums.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\cube\noguitar.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\cube\nokeys.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\cube\novocals.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\cube\probass.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\cube\prodrums.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\cube\proguitar.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\cube\prokeys.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\icons\cube\vocals.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="DLCManager\external_tools\C3Tools\res\karaoke.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -322,7 +961,91 @@
     <None Update="DLCManager\external_tools\C3Tools\res\pguitar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\phaseshift\banner.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\phaseshift\c3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="DLCManager\external_tools\C3Tools\res\pkeys.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\autoplay.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\autoplay_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\backing.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\bass.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\crowd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\dopreview.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\dosong.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\drums.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\guitar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\keys.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\line.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\loop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\loop_off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\nobacking.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\nobass.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\nocrowd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\nodrums.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\noguitar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\nokeys.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\novocals.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\pause.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\play.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\slider.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\speaker.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\stop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\C3Tools\res\play\vocals.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="DLCManager\external_tools\C3Tools\res\rb3.png">
@@ -692,6 +1415,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="DLCManager\external_tools\mdbplus.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\microsoft-jdk-21.0.4-windows-aarch64.msi">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="DLCManager\external_tools\NVorbis.bin.0.8.4\COPYING">
@@ -2177,6 +2903,87 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="DLCManager\external_tools\RS2014-Mod-Installer.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\batch-example.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\ChangeLog.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\libflac-8.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\libgcc_s_sjlj-1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\libgomp-1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\libid3tag-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\libogg-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\libpng16-16.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\libsox-3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\libssp-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\libvorbis-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\libvorbisenc-2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\libvorbisfile-3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\libwavpack-1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\libwinpthread-1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\LICENSE.GPL.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\README.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\README.win32.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\sox.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\sox.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\soxformat.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\soxi.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\Uninstall sox-14.4.2.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\wget.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\wget.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14-4-2\zlib1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\sox-14.4.2-win32.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="DLCManager\external_tools\SQLite.Interop.dll">
@@ -4948,10 +5755,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.67.0.3358" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.0-preview.3.24172.4" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.0-preview.3.24172.4" />
+    <PackageReference Include="EntityFramework" Version="6.5.1" />
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.68.0.3556" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.0-rc.1.24451.1" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.0-rc.1.24451.1" />
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="8.0.0-preview.7.23375.6" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.4.0-preview.18571.3" />
     <PackageReference Include="Rocksmith2014.XML" Version="1.1.1" />
@@ -4960,16 +5767,17 @@
     <PackageReference Include="SpotifyAPI.Web.Auth" Version="7.1.1" />
     <PackageReference Include="SQLite" Version="3.13.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
-    <PackageReference Include="System.Data.OleDb" Version="9.0.0-preview.3.24172.9" />
+    <PackageReference Include="System.Data.OleDb" Version="9.0.0-rc.1.24431.7" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
     <PackageReference Include="System.Security.Principal.Windows" Version="5.0.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.0-rc.1.24431.7" />
     <PackageReference Include="Unosquare.Swan.Lite" Version="3.1.0" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.0-preview.3.24172.9" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.0-rc.1.24431.7" />
   </ItemGroup>
   <PropertyGroup Condition="'$(OutDir)'==''">
-  <OutDir>bin\$(Configuration)\$(TargetFramework)\</OutDir>
+  <OutDir>C:\GitHub\bin\</OutDir>
 </PropertyGroup>
   <PropertyGroup>
     <UseWPF>True</UseWPF>
@@ -4993,6 +5801,7 @@
     <RepositoryUrl>https://github.com/catara/rocksmith-custom-song-toolkit/tree/Main</RepositoryUrl>
     <PackageProjectUrl>https://github.com/catara/rocksmith-custom-song-toolkit/tree/Main</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
+    <SupportedOSPlatformVersion>10.0.26100.0</SupportedOSPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>False</Optimize>

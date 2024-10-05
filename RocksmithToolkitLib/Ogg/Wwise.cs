@@ -9,6 +9,7 @@ using ICSharpCode.SharpZipLib.BZip2;
 using ICSharpCode.SharpZipLib.Tar;
 using System.Diagnostics;
 using RocksmithToolkitLib.XmlRepository;
+using Windows.Networking.Sockets;
 
 namespace RocksmithToolkitLib.Ogg
 {
@@ -29,29 +30,47 @@ namespace RocksmithToolkitLib.Ogg
             {
                 var wwiseCLIPath = GetWwisePath();
                 var wwiseTemplateDir = LoadWwiseTemplate(wavSourcePath, audioQuality);
-
-                // console writes may be captured by starting toolkit in a command window an redirecting the output to a file
-                // e.g., ‘RocksmithToolkitGUI.exe >console.log’ 
-                Console.WriteLine("WwiseCLI:\n\'" + wwiseCLIPath + "\'\n\nTemplate:\n\'" + wwiseTemplateDir + "\'");
-
-                // apply magicDust to WwiseCLI.exe to force conversions (known Wwise2010 issue)
-                ExternalApps.Wav2Wem(wwiseCLIPath, wwiseTemplateDir, 10);
-                GetWwiseFiles(destinationPath, wwiseTemplateDir);
+                try
+                {
+                    // console writes may be captured by starting toolkit in a command window an redirecting the output to a file
+                    // e.g., ‘RocksmithToolkitGUI.exe >console.log’ 
+                    Console.WriteLine("WwiseCLI:\n\'" + wwiseCLIPath + "\'\n\nTemplate:\n\'" + wwiseTemplateDir + "\'");
+                    //System.Threading.Thread.Sleep(50);
+                    // apply magicDust to WwiseCLI.exe to force conversions (known Wwise2010 issue)
+                    ExternalApps.Wav2Wem(wwiseCLIPath, wwiseTemplateDir, 10);
+                    GetWwiseFiles(destinationPath, wwiseTemplateDir);
+                }
+                catch (Exception ex)
+                {
+                    //overridden ex, can't get real ex/msg, use log + throw;
+                    try
+                    {
+                        System.Threading.Thread.Sleep(5000);
+                        ExternalApps.Wav2Wem(wwiseCLIPath, wwiseTemplateDir, 10);
+                        System.Threading.Thread.Sleep(5000);
+                        GetWwiseFiles(destinationPath, wwiseTemplateDir);
+                        //throw new Exception("Wwise audio file conversion failed: " + ex.Message + Environment.NewLine);
+                    }
+                    catch (Exception exx)
+                    {
+                        System.Threading.Thread.Sleep(15000);
+                        GetWwiseFiles(destinationPath, wwiseTemplateDir);
+                    }
+                }
             }
             catch (Exception ex)
             {
-                //overridden ex, can't get real ex/msg, use log + throw;
-                throw new Exception("Wwise audio file conversion failed: " + ex.Message + Environment.NewLine);
+                ;
             }
         }
 
         public static string GetWwisePath()
         {
-            // support for Wwise v2013.2.x v2014.1.x 2015.1.x or 2016.2.x series
+            // support for Wwise v20xx series
             // Wwise may not be installed in the default location so use the Configuration Wwise Path if entered
             var wwiseRoot = !Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\" + ConfigRepository.Instance()["dlcm_localwwise"] + "\\" + ConfigRepository.Instance()["dlcm_wwise"])
                 ? ConfigRepository.Instance()["general_wwisepath"]
-                : (AppDomain.CurrentDomain.BaseDirectory + "\\" + ConfigRepository.Instance()["dlcm_localwwise"] + "\\" + ConfigRepository.Instance()["dlcm_wwise"]);
+                : (AppDomain.CurrentDomain.BaseDirectory + "\\" + ConfigRepository.Instance()["dlcm_localwwise"] + "\\" + ConfigRepository.Instance()["dlcm_wwise"]);////
             // otherwise use the WWISEROOT Environmental Variable
             if (String.IsNullOrEmpty(ConfigRepository.Instance()["general_wwisepath"]))
                 wwiseRoot = Environment.GetEnvironmentVariable("WWISEROOT");
@@ -59,7 +78,7 @@ namespace RocksmithToolkitLib.Ogg
             if (String.IsNullOrEmpty(wwiseRoot))
                 throw new FileNotFoundException("Could not find Audiokinetic Wwise installation." + Environment.NewLine +
                     "Please confirm that either Wwise v2013.2.x v2014.1.x 2015.1.x or 2016.2.xx or 2017.1.xx or" +
-                    " 2018.1.x or 2019.2.x or 2021.1.13(latest w CLI support) or 2022.1.x or 2023.1.beta series is installed." + Environment.NewLine);
+                    " 2018.1.x or 2019.2.x or 2021.1.13(latest w CLI support) or 2022.1.x or 2023.1.x or 2024.1.x beta series is installed." + Environment.NewLine);
 
             var wwiseCLIPath = Directory.EnumerateFiles(wwiseRoot, "WwiseC*.exe", SearchOption.AllDirectories);
             if (!wwiseCLIPath.Any())
@@ -72,7 +91,7 @@ namespace RocksmithToolkitLib.Ogg
             if (!wwiseCLIPath.Any())
                 throw new FileNotFoundException("Could not find WwiseCLI.exe/WwiseConsole.exe in " + wwiseRoot + Environment.NewLine +
                     "Please confirm that either Wwise v2013.2.x v2014.1.x 2015.1.x or 2016.2.x or 2017.1.xx or" +
-                    " 2018.1.x or 2019.2.xx (latest with no issues on PS3) or 2021.1.13(latest w CLI support) or 2022.1.x or 2023.1.beta series is installed." + Environment.NewLine);
+                    " 2018.1.x or 2019.2.xx (latest with no issues on PS3) or 2021.1.13(latest w CLI support) or 2022.1.x or 2023.1.x or 2024.1.x beta series is installed." + Environment.NewLine);
 
             //win32 = 32bit x64 = 64bit
             string wwiseCLIexe = wwiseCLIPath.AsParallel().SingleOrDefault(e => e.Contains("Authoring\\Win32"));
@@ -109,6 +128,8 @@ namespace RocksmithToolkitLib.Ogg
                 Selected = OggFile.WwiseVersion.Wwise2022;
             else if (wwiseVersion.StartsWith("2023"))
                 Selected = OggFile.WwiseVersion.Wwise2023;
+            else if (wwiseVersion.StartsWith("2024"))
+                Selected = OggFile.WwiseVersion.Wwise2024;
             // add support for new versions here, code is expandable
             //else if (wwiseVersion.StartsWith("xxxx.x"))
             //    Selected = OggFile.WwiseVersion.WwiseXXXX;
@@ -118,8 +139,8 @@ namespace RocksmithToolkitLib.Ogg
             if (Selected == OggFile.WwiseVersion.None)
                 throw new FileNotFoundException("You have no compatible version of Audiokinetic Wwise installed." + Environment.NewLine +
                     "Install supportend Wwise version, which are v2013.2.x || v2014.1.x || v2015.1.x || v2016.2.x series || v2017.1.x series" +
-                    " || v2018.1.x series || v2019.2.x series || 2021.1.13(latest w CLI support) || v2022.1.x series || 2023.1.beta  " + Environment.NewLine +
-                    "if you would like to use toolkit's Wwise autoconvert feature.   Did you remember to set the Wwise" + Environment.NewLine +
+                    " || v2018.1.x series || v2019.2.x series (last not generating ps3 weird tape-delay issues) || 2021.1.13(latest w CLI support) || v2022.1.x series || 2023.1.6 series || 2024.1.x beta series " + Environment.NewLine +
+                    "if you would like to use toolkit's Wwise autoconvert feature. Did you remember to set the Wwise" + Environment.NewLine +
                     "installation path in the toolkit General Config menu?" + Environment.NewLine);
             return wwiseCLIexe;
         }
@@ -135,9 +156,18 @@ namespace RocksmithToolkitLib.Ogg
             // TODO: add Wwise template validation to ExternalApps
             var templateDir = Path.Combine(ExternalApps.TOOLKIT_ROOT, "Template");
 
+            // for fewer headaches ... start with fresh Wwise 2023 Template
+            if (Directory.Exists(templateDir)) IOExtension.DeleteDirectory(templateDir, true);///bcapi && Selected == OggFile.WwiseVersion.Wwise2019
+            ExtractTemplate(Path.Combine(ExternalApps.TOOLKIT_ROOT, Selected + ".tar.bz2"));
+            if (Directory.Exists(templateDir + Path.GetFileName(Path.GetDirectoryName(sourcePath)) + Path.GetFileName(sourcePath)))
+                IOExtension.DeleteDirectory(templateDir + Path.GetFileName(Path.GetDirectoryName(sourcePath)) + Path.GetFileName(sourcePath), true);
+            Directory.Move(templateDir, templateDir + Path.GetFileName(Path.GetDirectoryName(sourcePath)) + Path.GetFileName(sourcePath));//some wem files get locked maybe a new template directory would help
+            templateDir = templateDir + Path.GetFileName(Path.GetDirectoryName(sourcePath)) + Path.GetFileName(sourcePath);
+
             // Unpack required template here, based on Wwise version installed.
             switch (Selected)
             {
+
                 // add legacy support for RS1 CDLC here
                 case OggFile.WwiseVersion.Wwise2010:
                 // add support for new versions of Wwise for RS2014 here
@@ -150,13 +180,8 @@ namespace RocksmithToolkitLib.Ogg
                 case OggFile.WwiseVersion.Wwise2019:
                 case OggFile.WwiseVersion.Wwise2021:
                 case OggFile.WwiseVersion.Wwise2022:
-                case OggFile.WwiseVersion.Wwise2023: 
-                    // for fewer headaches ... start with fresh Wwise 2021 Template
-                    if (Directory.Exists(templateDir) && Selected == OggFile.WwiseVersion.Wwise2019) ///bcapi
-                        IOExtension.DeleteDirectory(templateDir, true);
-
-
-                    ExtractTemplate(Path.Combine(ExternalApps.TOOLKIT_ROOT, Selected + ".tar.bz2"));
+                case OggFile.WwiseVersion.Wwise2023:
+                case OggFile.WwiseVersion.Wwise2024:
                     break;
                 default:
                     throw new FileNotFoundException("<ERROR> Wwise path is incompatible." + Environment.NewLine);
@@ -245,6 +270,7 @@ namespace RocksmithToolkitLib.Ogg
             var wemDir = Path.Combine(".cache", "Windows", "SFX"); //could be platform dependent like "Mac" or "PS3"
             var wemPath = Path.Combine(wwiseTemplateDir, wemDir);
             var wemPathInfo = new DirectoryInfo(wemPath);
+            var ww2024 = new DirectoryInfo(Path.Combine(wwiseTemplateDir, ".cache"));
             Console.WriteLine("Wwise '.cache': " + wemPath);
 
             if (!wemPathInfo.Exists)
@@ -256,10 +282,12 @@ namespace RocksmithToolkitLib.Ogg
 
             var srcPaths = wemPathInfo.EnumerateFiles("*", SearchOption.TopDirectoryOnly).Where(fi => fi.FullName.ToLower().EndsWith(fileExt)).ToList();
             if (!srcPaths.Any())
+                srcPaths = ww2024.EnumerateFiles("*", SearchOption.AllDirectories).Where(fi => fi.FullName.ToLower().EndsWith(fileExt)).ToList();
+            if (!srcPaths.Any())
                 throw new Exception("<ERROR> Did not find any converted Wwise audio files ..." + Environment.NewLine);
 
-            if ( srcPaths.Count < 2) //Selected != OggFile.WwiseVersion.Wwise2019 &&
-                throw new Exception("<ERROR> Did not find converted Wwise audio and preview files (i.e. "+srcPaths.Count+"/min2)..." + Environment.NewLine);
+            if (srcPaths.Count < 2) //Selected != OggFile.WwiseVersion.Wwise2019 &&
+                ;// throw new Exception("<ERROR> Did not find converted Wwise audio and preview files (i.e. " + srcPaths.Count + "/min2)..." + Environment.NewLine);
 
             var destPreviewPath = string.Format("{0}_preview.wem", destinationPath.Substring(0, destinationPath.LastIndexOf(".", StringComparison.Ordinal)));
             foreach (var srcPath in srcPaths)

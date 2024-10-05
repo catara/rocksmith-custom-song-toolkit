@@ -33,6 +33,8 @@ namespace RocksmithToolkitGUI.DLCManager
             components = new System.ComponentModel.Container();
             cbx_Export = new ComboBox();
             panel2 = new Panel();
+            chbx_ShowMessages = new CheckBox();
+            chbx_Upload2CF = new CheckBox();
             btn_Debug = new Button();
             chbx_FilterCompound = new CheckBox();
             rbtn_Population_PackNO = new CheckBox();
@@ -150,7 +152,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // cbx_Export
             // 
             cbx_Export.FormattingEnabled = true;
-            cbx_Export.Items.AddRange(new object[] { "Excel", "WebPage", "for a CustomForge upload" });
+            cbx_Export.Items.AddRange(new object[] { "Excel", "WebPage", "HTML for a CustomForge upload" });
             cbx_Export.Location = new System.Drawing.Point(128, 186);
             cbx_Export.Margin = new Padding(2);
             cbx_Export.Name = "cbx_Export";
@@ -160,6 +162,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // panel2
             // 
+            panel2.Controls.Add(chbx_ShowMessages);
+            panel2.Controls.Add(chbx_Upload2CF);
             panel2.Controls.Add(btn_Debug);
             panel2.Controls.Add(chbx_FilterCompound);
             panel2.Controls.Add(rbtn_Population_PackNO);
@@ -184,6 +188,30 @@ namespace RocksmithToolkitGUI.DLCManager
             panel2.Name = "panel2";
             panel2.Size = new System.Drawing.Size(382, 82);
             panel2.TabIndex = 204;
+            // 
+            // chbx_ShowMessages
+            // 
+            chbx_ShowMessages.Font = new System.Drawing.Font("Calibri", 8F);
+            chbx_ShowMessages.Location = new System.Drawing.Point(347, 3);
+            chbx_ShowMessages.Margin = new Padding(2);
+            chbx_ShowMessages.Name = "chbx_ShowMessages";
+            chbx_ShowMessages.Size = new System.Drawing.Size(42, 18);
+            chbx_ShowMessages.TabIndex = 439;
+            chbx_ShowMessages.Text = "SM";
+            toolTip1.SetToolTip(chbx_ShowMessages, "Show Messages (e.g. DB Type selection, OK only informal mss) if more than ONCE a day or not same machine or user)");
+            chbx_ShowMessages.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Upload2CF
+            // 
+            chbx_Upload2CF.Font = new System.Drawing.Font("Calibri", 8F);
+            chbx_Upload2CF.Location = new System.Drawing.Point(313, 3);
+            chbx_Upload2CF.Margin = new Padding(2);
+            chbx_Upload2CF.Name = "chbx_Upload2CF";
+            chbx_Upload2CF.Size = new System.Drawing.Size(42, 18);
+            chbx_Upload2CF.TabIndex = 438;
+            chbx_Upload2CF.Text = "CF";
+            toolTip1.SetToolTip(chbx_Upload2CF, "For CustomForge uploads don't  manipulate metadata and create clean songs when Exporting for CF upload");
+            chbx_Upload2CF.UseVisualStyleBackColor = true;
             // 
             // btn_Debug
             // 
@@ -306,7 +334,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_GoRepack.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
             helpProvider1.SetHelpKeyword(btn_GoRepack, "Open the folder contaning Repack-ed CDLCs.");
-            btn_GoRepack.Location = new System.Drawing.Point(294, 4);
+            btn_GoRepack.Location = new System.Drawing.Point(289, 4);
             btn_GoRepack.Margin = new Padding(2);
             btn_GoRepack.Name = "btn_GoRepack";
             helpProvider1.SetShowHelp(btn_GoRepack, true);
@@ -419,7 +447,7 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_Rebuild.AutoSize = true;
             chbx_Rebuild.Enabled = false;
             chbx_Rebuild.Font = new System.Drawing.Font("Calibri", 8F);
-            chbx_Rebuild.Location = new System.Drawing.Point(319, 5);
+            chbx_Rebuild.Location = new System.Drawing.Point(333, 44);
             chbx_Rebuild.Margin = new Padding(2);
             chbx_Rebuild.Name = "chbx_Rebuild";
             chbx_Rebuild.Size = new System.Drawing.Size(62, 17);
@@ -456,7 +484,7 @@ namespace RocksmithToolkitGUI.DLCManager
             Export_To.Size = new System.Drawing.Size(56, 26);
             Export_To.TabIndex = 56;
             Export_To.Text = "Export as";
-            toolTip1.SetToolTip(Export_To, "Export Access Db and connected files as ...");
+            toolTip1.SetToolTip(Export_To, "Summarise and Export to external file formats HTML/<Excel>");
             Export_To.UseVisualStyleBackColor = false;
             Export_To.Click += Export_To_Click;
             // 
@@ -525,7 +553,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             cbx_Artist_Sort.DropDownWidth = 280;
             cbx_Artist_Sort.FormattingEnabled = true;
-            cbx_Artist_Sort.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Capo>", "<CapoFret>", "<Found on CF>", "<Uploaded on CF>" });
+            cbx_Artist_Sort.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Has/Is_Alternate>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Attributes>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Multi Track>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Slide>", "<Capo>", "<CapoFret>", "<AI Tracks Available>", "<Alternate Track>", "<A440>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Found on CF>", "<Uploaded on CF>", "<CF Author>", "<Based on RB>", "<Based on_CF>", "<Based on GP>", "<Based on Tabs>", "<Based on Youtube>" });
             cbx_Artist_Sort.Location = new System.Drawing.Point(398, 268);
             cbx_Artist_Sort.Margin = new Padding(2);
             cbx_Artist_Sort.Name = "cbx_Artist_Sort";
@@ -698,7 +726,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             cbx_Artist.DropDownWidth = 280;
             cbx_Artist.FormattingEnabled = true;
-            cbx_Artist.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Capo>", "<CapoFret>", "<Found on CF>", "<Uploaded on CF>" });
+            cbx_Artist.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Has/Is_Alternate>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Attributes>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Multi Track>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Slide>", "<Capo>", "<CapoFret>", "<AI Tracks Available>", "<Alternate Track>", "<A440>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Found on CF>", "<Uploaded on CF>", "<CF Author>", "<Based on RB>", "<Based on_CF>", "<Based on GP>", "<Based on Tabs>", "<Based on Youtube>" });
             cbx_Artist.Location = new System.Drawing.Point(398, 250);
             cbx_Artist.Margin = new Padding(2);
             cbx_Artist.Name = "cbx_Artist";
@@ -719,7 +747,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             cbx_Title.DropDownWidth = 280;
             cbx_Title.FormattingEnabled = true;
-            cbx_Title.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Capo>", "<CapoFret>", "<Found on CF>", "<Uploaded on CF>" });
+            cbx_Title.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Has/Is_Alternate>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Attributes>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Multi Track>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Slide>", "<Capo>", "<CapoFret>", "<AI Tracks Available>", "<Alternate Track>", "<A440>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Found on CF>", "<Uploaded on CF>", "<CF Author>", "<Based on RB>", "<Based on_CF>", "<Based on GP>", "<Based on Tabs>", "<Based on Youtube>" });
             cbx_Title.Location = new System.Drawing.Point(398, 210);
             cbx_Title.Margin = new Padding(2);
             cbx_Title.Name = "cbx_Title";
@@ -773,7 +801,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             cbx_File_Name.DropDownWidth = 280;
             cbx_File_Name.FormattingEnabled = true;
-            cbx_File_Name.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Capo>", "<CapoFret>", "<Found on CF>", "<Uploaded on CF>" });
+            cbx_File_Name.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Has/Is_Alternate>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Attributes>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Multi Track>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Slide>", "<Capo>", "<CapoFret>", "<AI Tracks Available>", "<Alternate Track>", "<A440>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Found on CF>", "<Uploaded on CF>", "<CF Author>", "<Based on RB>", "<Based on_CF>", "<Based on GP>", "<Based on Tabs>", "<Based on Youtube>" });
             cbx_File_Name.Location = new System.Drawing.Point(398, 329);
             cbx_File_Name.Margin = new Padding(2);
             cbx_File_Name.Name = "cbx_File_Name";
@@ -794,7 +822,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             cbx_Album.DropDownWidth = 280;
             cbx_Album.FormattingEnabled = true;
-            cbx_Album.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Capo>", "<CapoFret>", "<Found on CF>", "<Uploaded on CF>" });
+            cbx_Album.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Has/Is_Alternate>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Attributes>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Multi Track>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Slide>", "<Capo>", "<CapoFret>", "<AI Tracks Available>", "<Alternate Track>", "<A440>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Found on CF>", "<Uploaded on CF>", "<CF Author>", "<Based on RB>", "<Based on_CF>", "<Based on GP>", "<Based on Tabs>", "<Based on Youtube>" });
             cbx_Album.Location = new System.Drawing.Point(398, 287);
             cbx_Album.Margin = new Padding(2);
             cbx_Album.Name = "cbx_Album";
@@ -815,7 +843,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             cbx_Title_Sort.DropDownWidth = 280;
             cbx_Title_Sort.FormattingEnabled = true;
-            cbx_Title_Sort.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Capo>", "<CapoFret>", "<Found on CF>", "<Uploaded on CF>" });
+            cbx_Title_Sort.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Has/Is_Alternate>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Attributes>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Multi Track>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Slide>", "<Capo>", "<CapoFret>", "<AI Tracks Available>", "<Alternate Track>", "<A440>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Found on CF>", "<Uploaded on CF>", "<CF Author>", "<Based on RB>", "<Based on_CF>", "<Based on GP>", "<Based on Tabs>", "<Based on Youtube>" });
             cbx_Title_Sort.Location = new System.Drawing.Point(398, 230);
             cbx_Title_Sort.Margin = new Padding(2);
             cbx_Title_Sort.Name = "cbx_Title_Sort";
@@ -985,7 +1013,7 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_OpenMainDB.Text = "Open Main DB";
             toolTip1.SetToolTip(btn_OpenMainDB, "Main DB Listing All Imported CDLC");
             btn_OpenMainDB.UseVisualStyleBackColor = false;
-            btn_OpenMainDB.Click += btn_DecompressAll_Click;
+            btn_OpenMainDB.Click += btn_OpenMainDB_Click;
             // 
             // lbl_RocksmithDLCPath
             // 
@@ -1198,7 +1226,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_CopyDefaultDBtoTemp
             // 
             btn_CopyDefaultDBtoTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            btn_CopyDefaultDBtoTemp.Location = new System.Drawing.Point(304, 44);
+            btn_CopyDefaultDBtoTemp.Location = new System.Drawing.Point(304, 45);
             btn_CopyDefaultDBtoTemp.Margin = new Padding(0);
             btn_CopyDefaultDBtoTemp.Name = "btn_CopyDefaultDBtoTemp";
             btn_CopyDefaultDBtoTemp.Size = new System.Drawing.Size(18, 16);
@@ -1360,7 +1388,7 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_Settings.AutoSize = true;
             lbl_Settings.Font = new System.Drawing.Font("Calibri", 9F);
             lbl_Settings.ForeColor = System.Drawing.SystemColors.ControlText;
-            lbl_Settings.Location = new System.Drawing.Point(327, 392);
+            lbl_Settings.Location = new System.Drawing.Point(292, 468);
             lbl_Settings.Margin = new Padding(2, 0, 2, 0);
             lbl_Settings.Name = "lbl_Settings";
             lbl_Settings.Size = new System.Drawing.Size(112, 14);
@@ -1395,7 +1423,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             cbx_Lyric_Info.DropDownWidth = 280;
             cbx_Lyric_Info.FormattingEnabled = true;
-            cbx_Lyric_Info.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Capo>", "<CapoFret>", "<Found on CF>", "<Uploaded on CF>" });
+            cbx_Lyric_Info.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Has/Is_Alternate>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Attributes>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Multi Track>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Slide>", "<Capo>", "<CapoFret>", "<AI Tracks Available>", "<Alternate Track>", "<A440>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Found on CF>", "<Uploaded on CF>", "<CF Author>", "<Based on RB>", "<Based on_CF>", "<Based on GP>", "<Based on Tabs>", "<Based on Youtube>" });
             cbx_Lyric_Info.Location = new System.Drawing.Point(398, 351);
             cbx_Lyric_Info.Margin = new Padding(2);
             cbx_Lyric_Info.Name = "cbx_Lyric_Info";
@@ -1441,7 +1469,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             cbx_Album_Sort.DropDownWidth = 280;
             cbx_Album_Sort.FormattingEnabled = true;
-            cbx_Album_Sort.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Capo>", "<CapoFret>", "<Found on CF>", "<Uploaded on CF>" });
+            cbx_Album_Sort.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Has/Is_Alternate>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Attributes>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Multi Track>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Slide>", "<Capo>", "<CapoFret>", "<AI Tracks Available>", "<Alternate Track>", "<A440>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Found on CF>", "<Uploaded on CF>", "<CF Author>", "<Based on RB>", "<Based on_CF>", "<Based on GP>", "<Based on Tabs>", "<Based on Youtube>" });
             cbx_Album_Sort.Location = new System.Drawing.Point(398, 309);
             cbx_Album_Sort.Margin = new Padding(2);
             cbx_Album_Sort.Name = "cbx_Album_Sort";
@@ -1485,7 +1513,6 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             lbGroups.Font = new System.Drawing.Font("Segoe UI", 7F);
             lbGroups.FormattingEnabled = true;
-            lbGroups.ItemHeight = 12;
             lbGroups.Items.AddRange(new object[] { "test1", "test2", "test 3", "test4" });
             lbGroups.Location = new System.Drawing.Point(6, 485);
             lbGroups.Name = "lbGroups";
@@ -1716,6 +1743,8 @@ namespace RocksmithToolkitGUI.DLCManager
         private Button btn_ApplyMultiFilters;
         private Button button2;
         private Button btn_DistribNotes;
+        private CheckBox chbx_Upload2CF;
+        private CheckBox chbx_ShowMessages;
         //public static ProgressBar pB_ReadDLCs;
     }
 }

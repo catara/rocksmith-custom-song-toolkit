@@ -1,0 +1,56 @@
+{
+    "version": 1,
+    "definitions": {
+        "viewTypeToName": {
+            "type": "object",
+            "description": "Association between a view name and its display name.",
+            "properties": {
+                "viewName": {
+                    "type": "string",
+                    "description": "The type name of the view."
+                },
+                "viewDisplayName": {
+                    "type": "string",
+                    "description": "The display name of the view."
+                }
+            },
+            "additionalProperties": false
+        },
+        "viewInstance": {
+            "type": "object",
+            "description": "A Wwise view instance part of a layout.",
+            "properties": {
+                "viewName": {
+                    "type": "string",
+                    "description": "Name of the view instance."
+                },
+                "viewID": {
+                    "$ref": "common_definitions.json#/definitions/guid",
+                    "description": "ID of the view instance."
+                },
+                "viewIsDocked": {
+                    "type": "boolean",
+                    "description": "True if the view is docked."
+                },
+                "viewDisplayName": {
+                    "type": "string",
+                    "description": "Display name of the view instance."
+                }
+            },
+            "additionalProperties": false
+        },
+        "widgetAttributeEntry": {
+            "type": "object",
+            "description": "The state of an attribute.",
+            "properties": {
+                "attribute": {
+                    "type": "string",
+                    "description": "The name of the attribute."
+                },
+                "value": {
+                    "description": "The value of the attribute."
+                }
+            }
+        }
+    }
+}

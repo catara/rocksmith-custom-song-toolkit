@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-105,-4)">
+        <g id="Filter_Properties_Disabled" transform="matrix(1,0,0,1,106,4)">
+            <g opacity="0.3">
+                <g>
+                    <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(0.95,0,0,0.95,-1,-1.13687e-13)">
+                        <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+                    </g>
+                    <g transform="matrix(1,0,0,1,-106,-4)">
+                        <path d="M122,12.49C122,12.22 121.78,12 121.51,12L117,12L115,14.503L115,20.51C115,20.78 115.22,21 115.49,21L121.51,21C121.78,21 122,20.78 122,20.51L122,12.49ZM121,18L116,18L116,19L121,19L121,18ZM121,16L116,16L116,17L121,17L121,16ZM121,14L116,14L116,15L121,15L121,14Z" style="fill-opacity:0.45;"/>
+                    </g>
+                    <g transform="matrix(2.4,0,0,1.71429,-1966.8,-282.571)">
+                        <path d="M821.583,169.609L821.583,173L822.417,174.75L822.417,169.609L824.5,166.692L824.5,166L819.5,166L819.5,166.692L821.583,169.609Z" style="fill-opacity:0.45;"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

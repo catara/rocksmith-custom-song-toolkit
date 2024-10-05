@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 9 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-279,-54)">
+        <g transform="matrix(0.75,0,0,0.75,-596.75,192.5)">
+            <g transform="matrix(0.642857,0,0,0.642857,633.024,-25.6667)">
+                <g id="Dialog_TabClose_Hover">
+                    <g id="Close-Icon" serif:id="Close Icon">
+                        <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(0.933333,0,0,0.933333,831.667,-247.333)">
+                            <rect x="0" y="0" width="20" height="20" style="fill:none;"/>
+                        </g>
+                        <path d="M841.007,-239.354L846.925,-245.259L848.259,-245.259L848.259,-243.661L842.475,-237.889L848.265,-232.111L848.259,-230.741L846.715,-230.728L841.008,-236.424L835.314,-230.741L833.741,-230.741L833.741,-232.102L839.54,-237.889L833.741,-243.677L833.741,-245.259L835.089,-245.259L841.007,-239.354Z" style="fill:rgb(36,36,36);"/>
+                        <path d="M841.007,-239.354L846.925,-245.259L848.259,-245.259L848.259,-243.661L842.475,-237.889L848.265,-232.111L848.259,-230.741L846.715,-230.728L841.008,-236.424L835.314,-230.741L833.741,-230.741L833.741,-232.102L839.54,-237.889L833.741,-243.677L833.741,-245.259L835.089,-245.259L841.007,-239.354Z" style="fill:white;fill-opacity:0.8;"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

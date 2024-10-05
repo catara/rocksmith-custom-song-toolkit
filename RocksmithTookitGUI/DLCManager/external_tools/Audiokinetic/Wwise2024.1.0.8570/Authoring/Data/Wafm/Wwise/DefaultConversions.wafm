@@ -1,0 +1,106 @@
+{
+  "ak.dlg.PCMParams": {
+    "Version": 1,
+    "Type": "Dialog",
+    "RootWidget": "MainDialog",
+    "Metadata": {},
+    "Widgets": [
+      {
+        "Name": "MaxBitDepthLabel",
+        "Type": "Label",
+        "Text": "Max Bit Depth",
+        "TextStyle": [
+          "VerticallyCentered"
+        ]
+      },
+      {
+        "Name": "MaxBitDepthCombo",
+        "Type": "ComboBox",
+        "Items": [
+          "16",
+          "24"
+        ]
+      },
+      {
+        "Name": "OkButton",
+        "Type": "PushButton",
+        "Text": "OK",
+        "TooltipText": "OK",
+        "ModalResult": "Ok"
+      },
+      {
+        "Name": "CancelButton",
+        "Type": "PushButton",
+        "Text": "Cancel",
+        "TooltipText": "Cancel the dialog",
+        "ModalResult": "Cancel"
+      }
+    ],
+    "Layouts": {
+      "Settings": [
+        {
+          "Name": "MainDialog",
+          "Type": "AnchorLayout",
+          "Width": 220,
+          "Height": 100,
+          "MinWidth": 220,
+          "MinHeight": 100,
+          "Children": [
+            {
+              "Name": "MaxBitDepthLabel",
+              "Positions": [
+                20,
+                22,
+                86,
+                20
+              ],
+              "AnchorSets": [
+                "side-left",
+                "side-top"
+              ]
+            },
+            {
+              "Name": "MaxBitDepthCombo",
+              "Positions": [
+                108,
+                22,
+                100,
+                20
+              ],
+              "AnchorSets": [
+                "side-left",
+                "side-top"
+              ]
+            },
+            {
+              "Name": "OkButton",
+              "Positions": [
+                32,
+                70,
+                80,
+                28
+              ],
+              "AnchorSets": [
+                "side-right",
+                "side-bottom"
+              ]
+            },
+            {
+              "Name": "CancelButton",
+              "Positions": [
+                120,
+                70,
+                80,
+                28
+              ],
+              "AnchorSets": [
+                "side-right",
+                "side-bottom"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,11 @@
+
+<h2>Use game-defined aux sends</h2>
+<p>使用游戏定义的辅助发送。决定对象是否使用关联游戏对象的 Game-Defined Auxiliary Send。Game-Defined Auxiliary Send 设置包括 Auxiliary Bus 和 Send Volume。</p>
+<p>若启用，则对象受由以下函数从游戏发送的值影响：</p>
+<ul>
+<li><a href="https://www.audiokinetic.com/library/?source=SDK&amp;id=ak__soundengine__setgameobjectauxsendvalues.html">AK::SoundEngine::SetGameObjectAuxSendValues()</a></li>
+<li><a href="https://www.audiokinetic.com/library/?source=SDK&amp;id=ak__soundengine__setgameobjectoutputbusvolume.html">AK::SoundEngine::SetGameObjectOutputBusVolume()</a></li>
+</ul>
+<p>另外，若游戏已初始化 Spatial Audio 并将 Room 和 Portal 数据发送到 Wwise，则此选项决定是否要将对象发送到基于游戏对象的位置为 Room 和 Portal 定义的 Auxiliary Bus。</p>
+<p>有关此选项的更多详细信息，请参阅 <a href="HelpDoc=understanding_sends">理解发送</a> 页面。</p>
+<p>Default value: false<br/></p>

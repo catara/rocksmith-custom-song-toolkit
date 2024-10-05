@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-341,-44)">
+        <g id="General_SmallAddSoundBank_Pressed" transform="matrix(1,0,0,1,66,-21)">
+            <g id="Base-Block" serif:id="Base Block" transform="matrix(1,0,0,1,278,68)">
+                <g transform="matrix(1,0,0,1,-40,-25)">
+                    <path d="M55,27.1C55,25.941 54.059,25 52.9,25L42.1,25C40.941,25 40,25.941 40,27.1L40,37.9C40,39.059 40.941,40 42.1,40L52.9,40C54.059,40 55,39.059 55,37.9L55,27.1Z" style="fill-opacity:0;"/>
+                </g>
+                <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(1,0,0,1,-3,-3)">
+                    <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+                </g>
+            </g>
+            <g>
+                <g transform="matrix(1,0,0,1,277,66)">
+                    <g id="ObjectIcons_Soundbank_nor">
+                        <g id="Icons">
+                            <g transform="matrix(1,0,0,1,-40,-25)">
+                                <g id="Base-Block1" serif:id="Base Block">
+                                    <path d="M55,27.1C55,25.941 54.059,25 52.9,25L42.1,25C40.941,25 40,25.941 40,27.1L40,37.9C40,39.059 40.941,40 42.1,40L52.9,40C54.059,40 55,39.059 55,37.9L55,27.1Z" style="fill-opacity:0;"/>
+                                </g>
+                            </g>
+                            <g transform="matrix(1,0,0,1,-308,-85)">
+                                <path d="M324,93L323,93L323,94L324,94L324,93ZM324,90L323,90L323,91L324,91L324,90ZM310,93L309,93L309,94L310,94L310,93ZM310,90L309,90L309,91L310,91L310,90ZM310,96L309,96L309,97L310,97L310,96Z"/>
+                            </g>
+                            <path d="M8.499,15L4.54,15C3.69,15 3,14.31 3,13.46L3,3.54C3,2.69 3.69,2 4.54,2L12.46,2C13.31,2 14,2.69 14,3.54L14,9.499L11.942,9.499C11.741,8.177 10.907,7.766 8.529,7.756C7.252,7.751 6.422,7.748 6.406,6.552C6.393,5.516 7.382,5.29 8.551,5.29C10.158,5.29 10.492,5.447 10.497,6.552L11.861,6.552C11.841,4.853 11.189,3.898 8.489,3.898C5.6,3.898 4.883,5.002 4.883,6.552C4.883,8.103 5.695,9.182 8.462,9.154C9.549,9.143 10.085,9.265 10.324,9.608C9.412,9.882 8.714,10.651 8.542,11.602L8.481,11.604C6.611,11.604 6.423,11.222 6.406,10.341L5.042,10.341C5.021,11.916 5.528,12.986 8.499,12.999L8.499,15Z"/>
+                            <g transform="matrix(1,0,0,1,-308,-85)">
+                                <path d="M322,90L323,90L323,91L322,91L322,90ZM322,93L323,93L323,94L322,94L322,93ZM310,90L311,90L311,91L310,91L310,90ZM310,93L311,93L311,94L310,94L310,93ZM310,96L311,96L311,97L310,97L310,96Z" style="fill-opacity:0.6;"/>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+                <g transform="matrix(1,0,0,1,1,1)">
+                    <path d="M293,77.75C293,76.784 292.216,76 291.25,76L287.75,76C286.784,76 286,76.784 286,77.75L286,81.25C286,82.216 286.784,83 287.75,83L291.25,83C292.216,83 293,82.216 293,81.25L293,77.75ZM290,79L292,79L292,80L290,80L290,82L289,82L289,80L287,80L287,79L289,79L289,77L290,77L290,79Z"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -29,6 +29,7 @@ namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class Standardization : Form
     {
+        public bool GroupChanged = false;
         //public Standardization(string txt_DBFolder, string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, OleDbConnection cnnb, string artist, SQLiteConnection cnnz)
         public Standardization(string txt_DBFolder, string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete, OleDbConnection cnnb, string artist, SQLite.SQLiteConnection cnnc)
         {
@@ -80,30 +81,30 @@ namespace RocksmithToolkitGUI.DLCManager
                     i = databox.SelectedCells[0].RowIndex;
                 do
                 {
-                    //DataViewGrid.SelectedCells[/*0*/].RowIndex
                     if (databox.Rows[i].Cells[3].Value.ToString() == Artist)
                     {
-                        //databox.Rows[0].Selected = false; databox.Rows[i];
                         databox.CurrentCell = databox.Rows[i].Cells[0];
-                        //ChangeRow();
                         break;
                     }
                     i++;
                 }
                 while (i > 0 && databox.RowCount > 1 && i < databox.RowCount);
             }
+            if (sender is not null)
+            {
+                chbx_a1.Text = c("dlcm_CustomToAtribute_1"); if (c("dlcm_CustomToAtribute_1") != "") chbx_a1.Enabled = true;
+                else chbx_a1.Enabled = false;
+                chbx_a2.Text = c("dlcm_CustomToAtribute_2"); if (c("dlcm_CustomToAtribute_2") != "") chbx_a2.Enabled = true;
+                else chbx_a2.Enabled = false;
+                chbx_a3.Text = c("dlcm_CustomToAtribute_3"); if (c("dlcm_CustomToAtribute_3") != "") chbx_a3.Enabled = true;
+                else chbx_a3.Enabled = false;
+                chbx_a4.Text = c("dlcm_CustomToAtribute_4"); if (c("dlcm_CustomToAtribute_4") != "") chbx_a4.Enabled = true;
+                else chbx_a4.Enabled = false;
+                chbx_a5.Text = c("dlcm_CustomToAtribute_5"); if (c("dlcm_CustomToAtribute_5") != "") chbx_a5.Enabled = true;
+                else chbx_a5.Enabled = false;
 
-            chbx_a1.Text = c("dlcm_CustomToAtribute_1"); if (c("dlcm_CustomToAtribute_1") != "") chbx_a1.Enabled = true;
-            else chbx_a1.Enabled = false;
-            chbx_a2.Text = c("dlcm_CustomToAtribute_2"); if (c("dlcm_CustomToAtribute_2") != "") chbx_a2.Enabled = true;
-            else chbx_a2.Enabled = false;
-            chbx_a3.Text = c("dlcm_CustomToAtribute_3"); if (c("dlcm_CustomToAtribute_3") != "") chbx_a3.Enabled = true;
-            else chbx_a3.Enabled = false;
-            chbx_a4.Text = c("dlcm_CustomToAtribute_4"); if (c("dlcm_CustomToAtribute_4") != "") chbx_a4.Enabled = true;
-            else chbx_a4.Enabled = false;
-            chbx_a5.Text = c("dlcm_CustomToAtribute_5"); if (c("dlcm_CustomToAtribute_5") != "") chbx_a5.Enabled = true;
-            else chbx_a5.Enabled = false;
-
+                GenGroups();
+            }
         }
 
         //public void OpenDb()
@@ -266,6 +267,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         }
                     }
                 cbx_Groups.Text = databox.Rows[i].Cells[17].Value.ToString();
+                SelectGroups();
                 //if (DataGridView1.Rows[i].Cells["Default_Cover"].Value.ToString() == "Yes") chbx_Default_Cover.Checked = true;
                 //    else chbx_Default_Cover.Checked = false;
                 //if (chbx_AutoSave.Checked) SaveOK = true;
@@ -279,7 +281,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void button8_Click(object sender, EventArgs e)
         {
-           SaveOK = true; SaveRecord();
+            SaveOK = true; SaveRecord();
         }
 
         public void Populate(ref DataGridView DataGridView, ref BindingSource bs)
@@ -739,6 +741,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 UpdateDBbyExecuteNonQuery(command, cnb, cnc);
                 command.Dispose();
 
+                savegroups();
                 //    try
                 //    {
                 //        connection.Open();
@@ -1021,7 +1024,74 @@ namespace RocksmithToolkitGUI.DLCManager
             //}
         }
 
-        private void cbx_Groups_DropDown(object sender, EventArgs e)
+        private void SelectGroups()
+        {
+            //select multigrp items
+            DataSet dgs = new DataSet(); dgs = SelectFromDB("Groups", "SELECT DISTINCT Groupz FROM Groups WHERE Type=\"DefaultGroup\" " +
+                "AND (Comments=\"" + txt_Artist.Text + "\" OR Comments=\"" + txt_Artist_Correction.Text + "\");", "", cnb, cnc);
+            var nore = GetNoRec(dgs, cnb, cnc);//ds.Tables[0].Rows.Count;
+
+            for (int k = chbx_AllDfltGroups.Items.Count - 1; k >= 0; --k)
+                chbx_AllDfltGroups.SetItemChecked(k, false);
+
+            if (nore > 0)
+            {
+                for (int j = 0; j < nore; j++)
+                {
+                    var Groupz = dgs.Tables[0].Rows[j].ItemArray[0].ToString();
+
+                    for (int k = 0; k < chbx_AllDfltGroups.Items.Count; k++) if (Groupz.ToString() == chbx_AllDfltGroups.Items[k].ToString()) chbx_AllDfltGroups.SetItemChecked(k, true);
+                }
+
+            }
+
+        }
+
+        public void savegroups()
+        {
+            if (GroupChanged)
+            {
+                var artst = (txt_Artist_Correction.Text != "" ? txt_Artist_Correction.Text : txt_Artist.Text);
+                //identify all already selected Groups as to not to overwritte their
+                var sel = "SELECT CDLC_ID, Groupz, ID, Comments FROM Groups WHERE Type =\"DefaultGroup\" " +
+                    "AND Comments=\"" + artst + "\"";
+                DataSet grp = new DataSet(); grp = SelectFromDB("Groups", sel, "", cnb, cnc);
+                var noOfRecs = GetNoRec(grp, cnb, cnc);
+
+                var grpdel = "("; var found = false;
+                for (int j = 0; j < chbx_AllDfltGroups.Items.Count; j++)
+                {
+                    found = false;
+                    for (var k = 0; k < noOfRecs; k++)
+                    {
+                        if (!chbx_AllDfltGroups.GetItemChecked(j) && grp.Tables[0].Rows[k].ItemArray[1].ToString() == chbx_AllDfltGroups.Items[j].ToString())
+                            grpdel += "," + grp.Tables[0].Rows[k].ItemArray[2].ToString() + ",";
+                        if (chbx_AllDfltGroups.GetItemChecked(j) && grp.Tables[0].Rows[k].ItemArray[1].ToString() == chbx_AllDfltGroups.Items[j].ToString())
+                            found = true;
+                    }
+
+                    if (!found && chbx_AllDfltGroups.GetItemChecked(j))
+                    {
+                        var insertcmdd = "CDLC_ID, Groupz, Type, Date_Added, Comments";
+                        var gpp = chbx_AllDfltGroups.Items[j].ToString();
+
+                        var insertvalues = "\"" + "" + "\", \"" + gpp + "\", \"DefaultGroup\", \"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\",\"" + artst + "\"";
+                        InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0, cnc);
+                        //GenericFunctions.ApplyArtistAutoGroup(cnb, pB_ReadDLCs, null, cnc);
+                    }
+                }
+
+                grpdel = grpdel.Replace(",,", ",").Replace("(,", "(").Replace(",)", ")").Replace("(,", "(") + ")";
+
+                if (grpdel != "()")
+                    ;// DeleteFromDB("Groups", "DELETE * FROM Groups WHERE Type=\"DefaultGroup\" AND Groupz=\"" + "" + "\" AND ID IN " + grpdel.Replace(",)", ")"), cnb, cnc);
+
+                var tst = "Stop saving groups... "; timestamp = UpdateLog(timestamp, tst, false, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, null);
+                GroupChanged = false;
+            }
+        }
+
+        private void GenGroups()
         {
             //populaet the Group  Dropdown
             DataSet ds = new DataSet(); ds = SelectFromDB("Groups", "SELECT DISTINCT Groupz FROM Groups WHERE Type=\"DLC\";", "", cnb, cnc);
@@ -1041,6 +1111,18 @@ namespace RocksmithToolkitGUI.DLCManager
                         }
                     }
                 }
+                if (chbx_AllDfltGroups.Items.Count > 0)
+                {
+                    chbx_AllDfltGroups.DataSource = null;
+                    for (int k = chbx_AllDfltGroups.Items.Count - 1; k >= 0; --k)
+                    {
+                        if (!chbx_AllDfltGroups.Items[k].ToString().Contains("--"))
+                        {
+                            chbx_AllDfltGroups.Items.RemoveAt(k);
+                        }
+                    }
+                }
+
                 //add items
                 cbx_Groups.DataSource = null;
                 cbx_Groups.Items.Add("");
@@ -1048,8 +1130,15 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     var tem = ds.Tables[0].Rows[j].ItemArray[0].ToString();
                     cbx_Groups.Items.Add(tem);
+                    chbx_AllDfltGroups.Items.Add(tem);
                 }
+
             }
+        }
+
+        private void cbx_Groups_DropDown(object sender, EventArgs e)
+        {
+
         }
 
         private void cbx_Groups_SelectedIndexChanged(object sender, EventArgs e)
@@ -1379,9 +1468,50 @@ namespace RocksmithToolkitGUI.DLCManager
             var afacd = ApplyForcedAlbumCoverDefaulting(cnb, cnc, pB_ReadDLCs, null);
         }
 
-        //private void btn_GetSpotifyCover_Click(object sender, EventArgs e)
-        //{
+        private void chbx_AllDfltGroups_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            GroupChanged = true;
+        }
 
-        //}
+        private void button3_Click(object sender, EventArgs e)
+        {
+            GoTocounter = 0;
+            if (!SearchON)
+            {
+                if (chbx_AutoSave.Checked) SaveRecord();
+
+                SearchON = true;
+            }
+            else
+               if (txt_SearchArtist.Text != "" || txt_SearchAlbum.Text != "")
+                try
+                {
+                    var cmd = "SELECT * FROM Standardisation WHERE " +
+                        txt_Artist.Text != "" ? ("(Artist like \"%" + txt_SearchArtist.Text + "%\" " +
+                        "OR (Artist_Correction like \"%" + txt_SearchArtist.Text + "%\")")
+                        : (txt_SearchArtist.Text != "" ? " AND " : "") + ("(Album like \"%" + txt_SearchAlbum.Text + "%\" " +
+                        "OR (Album_Correction like \"%" + txt_SearchAlbum.Text + "%\")");
+
+                    var no_R = GetNoRecords(cmd, cnb, cnc);
+                    if (no_R <= 0) MessageBox.Show("No records found matching your criteria!");
+                    else
+                    {
+                        SearchCmd = cmd;
+                        Standardization_Load(null, null);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var tsst = "Error ..." + ex; timestamp = UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                    MessageBox.Show(ex.Message + "Can't run Search ! " + SearchCmd);
+                }
+            else MessageBox.Show("Add a search criteria");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            SearchCmd = "Select * FROM Standardization;";
+            Standardization_Load(null, null);
+        }
     }
 }

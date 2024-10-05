@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- See https://www.audiokinetic.com/en/library/edge/?source=SDK&id=globalviewsids.html for the list of all available view names. -->
+<Layout Name="Profiler">
+	<StackPanel Name="StackPanel" ID="{2AE4691B-E8E7-44B8-8F8A-EE9A4C4C3AB3}" Width="1618" Height="784" Orientation="Vertical">
+		<StackPanel Name="StackPanel" ID="{579FCB4B-03BF-4044-AA5A-6F82FC762BB1}" Width="1618" Height="784" Orientation="Vertical">
+			<StackPanel Name="StackPanel" ID="{C8855107-D930-43FF-9EF7-596191707E54}" Width="1097" Height="475" Orientation="Horizontal">
+				<StackPanel Name="StackPanel" ID="{5BC2C1FF-354E-46B8-A32B-5EBEF94B344E}" Width="690" Height="451" Orientation="Vertical">
+					<View Name="CaptureLog" ID="{A9F63907-5B79-4920-B9B7-08752E5D1C0C}" Width="690" Height="384"/>
+					<Splitter/>
+					<View Name="ContextualHelp" ID="{8EDB5E4E-4889-45B1-B240-1FB691A741F1}" Width="690" Height="85"/>
+				</StackPanel>
+				<Splitter/>
+				<View Name="AdvancedProfiler" ID="{B655A06A-6950-4B6D-A6A9-02EC6EF24292}" Width="930" Height="527"/>
+			</StackPanel>
+			<Splitter/>
+			<View Name="PerformanceMonitor" ID="{11AC0DC3-5110-44E3-9977-72C9AC1A821C}" Width="1097" Height="168"/>
+		</StackPanel>
+	</StackPanel>
+</Layout>

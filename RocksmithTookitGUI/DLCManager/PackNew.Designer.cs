@@ -52,9 +52,9 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lbl_Settings;
         private CueTextBox txt_CDLC_Name;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_GoToGuitarUltimate;
+        private System.Windows.Forms.Button btn_GoToCustomforge;
+        private System.Windows.Forms.Button btn_GoToYoutube;
         private System.Windows.Forms.Button btn_Album2SortA;
         private System.Windows.Forms.LinkLabel lbl_LinkUG;
         private System.Windows.Forms.CheckBox chbx_SaveInDB;
@@ -81,5 +81,13 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_PrevDate;
         private System.Windows.Forms.Label label3;
         private System.ComponentModel.IContainer components;
+        private System.Windows.Forms.Button btn_GP5;
+        private System.Windows.Forms.TextBox txt_RemoteFolder;
+        private System.Windows.Forms.Label lbl_Descri;
+        private System.Windows.Forms.RichTextBox txt_Descriptions;
+        private System.Windows.Forms.Button btn_GotoRockband;
+        private CueTextBox txt_RockBand;
+        private System.Windows.Forms.CheckBox chbx_RequiresSlide;
+        private CueTextBox txt_CF_Author;
     }
 }

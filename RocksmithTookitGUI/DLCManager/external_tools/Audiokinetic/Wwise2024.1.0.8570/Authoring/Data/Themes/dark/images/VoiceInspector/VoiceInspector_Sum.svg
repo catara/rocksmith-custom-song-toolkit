@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 15 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
+    <g transform="matrix(1,0,0,1,0,-5)">
+        <g transform="matrix(1,0,0,1,1.42109e-14,5)">
+            <g id="VoiceInspector_Sum">
+                <g id="Icons">
+                    <g transform="matrix(1,0,0,1,-40,-25)">
+                        <g id="Object-Icon-Base" serif:id="Object Icon Base">
+                            <rect x="40" y="25" width="15" height="15" style="fill:rgb(34,34,34);fill-opacity:0;"/>
+                        </g>
+                    </g>
+                    <g transform="matrix(1,0,0,1,0.137854,-5)">
+                        <path d="M2.029,19C0.966,18.95 0.673,18.408 0.974,17.485L4.729,12.479L0.993,7.545C0.733,6.595 1.03,6.061 1.959,6L11.969,6C12.589,6.044 12.951,6.364 13,7.018L13,10C12.973,10.64 12.71,11.044 12,11L10.094,11C9.372,11.053 8.988,10.74 9,10L8.121,9.994L9.891,12.052C10.058,12.382 10.066,12.662 9.87,12.879L8.039,15.008L9,15C9.028,14.424 9.258,14.007 10,14L12,14C12.749,14.051 13.048,14.407 13,15L13,18C13.035,18.641 12.777,19.032 12.023,19L2.029,19ZM12,7L2,7L6,12.482L2,18L12,18L12,15L10,15L10,16L6,16L9,12.46L6,9L10,9L10,10L12,10L12,7Z" style="fill:rgb(34,34,34);"/>
+                    </g>
+                    <g transform="matrix(1,0,0,1,0.137854,5.32907e-15)">
+                        <path d="M10,4L10,5L12,5L12,2L2,2L6,7.482L2,13L12,13L12,10L10,10L10,11L6,11L9,7.46L6,4L10,4Z" style="fill:rgb(200,200,200);"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

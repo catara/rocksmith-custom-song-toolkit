@@ -1,0 +1,8 @@
+
+<h2>Seek Time</h2>
+<p>절대적 시간의 값으로 표현되는 seek 위치를 말합니다. 이 길이는 반복 재생 또한 고려합니다. 예를 들어 두 번 반복 재생되는 10초 길이의 사운드의 10초 부분에 seek하고자 할 경우, 커서의 위치는 반복 재생의 두 번째 출발 지점으로 지정됩니다.</p>
+<p>마찬가지로 무제한 반복 재생되는 사운드의 반복 재생 구간 후의 부분(outro(퇴장) 부분)은 seek하는 것이 불가능합니다.</p>
+<p>Music Segment 내에서 seek할 때, seek의 위치는 Entry Cue와 상대적입니다. 그렇기 때문에 Entry Cue (Pre-Entry) 전의 부분을 seek하는 것은 불가능합니다. 하지만 이 옵션을 사용할 경우 Exit Cue (Post-Exit) 후의 부분은 seek할 수 있습니다.</p>
+<p>Default value: 0<br/>
+Range: 0 to 3600<br/>
+Units: s <br/></p>

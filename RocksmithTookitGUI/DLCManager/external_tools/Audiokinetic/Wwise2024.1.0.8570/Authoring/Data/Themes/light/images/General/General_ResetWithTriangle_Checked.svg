@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-204,-26)">
+        <g id="General_ResetWithTriangle_Checked" transform="matrix(1,0,0,1,156,22)">
+            <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(1,0,0,1,48,4)">
+                <rect x="0" y="0" width="20" height="20" style="fill:rgb(58,58,58);fill-opacity:0;"/>
+            </g>
+            <g transform="matrix(1.73001,7.10305e-17,-7.10305e-17,-1.15,-255.577,44.15)">
+                <path d="M185,19L186,21L184,21L185,19Z"/>
+            </g>
+            <g transform="matrix(1.33544,0,0,1.33544,-380.583,-7.73431)">
+                <path d="M328.417,9.536L324.673,13.665L328.417,17.737L328.417,14.748C328.417,14.748 331.395,14.215 331.412,16.558C331.437,19.966 325.869,20.768 325.869,20.768C330.267,20.742 333.015,19.777 333.015,16.341C333.015,11.782 328.417,12.531 328.417,12.531L328.417,9.536Z"/>
+            </g>
+            <g transform="matrix(0.5,0,0,1.375,-111,-8.75)">
+                <rect x="322" y="10" width="2" height="8"/>
+            </g>
+        </g>
+    </g>
+</svg>

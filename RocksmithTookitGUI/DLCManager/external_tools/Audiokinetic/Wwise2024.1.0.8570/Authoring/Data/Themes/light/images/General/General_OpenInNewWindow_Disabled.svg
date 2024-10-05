@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-8,-58)">
+        <g transform="matrix(1,0,0,1,-174,-22)">
+            <g id="General_OpenInNewWindow_Disabled" opacity="0.3">
+                <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(0.95,0,0,0.95,182,80)">
+                    <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+                </g>
+                <g opacity="0.45">
+                    <g transform="matrix(1,0,0,1,-104,22)">
+                        <path d="M288,61L294,61L294,63L290,63L290,73L300,73L300,69L302,69L302,75L288,75L288,61Z"/>
+                    </g>
+                    <g id="Arrow-Front" serif:id="Arrow Front" transform="matrix(1,-2.46519e-32,2.46519e-32,1,-104,22)">
+                        <path d="M296.996,60L303,60L303,62L302.992,62L302.992,66L300.996,64.004L300.996,63.992L300.72,63.716L295.436,69L293.996,67.56L299.28,62.276L299,61.996L298.992,61.996L296.996,60Z"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

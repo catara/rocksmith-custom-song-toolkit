@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 7 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-48,-85)">
+        <g transform="matrix(1,0,0,1,36,54)">
+            <g id="State_nor_dis_21px" opacity="0.5">
+                <g transform="matrix(1,0,0,0.428571,1,29.8571)">
+                    <path d="M17,8.617C17,6.621 16.305,5 15.45,5L13.6,5C12.717,5 12,6.673 12,8.733L12,26L17,26L17,8.617Z" style="fill-opacity:0.01;"/>
+                </g>
+                <g transform="matrix(1,0,0,0.47619,1,38.619)">
+                    <path d="M17,5L12,5L12,21.8C12,24.118 12.896,26 14,26L15,26C16.104,26 17,24.118 17,21.8L17,5Z" style="fill-opacity:0.01;"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-36,-54)">
+                    <path d="M55,87.24C55,86.004 53.996,85 52.76,85L50.24,85C49.004,85 48,86.004 48,87.24L48,103.76C48,104.996 49.004,106 50.24,106L52.76,106C53.996,106 55,104.996 55,103.76L55,87.24ZM54,87.55C54,86.695 53.305,86 52.45,86L50.6,86C49.717,86 49,86.717 49,87.6L49,103C49,104.104 49.896,105 51,105L52,105C53.104,105 54,104.104 54,103L54,87.55Z" style="fill:rgb(54,54,54);fill-opacity:0.05;"/>
+                </g>
+                <g transform="matrix(1,0,0,-1,12,52)">
+                    <rect x="2" y="11" width="3" height="1" style="fill:white;fill-opacity:0.05;"/>
+                </g>
+                <g transform="matrix(1,0,0,-1,12,46)">
+                    <rect x="2" y="11" width="3" height="1" style="fill:white;fill-opacity:0.05;"/>
+                </g>
+                <g transform="matrix(1,0,0,-1,12,51)">
+                    <rect x="2" y="4" width="3" height="1" style="fill:white;fill-opacity:0.05;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

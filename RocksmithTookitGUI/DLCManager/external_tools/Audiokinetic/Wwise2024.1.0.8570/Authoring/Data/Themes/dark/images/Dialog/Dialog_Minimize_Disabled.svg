@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-192,-4)">
+        <g transform="matrix(0.75,0,0,0.75,-596.75,192.5)">
+            <g id="Dialog_Minimize_Disabled" transform="matrix(1.33333,0,0,1.33333,987.667,-256.667)">
+                <g opacity="0.3">
+                    <g id="Minimize" transform="matrix(1.09141,0,0,1.05754,-1243.55,127.941)">
+                        <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(0.916242,0,0,0.945586,1183.37,-117.197)">
+                            <rect x="0" y="0" width="20" height="20" style="fill:none;"/>
+                        </g>
+                        <g transform="matrix(1.01805,0,0,0.945586,-350.316,-990.919)">
+                            <rect x="1511" y="936" width="9" height="3" style="fill:rgb(21,21,21);"/>
+                        </g>
+                        <g transform="matrix(1.01805,0,0,0.945586,-350.316,-990.919)">
+                            <rect x="1511" y="936" width="9" height="3" style="fill:white;fill-opacity:0.7;"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- See https://www.audiokinetic.com/en/library/edge/?source=SDK&id=globalviewsids.html for the list of all available view names. -->
+<Layout Name="Schematic">
+	<StackPanel Name="StackPanel" ID="{988DB823-5D12-4891-B307-787F053E583E}" Width="1633" Height="734" Orientation="Vertical">
+		<StackPanel Name="StackPanel" ID="{F1D1D586-29E6-4A5E-89A4-9DE4C8EAE9C8}" Width="1633" Height="731" Orientation="Horizontal">
+			<StackPanel Name="StackPanel" ID="{2580CD32-CE71-4EE7-A6F9-3E59A3006F59}" Width="1488" Height="791" Orientation="Horizontal">
+				<StackPanel Name="StackPanel" ID="{8E5D7E81-FDAA-4F28-A1CE-539CFEA522B3}" Width="283" Height="791" Orientation="Vertical">
+					<View Name="ProjectExplorer" ID="{52528A38-DA72-4484-B798-D26C0AD49403}" Width="283" Height="557" SelectionChannel="1"/>
+					<Splitter/>
+					<View Name="EventViewer" ID="{008FCBDC-3619-45E8-AD5D-82D62DD2C658}" Width="283" Height="227" SelectionChannel="1">
+						<ViewData>
+							<EventViewer ActiveTab="0" Filter="2"/>
+						</ViewData>
+					</View>
+				</StackPanel>
+				<Splitter/>
+				<StackPanel Name="StackPanel" ID="{FE495002-8B7E-4943-9967-5FF9CED7DA51}" Width="1200" Height="791" Orientation="Vertical">
+					<View Name="SchematicView" ID="{FD4544AB-1625-4431-86D8-2EFE341CC9AE}" Width="651" Height="502"/>
+					<Splitter/>
+					<View Name="Transport" ID="{210D1394-9BBE-41B8-B725-4BB75B3A7E7D}" Width="651" Height="56"/>
+				</StackPanel>
+			</StackPanel>
+			<Splitter/>
+			<View Name="Meter" ID="{6EC2FF1C-7253-4857-B3E5-F845984FD404}" Width="150" Height="791" SelectionChannel="1"/>
+		</StackPanel>
+	</StackPanel>
+</Layout>

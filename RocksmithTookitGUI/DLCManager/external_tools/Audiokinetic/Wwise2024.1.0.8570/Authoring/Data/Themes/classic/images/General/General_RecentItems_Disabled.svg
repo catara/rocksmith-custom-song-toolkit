@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-283,-50)">
+        <g transform="matrix(1,0,0,0.970696,285,52.004)">
+            <g id="General_RecentItems_Disabled">
+                <g id="Icons">
+                    <g transform="matrix(1.33333,0,0,1.37358,-55.3333,-36.4041)">
+                        <g id="Base-Block" serif:id="Base Block">
+                            <path d="M55,27.1C55,25.941 54.059,25 52.9,25L42.1,25C40.941,25 40,25.941 40,27.1L40,37.9C40,39.059 40.941,40 42.1,40L52.9,40C54.059,40 55,39.059 55,37.9L55,27.1Z" style="fill-opacity:0;"/>
+                        </g>
+                    </g>
+                    <g transform="matrix(1.5,4.41566e-17,-4.28626e-17,-1.18472,-1658.5,468.011)">
+                        <path d="M1116,380L1117,382L1115,382L1116,380Z" style="fill:white;"/>
+                    </g>
+                    <g transform="matrix(1.13395,0,0,1.16818,-316.001,-152.653)">
+                        <path d="M287.491,135.963C289.438,135.963 291.018,137.544 291.018,139.491C291.018,141.438 289.438,143.018 287.491,143.018C285.544,143.018 283.963,141.438 283.963,139.491C283.963,137.544 285.544,135.963 287.491,135.963ZM287.491,139.491L287.491,137.727L286.609,136.845L286.609,140.373L288.373,140.373L289.255,139.491L287.491,139.491Z" style="fill:white;"/>
+                    </g>
+                    <g transform="matrix(1,0,0,1.03019,-285,-49.4531)">
+                        <path d="M290.417,60L285,60L285,52L290,52L290,47L295,47C295,47 294.979,49.925 294.968,53C292.223,53.017 290,55.251 290,58C290,58.711 290.149,59.387 290.417,60ZM289,51L285,51L289,47L289,51Z" style="fill:white;"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

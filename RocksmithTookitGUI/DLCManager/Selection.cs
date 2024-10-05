@@ -28,10 +28,10 @@ namespace RocksmithToolkitGUI.DLCManager
         public bool StopImport { get; set; }
         public Selection(string slct, string B2Txt, string B3Txt)//string txt_DBFolder,string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete
         {/*string link, string Title, bool B1Visi, bool B2Visi, bool B3Visi, string B1Txt,*/
-            if (c("dlcm_AdditionalManipul116") != "Yes") return;
             InitializeComponent();
             //lbl_Link.Text = link;
             // txt_Description.Text = mss;
+            this.Text = "Options at " + (B3Txt.IndexOf(" ") > 0 ? B3Txt.Substring(B3Txt.IndexOf(" "), B3Txt.Length - B3Txt.IndexOf(" ") - 1) : "Packing").Trim();
             IgnoreSong = false;
             StopImport = false;
             //ErrorWindow.ActiveForm.Text = Title;
@@ -44,7 +44,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (B2Txt != "") btn_B2.Text = B2Txt;
             if (B3Txt != "") btn_B3.Text = B3Txt;/*Comments like 'dlcm_AdditionalManipul%'*/
             //slct = "SELECT Type, Profile_Name, DisplayGroup FROM Groups u WHERE Profile_Name=\"" + c("dlcm_Configurations")+ "\" AND DisplayGroup='Pack' ORDER BY DisplayGroup ASC";
-            chbx_Additional_Manipulations=GenerateParamsList(chbx_Additional_Manipulations, slct);
+            chbx_Additional_Manipulations = GenerateParamsList(chbx_Additional_Manipulations, slct);
             //chbx_Additional_Manipulations = GenerateParamsLists(chbx_Additional_Manipulations, slct);
 
             //MessageBox.Show("test0");
@@ -59,7 +59,7 @@ namespace RocksmithToolkitGUI.DLCManager
         //     var n = GetNoRec(dv, cnb, cnc);
 
         //    //SELECT all Params for current Profile
-            
+
         //    DataSet dsz1 = new DataSet(); dsz1 = SelectFromDB("Groups", slct, ConfigRepository.Instance()["dlcm_DBFolder"].ToString(), cnb, cnc);
         //    var noOfRec = GetNoRec(dsz1, cnb, cnc);
 
@@ -203,7 +203,7 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_Link.AutoSize = true;
             lbl_Link.Location = new Point(667, 19);
             lbl_Link.Name = "lbl_Link";
-            lbl_Link.Size = new Size(121, 32);
+            lbl_Link.Size = new Size(60, 15);
             lbl_Link.TabIndex = 7;
             lbl_Link.TabStop = true;
             lbl_Link.Text = "linkLabel1";
@@ -239,6 +239,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ClientSize = new Size(1115, 829);
             Controls.Add(splitContainer1);
             Name = "Selection";
+            Load += Selection_Load;
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel2.ResumeLayout(false);
             splitContainer1.Panel2.PerformLayout();
@@ -292,6 +293,14 @@ namespace RocksmithToolkitGUI.DLCManager
                     break;
                 }
             if (index >= 0) chbx_Additional_Manipulations.SetSelected(index, true);
+        }
+
+        private void Selection_Load(object sender, EventArgs e)
+        {
+            if (c("dlcm_AdditionalManipul116") != "Yes" || btn_B2.Text.Contains("Export"))
+            {
+                this.Hide(); return;
+            }
         }
     }
 }

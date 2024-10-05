@@ -2,10 +2,7 @@
   "profiles": {
     "RocksmithToolkitGUI": {
       "commandName": "Project",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:50510;http://localhost:50511",
+      "applicationUrl": "",
       "nativeDebugging": false
     }
   }

@@ -1,0 +1,73 @@
+{
+    "bundle": {
+        "id": "wwise.2019_2_15_7667",
+        "type": "wwise",
+        "name": "",
+        "tag": "",
+        "description": "",
+        "vendor": "",
+        "version": {
+            "year": 2019,
+            "major": 2,
+            "minor": "15",
+            "build": 7667
+        },
+        "labels": [],
+        "links": [],
+        "productDependentData": {},
+        "documentation": [],
+        "displayName": " 2019.2.15.7667",
+        "image": "",
+        "redistributables": [],
+        "eulas": [],
+        "groups": [],
+        "files": [],
+        "children": []
+    },
+    "targetDir": "C:\\Program Files (x86)\\Audiokinetic\\Wwise2019.2.15.7667",
+    "installType": "normal",
+    "parentId": null,
+    "installed": {
+        "groups": [
+            {
+                "id": "Packages",
+                "valueId": "Authoring"
+            },
+            {
+                "id": "AuthoringPlatforms",
+                "valueId": "Win32"
+            },
+            {
+                "id": "AuthoringPlatforms",
+                "valueId": "x64"
+            },
+            {
+                "id": "AuthoringOS",
+                "valueId": "Windows"
+            },
+            {
+                "id": "AuthoringOS",
+                "valueId": "OSX"
+            },
+            {
+                "id": "SourceCodeLevel",
+                "valueId": "Level2"
+            },
+            {
+                "id": "SourceCodeLevel",
+                "valueId": "Level3"
+            }
+        ],
+        "files": [
+            "Authoring.tar.xz",
+            "Authoring.x64.tar.xz",
+            "FilePackager.x64.tar.xz",
+            "Authoring.MacExcludes.x64.tar.xz",
+            "Authoring.Documentation.tar.xz"
+        ],
+        "date": 1725910753904
+    },
+    "sampleFiles": [],
+    "children": [],
+    "unpackedFiles": []
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-72,-4)">
+        <g transform="matrix(0.75,0,0,0.75,-596.75,192.5)">
+            <g id="Reconnect" transform="matrix(1.33333,0,0,1.33333,795.667,-256.667)">
+                <g opacity="0.3">
+                    <g>
+                        <g id="BG-Transparent" serif:id="BG Transparent" transform="matrix(1,0,0,1,72,4)">
+                            <rect x="0" y="0" width="20" height="20" style="fill:none;"/>
+                        </g>
+                        <g transform="matrix(1.15384,0,0,1.15385,70.3847,1.23077)">
+                            <path d="M14.4,7.6L9.108,7.6L12.667,11.531L10.933,13.667L14.4,13.667L14.4,7.6ZM15.267,5L5.733,5C4.633,5 4,5.633 4,6.733L4,10C4.606,9.34 5.004,8.938 5.733,8.815L5.733,6.733L15.267,6.733L15.267,14.533L10.605,14.533C8.849,14.539 8.697,16.267 9.2,16.267L15.293,16.267C16.393,16.267 17,15.611 17,14.511L17,6.733C17,5.633 16.367,5 15.267,5Z" style="fill:white;fill-rule:nonzero;"/>
+                        </g>
+                        <g transform="matrix(-0.815887,-0.815892,-0.815887,0.815892,157.23,76.6888)">
+                            <path d="M88.528,7.356L83.557,7.424L83.578,12.306L85.134,10.75C85.134,10.75 86.983,12.56 85.738,13.823C83.719,15.872 80.278,13.249 80.278,13.249C82.919,15.859 85.33,16.744 87.349,14.663C90.216,11.708 86.972,8.912 86.972,8.912L88.528,7.356Z" style="fill:white;"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

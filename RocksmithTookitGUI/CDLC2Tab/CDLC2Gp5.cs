@@ -75,42 +75,50 @@ namespace RocksmithToolkitGUI.CDLC2Tab
         {
             var browser = new PsarcBrowser(inputFilePath);
             var songList = browser.GetSongList();
-
-            if (songId == null) // grab the first song.Identifier
+            if (songList.Count==0) 
+                return null;
+            Song2014 arrSong2014 = new Song2014();
+            try ///ps3 fails?
             {
-                songId = songList.FirstOrDefault().Identifier;
-            }
-            else // check if songId exists in song.Identifier
-            {
-                if (songList.FirstOrDefault(x => x.Identifier.Contains(songId)) == null)
+                if (songId == null) // grab the first song.Identifier
                 {
-                    Console.WriteLine("Could not find songId: " + songId);
-                    return null;
+                    songId = songList.FirstOrDefault().Identifier;
                 }
-            }
-
-            if (arrangement == null) // grab the first song.Arrangment[0]
-            {
-                arrangement = songList.FirstOrDefault().Arrangements[0];
-            }
-            else // check if track exists in song.Arrangments
-            {
-                if (songList.FirstOrDefault(x => x.Arrangements.Contains(arrangement)) == null)
+                else // check if songId exists in song.Identifier
                 {
-                    Console.WriteLine("Could not find arrangement: " + arrangement);
-                    return null;
+                    if (songList.FirstOrDefault(x => x.Identifier.Contains(songId)) == null)
+                    {
+                        Console.WriteLine("Could not find songId: " + songId);
+                        return null;
+                    }
                 }
+
+                if (arrangement == null) // grab the first song.Arrangment[0]
+                {
+                    arrangement = songList.FirstOrDefault().Arrangements[0];
+                }
+                else // check if track exists in song.Arrangments
+                {
+                    if (songList.FirstOrDefault(x => x.Arrangements.Contains(arrangement)) == null)
+                    {
+                        Console.WriteLine("Could not find arrangement: " + arrangement);
+                        return null;
+                    }
+                }
+
+                // push Song2014 into memory for this arrangement
+                arrSong2014 = browser.GetArrangement(songId, arrangement);
+                Console.WriteLine("Pushed To Memory: [{0}] {{{1}}}", songId, arrangement);
             }
-
-            // push Song2014 into memory for this arrangement
-            Song2014 arrSong2014 = browser.GetArrangement(songId, arrangement);
-            Console.WriteLine("Pushed To Memory: [{0}] {{{1}}}", songId, arrangement);
-
+            catch (Exception ex)
+            {
+                ;
+            }
             return arrSong2014;
         }
 
         #endregion
-    
+
         #region Song2014 to GuitarPro *.gp5 file
 
         /// <summary>
@@ -263,7 +271,7 @@ namespace RocksmithToolkitGUI.CDLC2Tab
             }
 
         }
-        
+
         public static void ExportArrangement(Score score, Song2014 arrangement, int difficulty,
                string originalFile, ToolkitInfo toolkitInfo)
         {
@@ -316,7 +324,7 @@ namespace RocksmithToolkitGUI.CDLC2Tab
             var cleaned = fileName.Where(x => !invalidChars.Contains(x)).ToArray();
             return new string(cleaned);
         }
-      
+
         #endregion
 
         #region SongInfoShort to SongInfo

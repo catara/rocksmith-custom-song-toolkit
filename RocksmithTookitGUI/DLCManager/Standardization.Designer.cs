@@ -35,9 +35,9 @@ namespace RocksmithToolkitGUI.DLCManager
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             btn_ChangeCover = new System.Windows.Forms.Button();
             picbx_AlbumArtPath = new System.Windows.Forms.PictureBox();
             chbx_Save_All = new System.Windows.Forms.CheckBox();
@@ -67,6 +67,12 @@ namespace RocksmithToolkitGUI.DLCManager
             label3 = new System.Windows.Forms.Label();
             btn_ApplyCurrent = new System.Windows.Forms.Button();
             splitContainer1 = new System.Windows.Forms.SplitContainer();
+            chbx_AllDfltGroups = new System.Windows.Forms.CheckedListBox();
+            txt_SearchAlbum = new System.Windows.Forms.TextBox();
+            button1 = new System.Windows.Forms.Button();
+            txt_SearchArtist = new System.Windows.Forms.TextBox();
+            button2 = new System.Windows.Forms.Button();
+            button3 = new System.Windows.Forms.Button();
             txt_ID = new System.Windows.Forms.TextBox();
             txt_Album = new System.Windows.Forms.TextBox();
             txt_AlbumArtPath = new System.Windows.Forms.TextBox();
@@ -88,10 +94,10 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_SearchReset = new System.Windows.Forms.Button();
             btn_Search = new System.Windows.Forms.Button();
             btn_RemoveDuplicates = new System.Windows.Forms.Button();
-            button2 = new System.Windows.Forms.Button();
+            btn_ApplyandMultiSpoti = new System.Windows.Forms.Button();
             btn_MultiplyAutoGroup = new System.Windows.Forms.Button();
             btn_ApplyDefault = new System.Windows.Forms.Button();
-            bbtn_ApplyYear = new System.Windows.Forms.Button();
+            btn_ApplyYear = new System.Windows.Forms.Button();
             databox = new System.Windows.Forms.DataGridView();
             toolTip1 = new System.Windows.Forms.ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)picbx_AlbumArtPath).BeginInit();
@@ -187,7 +193,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_Apply
             // 
-            btn_Apply.Location = new System.Drawing.Point(0, 370);
+            btn_Apply.Location = new System.Drawing.Point(4, 400);
             btn_Apply.Margin = new System.Windows.Forms.Padding(2);
             btn_Apply.Name = "btn_Apply";
             btn_Apply.Size = new System.Drawing.Size(126, 40);
@@ -385,20 +391,20 @@ namespace RocksmithToolkitGUI.DLCManager
             // cbx_Groups
             // 
             cbx_Groups.FormattingEnabled = true;
-            cbx_Groups.Location = new System.Drawing.Point(172, 310);
+            cbx_Groups.Location = new System.Drawing.Point(84, 646);
             cbx_Groups.Margin = new System.Windows.Forms.Padding(2);
             cbx_Groups.Name = "cbx_Groups";
-            cbx_Groups.Size = new System.Drawing.Size(126, 23);
+            cbx_Groups.Size = new System.Drawing.Size(84, 23);
             cbx_Groups.TabIndex = 401;
             cbx_Groups.DropDown += cbx_Groups_DropDown;
             cbx_Groups.SelectedIndexChanged += cbx_Groups_SelectedIndexChanged;
             // 
             // label3
             // 
-            label3.Location = new System.Drawing.Point(126, 310);
+            label3.Location = new System.Drawing.Point(6, 649);
             label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(46, 42);
+            label3.Size = new System.Drawing.Size(74, 20);
             label3.TabIndex = 402;
             label3.Text = "Auto Group:";
             // 
@@ -407,7 +413,7 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_ApplyCurrent.Location = new System.Drawing.Point(0, 318);
             btn_ApplyCurrent.Margin = new System.Windows.Forms.Padding(2);
             btn_ApplyCurrent.Name = "btn_ApplyCurrent";
-            btn_ApplyCurrent.Size = new System.Drawing.Size(126, 26);
+            btn_ApplyCurrent.Size = new System.Drawing.Size(220, 26);
             btn_ApplyCurrent.TabIndex = 403;
             btn_ApplyCurrent.Text = "Apply current standard.";
             btn_ApplyCurrent.UseVisualStyleBackColor = true;
@@ -424,6 +430,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // splitContainer1.Panel1
             // 
+            splitContainer1.Panel1.Controls.Add(chbx_AllDfltGroups);
+            splitContainer1.Panel1.Controls.Add(txt_SearchAlbum);
+            splitContainer1.Panel1.Controls.Add(button1);
+            splitContainer1.Panel1.Controls.Add(txt_SearchArtist);
+            splitContainer1.Panel1.Controls.Add(button2);
+            splitContainer1.Panel1.Controls.Add(button3);
             splitContainer1.Panel1.Controls.Add(txt_ID);
             splitContainer1.Panel1.Controls.Add(txt_Album);
             splitContainer1.Panel1.Controls.Add(txt_AlbumArtPath);
@@ -455,12 +467,12 @@ namespace RocksmithToolkitGUI.DLCManager
             splitContainer1.Panel1.Controls.Add(btn_GetSpotifyCover);
             splitContainer1.Panel1.Controls.Add(btn_RemoveDuplicates);
             splitContainer1.Panel1.Controls.Add(btn_Apply);
-            splitContainer1.Panel1.Controls.Add(button2);
+            splitContainer1.Panel1.Controls.Add(btn_ApplyandMultiSpoti);
             splitContainer1.Panel1.Controls.Add(btn_MultiplyAutoGroup);
             splitContainer1.Panel1.Controls.Add(chbx_Include_ArtistSort);
             splitContainer1.Panel1.Controls.Add(btn_ApplyDefault);
             splitContainer1.Panel1.Controls.Add(chbx_Default_Cover);
-            splitContainer1.Panel1.Controls.Add(bbtn_ApplyYear);
+            splitContainer1.Panel1.Controls.Add(btn_ApplyYear);
             splitContainer1.Panel1.Controls.Add(btn_Close);
             splitContainer1.Panel1.Controls.Add(btn_CheckOnline);
             splitContainer1.Panel1.Controls.Add(btn_ApplyCurrent);
@@ -483,10 +495,82 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             splitContainer1.Panel2.Controls.Add(databox);
             splitContainer1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            splitContainer1.Size = new System.Drawing.Size(916, 647);
+            splitContainer1.Size = new System.Drawing.Size(916, 747);
             splitContainer1.SplitterDistance = 295;
             splitContainer1.TabIndex = 404;
             splitContainer1.TabStop = false;
+            // 
+            // chbx_AllDfltGroups
+            // 
+            chbx_AllDfltGroups.CheckOnClick = true;
+            chbx_AllDfltGroups.FormattingEnabled = true;
+            chbx_AllDfltGroups.Location = new System.Drawing.Point(9, 666);
+            chbx_AllDfltGroups.Margin = new System.Windows.Forms.Padding(0);
+            chbx_AllDfltGroups.Name = "chbx_AllDfltGroups";
+            chbx_AllDfltGroups.Size = new System.Drawing.Size(164, 166);
+            chbx_AllDfltGroups.TabIndex = 450;
+            chbx_AllDfltGroups.ItemCheck += chbx_AllDfltGroups_ItemCheck;
+            // 
+            // txt_SearchAlbum
+            // 
+            txt_SearchAlbum.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            txt_SearchAlbum.ForeColor = System.Drawing.Color.Gray;
+            txt_SearchAlbum.Location = new System.Drawing.Point(175, 670);
+            txt_SearchAlbum.Margin = new System.Windows.Forms.Padding(2);
+            txt_SearchAlbum.Name = "txt_SearchAlbum";
+            txt_SearchAlbum.Size = new System.Drawing.Size(62, 20);
+            txt_SearchAlbum.TabIndex = 449;
+            toolTip1.SetToolTip(txt_SearchAlbum, "Artist");
+            // 
+            // button1
+            // 
+            button1.Enabled = false;
+            button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            button1.Location = new System.Drawing.Point(241, 689);
+            button1.Margin = new System.Windows.Forms.Padding(2);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(50, 20);
+            button1.TabIndex = 448;
+            button1.Text = "Go To";
+            toolTip1.SetToolTip(button1, "Search for a songg by title, album, filename,etc.");
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // txt_SearchArtist
+            // 
+            txt_SearchArtist.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            txt_SearchArtist.ForeColor = System.Drawing.Color.Gray;
+            txt_SearchArtist.Location = new System.Drawing.Point(176, 649);
+            txt_SearchArtist.Margin = new System.Windows.Forms.Padding(2);
+            txt_SearchArtist.Name = "txt_SearchArtist";
+            txt_SearchArtist.Size = new System.Drawing.Size(62, 20);
+            txt_SearchArtist.TabIndex = 447;
+            toolTip1.SetToolTip(txt_SearchArtist, "Artist");
+            // 
+            // button2
+            // 
+            button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            button2.Location = new System.Drawing.Point(241, 711);
+            button2.Margin = new System.Windows.Forms.Padding(2);
+            button2.Name = "button2";
+            button2.Size = new System.Drawing.Size(50, 20);
+            button2.TabIndex = 446;
+            button2.Text = "Reset";
+            toolTip1.SetToolTip(button2, "Reset Search/Filter");
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
+            // button3
+            // 
+            button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            button3.Location = new System.Drawing.Point(241, 649);
+            button3.Margin = new System.Windows.Forms.Padding(2);
+            button3.Name = "button3";
+            button3.Size = new System.Drawing.Size(50, 40);
+            button3.TabIndex = 445;
+            button3.Text = "Search";
+            toolTip1.SetToolTip(button3, "Search for a song by Title, Album, FileName, ID, Author, FreeTexts.");
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // txt_ID
             // 
@@ -509,6 +593,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Album.ReadOnly = true;
             txt_Album.Size = new System.Drawing.Size(289, 20);
             txt_Album.TabIndex = 126;
+            toolTip1.SetToolTip(txt_Album, "Album");
             // 
             // txt_AlbumArtPath
             // 
@@ -521,6 +606,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_AlbumArtPath.Size = new System.Drawing.Size(116, 20);
             txt_AlbumArtPath.TabIndex = 130;
             txt_AlbumArtPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            toolTip1.SetToolTip(txt_AlbumArtPath, "Album Art Path");
             // 
             // txt_Artist
             // 
@@ -532,6 +618,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Artist.ReadOnly = true;
             txt_Artist.Size = new System.Drawing.Size(289, 20);
             txt_Artist.TabIndex = 131;
+            toolTip1.SetToolTip(txt_Artist, "Artist");
             // 
             // txt_Artist_Correction
             // 
@@ -542,6 +629,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Artist_Correction.Name = "txt_Artist_Correction";
             txt_Artist_Correction.Size = new System.Drawing.Size(241, 20);
             txt_Artist_Correction.TabIndex = 132;
+            toolTip1.SetToolTip(txt_Artist_Correction, "Artist Correction");
             txt_Artist_Correction.KeyPress += txt_Artist_Correction_KeyPress;
             // 
             // txt_Album_Correction
@@ -553,6 +641,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Album_Correction.Name = "txt_Album_Correction";
             txt_Album_Correction.Size = new System.Drawing.Size(241, 20);
             txt_Album_Correction.TabIndex = 133;
+            toolTip1.SetToolTip(txt_Album_Correction, "Album Correction");
             txt_Album_Correction.KeyPress += txt_Album_Correction_KeyPress;
             // 
             // txt_AlbumArt_Correction
@@ -565,6 +654,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_AlbumArt_Correction.Size = new System.Drawing.Size(128, 20);
             txt_AlbumArt_Correction.TabIndex = 134;
             txt_AlbumArt_Correction.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            toolTip1.SetToolTip(txt_AlbumArt_Correction, "Album Art Correction");
             // 
             // txt_Album_Short
             // 
@@ -576,6 +666,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Album_Short.Size = new System.Drawing.Size(50, 20);
             txt_Album_Short.TabIndex = 391;
             txt_Album_Short.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            toolTip1.SetToolTip(txt_Album_Short, "Album Short");
             // 
             // txt_Artist_Short
             // 
@@ -587,6 +678,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Artist_Short.Size = new System.Drawing.Size(50, 20);
             txt_Artist_Short.TabIndex = 386;
             txt_Artist_Short.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            toolTip1.SetToolTip(txt_Artist_Short, "Artist Short");
             // 
             // txt_Year_Correction
             // 
@@ -597,6 +689,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Year_Correction.Name = "txt_Year_Correction";
             txt_Year_Correction.Size = new System.Drawing.Size(50, 20);
             txt_Year_Correction.TabIndex = 389;
+            toolTip1.SetToolTip(txt_Year_Correction, "Year Correction");
             // 
             // chbx_a1
             // 
@@ -727,24 +820,24 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_RemoveDuplicates.UseVisualStyleBackColor = true;
             btn_RemoveDuplicates.Click += btn_RemoveDuplicates_Click;
             // 
-            // button2
+            // btn_ApplyandMultiSpoti
             // 
-            button2.Font = new System.Drawing.Font("Segoe UI", 7F);
-            button2.Location = new System.Drawing.Point(134, 407);
-            button2.Margin = new System.Windows.Forms.Padding(2);
-            button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(104, 33);
-            button2.TabIndex = 407;
-            button2.Text = "Apply 'n Multiply Spotify";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += MultiplyAndApplySpotify;
+            btn_ApplyandMultiSpoti.Font = new System.Drawing.Font("Segoe UI", 7F);
+            btn_ApplyandMultiSpoti.Location = new System.Drawing.Point(134, 407);
+            btn_ApplyandMultiSpoti.Margin = new System.Windows.Forms.Padding(2);
+            btn_ApplyandMultiSpoti.Name = "btn_ApplyandMultiSpoti";
+            btn_ApplyandMultiSpoti.Size = new System.Drawing.Size(104, 33);
+            btn_ApplyandMultiSpoti.TabIndex = 407;
+            btn_ApplyandMultiSpoti.Text = "Apply 'n Multiply Spotify";
+            btn_ApplyandMultiSpoti.UseVisualStyleBackColor = true;
+            btn_ApplyandMultiSpoti.Click += MultiplyAndApplySpotify;
             // 
             // btn_MultiplyAutoGroup
             // 
-            btn_MultiplyAutoGroup.Location = new System.Drawing.Point(4, 414);
+            btn_MultiplyAutoGroup.Location = new System.Drawing.Point(175, 689);
             btn_MultiplyAutoGroup.Margin = new System.Windows.Forms.Padding(2);
             btn_MultiplyAutoGroup.Name = "btn_MultiplyAutoGroup";
-            btn_MultiplyAutoGroup.Size = new System.Drawing.Size(126, 26);
+            btn_MultiplyAutoGroup.Size = new System.Drawing.Size(63, 56);
             btn_MultiplyAutoGroup.TabIndex = 406;
             btn_MultiplyAutoGroup.Text = "Apply 'n Multiply Default";
             btn_MultiplyAutoGroup.UseVisualStyleBackColor = true;
@@ -762,57 +855,56 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_ApplyDefault.UseVisualStyleBackColor = true;
             btn_ApplyDefault.Click += Btn_ApplyDefault_Click;
             // 
-            // bbtn_ApplyYear
+            // btn_ApplyYear
             // 
-            bbtn_ApplyYear.Location = new System.Drawing.Point(0, 344);
-            bbtn_ApplyYear.Margin = new System.Windows.Forms.Padding(2);
-            bbtn_ApplyYear.Name = "bbtn_ApplyYear";
-            bbtn_ApplyYear.Size = new System.Drawing.Size(126, 26);
-            bbtn_ApplyYear.TabIndex = 404;
-            bbtn_ApplyYear.Text = "Apply 'n Multiply Year Corr";
-            bbtn_ApplyYear.UseVisualStyleBackColor = true;
-            bbtn_ApplyYear.Click += Bbtn_ApplyYear_Click;
+            btn_ApplyYear.Location = new System.Drawing.Point(0, 344);
+            btn_ApplyYear.Margin = new System.Windows.Forms.Padding(2);
+            btn_ApplyYear.Name = "btn_ApplyYear";
+            btn_ApplyYear.Size = new System.Drawing.Size(126, 52);
+            btn_ApplyYear.TabIndex = 404;
+            btn_ApplyYear.Text = "Apply 'n Multiply Year Corr";
+            btn_ApplyYear.UseVisualStyleBackColor = true;
+            btn_ApplyYear.Click += Bbtn_ApplyYear_Click;
             // 
             // databox
             // 
             databox.AllowUserToAddRows = false;
             databox.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.125F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            databox.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.125F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            databox.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             databox.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.875F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            databox.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.875F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            databox.DefaultCellStyle = dataGridViewCellStyle2;
             databox.Dock = System.Windows.Forms.DockStyle.Fill;
             databox.Location = new System.Drawing.Point(0, 0);
             databox.Margin = new System.Windows.Forms.Padding(2);
-            databox.MaximumSize = new System.Drawing.Size(1500, 1500);
             databox.MinimumSize = new System.Drawing.Size(1200, 300);
             databox.Name = "databox";
             databox.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9F);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            databox.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            databox.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             databox.RowHeadersWidth = 82;
             databox.RowTemplate.Height = 20;
             databox.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            databox.Size = new System.Drawing.Size(1200, 647);
+            databox.Size = new System.Drawing.Size(1200, 747);
             databox.TabIndex = 9;
             databox.RowLeave += databox_RowLeave;
             databox.SelectionChanged += databox_SelectionChanged;
@@ -822,10 +914,9 @@ namespace RocksmithToolkitGUI.DLCManager
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             AutoSize = true;
-            ClientSize = new System.Drawing.Size(916, 647);
+            ClientSize = new System.Drawing.Size(916, 747);
             Controls.Add(splitContainer1);
             Margin = new System.Windows.Forms.Padding(2);
-            MaximumSize = new System.Drawing.Size(1508, 1519);
             MinimumSize = new System.Drawing.Size(727, 445);
             Name = "Standardization";
             Text = "Standardise/Correct Song/CDLC MetaData";
@@ -933,9 +1024,9 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btn_ApplyCurrent;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Button bbtn_ApplyYear;
+        private System.Windows.Forms.Button btn_ApplyYear;
         private System.Windows.Forms.Button btn_ApplyDefault;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btn_ApplyandMultiSpoti;
         private System.Windows.Forms.Button btn_MultiplyAutoGroup;
         private System.Windows.Forms.Button btn_RemoveDuplicates;
         private System.Windows.Forms.Button btn_GoTo;
@@ -951,5 +1042,11 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.CheckBox chbx_a1;
         private System.Windows.Forms.TextBox txt_ID;
         protected internal System.Windows.Forms.DataGridView databox;
+        private System.Windows.Forms.TextBox txt_SearchAlbum;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox txt_SearchArtist;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.CheckedListBox chbx_AllDfltGroups;
     }
 }

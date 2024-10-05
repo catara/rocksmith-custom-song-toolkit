@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-34,-4)">
+        <g transform="matrix(0.75,0,0,0.75,-586.75,192.5)">
+            <g id="FollowCaptureTime" transform="matrix(1.33333,0,0,1.33333,795.667,-256.667)">
+                <g opacity="0.3">
+                    <g id="BG-Transparent" serif:id="BG Transparent" transform="matrix(1,0,0,1,24,4)">
+                        <rect x="0" y="0" width="20" height="20" style="fill:none;"/>
+                    </g>
+                    <g transform="matrix(0.65,0,0,0.8,26.7,5.4)">
+                        <g id="FollowCaptureTime1" serif:id="FollowCaptureTime">
+                            <path d="M4.667,12C4.667,10.29 5.29,9.5 7,9.5L11.231,9.5L11.231,7L7,7C4.24,7 2,9.24 2,12C2,14.76 4.24,17 7,17L11.231,17L11.231,14.5L7,14.5C5.29,14.5 4.667,13.71 4.667,12ZM8.154,13.25L15.846,13.25L15.846,10.75L8.154,10.75L8.154,13.25ZM17,7L12.769,7L12.769,9.5L17,9.5C18.71,9.5 19.333,10.29 19.333,12C19.333,13.71 18.71,14.5 17,14.5L12.769,14.5L12.769,17L17,17C19.76,17 22,14.76 22,12C22,9.24 19.76,7 17,7Z" style="fill-rule:nonzero;"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2023 Audiokinetic Inc. -->
+<PluginModule>
+  <EffectPlugin Name="Wwise 3D Audio Bed Mixer" CompanyID="0" PluginID="190" DisplayName="3D Audio Bed Mixer">
+    <PluginInfo MenuPath="00-Wwise">
+      <PlatformSupport>
+        <Platform Name="Any">
+          <CanBeInsertOnBusses>true</CanBeInsertOnBusses>
+          <CanBeInsertOnAudioObjects>false</CanBeInsertOnAudioObjects>
+          <CanSendMonitorData>true</CanSendMonitorData>
+        </Platform>
+      </PlatformSupport>
+    </PluginInfo>
+    <Properties>
+      <Property Name="MainMixConfiguration" Type="Uint32" SupportLink="true" DisplayName="Main Mix Configuration">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>0</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="Uint32">
+              <!-- Serialized channel config: MSB mask(20) type(4) nchannels(8) -->
+              <Value DisplayName="Same as Audio Device">0</Value>
+              <Value DisplayName="7.1">6549768</Value>
+              <Value DisplayName="7.1.4">761524492</Value>
+              <Value DisplayName="Ambisonics 1st order">516</Value>
+              <!-- 0x00000204 -->
+              <Value DisplayName="Ambisonics 2nd order">521</Value>
+              <!-- 0x00000209 -->
+              <Value DisplayName="Ambisonics 3rd order">528</Value>
+              <!-- 0x00000210 -->
+              <Value DisplayName="Ambisonics 4th order">537</Value>
+              <!-- 0x00000219 -->
+              <Value DisplayName="Ambisonics 5th order">548</Value>
+              <!-- 0x00000224 -->
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="PassthroughMixPolicy" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" Type="Uint16" SupportLink="true" DisplayName="Passthrough Mix">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>1</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="Uint16">
+              <Value DisplayName="When Audio Device supports it">0</Value>
+              <Value DisplayName="Always">1</Value>
+              <Value DisplayName="Never">2</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="SystemAudioObjectsPolicy" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" Type="Uint16" SupportLink="true" DisplayName="Preserve System-Eligible Audio Objects">
+        <DefaultValue>0</DefaultValue>
+        <AudioEnginePropertyID>2</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Enumeration Type="Uint16">
+              <Value DisplayName="When Audio Device supports it">0</Value>
+              <Value DisplayName="Always">1</Value>
+              <Value DisplayName="Never">2</Value>
+            </Enumeration>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="SystemAudioObjectLimit" SupportRTPCType="Exclusive" ForceRTPCCurveSegmentShape="Constant" Type="Uint16" SupportLink="true" DisplayName="System-Eligible Audio Object Limit">
+        <DefaultValue>64</DefaultValue>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Uint16">
+              <Min>0</Min>
+              <Max>512</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <AudioEnginePropertyID>3</AudioEnginePropertyID>
+        <Dependencies>
+          <PropertyDependency Name="SystemAudioObjectsPolicy" Action="Enable">
+            <Condition>
+              <Enumeration Type="Uint16">
+                <Value>0</Value>
+                <Value>1</Value>
+              </Enumeration>
+            </Condition>
+          </PropertyDependency>        
+        </Dependencies>
+      </Property>
+    </Properties>
+  </EffectPlugin>
+</PluginModule>

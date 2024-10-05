@@ -67,6 +67,14 @@ using static System.Net.Mime.MediaTypeNames;
 using Newtonsoft.Json.Linq;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using Font = System.Drawing.Font;
+using RocksmithToolkitLib.DLCPackage.Manifest.Functions;
+using Platform = RocksmithToolkitLib.Platform;
+using System.Diagnostics.Metrics;
+using Swan.Formatters;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+using System.Net.WebSockets;
+using static System.Windows.Forms.LinkLabel;
+using Microsoft.Extensions.Options;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -200,6 +208,8 @@ namespace RocksmithToolkitGUI.DLCManager
             else chbx_RemoveBassDD.Checked = false;
             if (c("dlcm_UniqueID") == "Yes") chbx_UniqueID.Checked = true;
             else chbx_UniqueID.Checked = false;
+            if (c("dlcm_AdditionalManipul102") == "Yes") chbx_Clean.Checked = true;
+            else chbx_Clean.Checked = false;
             if (c("dlcm_AdditionalManipul92") == "Yes") chbx_PS3HAN.Checked = true;
             else chbx_PS3HAN.Checked = false;
             if (c("dlcm_AdditionalManipul93") == "Yes") chbx_PS3Retail.Checked = true;
@@ -236,14 +246,18 @@ namespace RocksmithToolkitGUI.DLCManager
 
 
             //Create Groups
-            CreateGroups();
+            CreateGroups(); timestamp = UpdateLog(timestamp, "Created groups", false, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
 
             //Add fields for sorting
-            CreateFieldsDropdown();
+            CreateFieldsDropdown(); timestamp = UpdateLog(timestamp, "Created sort Fields dropdown", false, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
 
             //Create filters from Db or programatically (e.g. groups)
-            cmb_Filter = GenerateFilterList(cmb_Filter, cnb, cnc);
-            lbGroups = GenerateFilterListBox(lbGroups, cmb_Filter, cnb, cnc);
+            cmb_Filter = GenerateFilterList(cmb_Filter, cnb, cnc); timestamp = UpdateLog(timestamp, "Generated Filter List", false, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
+            lbGroups = GenerateFilterListBox(lbGroups, cmb_Filter, cnb, cnc); timestamp = UpdateLog(timestamp, "Generated Filter List", false, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
             //// Loads Groups in chbx_AllGroups Filter box cmb_Filter //Create Groups list Dropbox
             //var norec = 0;
             //DataSet dsn = new DataSet(); dsn = SelectFromDB("Groups", "SELECT DISTINCT Groupz FROM Groups WHERE Type =\"DLC\";", "", cnb, cnc);
@@ -302,6 +316,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 var NEW_Path = c("dlcm_TempPath");
                 if (!DirectoryExists(OLD_Path) || (tmpp.ToLower().IndexOf(NEW_Path.ToLower()) == -1) && DirectoryExists(NEW_Path))
                 {
+                    timestamp = UpdateLog(timestamp, "Issues with folders location", false, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
                     var cmd = "UPDATE Main SET AlbumArtPath=REPLACE(AlbumArtPath, '" + OLD_Path + "','" + NEW_Path + "'), " +
                             "Album_ArtPathOrig = REPLACE(Album_ArtPathOrig, '" + OLD_Path + "', '" + NEW_Path + "'), " +
                             "AudioPath=REPLACE(AudioPath,'" + OLD_Path + "','" + NEW_Path + "'), " +
@@ -311,7 +327,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             "oggPreviewPath = REPLACE(oggPreviewPath, '" + OLD_Path + "','" + NEW_Path + "')" +
                             ";";
 
-                    DialogResult result1 = MessageBox.Show("DB Repository has been moved from " + OLD_Path + "\n\n to " + c("dlcm_TempPath") + tmpp + "\n\n-" + cmd, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult result1 = MessageBox.Show("Do you want to update paths?\n as DB Repository has been moved from " + OLD_Path + "\n\n to " + c("dlcm_TempPath") + tmpp + "\n\n-" + cmd, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result1 == DialogResult.Yes)
                     {
                         DataSet dus = new DataSet(); dus = UpdateDB("Main", cmd, cnb, cnc);
@@ -333,19 +349,23 @@ namespace RocksmithToolkitGUI.DLCManager
                         cmd = "UPDATE Standardization SET SpotifyAlbumPath=REPLACE(SpotifyAlbumPath, '" + OLD_Path + "','" + NEW_Path + "')" +
                             ";"; dhs = UpdateDB("Standardization", cmd, cnb, cnc);
                         tst = "Standardization table has been updated ... "; timestamp = UpdateLog(timestamp, tst, false, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                        timestamp = UpdateLog(timestamp, "Fixed Issues wirth folder locaTIONS IN THE LIB", false, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
 
                         MessageBox.Show("Main,Arrangements,Pack_AutiTrail and Standardization tables have been updated: " + c("dlcm_TempPath") + tmpp, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
-                        MessageBox.Show("Issues with Temp Folder and DB Reporsitory");
+                        MessageBox.Show("Issues with Temp Folder and DB Reporsitory"); SaveOK = true;
                         return;
                     }
                 }
             }
 
             //Update_Selected();
-            ListSettings();
+            ListSettings(); timestamp = UpdateLog(timestamp, "List Setting", false, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            timestamp = UpdateLog(timestamp, "Checking FTP and if \"output\" folder are existing", false, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            cbx_Format_SelectedValueChanged(null, null); timestamp = UpdateLog(timestamp, "folders Changed/Checked", false, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
             SaveOK = true;
             if (AfterImport)
             {
@@ -453,7 +473,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 oldSearchCmd = SearchCmd;
             }
             else
-               if (txt_Artist.Text != "" || txt_Title.Text != "" || txt_Album.Text != "" || txt_Description.Text != "" || txt_Live_Details.Text != "" || txt_OldPath.Text != "" || txt_Author.Text != "" || txt_ID.Text != "")
+               if (txt_Artist.Text != "" || txt_Title.Text != "" || txt_Album.Text != "" || txt_Description.Text != "" ||
+                txt_Live_Details.Text != "" || txt_OldPath.Text != "" || txt_Author.Text != "" || txt_ID.Text != "")
                 try
                 {
                     btn_GoTo.Enabled = false;
@@ -657,14 +678,16 @@ namespace RocksmithToolkitGUI.DLCManager
 
                         if (txt_Playthrough.Items.Count > 0) for (int k = txt_Playthrough.Items.Count - 1; k >= 0; --k) txt_Playthrough.Items.RemoveAt(k);//remove items
                         txt_Playthrough.Text = "";
-                        var scmd = "SELECT Arrangement_Name, RouteMask, Bonus, PlaythroughYBLink FROM Arrangements WHERE CDLC_ID=" + SongRecord[0].ID + GetArrOfficSQLTxt(arrangoff);
+                        var scmd = "SELECT Arrangement_Name, RouteMask, Bonus, PlaythroughYBLink, Alternate, Favorite FROM Arrangements WHERE CDLC_ID=" + SongRecord[0].ID + GetArrOfficSQLTxt(arrangoff);
                         DataSet dnss = new DataSet(); dnss = SelectFromDB("Arrangements", scmd, "", cnb, cnc);
                         var norecs = GetNoRec(dnss, cnb, cnc);//dnss.Tables.Count == 0 ? 0 : dnss.Tables[0].Rows.Count;
                         if (norecs > 0) for (int j = 0; j < norecs; j++)
                                 if (dnss.Tables[0].Rows[j][3].ToString() != "" && dnss.Tables[0].Rows[j][3].ToString() != null)
                                 {
-                                    var b = "";
-                                    var t = dnss.Tables[0].Rows[j][3].ToString();
+                                    var b = dnss.Tables[0].Rows[j][2].ToString();
+                                    var t = dnss.Tables[0].Rows[j][3].ToString();//b + "_" + a + "_" +
+                                    var a = dnss.Tables[0].Rows[j][4].ToString();
+                                    var f = dnss.Tables[0].Rows[j][5].ToString();
                                     //if (t == "Lead") b=0;
                                     //else if (t == "Rhythm") b=1;
                                     //else if (t == "Combo") b=2;
@@ -676,8 +699,8 @@ namespace RocksmithToolkitGUI.DLCManager
                                     else if (t == "3" || t == "Bass") b = "Bass";
                                     else if (t == "4" || t == "Vocal" || t == "5" || t == "JVocals") b = "Vocal";
 
-                                    var v = b + "_" + dnss.Tables[0].Rows[j][1].ToString() + "_"
-                                    + (dnss.Tables[0].Rows[j][2].ToString().ToLower() == "Yes".ToLower() ? "_B_" : "")
+                                    var v = dnss.Tables[0].Rows[j][1].ToString() + "_"
+                                    + (b == "True".ToLower() ? "_B_" : "") + (a == "True".ToLower() ? "_A_" : "") + (f == "Yes".ToLower() ? "_F_" : "")
                                     + "_" + dnss.Tables[0].Rows[j][3].ToString();
                                     txt_Playthrough.Items.Add(v);//add items
                                     txt_Playthrough.Text = v;
@@ -688,6 +711,8 @@ namespace RocksmithToolkitGUI.DLCManager
                             txt_Playthrough.Text = SongRecord[0].Youtube_Playthrough;
                         }
 
+                        chbx_A_CatchAllAtributte.Text = "";
+
                         //cmb_Tracks
                         ListTracks(SongRecord[0].Duplicate_Of, SongRecord[0].ID, SongRecord[0].Song_Lenght);
 
@@ -695,6 +720,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         AddAlternativeAudioTracksAvailability(SongRecord[0].ID);
 
                         txt_DuplicateOf.Text = SongRecord[0].Duplicate_Of.ToString();
+                        txt_Duplicate_Of.Text = SongRecord[0].Duplicate_Of.ToString();
                         btn_Playthrough.Enabled = (txt_Playthrough.Text == "" || txt_Playthrough.Text is null) ? false : true;
 
                         txt_CustomsForge_Link.Text = SongRecord[0].CustomsForge_Link;
@@ -704,11 +730,25 @@ namespace RocksmithToolkitGUI.DLCManager
                         txt_PackingDate.Text = SongRecord[0].PackingDate;
                         txt_UpdateVersionDate.Text = SongRecord[0].UpdateVersionDate;
                         txt_BasedOn_GP.Text = SongRecord[0].BasedOn_GP;
+                        if (txt_BasedOn_GP.Text == "") { btn_BasedOn_GP.Enabled = false; btn_GetGP.Enabled = false; }
+                        else { btn_BasedOn_GP.Enabled = true; btn_GetGP.Enabled = true; }
                         txt_ToDo_s.Text = SongRecord[0].ToDos;
+                        txt_EoFPath.Text = SongRecord[0].EoFPath;
+                        if (txt_EoFPath.Text == "") { btn_OpenEoF.Enabled = false; btn_SetEoFPath.Enabled = false; }
+                        else { btn_OpenEoF.Enabled = true; btn_SetEoFPath.Enabled = true; }
                         txt_ToneDetails.Text = SongRecord[0].ToneDetails;
-                        txt_BasedOn_Tabs.Text = SongRecord[0].BasedOn_Tabs;
-                        txt_BasedOn_Youtube.Text = SongRecord[0].BasedOn_Youtube;
-                        txt_BasedOn_CF.Text = SongRecord[0].BasedOn_CF;
+                        txt_CF_Author.Text = SongRecord[0].CF_Author;
+                        txt_PackageDetails.Text = SongRecord[0].PackageDetails;
+                        txt_BasedOn_Tabs.Text = SongRecord[0].BasedOn_Tabs; if (txt_BasedOn_Tabs.Text == "") btn_BasedOn_Tabs.Enabled = false; else btn_BasedOn_Tabs.Enabled = true;
+                        txt_BasedOn_Youtube.Text = SongRecord[0].BasedOn_Youtube; if (txt_BasedOn_Youtube.Text == "") btn_BasedOn_Youtube.Enabled = false; else btn_BasedOn_Youtube.Enabled = true;
+                        txt_BasedOn_CF.Text = SongRecord[0].BasedOn_CF; if (txt_BasedOn_CF.Text == "") btn_BasedOn_CF.Enabled = false; else btn_BasedOn_CF.Enabled = true;
+                        txt_filePathonself.Text = SongRecord[0].BasedOn_CF; if (txt_filePathonself.Text == "") btn_filePathonself.Enabled = false; else btn_filePathonself.Enabled = true;
+                        txt_SpotifySongID.Text = SongRecord[0].Spotify_Song_ID; if (txt_SpotifySongID.Text == "") btn_SetSpotifySongID.Enabled = false; else btn_SetSpotifySongID.Enabled = true;
+                        txt_BasedOn_RB.Text = SongRecord[0].BasedOn_RB; if (txt_BasedOn_RB.Text == "") btn_BasedOn_RB.Enabled = false; else btn_BasedOn_RB.Enabled = true;
+
+                        chbx_Found_on_CF.Checked = SongRecord[0].Found_on_CF == "Yes" ? true : false;
+                        chbx_Found_on_CAPIRO.Checked = SongRecord[0].Uploaded_on_CAPIRO == "Yes" ? true : false;
+                        chbx_Uploaded_on_CF.Checked = SongRecord[0].Uploaded_on_CF == "Yes" ? true : false;
 
                         txt_Artist_ShortName.Text = SongRecord[0].Artist_ShortName;
                         txt_Album_ShortName.Text = SongRecord[0].Album_ShortName;
@@ -723,73 +763,23 @@ namespace RocksmithToolkitGUI.DLCManager
                         else chbx_UseInternalDDRemovalLogic.Checked = false;
                         if (SongRecord[0].Is_Original == "Yes") { chbx_Original.Checked = true; chbx_Original.ForeColor = btn_Debug.ForeColor; }
                         else { chbx_Original.Checked = false; chbx_Original.ForeColor = btn_Duplicate.ForeColor; }
-                        if (SongRecord[0].Is_Original == "Yes") chbx_A440.Checked = true;
+                        if (SongRecord[0].A440TunningFrecv == "Yes" || !SongRecord[0].A440TunningFrecv.ToLower().Contains("non")) chbx_A440.Checked = true;
                         else chbx_A440.Checked = false;
                         if (SongRecord[0].Is_Beta == "Yes") chbx_Beta.Checked = true;
                         else chbx_Beta.Checked = false;
+                        if (SongRecord[0].Has_Alternate_Track == "Yes") chbx_AltTrack.Checked = true;
+                        else chbx_AltTrack.Checked = false;
                         /*{chbx_PackBeta.Enabled = true;; chbx_PackBeta.Enabled = false;  }}*/
                         if (SongRecord[0].Has_Capo == "Yes") { chbx_Capo.Checked = true; chbx_Capo.Visible = true; }
                         else { chbx_Capo.Checked = false; chbx_Capo.Visible = false; }
+                        //if (SongRecord[0].Has_Slide == "Yes") { chbx_Capo.Checked = true; chbx_Capo.Visible = true; }
+                        //else { chbx_Capo.Checked = false; chbx_Capo.Visible = false; }
                         if (SongRecord[0].Has_ShowLights == "Yes") { chbx_HasShowLights.Checked = true; chbx_HasShowLights.Visible = true; }
                         else { chbx_HasShowLights.Checked = false; chbx_HasShowLights.Visible = false; }
                         //if (SongRecord[0].ImprovedWithDM == "Yes") chbx_A_IsImprovedWithDM.Checked = true;
                         //else chbx_A_IsImprovedWithDM.Checked = false;
 
-                        //Attributes
-                        //Location: 4, 54
-                        var x = 1;
-                        var y = 52;
-                        if (SongRecord[0].Is_Instrumental == "Yes") { chbx_A_IsInstrumental.Location = new Point(x, y); x += chbx_A_IsInstrumental.Size.Width; chbx_A_IsInstrumental.Checked = true; chbx_A_IsInstrumental.Visible = true; }
-                        else { chbx_A_IsInstrumental.Checked = false; chbx_A_IsInstrumental.Visible = false; }
-                        if (SongRecord[0].Is_Single == "Yes") { chbx_A_IsSingle.Location = new Point(x, y); x += chbx_A_IsSingle.Size.Width; chbx_A_IsSingle.Checked = true; chbx_A_IsSingle.Visible = true; }
-                        else { chbx_A_IsSingle.Checked = false; chbx_A_IsSingle.Visible = false; }
-                        if (SongRecord[0].Is_Medley == "Yes") { chbx_A_IsMedley.Location = new Point(x, y); x += chbx_A_IsMedley.Size.Width; chbx_A_IsMedley.Checked = true; chbx_A_IsMedley.Visible = true; }
-                        else { chbx_A_IsMedley.Checked = false; chbx_A_IsMedley.Visible = false; }
-                        if (SongRecord[0].Is_MultiStrings == "Yes") { chbx_A_IsMultiStrings.Location = new Point(x, y); x += chbx_A_IsMultiStrings.Size.Width; chbx_A_IsMultiStrings.Checked = true; chbx_A_IsMultiStrings.Visible = true; }
-                        else { chbx_A_IsMultiStrings.Checked = false; chbx_A_IsMultiStrings.Visible = false; }
-                        if (SongRecord[0].Is_Soundtrack == "Yes") { chbx_A_IsSoundtrack.Location = new Point(x, y); x += chbx_A_IsSoundtrack.Size.Width; chbx_A_IsSoundtrack.Checked = true; chbx_A_IsSoundtrack.Visible = true; }
-                        else { chbx_A_IsSoundtrack.Checked = false; chbx_A_IsSoundtrack.Visible = false; }
-                        if (SongRecord[0].Is_EP == "Yes") { chbx_A_IsEP.Location = new Point(x, y); x += chbx_A_IsEP.Size.Width; chbx_A_IsEP.Checked = true; chbx_A_IsEP.Visible = true; }
-                        else { chbx_A_IsEP.Checked = false; chbx_A_IsEP.Visible = false; }
-                        if (SongRecord[0].Is_Uncensored == "Yes") { chbx_A_IsUncensored.Location = new Point(x, y); x += chbx_A_IsUncensored.Size.Width; chbx_A_IsUncensored.Checked = true; chbx_A_IsUncensored.Visible = true; }
-                        else { chbx_A_IsUncensored.Checked = false; chbx_A_IsUncensored.Visible = false; }
-                        if (SongRecord[0].Is_FullAlbum == "Yes") { chbx_A_IsFullAlbum.Location = new Point(x, y); x += chbx_A_IsFullAlbum.Size.Width; chbx_A_IsFullAlbum.Checked = true; chbx_A_IsFullAlbum.Visible = true; }
-                        else { chbx_A_IsFullAlbum.Checked = false; chbx_A_IsFullAlbum.Visible = false; }
-                        if (SongRecord[0].Has_Featuring == "Yes") { chbx_A_HasFeaturing.Location = new Point(x, y); x += chbx_A_HasFeaturing.Size.Width; chbx_A_HasFeaturing.Checked = true; chbx_A_HasFeaturing.Visible = true; }
-                        else { chbx_A_HasFeaturing.Checked = false; chbx_A_HasFeaturing.Visible = false; }
-                        if (SongRecord[0].Is_Cover == "Yes") { chbx_A_IsCover.Location = new Point(x, y); x += chbx_A_IsCover.Size.Width; chbx_A_IsCover.Checked = true; chbx_A_IsCover.Visible = true; }
-                        else { chbx_A_IsCover.Checked = false; chbx_A_IsCover.Visible = false; }
-                        if (SongRecord[0].Is_Deluxe == "Yes") { chbx_A_IsDeluxe.Location = new Point(x, y); x += chbx_A_IsDeluxe.Size.Width; chbx_A_IsDeluxe.Checked = true; chbx_A_IsDeluxe.Visible = true; }
-                        else { chbx_A_IsDeluxe.Checked = false; chbx_A_IsDeluxe.Visible = false; }
-                        if (SongRecord[0].Is_GreatestHits == "Yes") { chbx_A_IsGreatestHits.Location = new Point(x, y); x += chbx_A_IsGreatestHits.Size.Width; chbx_A_IsGreatestHits.Checked = true; chbx_A_IsGreatestHits.Visible = true; }
-                        else { chbx_A_IsGreatestHits.Checked = false; chbx_A_IsGreatestHits.Visible = false; }
-                        if (SongRecord[0].Is_Midi == "Yes") { chbx_A_IsMidi.Location = new Point(x, y); x += chbx_A_IsMidi.Size.Width; chbx_A_IsMidi.Checked = true; chbx_A_IsMidi.Visible = true; }
-                        else { chbx_A_IsMidi.Checked = false; chbx_A_IsMidi.Visible = false; }
-                        if (SongRecord[0].Is_MetalCover == "Yes") { chbx_A_IsMetalCover.Location = new Point(x, y); x += chbx_A_IsMetalCover.Size.Width; chbx_A_IsMetalCover.Checked = true; chbx_A_IsMetalCover.Visible = true; }
-                        else { chbx_A_IsMetalCover.Checked = false; chbx_A_IsMetalCover.Visible = false; }
-                        if (SongRecord[0].Is_GameSoundtrack == "Yes"){chbx_A_IsGameSoundtrack.Location = new Point(x, y); x += chbx_A_IsGameSoundtrack.Size.Width; chbx_A_IsGameSoundtrack.Checked = true; chbx_A_IsGameSoundtrack.Visible = true;}
-                        else {chbx_A_IsGameSoundtrack.Checked = false; chbx_A_IsGameSoundtrack.Visible = false;}
-                        if (SongRecord[0].Is_Ukulele == "Yes") { chbx_A_IsUkulele.Location = new Point(x, y); x += chbx_A_IsUkulele.Size.Width; chbx_A_IsUkulele.Checked = true; chbx_A_IsUkulele.Visible = true; }
-                        else { chbx_A_IsUkulele.Checked = false; chbx_A_IsUkulele.Visible = false; }
-                        if (SongRecord[0].Is_TVTheme == "Yes") {
-                            chbx_A_IsTVTheme.Location = new Point(x, y); x += chbx_A_IsTVTheme.Size.Width; chbx_A_IsTVTheme.Checked = true; chbx_A_IsTVTheme.Visible = true; }
-                        else { chbx_A_IsTVTheme.Checked = false; chbx_A_IsTVTheme.Visible = false; }
-                        if (SongRecord[0].Is_AmateurCover == "Yes") { chbx_A_IsAmateurCover.Location = new Point(x, y); x += chbx_A_IsAmateurCover.Size.Width; chbx_A_IsAmateurCover.Checked = true; chbx_A_IsAmateurCover.Visible = true; }
-                        else { chbx_A_IsAmateurCover.Checked = false; chbx_A_IsAmateurCover.Visible = false; }
-                        if (SongRecord[0].Is_Demo == "Yes") { chbx_A_IsDemo.Location = new Point(x, y); x += chbx_A_IsDemo.Size.Width; chbx_A_IsDemo.Checked = true; chbx_A_IsDemo.Visible = true; }
-                        else { chbx_A_IsDemo.Checked = false; chbx_A_IsDemo.Visible = false; }
-                        if (SongRecord[0].Is_Karaoke == "Yes") { chbx_A_IsKaraoke.Location = new Point(x, y); x += chbx_A_IsKaraoke.Size.Width; chbx_A_IsKaraoke.Checked = true; chbx_A_IsKaraoke.Visible = true; }
-                        else { chbx_A_IsKaraoke.Checked = false; chbx_A_IsKaraoke.Visible = false; }
-                        if (SongRecord[0].Is_Remix == "Yes") { chbx_A_IsRemix.Location = new Point(x, y); x += chbx_A_IsRemix.Size.Width; chbx_A_IsRemix.Checked = true; chbx_A_IsRemix.Visible = true; }
-                        else { chbx_A_IsRemix.Checked = false; chbx_A_IsRemix.Visible = false; }
-                        if (SongRecord[0].Is_Remastered == "Yes") { chbx_A_IsRemastered.Location = new Point(x, y); x += chbx_A_IsRemastered.Size.Width; chbx_A_IsRemastered.Checked = true; chbx_A_IsRemastered.Visible = true; }
-                        else { chbx_A_IsRemastered.Checked = false; chbx_A_IsRemastered.Visible = false; }
-                        if (SongRecord[0].Is_Live == "Yes") { chbx_A_IsLive.Location = new Point(x, y); x += chbx_A_IsLive.Size.Width; chbx_A_IsLive.Checked = true; chbx_A_IsLive.Visible = true; }
-                        else { chbx_A_IsLive.Checked = false; chbx_A_IsLive.Visible = false; }
-                        if (SongRecord[0].Is_Acoustic == "Yes") { chbx_A_IsAcoustic.Location = new Point(x, y); x += chbx_A_IsAcoustic.Size.Width; chbx_A_IsAcoustic.Checked = true; chbx_A_IsAcoustic.Visible = true; }
-                        else { chbx_A_IsAcoustic.Checked = false; chbx_A_IsAcoustic.Visible = false; }
-                        //if (SongRecord[0].Is_EP == "Yes") { chbx_A_IsEP.Location = new Point(x, y); x += chbx_A_IsEP.Size.Width; chbx_A_IsEP.Checked = true; chbx_A_IsEP.Visible = true; }
-                        //else { chbx_A_IsEP.Checked = false; chbx_A_IsEP.Visible = false; }
+                        SetAttributes(SongRecord);
 
                         if (SongRecord[0].ImprovedWithDM == "Yes") { chbx_IsImprovedWithDM.Checked = true; chbx_IsImprovedWithDM.Visible = true; }
                         else { chbx_IsImprovedWithDM.Checked = false; chbx_IsImprovedWithDM.Visible = false; }
@@ -831,6 +821,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         else { chbx_KeepDD.Checked = false; }
                         if (SongRecord[0].Selected == "Yes") chbx_Selected.Checked = true;
                         else chbx_Selected.Checked = false;
+                        if (c("dlcm_AdditionalManipul102") == "Yes") chbx_Clean.Checked = true;
+                        else chbx_Clean.Checked = false;
                         if (SongRecord[0].Has_Author == "Yes") { chbx_HasAuthor.Checked = true; chbx_HasAuthor.Visible = true; }
                         else { chbx_HasAuthor.Checked = false; chbx_HasAuthor.Visible = false; }
                         if (SongRecord[0].Bass_Has_DD == "Yes") { chbx_BassDD.Checked = true; btn_RemoveBassDD.Enabled = true; chbx_KeepBassDD.Enabled = true; chbx_RemoveBassDD.Enabled = true; }
@@ -847,9 +839,39 @@ namespace RocksmithToolkitGUI.DLCManager
 
                         if (SongRecord[0].Available_Old == "Yes") { chbx_Avail_Old.Checked = true; btn_OldFolder.Enabled = true; btn_CopyOld.Enabled = true; chbx_CopyOld.Enabled = true; }
                         else { chbx_Avail_Old.Checked = false; btn_OldFolder.Enabled = false; ; btn_CopyOld.Enabled = false; chbx_CopyOld.Enabled = false; }
+
                         //chbx_Avail_Duplicate.Checked = false;
-                        if (SongRecord[0].Available_Duplicate == "Yes") { chbx_Avail_Duplicate.Checked = true; btn_DuplicateFolder.Enabled = true; }
-                        else { chbx_Avail_Duplicate.Checked = false; btn_DuplicateFolder.Enabled = false; }
+                        if (SongRecord[0].Available_Duplicate == "Yes")
+                        {
+                            chbx_Avail_Duplicate.Checked = true; btn_DuplicateFolder.Enabled = true; cmb_Duplicate.Enabled = true;
+
+                            for (int k = cmb_Duplicate.Items.Count - 1; k >= 0; --k) cmb_Duplicate.Items.RemoveAt(k);//remove items
+                            var cmdz = " FROM Pack_AuditTrail WHERE PackPath like \"%0_duplicate%\" AND CDLC_ID=" + txt_ID.Text + "";
+                            var tcmd = "SELECT PackPath+\"\\\"+FileName, FileName " + cmdz;
+                            DataSet dms = new DataSet(); dms = SelectFromDB("Pack_AuditTrail", tcmd, "", cnb, cnc);
+                            var norecz = GetNoRec(dms, cnb, cnc);//dns.Tables[0].Rows.Count;
+                            if (norecz > 0) for (int j = 0; j < norecz; j++)
+                                {
+                                    cmb_Duplicate.Items.Add(dms.Tables[0].Rows[j][0].ToString());//add items
+                                    cmb_Duplicate.Text = dms.Tables[0].Rows[j][0].ToString();
+                                }
+                        }
+                        else { chbx_Avail_Duplicate.Checked = false; btn_DuplicateFolder.Enabled = false; cmb_Duplicate.Enabled = false; cmb_Duplicate.Text = ""; }
+
+                        //chbx_AlternateAvail
+                        //chbx_AlternateAvail.Checked = true; chbx_AlternateAvail.Visible = true;
+                        for (int k = cmb_Alternate.Items.Count - 1; k >= 0; --k) cmb_Alternate.Items.RemoveAt(k);//remove items
+                        var cmd = "SELECT ID, Song_Title FROM Main WHERE Duplicate_Of =\"" + txt_ID.Text + "\" OR ID=" + (txt_Duplicate_Of.Text == "" ? 0 : txt_Duplicate_Of.Text) + " ORDER BY Duplicate_Of; ";
+                        DataSet dns = new DataSet(); dns = SelectFromDB("Main", cmd, "", cnb, cnc);
+                        var norec = GetNoRec(dns, cnb, cnc);//dns.Tables[0].Rows.Count;
+                        if (norec > 0) for (int j = 0; j < norec; j++)
+                            {
+                                cmb_Alternate.Items.Add(dns.Tables[0].Rows[j][0].ToString() + " - " + dns.Tables[0].Rows[j][1].ToString());//add items
+                                cmb_Alternate.Text = dns.Tables[0].Rows[j][0].ToString() + " - " + dns.Tables[0].Rows[j][1].ToString();
+                                chbx_AlternateAvail.Checked = true; chbx_AlternateAvail.Visible = true; cmb_Alternate.Visible = true;
+                            }
+                        else { chbx_AlternateAvail.Checked = false; chbx_AlternateAvail.Visible = false; cmb_Alternate.Text = ""; cmb_Alternate.Visible = false; }
+
                         if (SongRecord[0].Has_Been_Corrected == "Yes") chbx_Has_Been_Corrected.Checked = true;
                         else chbx_Has_Been_Corrected.Checked = false;
 
@@ -857,6 +879,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         else chbx_AudioChanged.Checked = false;
                         if (SongRecord[0].Has_Had_Lyrics_Changed == "Yes") chbx_LyricsChanged.Checked = true;
                         else chbx_LyricsChanged.Checked = false;
+                        if (SongRecord[0].AI_TrackAvail == "Yes") chbx_AI_TrackAvail.Checked = true;
+                        else chbx_AI_TrackAvail.Checked = false;
 
                         if (SongRecord[0].Has_Alternate_Audio == "Yes") chbx_AlternateAudioAvail.Checked = true;
                         else chbx_AlternateAudioAvail.Checked = false;
@@ -868,13 +892,13 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (SongRecord[0].Has_Other_Officials == "Yes")
                         {
                             chbx_Originals_Available.Checked = true;
-                            var cmd = "SELECT DISTINCT Platform FROM Pack_AuditTrail WHERE Official=\"Yes\" AND DLC_ID=" + SongRecord[0].ID + " AND PackPath not like \"%0_old%\"; ";
-                            DataSet dns = new DataSet(); dns = SelectFromDB("Main", cmd, "", cnb, cnc);
-                            var norec = GetNoRec(dns, cnb, cnc);//dns.Tables[0].Rows.Count;
-                            if (norec > 0) for (int j = 0; j < norec; j++)
+                            var cmdd = "SELECT DISTINCT Platform FROM Pack_AuditTrail WHERE Official=\"Yes\" AND DLC_ID=" + SongRecord[0].ID + " AND PackPath not like \"%0_old%\"; ";
+                            DataSet dds = new DataSet(); dds = SelectFromDB("Main", cmdd, "", cnb, cnc);
+                            var norecd = GetNoRec(dds, cnb, cnc);//dns.Tables[0].Rows.Count;
+                            if (norecd > 0) for (int j = 0; j < norecd; j++)
                                 {
-                                    chbx_Format_Originals.Items.Add(dns.Tables[0].Rows[j][0].ToString());//add items
-                                    chbx_Format_Originals.Text = dns.Tables[0].Rows[j][0].ToString();
+                                    chbx_Format_Originals.Items.Add(dds.Tables[0].Rows[j][0].ToString());//add items
+                                    chbx_Format_Originals.Text = dds.Tables[0].Rows[j][0].ToString();
                                 }
                         }
                         else chbx_Originals_Available.Checked = false;
@@ -979,7 +1003,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                         //Populate details on Arrangements
                         var sel = "SELECT Arrangement_Name, Start_Time, Bonus, Part, Has_Sections, MaxDifficulty, ToneBase, ToneA, ToneB, ToneC, ToneD, Tunning, TuningPitch, ConversionDateTime," +
-                            " Rating, ScrollSpeed, Comments, XMLFilePath FROM Arrangements WHERE CDLC_ID=" + txt_ID.Text + GetArrOfficSQLTxt(arrangoff) + " ORDER BY ID DESC;";
+                            " Rating, ScrollSpeed, Comments, XMLFilePath, Favorite, Alternate, Slide, CapoFret, A440TunningFrecv, ID FROM Arrangements WHERE CDLC_ID=" + txt_ID.Text + GetArrOfficSQLTxt(arrangoff) + " ORDER BY ID DESC;";
                         DataSet ddr = new DataSet(); ddr = SelectFromDB("Arrangements", sel, "", cnb, cnc);
                         rec = GetNoRec(ddr, cnb, cnc);//ddr.Tables.Count > 0 ? ddr.Tables[0].Rows.Count : 0;
 
@@ -988,6 +1012,16 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (rec > 0)
                         {
                             var tzt = "";
+                            var l = 0; var c = 0; var b = 0; var r = 0;
+                            chbx_LeaF1.Checked = false; chbx_LeaF2.Checked = false; chbx_LeaF3.Checked = false;
+                            chbx_ComF1.Checked = false; chbx_ComF2.Checked = false; chbx_ComF3.Checked = false;
+                            chbx_RhyF1.Checked = false; chbx_RhyF2.Checked = false; chbx_RhyF3.Checked = false;
+                            chbx_BasF1.Checked = false; chbx_BasF2.Checked = false; chbx_BasF3.Checked = false;
+
+                            chbx_LeaF1.Visible = false; chbx_LeaF2.Visible = false; chbx_LeaF3.Visible = false;
+                            chbx_ComF1.Visible = false; chbx_ComF2.Visible = false; chbx_ComF3.Visible = false;
+                            chbx_RhyF1.Visible = false; chbx_RhyF2.Visible = false; chbx_RhyF3.Visible = false;
+                            chbx_BasF1.Visible = false; chbx_BasF2.Visible = false; chbx_BasF3.Visible = false;
                             for (var j = 0; j <= rec - 1; j++)
                             {
                                 var Arrangement_Name = ddr.Tables[0].Rows[j].ItemArray[0].ToString();
@@ -1004,26 +1038,59 @@ namespace RocksmithToolkitGUI.DLCManager
                                 var ScroolSpeed = ddr.Tables[0].Rows[j].ItemArray[15].ToString() != null ? (", scroolspeed: " + ddr.Tables[0].Rows[j].ItemArray[15]) : "";
                                 var Comment = ddr.Tables[0].Rows[j].ItemArray[16] != null && ddr.Tables[0].Rows[j].ItemArray[16].ToString() != "" ? (", comment: " + ddr.Tables[0].Rows[j].ItemArray[16].ToString()) : "";
                                 var XMLFilePath = ", " + ddr.Tables[0].Rows[j].ItemArray[17].ToString();
+                                var fav = ", " + ddr.Tables[0].Rows[j].ItemArray[18].ToString() == "Yes" ? "F" : "";
+                                var alt = ", " + ddr.Tables[0].Rows[j].ItemArray[19].ToString() == "True" ? "A" : "";
+                                var sld = ", " + ddr.Tables[0].Rows[j].ItemArray[20].ToString() == "Yes" ? "S" : "";
+                                var capfr = ", " + ddr.Tables[0].Rows[j].ItemArray[21].ToString() != "0" ? "CapoFret" + ddr.Tables[0].Rows[j].ItemArray[21].ToString() : "";
+                                var a440 = ", " + ddr.Tables[0].Rows[j].ItemArray[22].ToString() != "440" ? ddr.Tables[0].Rows[j].ItemArray[22].ToString() : "440";
+                                var iud = ddr.Tables[0].Rows[j].ItemArray[23].ToString();
 
                                 // Set up the ToolTip text for the Button and Checkbox.
-                                var txtt = Start_Time + Bonus + Part + HasSections + MaxDifficulty + Tones + Tunings + TuningPitch + lastConversion + Rating + ScroolSpeed + Comment;
+                                var txtt = Start_Time + Bonus + fav + alt + a440 + sld + capfr + Part + HasSections + MaxDifficulty + Tones + Tunings + TuningPitch + lastConversion + Rating + ScroolSpeed + Comment;
                                 txtt = txtt.Replace(", , ", ", ").Replace(", , ", ", ").Replace(", , ", ", ").Replace(", , ", ", ");
-                                if (Arrangement_Name == "0" || Arrangement_Name == "Lead") toolTip1.SetToolTip(chbx_Lead, toolTip1.GetToolTip(chbx_Lead) + txtt);
-                                else if (Arrangement_Name == "1" || Arrangement_Name == "Rhythm") toolTip1.SetToolTip(chbx_Rhythm, toolTip1.GetToolTip(chbx_Rhythm) + txtt);
-                                else if (Arrangement_Name == "2" || Arrangement_Name == "Combo") toolTip1.SetToolTip(chbx_Combo, toolTip1.GetToolTip(chbx_Combo) + txtt);
-                                else if (Arrangement_Name == "3" || Arrangement_Name == "Bass") toolTip1.SetToolTip(chbx_Bass, toolTip1.GetToolTip(chbx_Bass) + txtt);
+                                if (Arrangement_Name == "0" || Arrangement_Name == "Lead")
+                                {
+                                    toolTip1.SetToolTip(chbx_Lead, toolTip1.GetToolTip(chbx_Lead) + txtt); l++;
+                                    if (l == 1) { chbx_LeaF1.Visible = true; toolTip1.SetToolTip(chbx_LeaF1, "Mark Lead 1 as favorite:" + iud); if (fav == ", F") chbx_LeaF1.Checked = true; }
+                                    else if (l == 2) { chbx_LeaF2.Visible = true; toolTip1.SetToolTip(chbx_LeaF2, "Mark Lead 2 as favorite:" + iud); if (fav == ", F") chbx_LeaF2.Checked = true; }
+                                    else if (l == 3) { chbx_LeaF3.Visible = true; toolTip1.SetToolTip(chbx_LeaF3, "Mark Lead 3 as favorite:" + iud); if (fav == ", F") chbx_LeaF3.Checked = true; }
+                                }
+                                else if (Arrangement_Name == "1" || Arrangement_Name == "Rhythm")
+                                {
+                                    toolTip1.SetToolTip(chbx_Rhythm, toolTip1.GetToolTip(chbx_Rhythm) + txtt); r++;
+                                    if (r == 1) { chbx_RhyF1.Visible = true; toolTip1.SetToolTip(chbx_RhyF1, "Mark Rhythm 1 as favorite:" + iud); if (fav == ", F") chbx_RhyF1.Checked = true; }
+                                    else if (r == 2) { chbx_RhyF2.Visible = true; toolTip1.SetToolTip(chbx_RhyF2, "Mark Rhythm 2 as favorite:" + iud); if (fav == ", F") chbx_RhyF2.Checked = true; }
+                                    else if (r == 3) { chbx_RhyF3.Visible = true; toolTip1.SetToolTip(chbx_RhyF3, "Mark Rhythm 3 as favorite:" + iud); if (fav == ", F") chbx_RhyF3.Checked = true; }
+                                }
+                                else if (Arrangement_Name == "2" || Arrangement_Name == "Combo")
+                                {
+                                    toolTip1.SetToolTip(chbx_Combo, toolTip1.GetToolTip(chbx_Combo) + txtt); c++;
+                                    if (c == 1) { chbx_ComF1.Visible = true; toolTip1.SetToolTip(chbx_ComF1, "Mark Combo 1 as favorite:" + iud); if (fav == ", F") chbx_ComF1.Checked = true; }
+                                    else if (c == 2) { chbx_ComF2.Visible = true; toolTip1.SetToolTip(chbx_ComF2, "Mark Combo 2 as favorite:" + iud); if (fav == ", F") chbx_ComF2.Checked = true; }
+                                    else if (c == 3) { chbx_ComF3.Visible = true; toolTip1.SetToolTip(chbx_ComF3, "Mark Combo 3 as favorite:" + iud); if (fav == ", F") chbx_ComF3.Checked = true; }
+                                }
+                                else if (Arrangement_Name == "3" || Arrangement_Name == "Bass")
+                                {
+                                    toolTip1.SetToolTip(chbx_Bass, toolTip1.GetToolTip(chbx_Bass) + txtt); b++;
+                                    if (b == 1) { chbx_BasF1.Visible = true; toolTip1.SetToolTip(chbx_BasF1, "Mark Bass 1 as favorite:" + iud); if (fav == ", F") chbx_BasF1.Checked = true; }
+                                    else if (b == 2) { chbx_BasF2.Visible = true; toolTip1.SetToolTip(chbx_BasF2, "Mark Bass 2 as favorite:" + iud); if (fav == ", F") chbx_BasF2.Checked = true; }
+                                    else if (b == 3) { chbx_BasF3.Visible = true; toolTip1.SetToolTip(chbx_BasF3, "Mark Bass 3 as favorite:" + iud); if (fav == ", F") chbx_BasF3.Checked = true; }
+                                }
                                 else if (Arrangement_Name == "4" || Arrangement_Name == "Vocal" || Arrangement_Name == "5" || Arrangement_Name == "JVocals") toolTip1.SetToolTip(chbx_Lyrics, toolTip1.GetToolTip(chbx_Lyrics) + txtt);
                                 //else if (Arrangement_Name == "5" || Arrangement_Name == "JVocals") toolTip1.SetToolTip(chbx_Combo, toolTip1.GetToolTip(chbx_Combo) + txtt);
+
                                 var instr = Arrangement_Name;
                                 var bon = ddr.Tables[0].Rows[j].ItemArray[2].ToString().ToLower() == "true" ? "b" : "";
-                                toolTip1.SetToolTip(txt_Tuning, toolTip1.GetToolTip(txt_Tuning) + ", " + instr + ": " + (bon == "" ? "" : bon + "-") + Tunings);
-                                //tzt += GetDropTunningInstr(ddr.Tables[0].Rows[j].ItemArray[11].ToString());
+                                toolTip1.SetToolTip(txt_Tuning, toolTip1.GetToolTip(txt_Tuning) + ", " + instr + ": " + (bon == "" ? "" : bon + "-")
+                                    + (fav == ", " ? "" : "F-") + (bon == ", " ? "" : "B-") + (alt == ", " ? "" : "A-") + (sld == ", " ? "" : "S-")
+                                    + (capfr == ", " ? "" : "C" + capfr + "-") + (a440 == ", " ? "" : a440 + "-") + Tunings);
                                 var tt = GetDropTunningInstr(ddr.Tables[0].Rows[j].ItemArray[11].ToString());
                                 if (tt != "") tzt += (tzt.IndexOf(tt) < 0) ? (instr + ": " + tt + "\n") : instr + ": Ditto\n";
                             }
                             if (tzt != "") toolTip1.SetToolTip(btn_PitchShift, tzt);
                             else toolTip1.SetToolTip(btn_PitchShift, "Not in any E standard or Drop D, drop(s) tunings, from which you can Drop down using EletroHarmonix Drop pedal");
                         }
+
                         //Populate all Packed versions of the song
                         var tht = "SELECT (PackPath+'\\'+FileName) as PackPath FROM Pack_AuditTrail WHERE CDLC_ID=" + txt_ID.Text + " ORDER BY ID DESC;";
                         DataSet dvr = new DataSet(); dvr = SelectFromDB("Pack_AuditTrail", tht, "", cnb, cnc);
@@ -1057,7 +1124,67 @@ namespace RocksmithToolkitGUI.DLCManager
             Update_Selected();
             tst = "Stop Change Row... "; timestamp = UpdateLog(timestamp, tst, false, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
         }
-
+        private void SetAttributes(MainDBfields[] SongRecord)
+        {
+            //Attributes
+            //Location: 4, 54
+            var x = 1;
+            var y = 52;
+            if (SongRecord[0].IntheWorks == "Yes") { chbx_A_IsInTheWorks.Checked = true; chbx_A_IsInTheWorks.Visible = true; }
+            else { chbx_A_IsInTheWorks.Checked = false; chbx_A_IsInTheWorks.Visible = false; }
+            if (SongRecord[0].Is_Instrumental == "Yes") { chbx_A_IsInstrumental.Location = new Point(x, y); x += chbx_A_IsInstrumental.Size.Width; chbx_A_IsInstrumental.Checked = true; chbx_A_IsInstrumental.Visible = true; }
+            else { chbx_A_IsInstrumental.Checked = false; chbx_A_IsInstrumental.Visible = false; }
+            if (SongRecord[0].Is_Single == "Yes") { chbx_A_IsSingle.Location = new Point(x, y); x += chbx_A_IsSingle.Size.Width; chbx_A_IsSingle.Checked = true; chbx_A_IsSingle.Visible = true; }
+            else { chbx_A_IsSingle.Checked = false; chbx_A_IsSingle.Visible = false; }
+            if (SongRecord[0].Is_Medley == "Yes") { chbx_A_IsMedley.Location = new Point(x, y); x += chbx_A_IsMedley.Size.Width; chbx_A_IsMedley.Checked = true; chbx_A_IsMedley.Visible = true; }
+            else { chbx_A_IsMedley.Checked = false; chbx_A_IsMedley.Visible = false; }
+            if (SongRecord[0].Is_MultiStrings == "Yes") { chbx_A_IsMultiStrings.Location = new Point(x, y); x += chbx_A_IsMultiStrings.Size.Width; chbx_A_IsMultiStrings.Checked = true; chbx_A_IsMultiStrings.Visible = true; }
+            else { chbx_A_IsMultiStrings.Checked = false; chbx_A_IsMultiStrings.Visible = false; }
+            if (SongRecord[0].Is_Soundtrack == "Yes") { chbx_A_IsSoundtrack.Location = new Point(x, y); x += chbx_A_IsSoundtrack.Size.Width; chbx_A_IsSoundtrack.Checked = true; chbx_A_IsSoundtrack.Visible = true; }
+            else { chbx_A_IsSoundtrack.Checked = false; chbx_A_IsSoundtrack.Visible = false; }
+            if (SongRecord[0].Is_EP == "Yes") { chbx_A_IsEP.Location = new Point(x, y); x += chbx_A_IsEP.Size.Width; chbx_A_IsEP.Checked = true; chbx_A_IsEP.Visible = true; }
+            else { chbx_A_IsEP.Checked = false; chbx_A_IsEP.Visible = false; }
+            if (SongRecord[0].Is_Uncensored == "Yes") { chbx_A_IsUncensored.Location = new Point(x, y); x += chbx_A_IsUncensored.Size.Width; chbx_A_IsUncensored.Checked = true; chbx_A_IsUncensored.Visible = true; }
+            else { chbx_A_IsUncensored.Checked = false; chbx_A_IsUncensored.Visible = false; }
+            if (SongRecord[0].Is_FullAlbum == "Yes") { chbx_A_IsFullAlbum.Location = new Point(x, y); x += chbx_A_IsFullAlbum.Size.Width; chbx_A_IsFullAlbum.Checked = true; chbx_A_IsFullAlbum.Visible = true; }
+            else { chbx_A_IsFullAlbum.Checked = false; chbx_A_IsFullAlbum.Visible = false; }
+            if (SongRecord[0].Has_Featuring == "Yes") { chbx_A_HasFeaturing.Location = new Point(x, y); x += chbx_A_HasFeaturing.Size.Width; chbx_A_HasFeaturing.Checked = true; chbx_A_HasFeaturing.Visible = true; }
+            else { chbx_A_HasFeaturing.Checked = false; chbx_A_HasFeaturing.Visible = false; }
+            if (SongRecord[0].Is_Cover == "Yes") { chbx_A_IsCover.Location = new Point(x, y); x += chbx_A_IsCover.Size.Width; chbx_A_IsCover.Checked = true; chbx_A_IsCover.Visible = true; }
+            else { chbx_A_IsCover.Checked = false; chbx_A_IsCover.Visible = false; }
+            if (SongRecord[0].Is_Deluxe == "Yes") { chbx_A_IsDeluxe.Location = new Point(x, y); x += chbx_A_IsDeluxe.Size.Width; chbx_A_IsDeluxe.Checked = true; chbx_A_IsDeluxe.Visible = true; }
+            else { chbx_A_IsDeluxe.Checked = false; chbx_A_IsDeluxe.Visible = false; }
+            if (SongRecord[0].Is_GreatestHits == "Yes") { chbx_A_IsGreatestHits.Location = new Point(x, y); x += chbx_A_IsGreatestHits.Size.Width; chbx_A_IsGreatestHits.Checked = true; chbx_A_IsGreatestHits.Visible = true; }
+            else { chbx_A_IsGreatestHits.Checked = false; chbx_A_IsGreatestHits.Visible = false; }
+            if (SongRecord[0].Is_Midi == "Yes") { chbx_A_IsMidi.Location = new Point(x, y); x += chbx_A_IsMidi.Size.Width; chbx_A_IsMidi.Checked = true; chbx_A_IsMidi.Visible = true; }
+            else { chbx_A_IsMidi.Checked = false; chbx_A_IsMidi.Visible = false; }
+            if (SongRecord[0].Is_MetalCover == "Yes") { chbx_A_IsMetalCover.Location = new Point(x, y); x += chbx_A_IsMetalCover.Size.Width; chbx_A_IsMetalCover.Checked = true; chbx_A_IsMetalCover.Visible = true; }
+            else { chbx_A_IsMetalCover.Checked = false; chbx_A_IsMetalCover.Visible = false; }
+            if (SongRecord[0].Is_GameSoundtrack == "Yes") { chbx_A_IsGameSoundtrack.Location = new Point(x, y); x += chbx_A_IsGameSoundtrack.Size.Width; chbx_A_IsGameSoundtrack.Checked = true; chbx_A_IsGameSoundtrack.Visible = true; }
+            else { chbx_A_IsGameSoundtrack.Checked = false; chbx_A_IsGameSoundtrack.Visible = false; }
+            if (SongRecord[0].Is_Ukulele == "Yes") { chbx_A_IsUkulele.Location = new Point(x, y); x += chbx_A_IsUkulele.Size.Width; chbx_A_IsUkulele.Checked = true; chbx_A_IsUkulele.Visible = true; }
+            else { chbx_A_IsUkulele.Checked = false; chbx_A_IsUkulele.Visible = false; }
+            if (SongRecord[0].Is_TVTheme == "Yes") { chbx_A_IsTVTheme.Location = new Point(x, y); x += chbx_A_IsTVTheme.Size.Width; chbx_A_IsTVTheme.Checked = true; chbx_A_IsTVTheme.Visible = true; }
+            else { chbx_A_IsTVTheme.Checked = false; chbx_A_IsTVTheme.Visible = false; }
+            if (SongRecord[0].Is_AmateurCover == "Yes") { chbx_A_IsAmateurCover.Location = new Point(x, y); x += chbx_A_IsAmateurCover.Size.Width; chbx_A_IsAmateurCover.Checked = true; chbx_A_IsAmateurCover.Visible = true; }
+            else { chbx_A_IsAmateurCover.Checked = false; chbx_A_IsAmateurCover.Visible = false; }
+            if (SongRecord[0].Is_Demo == "Yes") { chbx_A_IsDemo.Location = new Point(x, y); x += chbx_A_IsDemo.Size.Width; chbx_A_IsDemo.Checked = true; chbx_A_IsDemo.Visible = true; }
+            else { chbx_A_IsDemo.Checked = false; chbx_A_IsDemo.Visible = false; }
+            if (SongRecord[0].Is_Karaoke == "Yes") { chbx_A_IsKaraoke.Location = new Point(x, y); x += chbx_A_IsKaraoke.Size.Width; chbx_A_IsKaraoke.Checked = true; chbx_A_IsKaraoke.Visible = true; }
+            else { chbx_A_IsKaraoke.Checked = false; chbx_A_IsKaraoke.Visible = false; }
+            if (SongRecord[0].Is_Remix == "Yes") { chbx_A_IsRemix.Location = new Point(x, y); x += chbx_A_IsRemix.Size.Width; chbx_A_IsRemix.Checked = true; chbx_A_IsRemix.Visible = true; }
+            else { chbx_A_IsRemix.Checked = false; chbx_A_IsRemix.Visible = false; }
+            if (SongRecord[0].Is_Remastered == "Yes") { chbx_A_IsRemastered.Location = new Point(x, y); x += chbx_A_IsRemastered.Size.Width; chbx_A_IsRemastered.Checked = true; chbx_A_IsRemastered.Visible = true; }
+            else { chbx_A_IsRemastered.Checked = false; chbx_A_IsRemastered.Visible = false; }
+            if (SongRecord[0].Is_Live == "Yes") { chbx_A_IsLive.Location = new Point(x, y); x += chbx_A_IsLive.Size.Width; chbx_A_IsLive.Checked = true; chbx_A_IsLive.Visible = true; }
+            else { chbx_A_IsLive.Checked = false; chbx_A_IsLive.Visible = false; }
+            if (SongRecord[0].Is_Acoustic == "Yes") { chbx_A_IsAcoustic.Location = new Point(x, y); x += chbx_A_IsAcoustic.Size.Width; chbx_A_IsAcoustic.Checked = true; chbx_A_IsAcoustic.Visible = true; }
+            else { chbx_A_IsAcoustic.Checked = false; chbx_A_IsAcoustic.Visible = false; }
+            if (SongRecord[0].Has_Slide == "Yes") { chbx_A_IsSlide.Location = new Point(x, y); x += chbx_A_IsSlide.Size.Width; chbx_A_IsSlide.Checked = true; chbx_A_IsSlide.Visible = true; }
+            else { chbx_A_IsSlide.Checked = false; chbx_A_IsSlide.Visible = false; }
+            //if (SongRecord[0].AI_TrackAvail == "Yes") { chbx_AI_TrackAvail.Location = new Point(x, y); x += chbx_AI_TrackAvail.Size.Width; chbx_AI_TrackAvail.Checked = true; chbx_AI_TrackAvail.Visible = true; }
+            //else { chbx_AI_TrackAvail.Checked = false; chbx_AI_TrackAvail.Visible = false; }
+        }
         public string ListHot20()
         {
             var cmd = "SELECT ( M.Artist  &' - '& M.Song_Title  &' - '& G.Date_Added &' - '& M.ID) AS Groupz FROM Groups G" +
@@ -1090,7 +1217,8 @@ namespace RocksmithToolkitGUI.DLCManager
             var IDs = "0";
             for (var j = 0; j <= norecs - 1; j++) IDs += "," + dzs.Tables[0].Rows[j].ItemArray[0].ToString();
 
-            scmd = "SELECT ID, XMLFileName, Start_Time, RouteMask, Bonus, ArrangementType, CDLC_ID FROM Arrangements WHERE CDLC_ID IN (" + IDs + ")" + GetArrOfficSQLTxt(arrangoff);
+            scmd = "SELECT ID, XMLFileName, Start_Time, RouteMask, Bonus, ArrangementType, CDLC_ID" +
+                ", Alternate, Favorite, Slide, A440TunningFrecv, CapoFret FROM Arrangements WHERE CDLC_ID IN (" + IDs + ")" + GetArrOfficSQLTxt(arrangoff);
             DataSet dnzs = new DataSet(); dnzs = SelectFromDB("Arrangements", scmd, "", cnb, cnc);
             norecs = GetNoRec(dnzs, cnb, cnc);//dnzs.Tables.Count == 0 ? 0 : dnzs.Tables[0].Rows.Count;
             if (norecs > 0)
@@ -1110,6 +1238,11 @@ namespace RocksmithToolkitGUI.DLCManager
                         v += (dnzs.Tables[0].Rows[j][5].ToString() == "Vocal" ? dnzs.Tables[0].Rows[j][5].ToString() : dnzs.Tables[0].Rows[j][3].ToString());
                         v += "_" + "Start Time: " + B + "s_";
                         v += "_" + (dnzs.Tables[0].Rows[j][4].ToString() == "True" ? "Bonus" : "NoBonus");
+                        v += "_" + (dnzs.Tables[0].Rows[j][7].ToString() == "True" ? "Alternate" : "NoAlternate");
+                        v += "_" + (dnzs.Tables[0].Rows[j][8].ToString() == "Yes" ? "Favorite" : "NoFavorite");
+                        v += "_" + (dnzs.Tables[0].Rows[j][9].ToString() == "Yes" ? "Slide" : "NoSlide");
+                        v += "_" + (dnzs.Tables[0].Rows[j][10].ToString() == "440" ? "A440" : "NotA440");
+                        v += "_" + (dnzs.Tables[0].Rows[j][11].ToString() == "0" ? "NoCapo" : "Capo");
                         v += (djs.Tables[0].Rows[0].ItemArray[1].ToString().ToInt32() > 0 ? "_Duplicate Of: " + djs.Tables[0].Rows[0].ItemArray[1].ToString() : "");
                         v += "_Dupli(if)/Curent Lenght: " + djs.Tables[0].Rows[0].ItemArray[0].ToString() + "/" + Song_Lenght + "s_ArrangementID=" + dnzs.Tables[0].Rows[j][0].ToString();
                         cmb_Tracks.Items.Add(v);//add items
@@ -1118,83 +1251,21 @@ namespace RocksmithToolkitGUI.DLCManager
             cmb_Tracks.Items.Add(""); cmb_Tracks.Text = "";
         }
 
-        //DeleteFromDB("Groups", "DELETE * FROM Groups WHERE Type=\"AudioAlternative\" AND CDLC_ID=\"" + txt_ID.Text + "\" AND Comments =\"" + wav + "\"", cnb, cnc
         public void AddAlternativeAudioTracksAvailability(string ID)
         {
             if (txt_MultiTrackType.Items.Count > 0) for (int k = txt_MultiTrackType.Items.Count - 1; k >= 0; --k)
                     txt_MultiTrackType.Items[k] = txt_MultiTrackType.Items[k].ToString().Replace(" (Audio Available)", "");//remove items
-            //var scmd = "SELECT ID FROM Main WHERE ID=" + (Duplicate_Of == "" ? "0" : Duplicate_Of) + " OR ID=" + (ID == "" ? "0" : ID) + " OR Duplicate_Of=\"" + (Duplicate_Of == "0" ? "999999" : Duplicate_Of)
-            //    + "\" OR Duplicate_Of=\"" + (ID == "" ? "0" : ID) + "\";";
-            //DataSet dzs = new DataSet(); dzs = SelectFromDB("Main", scmd, "", cnb, cnc);
-            //var norecs = GetNoRec(dzs, cnb, cnc);//dzs.Tables.Count == 0 ? 0 : dzs.Tables[0].Rows.Count;
-            //var IDs = "0";
-            //for (var j = 0; j <= norecs - 1; j++) IDs += "," + dzs.Tables[0].Rows[j].ItemArray[0].ToString();
 
             var scmd = "SELECT ID, Type, Comments, Groupz FROM Groups WHERE CDLC_ID=\"" + txt_ID.Text + "\" AND Type=\"AudioAlternative\"";
             DataSet dnzs = new DataSet(); dnzs = SelectFromDB("Groups", scmd, "", cnb, cnc);
-            var norecs = GetNoRec(dnzs, cnb, cnc);//dnzs.Tables.Count == 0 ? 0 : dnzs.Tables[0].Rows.Count;
+            var norecs = GetNoRec(dnzs, cnb, cnc);
             if (norecs > 0)
                 for (int j = 0; j < norecs; j++)
                     for (int k = txt_MultiTrackType.Items.Count - 1; k >= 0; --k)
                         if (dnzs.Tables[0].Rows[j][3].ToString() == txt_MultiTrackType.Items[k].ToString().Replace(" (Audio Available)", ""))
-                        {
                             txt_MultiTrackType.Items[k] = txt_MultiTrackType.Items[k].ToString().Replace(" (Audio Available)", "") + " (Audio Available)";
-                            //if (dnzs.Tables[0].Rows[j][5].ToString().IndexOf("ShowLight") >= 0) continue;
-                            //scmd = "SELECT Song_Lenght,Duplicate_Of FROM Main WHERE ID=" + dnzs.Tables[0].Rows[j][6].ToString();
-                            //DataSet djs = new DataSet(); djs = SelectFromDB("Main", scmd, "", cnb, cnc);
-                            //double B = 0;
-                            //try
-                            //{
-                            //    B = Math.Round(double.Parse(dnzs.Tables[0].Rows[j][2].ToString()), 3);
-                            //}
-                            //catch (Exception ex) { B = -1; }
-                            //var v = "DLC ID: " + dnzs.Tables[0].Rows[j][6].ToString() + ", ";
-                            //v += (dnzs.Tables[0].Rows[j][5].ToString() == "Vocal" ? dnzs.Tables[0].Rows[j][5].ToString() : dnzs.Tables[0].Rows[j][3].ToString());
-                            //v += "_" + "Start Time: " + B + "s_";
-                            //v += "_" + (dnzs.Tables[0].Rows[j][4].ToString() == "True" ? "Bonus" : "NoBonus");
-                            //v += (djs.Tables[0].Rows[0].ItemArray[1].ToString().ToInt32() > 0 ? "_Duplicate Of: " + djs.Tables[0].Rows[0].ItemArray[1].ToString() : "");
-                            //v += "_Dupli(if)/Curent Lenght: " + djs.Tables[0].Rows[0].ItemArray[0].ToString() + "/" + Song_Lenght + "s_ArrangementID=" + dnzs.Tables[0].Rows[j][0].ToString();
-                            //cmb_Tracks.Items.Add(v);//add items
-                        }
-
-            //cmb_Tracks.Items.Add(""); cmb_Tracks.Text = "";
         }
-        //command.Parameters[35].Value
-        //command.Parameters[34].Value
-        //command.Parameters[33].Value
-        //command.Parameters[32].Value
-        //command.Parameters[31].Value
-        //command.Parameters[30].Value
-        //command.Parameters[29].Value
-        //command.Parameters[28].Value
-        //command.Parameters[27].Value
-        //command.Parameters[26].Value
-        //command.Parameters[25].Value
-        //command.Parameters[24].Value
-        //command.Parameters[23].Value
-        //command.Parameters[22].Value
-        //command.Parameters[21].Value
-        //command.Parameters[20].Value
-        //command.Parameters[19].Value
-        //command.Parameters[18].Value
-        //command.Parameters[17].Value
-        //command.Parameters[16].Value
-        //command.Parameters[15].Value
-        //command.Parameters[14].Value
-        //command.Parameters[13].Value
-        //command.Parameters[12].Value
-        //command.Parameters[11].Value
-        //command.Parameters[10].Value
-        //command.Parameters[9].Value
-        //command.Parameters[8].Value
-        //command.Parameters[7].Value
-        //command.Parameters[6].Value
-        //command.Parameters[5].Value
-        //command.Parameters[4].Value
-        //command.Parameters[3].Value
-        //command.Parameters[2].Value
-        //command.Parameters[1].Value
-        //command.Parameters[0].Value
+
         public void savegroups()
         {
             if (GroupChanged)
@@ -1238,8 +1309,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         //check grp id
                         DataSet dgs = new DataSet(); dgs = SelectFromDB("Groups", "SELECT distinct Comments FROM Groups WHERE Comments<>\"\" AND Type=\"DLC\" AND Groupz=\"" + gpp + "\"", "", cnb, cnc);//chbx_AllGroups.Items[chbx_AllGroups.SelectedIndex]
                         var noOfRec = GetNoRec(dgs, cnb, cnc);
-                        if (grpord != dgs.Tables[0].Rows[0].ItemArray[0].ToString() || noOfRec > 1)
-                            MessageBox.Show("Grp id diff than the DB(obtained from grp name:" + grpord + "; obtained from select:" + dgs.Tables[0].Rows[0].ItemArray[0].ToString() + "; no of distinct no found:" + noOfRec + ")");
+                        if (noOfRec > 1) if (grpord != dgs.Tables[0].Rows[0].ItemArray[0].ToString())
+                                MessageBox.Show("Grp id diff than the DB(obtained from grp name:" + grpord + "; obtained from select:" + dgs.Tables[0].Rows[0].ItemArray[0].ToString() + "; no of distinct no found:" + noOfRec + ")");
 
                         var insertvalues = "\"" + txt_ID.Text + "\", \"" + gpp + "\", \"DLC\", \"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\",\"" + grpord + "\"";
                         InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0, cnc);
@@ -1255,6 +1326,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 GroupChanged = false;
             }
         }
+
         public void SaveRecord()
         {
             //if (txt_Artist.Text == "") MessageBox.Show("Empty artist. somethign weird is happening");
@@ -1415,7 +1487,18 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandText += "Is_Ukulele = @param136, ";
                 command.CommandText += "Has_Alternate_Audio = @param137, ";
                 command.CommandText += "Has_Alternate_Lyrics = @param138, ";
-                command.CommandText += "A440TunningFrecv = @param139 ";
+                command.CommandText += "A440TunningFrecv = @param139, ";
+                command.CommandText += "EoFPath = @param140, ";
+                command.CommandText += "Found_on_CF = @param141, ";
+                command.CommandText += "Uploaded_on_CF = @param142, ";
+                command.CommandText += "Uploaded_on_CAPIRO = @param143, ";
+                command.CommandText += "FilePath_on_CAPIRO = @param144, ";
+                command.CommandText += "Spotify_Song_ID = @param145, ";
+                command.CommandText += "CF_Author = @param146, ";
+                command.CommandText += "Has_Slide = @param147, ";
+                command.CommandText += "BasedOn_RB = @param148, ";
+                command.CommandText += "Has_Alternate_Track = @param149, ";
+                command.CommandText += "AI_TrackAvail = @param150 ";
                 command.CommandText += " WHERE ID = " + txt_ID.Text;
 
                 command.Parameters.AddWithValue("@param1", txt_Title.Text);// databox.Rows[i].Cells["Song_Title"].Value.ToString());
@@ -1439,7 +1522,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param29", chbx_Alternate.Checked ? "Yes" : "No");// databox.Rows[i].Cells["Is_Alternate"].Value.ToString());
                 command.Parameters.AddWithValue("@param30", chbx_MultiTrack.Checked ? "Yes" : "No");// databox.Rows[i].Cells["Is_Multitrack"].Value.ToString());
                 command.Parameters.AddWithValue("@param31", chbx_Broken2.Checked ? "Yes" : "No");//  databox.Rows[i].Cells["Is_Broken"].Value.ToString());
-                command.Parameters.AddWithValue("@param32", txt_MultiTrackType.Text);// databox.Rows[i].Cells["MultiTrack_Version"].Value.ToString());
+                command.Parameters.AddWithValue("@param32", txt_MultiTrackType.Text.Replace(" (Audio Available)", ""));// databox.Rows[i].Cells["MultiTrack_Version"].Value.ToString());
                 command.Parameters.AddWithValue("@param33", txt_Alt_No.Text);/// databox.Rows[i].Cells["Alternate_Version_No"].Value.ToString());
                 command.Parameters.AddWithValue("@param40", chbx_Lyrics.Checked ? "Yes" : "No");// databox.Rows[i].Cells["Has_Vocals"].Value.ToString());
                 command.Parameters.AddWithValue("@param41", chbx_HasSections.Checked ? "Yes" : "No");// databox.Rows[i].Cells["Has_Sections"].Value.ToString());
@@ -1487,7 +1570,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param98", chbx_LyricsChanged.Checked ? "Yes" : "No");//databox.Rows[i].Cells["Has_Had_Lyrics_Changed"].Value.ToString());
                 command.Parameters.AddWithValue("@param99", txt_AlbumSort.Text);
                 command.Parameters.AddWithValue("@param100", chbx_Has_Been_Corrected.Checked ? "Yes" : "No"); //var old = txt_Title.Text; chbx_Has_Been_Corrected
-                command.Parameters.AddWithValue("@param101", txt_DuplicateOf.Text);
+                command.Parameters.AddWithValue("@param101", txt_DuplicateOf.Text == "0" ? txt_Duplicate_Of.Text : txt_DuplicateOf.Text);
                 command.Parameters.AddWithValue("@param102", chbx_Lead.Checked ? "Yes" : "No");
                 command.Parameters.AddWithValue("@param103", chbx_Rhythm.Checked ? "Yes" : "No");
                 command.Parameters.AddWithValue("@param104", chbx_Bass.Checked ? "Yes" : "No");
@@ -1517,16 +1600,26 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.Parameters.AddWithValue("@param128", chbx_A_IsGameSoundtrack.Checked ? "Yes" : "No");
                 command.Parameters.AddWithValue("@param129", chbx_A_IsTVTheme.Checked ? "Yes" : "No");
                 command.Parameters.AddWithValue("@param130", chbx_A_IsAmateurCover.Checked ? "Yes" : "No");
-                command.Parameters.AddWithValue("@param131", txt_BasedOn_GP.Text);
-                command.Parameters.AddWithValue("@param132", txt_PackingDate.Text);
-                command.Parameters.AddWithValue("@param133", txt_UpdateVersionDate.Text);
-                command.Parameters.AddWithValue("@param134", txt_FilesMissingIssues.Text);
-                command.Parameters.AddWithValue("@param135", chbx_A_IsUkulele.Checked ? "Yes" : "No");
-                command.Parameters.AddWithValue("@param136", chbx_A_IsMetalCover.Checked ? "Yes" : "No");
+                command.Parameters.AddWithValue("@param131", txt_BasedOn_GP.Text ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param132", txt_PackingDate.Text ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param133", txt_UpdateVersionDate.Text ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param134", txt_FilesMissingIssues.Text ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param135", chbx_A_IsMetalCover.Checked ? "Yes" : "No");
+                command.Parameters.AddWithValue("@param136", chbx_A_IsUkulele.Checked ? "Yes" : "No");
                 command.Parameters.AddWithValue("@param137", chbx_AlternateAudioAvail.Checked ? "Yes" : "No");
                 command.Parameters.AddWithValue("@param138", chbx_AlternateLyricsAvail.Checked ? "Yes" : "No");
                 command.Parameters.AddWithValue("@param139", chbx_A440.Checked ? "Yes" : "No");
-                //command.Parameters.AddWithValue("@param121", chbx_ShowL.Checked ? "Yes" : "No");
+                command.Parameters.AddWithValue("@param140", txt_EoFPath.Text ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param141", chbx_Found_on_CF.Checked ? "Yes" : "No");
+                command.Parameters.AddWithValue("@param142", chbx_Uploaded_on_CF.Checked ? "Yes" : "No");
+                command.Parameters.AddWithValue("@param143", chbx_Found_on_CAPIRO.Checked ? "Yes" : "No");
+                command.Parameters.AddWithValue("@param144", txt_filePathonself.Text ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param145", txt_SpotifySongID.Text ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param146", txt_CF_Author.Text ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param147", chbx_A_IsSlide.Checked ? "Yes" : "No");
+                command.Parameters.AddWithValue("@param148", txt_BasedOn_RB.Text ?? DBNull.Value.ToString());
+                command.Parameters.AddWithValue("@param149", chbx_AltTrack.Checked ? "Yes" : "No");
+                command.Parameters.AddWithValue("@param150", chbx_AI_TrackAvail.Checked ? "Yes" : "No");
 
                 UpdateDBbyExecuteNonQuery(command, connection, cnc);
 
@@ -1742,7 +1835,13 @@ namespace RocksmithToolkitGUI.DLCManager
                     ChangeRow();
                     tst = "Stop Populating... "; timestamp = UpdateLog(timestamp, tst, false, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                 }
-                else MessageBox.Show("No such Records/Songs (Found)");
+                else
+                {
+                    var t = SearchCmd.Replace(c("dlcm_SearchFields"), "*").Replace("ORDER BY " + c("dlcm_OrderOfFields"), "");
+                    MessageBox.Show("No " + " Records/Songs Found\n"
+                        + (cmb_Filter.Text == "" ? ", when SQL searching by: " + t + "."
+                        : ", using the Filter : \"" + cmb_Filter.Text + ".\n(" + t + ")"));
+                }
             }
             else MessageBox.Show("No Records/Songs (Imported/Found)");
 
@@ -1824,30 +1923,40 @@ namespace RocksmithToolkitGUI.DLCManager
             frm.Show();
         }
 
-        private void cbx_Format_SelectedValueChanged(object sender, EventArgs e)
+        private async void cbx_Format_SelectedValueChanged(object sender, EventArgs e)
         {
+            txt_PackFTPFldNOK.Text = "OK";
+            txt_PackFTPFldNOK.ForeColor = Color.Green;
             if (chbx_Format.Text == "PS3_US")
             {
                 txt_FTPPath.Text = c("dlcm_FTPUS");
                 chbx_PS3HAN.Enabled = true;
+                txt_PackFTPFldNOK.Text = FTPAvail(txt_FTPPath.Text);
+                txt_PackFTPFldNOK.ForeColor = txt_PackFTPFldNOK.Text == "OK" ? Color.Green : Color.Red;
             }
             else
             if (chbx_Format.Text == "ImportFolder" && DirectoryExists(c("dlcm_RocksmithDLCPath")))
             {
                 txt_FTPPath.Text = c("dlcm_RocksmithDLCPath");
                 chbx_PS3HAN.Enabled = true;
+                txt_PackFTPFldNOK.Text = FTPAvail(txt_FTPPath.Text);
+                txt_PackFTPFldNOK.ForeColor = txt_PackFTPFldNOK.Text == "OK" ? Color.Green : Color.Red;
             }
             else
             if (chbx_Format.Text == "PS3_EU")
             {
                 txt_FTPPath.Text = c("dlcm_FTPEU");
                 chbx_PS3HAN.Enabled = true;
+                txt_PackFTPFldNOK.Text = FTPAvail(txt_FTPPath.Text);
+                txt_PackFTPFldNOK.ForeColor = txt_PackFTPFldNOK.Text == "OK" ? Color.Green : Color.Red;
             }
             else
             if (chbx_Format.Text == "PS3_JP")
             {
                 txt_FTPPath.Text = c("dlcm_FTPJP");
                 chbx_PS3HAN.Enabled = true;
+                txt_PackFTPFldNOK.Text = FTPAvail(txt_FTPPath.Text);
+                txt_PackFTPFldNOK.ForeColor = txt_PackFTPFldNOK.Text == "OK" ? Color.Green : Color.Red;
             }
             else
             {
@@ -1873,6 +1982,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     txt = "No indicated Folder available";
                     txt_FTPPath.Text = "";
+                    txt_PackFTPFldNOK.Text = "NOK";
+                    txt_PackFTPFldNOK.ForeColor = Color.Red;
                 }
 
                 if (txt != "")
@@ -1888,7 +1999,6 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_Close_Click(object sender, EventArgs e)
         {
-
             Close();
         }
         private void savesettings()
@@ -1901,6 +2011,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ConfigRepository.Instance()["dlcm_andCopy"] = chbx_Copy.Checked ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_AdditionalManipul54"] = chbx_PackBeta.Checked ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_CopyOld"] = chbx_Copy.Checked ? "Yes" : "No";
+            ConfigRepository.Instance()["dlcm_AdditionalManipul102"] = chbx_Clean.Checked ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_AdditionalManipul92"] = chbx_PS3HAN.Checked ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_AdditionalManipul93"] = chbx_PS3Retail.Checked ? "Yes" : "No";
             ConfigRepository.Instance()["dlcm_DupliGTrack"] = chbx_Copy.Checked ? "Yes" : "No";
@@ -2481,7 +2592,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             var i = databox.SelectedCells[0].RowIndex;
             string filePath = c("dlcm_TempPath") + "\\0_old\\" + databox.Rows[i].Cells["Original_FileName"].Value.ToString();
-            StartProcesss("explorer.exe", string.Format("/select,\"{0}\"", filePath));
+            StartProcesss("explorer.exe", string.Format(" /select,\"{0}\"", filePath));
             //try
             //{
             //    Process process = Process.Start("explorer.exe", string.Format("/select,\"{0}\"", filePath));
@@ -2613,7 +2724,9 @@ namespace RocksmithToolkitGUI.DLCManager
                     " AlbumArt_OrigHash, Duplicate_Of, Split4Pack, UseInternalDDRemovalLogic, Is_Instrumental, Is_Single, Is_Soundtrack, Is_EP, Has_Had_Audio_Changed" +
                     ", Has_Had_Lyrics_Changed, Album_Sort, Is_Uncensored, IntheWorks, LyricsLanguage, LastConversionDateTime, ImprovedWithDM, Is_FullAlbum, PitchShiftableEsOrDd, Import_AuditTrail_ID, Is_Remastered" +
                     ",EoFPath, Is_Karaoke, Is_Cover, Has_Featuring, Is_Demo, Is_Remix, BasedOn_Youtube, BasedOn_CF, BasedOn_Tabs, ToDos, ToneDetails, PackageDetails, PackingDate, UpdateVersionDate, Has_Capo," +
-                    " Has_ShowLights, Has_JVocals, Is_Medley, Is_MultiStrings, BasedOn_GP, Album_ArtPathOrig, Is_Deluxe, Is_GreatestHits, Is_Midi, Is_GameSoundtrack, Is_TVTheme, Is_AmateurCover, Is_MetalCover, Is_Ukulele, Has_Alternate_Audio, Has_Alternate_Lyrics, A440TunningFrecv";
+                    " Has_ShowLights, Has_JVocals, Is_Medley, Is_MultiStrings, BasedOn_GP, Album_ArtPathOrig, Is_Deluxe, Is_GreatestHits, Is_Midi, Is_GameSoundtrack, Is_TVTheme, Is_AmateurCover, Is_MetalCover" +
+                    ", Is_Ukulele, Has_Alternate_Audio, Has_Alternate_Lyrics, A440TunningFrecv, Uploaded_on_CF, Found_on_CF, Uploaded_on_CAPIRO, FilePath_on_CAPIRO" +
+                    ", CF_Author, LastConversionDateTime, Has_Alternate_Track, Has_Slide, BasedOn_RB, AI_TrackAvail";
 
                 var insertvalues = "SELECT Song_Title+\" alt" + max.ToString() + "\", Song_Title_Sort+\" alt" + max.ToString() + "\", Album, Artist, Artist_Sort, Album_Year," +
                     " AverageTempo, Volume, Preview_Volume, \"" + AlbumArtPath + "\", \"" + AudioPath + "\", \"" + audioPreviewPath + "\", Track_No, Author, " +
@@ -2630,10 +2743,11 @@ namespace RocksmithToolkitGUI.DLCManager
                     " Is_Instrumental, Is_Single, Is_Soundtrack, Is_EP, Has_Had_Audio_Changed, Has_Had_Lyrics_Changed, Album_Sort, Is_Uncensored, IntheWorks, LyricsLanguage," +
                     " LastConversionDateTime, ImprovedWithDM, Is_FullAlbum, PitchShiftableEsOrDd, Import_AuditTrail_ID, Is_Remastered" +
                     ",EoFPath, Is_Karaoke, Is_Cover, Has_Featuring, Is_Demo, Is_Remix, BasedOn_Youtube, BasedOn_CF, BasedOn_Tabs, ToDos, ToneDetails, PackageDetails, PackingDate, UpdateVersionDate, Has_Capo," +
-                    " Has_ShowLights, Has_JVocals, Is_Medley, Is_MultiStrings, BasedOn_GP, \"" + AlbumOrigArtPath + "\", Is_Deluxe, Is_GreatestHits, Is_Midi, Is_GameSoundtrack, Is_TVTheme, Is_AmateurCover, Is_MetalCover, Is_Ukulele, Has_Alternate_Audio, Has_Alternate_Lyrics, A440TunningFrecv" +
+                    " Has_ShowLights, Has_JVocals, Is_Medley, Is_MultiStrings, BasedOn_GP, \"" + AlbumOrigArtPath + "\", Is_Deluxe, Is_GreatestHits, Is_Midi, Is_GameSoundtrack" +
+                    ", Is_TVTheme, Is_AmateurCover, Is_MetalCover, Is_Ukulele, Has_Alternate_Audio, Has_Alternate_Lyrics, A440TunningFrecv, Uploaded_on_CF, Found_on_CF" +
+                    ", Uploaded_on_CAPIRO, FilePath_on_CAPIRO, CF_Author, LastConversionDateTime, Has_Alternate_Track, Has_Slide, BasedOn_RB, AI_TrackAvail" +
                     " FROM Main WHERE ID = " + txt_ID.Text;
                 InsertIntoDBwValues("Main", insertcmdd, insertvalues, cnb, 0, cnc);
-
 
                 //getting ID
                 DataSet dus = new DataSet(); dus = SelectFromDB("Main", "SELECT ID FROM Main WHERE Song_Title=\"" + txt_Title.Text + " alt" + max.ToString() + "\"", "", cnb, cnc);
@@ -2642,13 +2756,15 @@ namespace RocksmithToolkitGUI.DLCManager
                 insertcmdd = "Arrangement_Name, CDLC_ID, Bonus, JSONFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlaythroughYBLink, CustomsForge_Link," +
                     "ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask," +
                     "XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, ConversionDateTime," +
-                    "SNGFileHash, Has_Sections, Comments, Start_Time, CleanedXML_Hash, Json_Hash, Part, MaxDifficulty, OrigSongTrack, PrimaryTrack, Favorite, Broken, Official, PersistentID, CapoFret";
+                    "SNGFileHash, Has_Sections, Comments, Start_Time, CleanedXML_Hash, Json_Hash, Part, MaxDifficulty, OrigSongTrack, PrimaryTrack, Favorite, Broken, Official" +
+                    ", PersistentID, CapoFret, A440TunningFrecv, Slide, Alternate";
                 insertvalues = "SELECT Arrangement_Name, " + CDLC_ID + ", Bonus, \"" + destination_dir + "\\manifests\\\"+right(JSONFilePath,len(JSONFilePath)-" +
                     "instr(JSONFilePath, 'manifests')-9), \"" + destination_dir + "\\songs\\arr\\\"+right(XMLFilePath,len(XMLFilePath)-instr(XMLFilePath, '\\songs\\arr\\')-10)," +
                     " XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlaythroughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType," +
                     " String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID," +
                     " SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, ConversionDateTime, SNGFileHash, Has_Sections, Comments, Start_Time, CleanedXML_Hash," +
-                    " Json_Hash, Part, MaxDifficulty, OrigSongTrack, PrimaryTrack, Favorite, Broken, Official, PersistentID, CapoFret FROM Arrangements WHERE CDLC_ID = " + txt_ID.Text;
+                    " Json_Hash, Part, MaxDifficulty, OrigSongTrack, PrimaryTrack, Favorite, Broken, Official, PersistentID, CapoFret, A440TunningFrecv, Slide" +
+                    ", Alternate FROM Arrangements WHERE CDLC_ID = " + txt_ID.Text;
                 InsertIntoDBwValues("Arrangements", insertcmdd, insertvalues, cnb, 0, cnc);
 
                 insertcmdd = "Tone_Name, CDLC_ID, Volume, Keyy, Is_Custom, Description, Favorite, SortOrder, NameSeparator, " +
@@ -2927,7 +3043,567 @@ namespace RocksmithToolkitGUI.DLCManager
             //    MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
             //    MessageBox.Show("Can not open Old Folder in Explorer ! ");
             //}
-            btm(true);
+
+            var result1 = MessageBox.Show("Use old tool BTM (Yes) or Some Internal Logic (No)", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+            if (result1 == DialogResult.Yes)
+            {
+                btm(true);
+            }
+            else
+            {
+                var txt = "";
+
+                //string array
+                //columnn 1 is instrument/track
+                //column 2 is time
+                //column 3 is fret
+                string[,,] nt0 = new string[10, 3000, 2];//consolidation of all other notes timings
+                string[,,] nt1 = new string[10, 3000, 2];
+                string[,,] nt2 = new string[10, 3000, 2];
+                string[,,] nt3 = new string[10, 3000, 2];
+                string[,,] nt4 = new string[10, 3000, 2];
+                string[,,] nt5 = new string[10, 3000, 2];
+                string[,,] nt6 = new string[10, 3000, 2];
+                string[,] chords = new string[2000, 7];
+                string[,] arg = new string[10, 7];
+                float min = float.Parse("100");
+
+                bool superOrg = false; var i = databox.SelectedCells[0].RowIndex;
+                var xml = ""; var Folder_Name = databox.Rows[i].Cells["Folder_Name"].Value.ToString();
+
+                DataSet dbn = new DataSet(); dbn = SelectFromDB("Arrangements", "SELECT ArrangementType, XMLFilePath, JSONFilePath FROM Arrangements WHERE ArrangementType IN (\"Bass\",\"Guitar\") AND CDLC_ID=\"" + txt_ID.Text + "\"" + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
+                var norec = dbn.Tables.Count < 1 ? 0 : dbn.Tables[0].Rows.Count;
+                var t = 1; float snglng = 0;
+                if (norec > 0)
+                    for (int k = 0; k < norec; k++)
+                    {
+                        xml = dbn.Tables[0].Rows[k][1].ToString();//add items
+                        var json = dbn.Tables[0].Rows[k][2].ToString();
+                        if (dbn.Tables[0].Rows[k][0].ToString().ToLower() != "bass" && dbn.Tables[0].Rows[k][0].ToString().ToLower() != "guitar") continue;
+
+                        Platform platform = Folder_Name.GetPlatform(); //string[] xmlFilez = new string[c("dlcm_maxsongsinDLCM").ToInt32()]; bool done = true; var countd = 0;                        
+                        //if (superOrg) //37. Keep the Uncompressed Songs superorganized
+                        //    jsons = xml.Replace("EOF", "Toolkit").Replace(".xml", ".json");
+                        //else
+                        //    jsons = (xml.Replace(".xml", ".json").Replace("songs\\arr", calc_path(Directory.GetFiles(Folder_Name, "*.json", System.IO.SearchOption.AllDirectories)[0])));
+
+                        var manifestFunctions = new ManifestFunctions(platform.version);
+                        Song2014 xmlContent = null;
+                        try
+                        {
+                            xmlContent = Song2014.LoadFromFile(xml);
+                            snglng = xmlContent.SongLength;
+                            arg[k, 0] = dbn.Tables[0].Rows[k][0].ToString().ToLower();
+                            //Save a copy
+                            //if (!File.Exists(xml + ".old8")) File.Copy(xml, xml + ".old8", false);
+                            //else File.Copy(xml, xml + ".old8", true);
+                            //var json = jsons;
+                            //if (!File.Exists(json + ".old8")) File.Copy(json, json + ".old8", false);
+                            //else { File.Copy(json + ".old8", json, true); }
+                            //if (xmlContent.Arrangement.ToLower() == "bass" || xmlContent.Arrangement.ToLower() == "guitar")
+                            //{
+
+                            platform.version = RocksmithToolkitLib.GameVersion.RS2014;
+                            if (manifestFunctions.GetMaxDifficulty(xmlContent) > 0)
+                            {  //Save a copy
+                                if (!File.Exists(xml + ".old8")) File.Copy(xml, xml + ".old8", false);
+                                else File.Copy(xml, xml + ".old8", true);
+                                if (!File.Exists(json + ".old8")) File.Copy(json, json + ".old8", false);
+                                else File.Copy(xml, xml + ".old8", true);
+                                xml = xml + ".old8";
+                                json = json + ".old8";
+                                RemoveDD(Folder_Name, chbx_Original.Checked ? "Yes" : "No", xml, platform, false, false, chbx_UseInternalDDRemovalLogic.Checked ? "Yes" : "No");
+                                xmlContent = Song2014.LoadFromFile(xml);
+                            }
+
+                            for (var n = 0; n < xmlContent.ChordTemplates.Length; n++)
+                            {
+                                if (xmlContent.ChordTemplates[n].Fret0 > -1) chords[n, 1] = xmlContent.ChordTemplates[n].Fret0.ToString();
+                                if (xmlContent.ChordTemplates[n].Fret1 > -1) chords[n, 2] = xmlContent.ChordTemplates[n].Fret1.ToString();
+                                if (xmlContent.ChordTemplates[n].Fret2 > -1) chords[n, 3] = xmlContent.ChordTemplates[n].Fret2.ToString();
+                                if (xmlContent.ChordTemplates[n].Fret3 > -1) chords[n, 4] = xmlContent.ChordTemplates[n].Fret3.ToString();
+                                if (xmlContent.ChordTemplates[n].Fret4 > -1) chords[n, 5] = xmlContent.ChordTemplates[n].Fret4.ToString();
+                                if (xmlContent.ChordTemplates[n].Fret5 > -1) chords[n, 6] = xmlContent.ChordTemplates[n].Fret5.ToString();
+                            }
+
+                            if (xmlContent.Levels[0].Chords.Length > 0)
+                                for (var m = 0; m < xmlContent.Levels[0].Chords.Length; m++)
+                                {
+                                    //if (xmlContent.Levels[0].Notes[n].Time > xmlContent.Levels[0].Chords[m].Time)
+                                    if (chords[xmlContent.Levels[0].Chords[m].ChordId, 1] is not null) { nt0[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt1[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt1[k, t, 1] = chords[xmlContent.Levels[0].Chords[m].ChordId, 1]; }
+                                    if (chords[xmlContent.Levels[0].Chords[m].ChordId, 2] is not null) { nt0[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt2[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt2[k, t, 1] = chords[xmlContent.Levels[0].Chords[m].ChordId, 2]; }
+                                    if (chords[xmlContent.Levels[0].Chords[m].ChordId, 3] is not null) { nt0[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt3[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt3[k, t, 1] = chords[xmlContent.Levels[0].Chords[m].ChordId, 3]; }
+                                    if (chords[xmlContent.Levels[0].Chords[m].ChordId, 4] is not null) { nt0[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt4[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt4[k, t, 1] = chords[xmlContent.Levels[0].Chords[m].ChordId, 4]; }
+                                    if (chords[xmlContent.Levels[0].Chords[m].ChordId, 5] is not null) { nt0[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt5[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt5[k, t, 1] = chords[xmlContent.Levels[0].Chords[m].ChordId, 5]; }
+                                    if (chords[xmlContent.Levels[0].Chords[m].ChordId, 6] is not null) { nt0[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt6[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt6[k, t, 1] = chords[xmlContent.Levels[0].Chords[m].ChordId, 6]; }
+                                    //if (xmlContent.Levels[0].Notes[n].Fret == 1) nt1[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString();
+                                    t++;
+                                }
+                            if (xmlContent.Levels[0].Notes.Length > 0)
+                                for (var n = 0; n < xmlContent.Levels[0].Notes.Length; n++)
+                                {
+                                    if (xmlContent.Levels[0].Notes[n].String == 0) { nt0[k, n, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt1[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt1[k, t, 1] = xmlContent.Levels[0].Notes[n].Fret.ToString(); }
+                                    else if (xmlContent.Levels[0].Notes[n].String == 1) { nt0[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt2[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt2[k, t, 1] = xmlContent.Levels[0].Notes[n].Fret.ToString(); }
+                                    else if (xmlContent.Levels[0].Notes[n].String == 2) { nt0[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt3[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt3[k, t, 1] = xmlContent.Levels[0].Notes[n].Fret.ToString(); }
+                                    else if (xmlContent.Levels[0].Notes[n].String == 3) { nt0[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt4[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt4[k, t, 1] = xmlContent.Levels[0].Notes[n].Fret.ToString(); }
+                                    else if (xmlContent.Levels[0].Notes[n].String == 4) { nt0[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt5[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt5[k, t, 1] = xmlContent.Levels[0].Notes[n].Fret.ToString(); }
+                                    else if (xmlContent.Levels[0].Notes[n].String == 5) { nt0[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt6[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt6[k, t, 1] = xmlContent.Levels[0].Notes[n].Fret.ToString(); }
+                                    t++;
+                                }
+
+                            //sort
+                            for (var n = 1; n <= xmlContent.Levels[0].Notes.Length + xmlContent.Levels[0].Chords.Length - 1; n++)
+                                for (var m = n + 1; m <= xmlContent.Levels[0].Notes.Length + xmlContent.Levels[0].Chords.Length; m++)
+                                {
+                                    //var timesn = nt1[k, n, 0]; timesn = timesn is not null && nt2[k, n, 0] is not null? timesn.Replace(nt2[k, n, 0], ""):null + nt2[k, n, 0]; timesn = timesn is not null && nt3[k, n, 0] is not null ? timesn.Replace(nt3[k, n, 0], ""): null + nt3[k, n, 0]; timesn = timesn is not null && nt4[k, n, 0] is not null ? timesn.Replace(nt4[k, n, 0], ""): null + nt4[k, n, 0]; timesn = timesn is not null && nt5[k, n, 0] is not null ? timesn.Replace(nt5[k, n, 0], ""): null + nt5[k, n, 0]; timesn = timesn is not null && nt6[k, n, 0] is not null ? timesn.Replace(nt6[k, n, 0], ""): null + nt6[k, n, 0];
+                                    //var timesm = nt1[k, m, 0]; timesm = timesm is not null && nt2[k, m, 0] is not null? timesm.Replace(nt2[k, m, 0], ""):null + nt2[k, m, 0]; timesm = timesm is not null && nt3[k, m, 0] is not null ? timesm.Replace(nt3[k, m, 0], ""): null + nt3[k, m, 0]; timesm = timesm is not null && nt4[k, m, 0] is not null ? timesm.Replace(nt4[k, m, 0], ""): null + nt4[k, m, 0]; timesm = timesm is not null && nt5[k, m, 0] is not null ? timesm.Replace(nt5[k, m, 0], ""): null + nt5[k, m, 0]; timesm = timesm is not null && nt6[k, m, 0] is not null ? timesm.Replace(nt6[k, m, 0], ""): null + nt6[k, m, 0];
+                                    var timesn = nt0[k, n, 0];
+                                    var timesm = nt0[k, m, 0];
+                                    if (timesn is not null && timesm is not null)
+                                    {
+                                        if (float.Parse(timesn) > float.Parse(timesm))
+                                        {
+                                            var z0 = nt0[k, n, 0]; nt0[k, n, 0] = nt0[k, m, 0]; nt1[k, m, 1] = z0;
+                                            var z1 = nt1[k, n, 1]; nt1[k, n, 1] = nt1[k, m, 1]; nt1[k, m, 1] = z1; var u1 = nt1[k, n, 0]; nt1[k, n, 0] = nt1[k, m, 0]; nt1[k, m, 0] = u1;
+                                            var z2 = nt2[k, n, 1]; nt2[k, n, 1] = nt2[k, m, 1]; nt2[k, m, 1] = z2; var u2 = nt2[k, n, 0]; nt2[k, n, 0] = nt2[k, m, 0]; nt2[k, m, 0] = u2;
+                                            var z3 = nt3[k, n, 1]; nt3[k, n, 1] = nt3[k, m, 1]; nt3[k, m, 1] = z3; var u3 = nt3[k, n, 0]; nt3[k, n, 0] = nt3[k, m, 0]; nt3[k, m, 0] = u3;
+                                            var z4 = nt4[k, n, 1]; nt4[k, n, 1] = nt4[k, m, 1]; nt4[k, m, 1] = z4; var u4 = nt4[k, n, 0]; nt4[k, n, 0] = nt4[k, m, 0]; nt4[k, m, 0] = u4;
+                                            var z5 = nt5[k, n, 1]; nt5[k, n, 1] = nt5[k, m, 1]; nt5[k, m, 1] = z5; var u5 = nt5[k, n, 0]; nt5[k, n, 0] = nt5[k, m, 0]; nt5[k, m, 0] = u5;
+                                            var z6 = nt6[k, n, 1]; nt6[k, n, 1] = nt6[k, m, 1]; nt6[k, m, 1] = z6; var u6 = nt6[k, n, 0]; nt6[k, n, 0] = nt6[k, m, 0]; nt6[k, m, 0] = u6;
+                                        }
+                                    }
+
+                                    //    if (nt1[k, n, 0] is not null && nt1[k, m, 0] is not null) { if (float.Parse(nt1[k, n, 0]) > float.Parse(nt1[k, m, 0])) { var z = nt1[k, n, 1]; nt1[k, n, 1] = nt1[k, m, 1]; nt1[k, m, 1] = z; var u = nt1[k, n, 0]; nt1[k, n, 0] = nt1[k, m, 0]; nt1[k, m, 0] = u; } }
+                                    //    else if (nt2[k, n, 0] is not null && nt2[k, m, 0] is not null) { if (float.Parse(nt2[k, n, 0]) > float.Parse(nt2[k, m, 0])) { var z = nt2[k, n, 1]; nt2[k, n, 1] = nt2[k, m, 1]; nt2[k, m, 1] = z; var u = nt2[k, n, 0]; nt2[k, n, 0] = nt2[k, m, 0]; nt2[k, m, 0] = u; } }
+                                    //    else if (nt3[k, n, 0] is not null && nt3[k, m, 0] is not null) { if (float.Parse(nt3[k, n, 0]) > float.Parse(nt3[k, m, 0])) { var z = nt3[k, n, 1]; nt3[k, n, 1] = nt3[k, m, 1]; nt3[k, m, 1] = z; var u = nt3[k, n, 0]; nt3[k, n, 0] = nt3[k, m, 0]; nt3[k, m, 0] = u; } }
+                                    //    else if (nt4[k, n, 0] is not null && nt4[k, m, 0] is not null) { if (float.Parse(nt4[k, n, 0]) > float.Parse(nt4[k, m, 0])) { var z = nt4[k, n, 1]; nt4[k, n, 1] = nt4[k, m, 1]; nt4[k, m, 1] = z; var u = nt4[k, n, 0]; nt4[k, n, 0] = nt4[k, m, 0]; nt4[k, m, 0] = u; } }
+                                    //    else if (nt5[k, n, 0] is not null && nt5[k, m, 0] is not null) { if (float.Parse(nt5[k, n, 0]) > float.Parse(nt5[k, m, 0])) { var z = nt5[k, n, 1]; nt5[k, n, 1] = nt5[k, m, 1]; nt5[k, m, 1] = z; var u = nt5[k, n, 0]; nt5[k, n, 0] = nt5[k, m, 0]; nt5[k, m, 0] = u; } }
+                                    //    else if (nt6[k, n, 0] is not null && nt6[k, m, 0] is not null) { if (float.Parse(nt6[k, n, 0]) > float.Parse(nt6[k, m, 0])) { var z = nt6[k, n, 1]; nt6[k, n, 1] = nt6[k, m, 1]; nt6[k, m, 1] = z; var u = nt6[k, n, 0]; nt6[k, n, 0] = nt6[k, m, 0]; nt6[k, m, 0] = u; } }
+                                }
+
+                            //try
+                            //get the smallest space between notes
+
+                            //for (var k = 1; m <= norec; m++)
+                            for (var n = 1; n <= t; n++)
+                            {
+                                var timesn1 = nt0[k, n, 0];
+                                var timesn2 = nt0[k, n + 1, 0];
+                                //var timesm = nt1[k, m, 0] + nt2[k, m, 0] + nt3[k, m, 0] + nt4[k, m, 0] + nt5[k, m, 0] + nt6[k, m, 0];
+                                if (timesn1 is not null && timesn2 is not null)
+                                    if (float.Parse(timesn1) >= 0 && float.Parse(timesn2) >= 0)
+                                        if (float.Parse(timesn2) - float.Parse(timesn1) > 0)
+                                        { if (float.Parse(timesn2) - float.Parse(timesn1) < min) min = float.Parse(timesn2) - float.Parse(timesn1); }
+                                //else if (float.Parse(timesn1) >= 0&& float.Parse(timesn2) >= 0) { if (float.Parse(timesn1) - float.Parse(timesn2) < min) min = float.Parse(timesn2) - float.Parse(timesn1); }
+                                //else if (float.Parse(nt2[m, n, 0]) >= 0) { if (float.Parse(nt2[m, n, 0]) - float.Parse(nt2[m, n + 1, 0]) < min) min = float.Parse(nt2[m, n, 0]) - float.Parse(nt2[m, n + 1, 0]); }
+                                //else if (float.Parse(nt3[m, n, 0]) >= 0) { if (float.Parse(nt3[m, n, 0]) - float.Parse(nt3[m, n + 1, 0]) < min) min = float.Parse(nt3[m, n, 0]) - float.Parse(nt3[m, n + 1, 0]); }
+                                //else if (float.Parse(nt4[m, n, 0]) >= 0) { if (float.Parse(nt4[m, n, 0]) - float.Parse(nt4[m, n + 1, 0]) < min) min = float.Parse(nt4[m, n, 0]) - float.Parse(nt4[m, n + 1, 0]); }
+                                //else if (float.Parse(nt5[m, n, 0]) >= 0) { if (float.Parse(nt5[m, n, 0]) - float.Parse(nt5[m, n + 1, 0]) < min) min = float.Parse(nt5[m, n, 0]) - float.Parse(nt5[m, n + 1, 0]); }
+                                //else if (float.Parse(nt6[m, n, 0]) >= 0) { if (float.Parse(nt6[m, n, 0]) - float.Parse(nt6[m, n + 1, 0]) < min) min = float.Parse(nt6[m, n, 0]) - float.Parse(nt6[m, n + 1, 0]); }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            var tsst = "Error at consolid nostes 4 quick display ..." + ex; UpdateLog(DateTime.Now, tsst, false, "", "", "", null, null);
+                        }
+                    }
+                //add header: song name, tunning
+                txt = "Song Title: " + txt_Title.Text;
+                txt += "\nArtist: " + txt_Artist.Text;
+                txt += "\nAlbum: " + txt_Album.Text;
+                txt += "\nTuning: " + txt_Tuning.Text;
+                txt += btn_PitchShift.Enabled ? "\nDetuning with Digitec Pedal: " + toolTip1.GetToolTip(btn_PitchShift).Replace("\n", "\n\t\t\t") : "";
+                txt += "\nSpace between notes: " + min;
+                txt += "\nMarker: every 10s";
+                txt += "\nsong Lenght: " + snglng;
+                //add content of tracks
+                //with 10s tracker bar
+                //with track headers
+                txt += "\n"; float z = 0; var done = false;
+                for (int k = 0; k < norec; k++)
+                {
+                    txt += "\n" + k + "/" + norec + " " + arg[k, 0].ToUpper() + "\n";
+                    z = 0; done = false; var u = 10;
+                    do
+                    {
+                        if (((z + min) / u) > 1)
+                        { txt += "|"; u += 10; }/*done = true; */
+                        else txt += "-";
+                        z = z + min;
+                    }
+                    while (z <= snglng);
+
+                    z = 0; done = false; txt += "\n";
+                    for (int n = 1; n <= t; n++)
+                    {
+                        do
+                        {
+                            if (nt1[k, n, 0] is not null)
+                            {
+                                if (float.Parse(nt1[k, n, 0]) >= z + min) { txt += nt1[k, n, 1]; done = true; }
+                                else txt += "-";
+                            }
+                            else txt += "-";
+                            z = z + min;
+                        }
+                        while (done && z <= snglng);
+                        done = false;
+                    }
+
+                    z = 0; done = false; txt += "\n";
+                    for (int n = 1; n <= t; n++)
+                    {
+                        do
+                        {
+                            if (nt2[k, n, 0] is not null)
+                            {
+                                if (float.Parse(nt2[k, n, 0]) >= z + min) { txt += nt2[k, n, 1]; done = true; }
+                                else txt += "-";
+                            }
+                            else txt += "-";
+                            z = z + min;
+                        }
+                        while (done && z <= snglng);
+                    }
+                    done = false;
+                    z = 0; done = false; txt += "\n";
+                    for (int n = 1; n <= t; n++)
+                    {
+                        do
+                        {
+                            if (nt3[k, n, 0] is not null)
+                            {
+                                if (float.Parse(nt3[k, n, 0]) >= z + min) { txt += nt3[k, n, 1]; done = true; }
+                                else txt += "-";
+                            }
+                            else txt += "-";
+                            z = z + min;
+                        }
+                        while (done && z <= snglng);
+                        done = false;
+                    }
+                    z = 0; done = false; txt += "\n";
+                    for (int n = 1; n <= t; n++)
+                    {
+                        do
+                        {
+                            if (nt4[k, n, 0] is not null)
+                            {
+                                if (float.Parse(nt4[k, n, 0]) >= z + min) { txt += nt4[k, n, 1]; done = true; }
+                                else txt += "-";
+                            }
+                            else txt += "-";
+                            z = z + min;
+                        }
+                        while (done && z <= snglng);
+                        done = false;
+                    }
+                    z = 0; done = false; txt += "\n";
+                    for (int n = 1; n <= t; n++)
+                    {
+                        do
+                        {
+                            if (nt5[k, n, 0] is not null)
+                            {
+                                if (float.Parse(nt5[k, n, 0]) >= z + min) { txt += nt5[k, n, 1]; done = true; }
+                                else txt += "-";
+                            }
+                            else txt += "-";
+                            z = z + min;
+                        }
+                        while (done && z <= snglng);
+                        done = false;
+                    }
+                    z = 0; done = false; txt += "\n";
+                    for (int n = 1; n <= t; n++)
+                    {
+                        do
+                        {
+                            if (nt6[k, n, 0] is not null)
+                            {
+                                if (float.Parse(nt6[k, n, 0]) >= z + min) { txt += nt6[k, n, 1]; done = true; }
+                                else txt += "-";
+                            }
+                            else txt += "-";
+                            z = z + min;
+                        }
+                        while (done && z <= snglng);
+                        done = false;
+                    }
+
+                }
+                //songEvents[i] = new RocksmithToolkitLib.XML.SongEvent
+                //{
+                //    Code = ebeats[i].Measure == -1 ? "B1" : "B0",
+                //    Time = ebeats[i].Time
+                //};//}
+                //var rampPath = Path.Combine(AppWD.Replace("DLCManager\\external_tools", ""), "ddc\\ddc_dd_remover.xml");
+                //var cfgPath = Path.Combine(AppWD.Replace("DLCManager\\external_tools", ""), "ddc\\ddc_default.cfg");
+
+                //var cmbPhraseLen = ConfigRepository.Instance().GetDecimal("ddc_phraselength");
+                //var consoleOutput = string.Empty;
+                //try
+                //{
+                //    if (UseInternalLog != "Yes") DDCreator.ApplyDD(xml, (int)cmbPhraseLen, false, rampPath, cfgPath, out consoleOutput, true, false);
+                //}
+                //catch (Exception ex)
+                //{//http://code.google.com/p/rocksmith-custom-song-creator/issues/detail?id=60
+                //    var tsst = "Error at remove DD..." + ex; UpdateLog(DateTime.Now, tsst, false, "", "", "", null, null);
+                //    UseInternalLog = "Yes";
+                //}
+
+                // if (Is_Original == "Yes" || !string.IsNullOrEmpty(consoleOutput) || UseInternalLog == "Yes")
+                //    try
+                //    {
+                //        if (xml.Length > 0)
+                //        {
+                //            platform.version = RocksmithToolkitLib.GameVersion.RS2014;
+                //            Song2014 xmlContent1 = Song2014.LoadFromFile(xml);
+                //            var manifestFunctions1 = new ManifestFunctions(platform.version);
+                //            var j = manifestFunctions1.GetMaxDifficulty(xmlContent1);
+                //            string textfile = File.ReadAllText(xml);
+
+                //            //for each timestamp in the xml file take the highest level entry
+                //            var fxml = File.OpenText(xml);
+                //            string tecst = "";
+                //            string line;
+                //            var header = "";
+                //            var footer = "";
+                //            //Read and Save Header
+                //            while ((line = fxml.ReadLine()) != null)
+                //            {
+                //                if (line.Contains("<levels")) break;
+                //                header += line + "\n";
+                //            }
+                //            header += "\n<levels count=\"1\">\n";
+                //            //level the maxdiff overall setting in the xml
+                //            var m = 1;
+                //            for (m = 1; m <= j; m++)
+                //            {
+                //                header = header.Replace("maxDifficulty=\"" + m + "\"", "maxDifficulty=\"0\"");
+                //            }
+
+                //            var v = 0; //difficulty level in the parsing
+                //            var diff = 0;
+                //            float[] timea = new float[10000]; //keeps the timestamp of each note
+                //            float[] timeb = new float[10000]; //keeps the timestamp of each anchor
+                //            string[] notes = new string[10000]; // keeps the full note details
+                //            string[] bends = new string[10000]; // keeps the bends single note details
+                //            string[] anchor = new string[10000]; // keeps the full note details
+                //            int[] lvla = new int[10000]; //keeps the level of the note&timestamp
+                //            string[] bnds = new string[10000]; //keeps the bends of the note&timestamp
+                //            int[] lvlb = new int[10000]; //keeps the level of the note&timestamp
+                //                                         //bool is_header = true; //to know when the header has been read and saved
+                //                                         //var l = 0; //storage counter in the array
+                //            float ts = 0; //timestamp parsed fro the <notes line
+                //            int ea = 0; //top end of the storage array notes
+                //            int eb = 0; //top end of the storage array anchor
+                //            bool UpdateT = false;
+                //            while ((line = fxml.ReadLine()) != null)
+                //            {
+                //                //header
+                //                if (line.Contains("<level difficulty=\""))
+                //                {
+                //                    line = line.Replace("<level difficulty=\"", "").Trim();
+                //                    line = line.Replace("\">", "");
+                //                    try { diff = line.ToInt32(); }
+                //                    catch
+                //                    {
+                //                        System.Windows.Forms.MessageBox.Show("Errors at DD lvl READ removal");
+                //                    }
+                //                    v = diff;
+                //                    continue;
+                //                }
+
+                //                //notes
+                //                if (line.Contains("<note time=\""))
+                //                {
+                //                    tecst = (line.Replace("<note time=\"", "")).TrimStart();
+                //                    tecst = tecst.Replace(tecst.Substring(tecst.IndexOf("\"")), "");
+                //                    try { ts = Convert.ToSingle(tecst); }
+                //                    catch (Exception ex)
+                //                    {
+                //                        var tsst = "Error11 ..." + ex; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                //                        System.Windows.Forms.MessageBox.Show("Errors at DD time notes READ removal");
+                //                    }
+
+                //                    UpdateT = false;
+                //                    for (m = 0; m < ea; m++)
+                //                    {
+                //                        if (ts == timea[m])
+                //                        {
+                //                            if (v > lvla[m])
+                //                            {
+                //                                notes[m] = line.Replace("\">", "\" />");
+                //                                timea[m] = ts;
+                //                                lvla[m] = v;
+                //                                UpdateT = true;
+                //                                if (line.IndexOf("bend=\"0\"") == -1 && line.IndexOf("bend=\"") > 0)
+                //                                {
+                //                                    line = fxml.ReadLine();
+                //                                    if (line.IndexOf("bendValue") > 0 && line.IndexOf("bendValues>") > 0)
+                //                                    {
+                //                                        line = fxml.ReadLine();
+                //                                        if (line.IndexOf("bendValue time") > 0)
+                //                                        {
+                //                                            bends[m] = line;
+                //                                            m += 2;
+                //                                        }
+                //                                    }
+                //                                }
+                //                            }
+                //                            break;
+                //                        }
+                //                    }
+                //                    if (!UpdateT) //if TimeStamp has not been found in the storage array then save it
+                //                    {
+                //                        notes[ea] = line.Replace("\">", "\" />");
+                //                        timea[ea] = ts;
+                //                        lvla[ea] = v;
+                //                        ea++;
+                //                        if (line.IndexOf("bend=\"0\"") == -1 && line.IndexOf("bend=\"") > 0)
+                //                        {
+                //                            line = fxml.ReadLine();
+                //                            if (line.IndexOf("bendValue") > 0 && line.IndexOf("bendValues>") > 0)
+                //                            {
+                //                                line = fxml.ReadLine();
+                //                                if (line.IndexOf("bendValue time") > 0)
+                //                                {
+                //                                    bends[m] = line;
+                //                                    m += 2;
+                //                                }
+                //                            }
+                //                        }
+                //                    }
+                //                }
+                //                //anchor
+                //                if (line.Contains("<anchor time=\""))
+                //                {
+                //                    tecst = (line.Replace("<anchor time=\"", "")).TrimStart();
+                //                    tecst = tecst.Replace(tecst.Substring(tecst.IndexOf("\"")), "");
+                //                    try { ts = Convert.ToSingle(tecst); }
+                //                    catch (Exception ex)
+                //                    {
+                //                        var tsst = "Error12 ..." + ex; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                //                        System.Windows.Forms.MessageBox.Show("Errors at DD time anchor READ removal");
+                //                    }
+                //                    UpdateT = false;
+                //                    for (m = 0; m < eb; m++)
+                //                    {
+                //                        if (ts == timeb[m])
+                //                        {
+                //                            if (v > lvlb[m])
+                //                            {
+                //                                anchor[m] = line;
+                //                                timeb[m] = ts;
+                //                                lvlb[m] = v;
+                //                                UpdateT = true;
+                //                            }
+                //                            break;
+                //                        }
+                //                    }
+                //                    if (!UpdateT) //if TimeStamp has not been found in the storage array then save it
+                //                    {
+                //                        anchor[eb] = line;
+                //                        timeb[eb] = ts;
+                //                        lvlb[eb] = v;
+                //                        eb++;
+                //                    }
+                //                }
+                //                if (line.Contains("<notes>")) continue;
+
+                //            }
+
+                //            //reorder the storage array
+                //            var n = 0;
+                //            string no;
+                //            string be;
+                //            int lv;
+                //            float ti;
+                //            for (m = 0; m <= ea - 1; m++)
+                //            {
+                //                for (n = m + 1; n <= ea; n++)
+                //                {
+                //                    if (timea[m] > timea[n]) //if TimeStamp is bigger reverse the order
+                //                    {
+                //                        no = notes[n];
+                //                        ti = timea[n];
+                //                        lv = lvla[n];
+                //                        be = bends[n];
+                //                        notes[n] = notes[m];
+                //                        timea[n] = timea[m];
+                //                        lvla[n] = lvla[m];
+                //                        bends[n] = bends[m];
+                //                        notes[m] = no;
+                //                        timea[m] = ti;
+                //                        lvla[m] = lv;
+                //                        bends[m] = be;
+                //                    }
+                //                }
+                //            }
+                //            //reorder the anchor storage array
+                //            for (m = 0; m <= eb - 1; m++)
+                //            {
+                //                for (n = m + 1; n <= eb; n++)
+                //                {
+                //                    if (timeb[m] > timeb[n]) //if TimeStamp is bigger reverse the order
+                //                    {
+                //                        no = anchor[n];
+                //                        ti = timeb[n];
+                //                        lv = lvlb[n];
+                //                        anchor[n] = anchor[m];
+                //                        timeb[n] = timeb[m];
+                //                        lvlb[n] = lvlb[m];
+                //                        anchor[m] = no;
+                //                        timeb[m] = ti;
+                //                        lvlb[m] = lv;
+                //                    }
+                //                }
+                //            }
+                //            //add level & notes to the footer
+                //            footer += "    <level difficulty=\"0\">" + "\n" + "      <notes>" + "\n";
+                //            for (m = 0; m <= ea; m++)
+                //            {
+                //                //footer += notes[m] + "\n";
+                //                if (bends[m] != "" && bends[m] != null)
+                //                {
+                //                    footer += notes[m].Replace("/>", ">") + "\n";
+                //                    footer += "  <bendValues>\n";
+                //                    footer += "   " + bends[m] + "\n";
+                //                    footer += "  </bendValues>\n";
+                //                    footer += " </note>\n";
+                //                }
+                //                else footer += notes[m] + "\n";
+                //            }
+                //            footer += "	  </notes>\n      <chords />\n      <anchors>\n";
+                //            //add level & notes to the footer
+                //            for (m = 0; m <= eb; m++)
+                //            {
+                //                footer += anchor[m] + "\n";
+                //            }
+                //            footer += "      </anchors>" + "\n" + "      <handShapes />" + "\n" + "     </level>" + "\n" + "   </levels>" + "\n" + "</song>";
+                //            fxml.Close();
+                //            File.WriteAllText(xml, header + footer);
+
+                //            //level the json as well
+                //            textfile = File.ReadAllText(json);
+                //            n = 0;
+                //            for (n = 0; n < j; n++)
+                //            {
+                //                textfile = textfile.Replace("\"MaxPhraseDifficulty\": " + n + ",", "\"MaxPhraseDifficulty\": 0,");
+                //            }
+                //            File.WriteAllText(json, textfile);
+                //        }
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        var tsst = "Error at Internal remove DD..." + ex; UpdateLog(DateTime.Now, tsst, false, "", "", "", null, null);
+                //    }
+                ErrorWindow frm1 = new ErrorWindow(txt, "", "Quick Tab display of song-tracks & Notes", true, false, false, "OK", "", "", true);
+                frm1.ShowDialog();
+                //if (frm1.StopImport) return true;
+                //else return false;
+            }
         }
 
         private void btn_InvertSelect_Click(object sender, EventArgs e)
@@ -3325,7 +4001,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 var same = " (";
                 DataSet dgs = new DataSet(); dgs = SelectFromDB("Groups", "SELECT CDLC_ID,Comments FROM Groups WHERE Groupz=\"" + chbx_Group.Text + "\" and Type=\"DLC\";", "", cnb, cnc);
                 var noec = GetNoRec(dgs, cnb, cnc);//dgs.Tables[0].Rows.Count;
-                //var fnn = "";
+                                                   //var fnn = "";
                 if (noec == 0) same += " Group name";
                 //{
 
@@ -3447,12 +4123,12 @@ namespace RocksmithToolkitGUI.DLCManager
                 //getHotest
                 DataSet ddg = new DataSet(); ddg = SelectFromDB("Groups", "SELECT TOP " + c("dlcm_maxsongsinweekly") + " Groupz, Comments, Date_Added FROM Groups " +
                             "WHERE Type=\"DLC\" ORDER BY Date_Added Desc;", "", cnb, cnc);
-                var nocrec = ddg.Tables[0].Rows.Count;
-                //DateTime min= DateTime.Now;
+                var nocrec = GetNoRec(ddg, cnb, cnc);// getnorec ddg.Tables[0].Rows.Count;
+                                                     //DateTime min= DateTime.Now;
                 var min = "";
                 var lastrow = ((c("dlcm_maxsongsinweekly").ToInt32() - 1) > c("dlcm_maxsongsinweekly").ToInt32()) ?
                     nocrec : c("dlcm_maxsongsinweekly").ToInt32() - 1;
-                if (nocrec > 0) min = ddg.Tables[0].Rows[lastrow][2].ToString().Replace(" ", "");
+                if (nocrec > 0 && lastrow <= nocrec) min = ddg.Tables[0].Rows[lastrow][2].ToString().Replace(" ", "");
 
                 btn_ADD2HOT.Text = "Add to Hot"; btn_ADD2HOT.Enabled = true;
                 DataSet dds = new DataSet(); dds = SelectFromDB("Groups", "SELECT DISTINCT Groupz, Comments, Date_Added FROM Groups " +
@@ -3486,7 +4162,6 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
             }
             catch (Exception ex) { var tsst = "Error ..." + ex; timestamp = UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null); }
-
         }
 
         void ListSettings()
@@ -3631,7 +4306,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 btn_CreateLyrics.Enabled = false;
                 if (chbx_AutoSave.Checked) SaveRecord();
                 ListTracks(txt_DuplicateOf.Text, txt_ID.Text, databox.Rows[i].Cells["Song_Lenght"].Value.ToString());
-                chbx_A_IsImprovedWithDM.Checked = true;
+                chbx_IsImprovedWithDM.Checked = true;
+                chbx_IsImprovedWithDM.Visible = true;
             }
         }
 
@@ -3697,7 +4373,8 @@ namespace RocksmithToolkitGUI.DLCManager
             UpdateDB("Main", "Update Main Set Remote_Path = \"\";", cnb, cnc); logmss = "Cleared Remote Songs... "; timestamp = UpdateLog(timestamp, logmss, false, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
             string[] fileEntries = new string[20000];
             string[] fileEntrie = new string[20000];
-            string[] dates = new string[20000]; ConfigRepository.Instance()["dlcm_FTPstatus"] = "OK";
+            string[] dates = new string[20000];
+            string[] size = new string[20000]; ConfigRepository.Instance()["dlcm_FTPstatus"] = "OK";
             if (chbx_Format.Text == "PS3_US" || chbx_Format.Text == "PS3_JP" || chbx_Format.Text == "PS3_EU") fileEntrie = GetFTPFiles(pathx);
             else try { fileEntries = Directory.GetFiles(pathx, "*" + (chbx_Format.Text == "PC" ? "_p." : chbx_Format.Text == "Mac" ? "_m." : chbx_Format.Text == "XBOX360" ? "" : "") + "psarc*", SearchOption.TopDirectoryOnly); }
                 catch (Exception ex) { var tsst = "Error ..." + ex; timestamp = UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null); }
@@ -3709,9 +4386,20 @@ namespace RocksmithToolkitGUI.DLCManager
             foreach (string fileName in fileEntrie)
             {
                 if (fileName == null) break;
-                string[] args = (fileName).ToString().Split(';');
-                fileEntries[l] = args[0];
-                dates[l] = args[1];
+                if (fileName.Contains("root"))
+                {
+                    string[] args = (fileName).ToString().Split(' ');
+                    fileEntries[l] = args[16].Replace(";", "");
+                    dates[l] = args[14] + "/" + args[14] + " " + args[15];
+                    size[l] = args[12];
+                }
+                else
+                {
+                    string[] args = (fileName).ToString().Split(';');
+                    fileEntries[l] = args[0];
+                    dates[l] = args[1];
+                }
+
                 l++;
             }
             var pack = GetMax("Pack_AuditTrail", "Pack", cnb, cnc);
@@ -3732,6 +4420,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 pB_ReadDLCs.Maximum = l;
                 z = 0;
                 var tst = "";
+
                 //Get (and SAve each New File Name in the FilesMissingIssues eXisting)
                 foreach (string fileName in fileEntries)
                 {
@@ -3742,9 +4431,9 @@ namespace RocksmithToolkitGUI.DLCManager
 
                     if (fileName.IndexOf("s1compatibility") > 0)
                         continue;
-                    z++; logmss = "Reading... " + fileName + "..."; timestamp = UpdateLog(timestamp, logmss, false, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    z++; logmss = z + "/" + l + "Reading... " + fileName + "..."; timestamp = UpdateLog(timestamp, logmss, false, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
 
-                    DataSet dfs = new DataSet(); dfs = SelectFromDB("Pack_AuditTrail", "SELECT CDLC_ID, PackDate FROM Pack_AuditTrail WHERE FileName=\"" + Path.GetFileName(fileName) + "\";", "", cnb, cnc);
+                    DataSet dfs = new DataSet(); dfs = SelectFromDB("Pack_AuditTrail", "SELECT CDLC_ID, PackDate FROM Pack_AuditTrail WHERE FileName=\"" + Path.GetFileName(fileName) + "\" ORDER BY ID DESC;", "", cnb, cnc);
                     norec = GetNoRec(dfs, cnb, cnc);//dfs.Tables[0].Rows.Count;
                     if (norec == 0) newn += fileName + "\";\"";
                     else
@@ -3760,14 +4449,17 @@ namespace RocksmithToolkitGUI.DLCManager
                         else
                         {
                             var fn = "";
-                            DataSet dfg = new DataSet(); dfg = SelectFromDB("Main", "SELECT ID, Remote_Path, \"\", ID, Artist, Album, Song_Title, Album_Year, File_Creation FROM Main WHERE ID=" + dlcid + ";", "", cnb, cnc);
+                            DataSet dfg = new DataSet(); dfg = SelectFromDB("Main", "SELECT ID, Remote_Path, \"\", ID, Artist, Album, Song_Title, Album_Year, File_Creation_Date FROM Main WHERE ID=" + dlcid + ";", "", cnb, cnc);
                             //var ptz = new System.IO.FileInfo(fileName);
+                            var norek = GetNoRec(dfg, cnb, cnc);//dfs.Tables[0].Rows.Count;
+                            if (norek == 0) MessageBox.Show("No DLC found");
                             var info = dfg.Tables[0].Rows[0].ItemArray[3].ToString() + " - " + dfg.Tables[0].Rows[0].ItemArray[4].ToString()
                                 + " - " + dfg.Tables[0].Rows[0].ItemArray[5].ToString() + " - " + dfg.Tables[0].Rows[0].ItemArray[6].ToString()
                                 + " - " + dfg.Tables[0].Rows[0].ItemArray[7].ToString();
-                            DialogResult result1 = MessageBox.Show("Duplicate DLC has been found!\n\n" + info + ":\n\nChose which to imediatelly delete:\n\n1. "
-                                + dfg.Tables[0].Rows[0].ItemArray[1].ToString() + " (" + dfg.Tables[0].Rows[0].ItemArray[8].ToString() + ")\n\n2. " +
-                                Path.GetFileName(fileName) + " (" + dates[z] + ")\n\n3. Ignore", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                            DialogResult result1 = MessageBox.Show("Duplicate DLC has been found!\n\by searching for the filename " + "\ninfo: " + info
+                                + ":\n\nChose which to immediately delete:\n\n(Yes) 1. (Pack_AuditTrail details)"
+                                + dfs.Tables[0].Rows[0].ItemArray[0].ToString() + ")\n\n(No) 2." +/*dfg.Tables[0].Rows[0].ItemArray[1].ToString() + " (" + dfg.Tables[0].Rows[0].ItemArray[8].ToString() */
+                                Path.GetFileName(fileName) + " (" + dates[z] + ")\n\n(Cancel) 3. Ignore\n\n(from " + pathx + ")", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                             //DialogResult result1 = MessageBox.Show("Duplicate DLC has been found!\n\nChose which to imediatelly delete:\n\n1. " + dfg.Tables[0].Rows[0].ItemArray[1].ToString() + +" (" + dfg.Tables[0].Rows[0].ItemArray[].ToString() + ")\n\n2. " + Path.GetFileName(fileName) + " (" + ptz + ")\n\n3. Ignore", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                             if (result1 == DialogResult.Yes)
                                 fn = dfg.Tables[0].Rows[0].ItemArray[1].ToString();
@@ -3794,6 +4486,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         }
                     }
                 }
+
                 found = (found.Length > 2) ? found.Substring(0, found.Length - 2) : "";
                 var newnn = (newn.Length > 2) ? newn.Substring(0, newn.Length - 2) : "";
                 pB_ReadDLCs.Value = 0;
@@ -3815,7 +4508,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         if (chbx_Format.Text == "PS3_US" || chbx_Format.Text == "PS3_JP" || chbx_Format.Text == "PS3_EU" || platformTXT == "PS3")
                         {
                             if (!File.Exists(tt))
-                                if (tt.IndexOf("�") < 1 && tt.IndexOf("?") < 1 && tt.IndexOf("rs1compatibilitydisc.psarc.edat") < 1 && tt != null)
+                                if (tt.IndexOf(" ") < 1 && tt.IndexOf("?") < 1 && tt.IndexOf("rs1compatibilitydisc.psarc.edat") < 1 && tt != null)
                                     a = CopyFTPFile(Path.GetFileName(t), tt, txt_FTPPath.Text);
                             if (a == "ok")
                             {
@@ -4687,7 +5380,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (cnt > 0)
             {
                 SearchCmd = SearchCmd.Replace("ORDER BY", "WHERE FilesMissingIssues <> \"\" ORDER BY");
-                if (MissingPSARC) MessageBox.Show("Please note that Pack_AuditTrail has unmatched records. Manaully decide if they have to be deleted based on Reason field.");
+                if (MissingPSARC) MessageBox.Show("Please note that Pack_AuditTrail has unmatched records. Manually decide if they have to be deleted based on Reason field.");
                 if (SearchCmd.IndexOf("ORDER BY") < 1) SearchCmd += " ORDER BY " + c("dlcm_OrderOfFields") + " ";
 
                 cmb_Filter.Text = "Show Songs with FilesMissing Issues";/* (vFilesMissingIssues.IndexOf(";") > 0 && vFilesMissingIssues.Length > 1 ? "s" : "")*/
@@ -4742,7 +5435,6 @@ namespace RocksmithToolkitGUI.DLCManager
                 chbx_RemoveBassDD.Enabled = true;
                 chbx_Last_Packed.Enabled = true;
             }
-
         }
 
         private void btn_Remove_All_Packed_Click(object sender, EventArgs e)
@@ -5252,6 +5944,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var IsMetalCover = databox.SelectedRows[0].Cells["Is_MetalCover"].Value.ToString();
             var IsUkulele = databox.SelectedRows[0].Cells["Is_Ukulele"].Value.ToString();
             var Is_Midi = databox.SelectedRows[0].Cells["Is_Midi"].Value.ToString();
+            var Has_Slide = databox.SelectedRows[0].Cells["Has_Slide"].Value.ToString();
 
             var unpackedDir = databox.SelectedRows[0].Cells["Folder_Name"].Value.ToString();
             var audio_hash = databox.SelectedRows[0].Cells["Audio_OrigHash"].Value.ToString();
@@ -5285,7 +5978,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         Rhythm, Lead, Vocalss, Tunings, i, norows, original_FileName, art_hash, audio_hash, audioPreview_hash, xmlhlist, jsonhlist,
                         c("dlcm_DBFolder"), clist, dlist, newold, Is_Original, altvert.ToString(),
                         c("dlcm_RocksmithDLCPath"), c("dlcm_AdditionalManipul39") == "Yes" ? true : false, c("dlcm_AdditionalManipul40") == "Yes" ? true : false,
-                        fsz, unpackedDir, Is_MultiTrack == "No" ? "" : Is_MultiTrack, MultiTrack_Version, File_Creation_Date, j.ToString() + "" + "", Platformm, IsLive == "No" ? "" : IsLive, LiveDetails, IsAcoustic, cnb, dupli_reason, databox.SelectedRows[0].Cells["Song_Lenght"].Value.ToString(), "-",
+                        fsz, unpackedDir, Is_MultiTrack == "No" ? "" : Is_MultiTrack, MultiTrack_Version, File_Creation_Date, j.ToString() + "" + "", Platformm, IsLive == "No" ? "" : IsLive, LiveDetails, IsAcoustic, dupli_reason, databox.SelectedRows[0].Cells["Song_Lenght"].Value.ToString(), "-",
                         databox.SelectedRows[0].Cells["ID"].Value.ToString().ToInt32(), cxmlhlist, snghlist, databox.Rows[0].Cells["File_Hash"].Value.ToString(),
                         IsInstrumental == "No" ? "" : IsInstrumental, IsSoundtrack == "No" ? "" : IsSoundtrack, IsFullAlbum == "No" ? "" : IsFullAlbum
                         , IsSingle == "No" ? "" : IsSingle, IsEP == "No" ? "" : IsEP, IsUncensored == "No" ? "" : IsUncensored, IsRemastered == "No" ? "" : IsRemastered, InTheWorks == "No" ? "" : InTheWorks
@@ -5293,7 +5986,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         , IsMedley == "No" ? "" : IsMedley, IsMultiStrings == "No" ? "" : IsMultiStrings
                         , IsDeluxe == "No" ? "" : IsDeluxe, IsGreatestHits == "No" ? "" : IsGreatestHits
                         , IsMidi == "No" ? "" : IsMidi, IsGameSoundtrack == "No" ? "" : IsGameSoundtrack, IsTVTheme == "No" ? "" : IsTVTheme, IsAmateurCover == "No" ? "" : IsAmateurCover
-                        , IsMetalCover == "No" ? "" : IsMetalCover, IsUkulele == "No" ? "" : IsUkulele, HasCapo == "No" ? "" : HasCapo, txt_Description.Text, A440TunningFrecv, cnc);
+                        , IsMetalCover == "No" ? "" : IsMetalCover, IsUkulele == "No" ? "" : IsUkulele, HasCapo == "No" ? "" : HasCapo, txt_Description.Text, A440TunningFrecv
+                        , Has_Slide, txt_DuplicateOf.Text.ToInt32(), cnb, cnc);
                     frm1.ShowDialog();
                     if (frm1.Author != author) if (frm1.Author == "Custom Song Creator" && c("dlcm_AdditionalManipul47") == "Yes") author = "";
                         else author = frm1.Author;
@@ -5309,7 +6003,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (frm1.ArtistSort != info.SongInfo.ArtistSort) txt_Artist_Sort.Text = frm1.ArtistSort;
                     if (frm1.Album != info.SongInfo.Album) txt_Album.Text = frm1.Album;
                     if (frm1.albumsort != info.SongInfo.AlbumSort) txt_AlbumSort.Text = frm1.albumsort;
-                    if (frm1.Alternate_No != Alternate_No && !(frm1.Alternate_No is null)) txt_Alt_No.Value = int.Parse(frm1.Alternate_No);
+                    if (frm1.Alternate_No != Alternate_No && !(frm1.Alternate_No is null) && frm1.Is_Alternate == "Yes") txt_Alt_No.Value = int.Parse(frm1.Alternate_No);
                     if (frm1.AlbumArtPath != AlbumArtPath) txt_AlbumArtPath.Text = frm1.AlbumArtPath;
                     //if (frm1.Art_Hash != art_hash) art_hash = frm1.Art_Hash;
                     if (frm1.MultiT != "") chbx_MultiTrack.Checked = frm1.MultiT == "Yes" ? true : false;
@@ -5337,14 +6031,15 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (frm1.isGreatestHits != "") chbx_A_IsGreatestHits.Checked = frm1.isGreatestHits == "Yes" ? true : false;
                     if (frm1.isDeluxe != "") chbx_A_IsDeluxe.Checked = frm1.isDeluxe == "Yes" ? true : false;
                     if (frm1.hasCapo != "") chbx_Capo.Checked = frm1.hasCapo == "Yes" ? true : false;
+                    if (frm1.hasSlide != "") chbx_A_IsSlide.Checked = frm1.hasSlide == "Yes" ? true : false;
                     if (frm1.isMedley != "") chbx_A_IsMedley.Checked = frm1.isMedley == "Yes" ? true : false;
                     if (frm1.isMultiStrings != "") chbx_A_IsMultiStrings.Checked = frm1.isMultiStrings == "Yes" ? true : false;
                     if (frm1.isMidi != "") chbx_A_IsMidi.Checked = frm1.isMidi == "Yes" ? true : false;
                     if (frm1.isGameSoundtrack != "") chbx_A_IsGameSoundtrack.Checked = frm1.isGameSoundtrack == "Yes" ? true : false;
                     if (frm1.isTVTheme != "") chbx_A_IsTVTheme.Checked = frm1.isTVTheme == "Yes" ? true : false;
                     if (frm1.isAmateurCover != "") chbx_A_IsAmateurCover.Checked = frm1.isAmateurCover == "Yes" ? true : false;
-                    //if (frm1.hasCapo != "") chbx_Capo.Checked = frm1.hasCapo == "Yes" ? true : false;
-                    //if (frm1.isKaraoke != "") chbx_A_IsKaraoke.Checked = frm1.isKaraoke == "Yes" ? true : false;
+                    if (frm1.hasSlide != "") chbx_A_IsSlide.Checked = frm1.hasSlide == "Yes" ? true : false;
+                    //if (frm1.has != "") chbx_A_IsKaraoke.Checked = frm1.isKaraoke == "Yes" ? true : false;
 
                     //if (frm1.YouTube_Link != "") YouTube_Link = frm1.YouTube_Link;
                     //if (frm1.CustomsForge_Link != "") CustomsForge_Link = frm1.CustomsForge_Link;
@@ -5706,7 +6401,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var old = ConfigRepository.Instance()["dlcm_MuliThreading"];
             var metadatadisplayedonce = ConfigRepository.Instance()["dlcm_AdditionalManipul115"];
             ConfigRepository.Instance()["dlcm_errorsstring"] = "";
-            var pack = ""; /*var norows = 0; */var brkn = 0;
+            var pack = ""; var brkn = 0;
             if (chbx_Format.Text == "PS4" || chbx_Format.Text == "iOS") { MessageBox.Show("Not yet working. rEtail songs can be eliminated just new ones packaged\n\nWiP"); return; }
             pB_ReadDLCs.Value = 0;
             pB_ReadDLCs.Maximum = 5;
@@ -5717,7 +6412,6 @@ namespace RocksmithToolkitGUI.DLCManager
             Selection frm1 = new Selection(slct, "Continue Packing", "Stop");
             frm1.ShowDialog();
             if (frm1.StopImport) return;
-            //UpdateLog(DateTime.Now, "----", false, c("dlcm_TempPath"), "", "", null, null);
 
             if (chbx_AutoSave.Checked) SaveRecord();
             savesettings();
@@ -5764,9 +6458,6 @@ namespace RocksmithToolkitGUI.DLCManager
                 sel += databox.SelectedRows[k].Cells["ID"].Value.ToString();
             }
 
-            //var SongRecord = UtilitiesFunctions.GetRecord_s(sel, cnb, cnc);
-            //var norows = SongRecord[0].NoRec.ToInt32();
-
             Groupss = chbx_Group.Text.ToString();
             var cmd = "SELECT * FROM Main ";
             cmd += sel.Length > 0 ? "WHERE ID in (" + sel + ")" : txt_ID.Text;/**/
@@ -5781,15 +6472,13 @@ namespace RocksmithToolkitGUI.DLCManager
                 else ftpstatus = "nok";
 
             if ((chbx_Format.Text == "PS3_US" || chbx_Format.Text == "PS3_JP" || chbx_Format.Text == "PS3_EU") && c("dlcm_AdditionalManipul92") == "Yes") HANPackagePreparation();
+            var frmt = chbx_Format.Text.Replace("_US", "").Replace("_JP", "").Replace("_EU", "");
 
-            //DataSet dms = new DataSet(); dms = SelectFromDB("Main", "SELECT max(val(Pack)) FROM Main", null, cnb, cnc);
-            //if (dms.Tables[0].Rows.Count > 0) pack = (int.Parse(dms.Tables[0].Rows[0].ItemArray[0].ToString()) + 1).ToString();
             pack = (int.Parse(GetMax("Pack_AuditTrail", "Pack", cnb, cnc)) + 1).ToString();
 
-            //var i = 0;
             var bassRemoved = "No"; var metainfo = ""; var norows = SongRecord[0].NoRec.ToInt32();
 
-            if (norows > 0) CreatePackingGroup(cmd, cnb, cmb_Filter.Text, norows, cnc);
+            if (norows > 0) CreatePackingGroup(cmd, cnb, cmb_Filter.Text, norows, cnc, frmt);
 
             // calc a sumamry of the metadata
             var f = false;
@@ -5801,13 +6490,12 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             if (f) return;
 
-            var ordno = ""; i = 0; pB_ReadDLCs.Maximum = norows; pB_ReadDLCs.Value = 0;
+            var ordno = 0; i = 0; pB_ReadDLCs.Maximum = norows; pB_ReadDLCs.Value = 0;
             foreach (var filez in SongRecord)
             {
                 if (filez.ID == null) break;
-                ordno = ordno + "1"; i++;
+                ordno = ordno + 1; i++;
                 timestamp = UpdateLog(timestamp, "\nPacking " + pB_ReadDLCs.Value + "/" + filez.NoRec + " song: " + filez.Artist + " - " + filez.Song_Title, true, Temp_Path_Import, "", "DLCManager", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-                //if (chbx_PackBeta.Checked) filez.Is_Beta = "Yes";(chbx_PackBeta.Checked?true:)
                 var args = filez.ID + ";" + (bassRemoved == "No" ? "false" : "true") + ";";
                 args += (chbx_Format.Text == "PC" ? "PC" : "") + ";" + (chbx_Format.Text == "PS3_US" || chbx_Format.Text == "PS3_JP" || chbx_Format.Text == "PS3_EU" ? "PS3" : "") + ";" + (chbx_Format.Text == "XBOX360" ? "XBOX360" : "") + ";" + (chbx_Format.Text == "Mac" ? "Mac" : "") + ";" + netstatus + ";";
                 args += (filez.Is_Beta == "Yes" ? true : false) + ";" + chbx_Group.Text + ";";
@@ -5816,13 +6504,13 @@ namespace RocksmithToolkitGUI.DLCManager
                 args += chbx_Last_Packed.Enabled + ";" + chbx_CopyOld.Checked + ";";
                 args += chbx_CopyOld.Enabled + ";" + chbx_Copy.Checked + ";";
                 args += chbx_Replace.Checked + ";" + chbx_Replace.Enabled + ";";
-                args += pack + ";" + "MainDB" + ";";/*SourcePlatform*/
+                args += pack + ";" + "MainDB" + ";";
                 args += filez.Original_FileName.Replace(";", "") + ";" + filez.Folder_Name.Replace(";", "") + ";";
                 args += c("dlcm_AdditionalManipul49") + ";" + txt_RemotePath.Text.Replace(";", "") + ";" + txt_FTPPath.Text.Replace(";", "") + ";";
                 args += chbx_RemoveBassDD.Checked + ";" + (filez.Bass_Has_DD == "Yes" ? true : false) + ";" + chbx_KeepBassDD.Checked + ";";
                 args += chbx_KeepDD.Checked + ";" + filez.Is_Original + ";" + filez.ID + ";";
-                args += SearchCmd + (SearchCmd.IndexOf(";") > 0 ? "" : ";") + pathDLC + ";" + filez.DLC_Name + ";"; //SearchCmd + ";" + c("dlcm_RocksmithDLCPath"), DataViewGrid.Rows[DataViewGrid.SelectedCells[0].RowIndex].Cells["DLC_Name"].Value
-                args += c("dlcm_AdditionalManipul76") + ";" + "" + ";" + "MainDB" + ";" + "" + ordno + i + ";" + spotystatus + ";" + ybstatus + ";" + ftpstatus + ";" + "No";
+                args += SearchCmd + (SearchCmd.IndexOf(";") > 0 ? "" : ";") + pathDLC + ";" + filez.DLC_Name + ";";
+                args += c("dlcm_AdditionalManipul76") + ";" + "" + ";" + "MainDB" + ";" + "" + (ordno + i) + ";" + spotystatus + ";" + ybstatus + ";" + ftpstatus + ";" + "No";
                 ConfigRepository.Instance()["dlcm_GlobalTempVariable"] = "";
                 pB_ReadDLCs.Increment(1);
                 bwRGenerate.RunWorkerAsync(args);
@@ -5840,10 +6528,8 @@ namespace RocksmithToolkitGUI.DLCManager
                         chbx_Broken2.Checked = true;
                         cmd = "SELECT Comments from LogPackingError WHERE Pack=\"" + pack + "\" AND CDLC_ID=" + filez.ID + " ORDER BY ID DESC;";
                         DataSet dis = new DataSet(); dis = SelectFromDB("LogPackingError", cmd, "", cnb, cnc);
-                        //rtxt_StatisticsOnReadDLCs.Text += "\n  54= " +dus.Tables[0].Rows.Count;
-                        var rec = GetNoRec(dis, cnb, cnc);//dus.Tables.Count == 0 ? 0 : dus.Tables[0].Rows.Count;
+                        var rec = GetNoRec(dis, cnb, cnc);
                         if (rec > 0) txt_FilesMissingIssues.Text = dis.Tables[0].Rows[0].ItemArray[0].ToString();
-                        // UpdatePackingLog("LogPackingError", ConfigRepository.Instance()["dlcm_DBFolder"], pack.ToInt32(), filez.ID, "", cnb, cnc);
                     }
                 }
             }
@@ -5853,10 +6539,9 @@ namespace RocksmithToolkitGUI.DLCManager
             if ((chbx_Format.Text == "PS3_US" || chbx_Format.Text == "PS3_JP" || chbx_Format.Text == "PS3_EU") && c("dlcm_AdditionalManipul92") == "Yes") HANPackage();
             ConfigRepository.Instance()["dlcm_MuliThreading"] = old;
             bwRGenerate.Dispose();
-            GeneratePackingSummary(pack, ConfigRepository.Instance()["dlcm_Global2TempVariable"], brkn, cnb, i, norows, cnc);
+            GeneratePackingSummary(pack, ConfigRepository.Instance()["dlcm_Global2TempVariable"], brkn, cnb, i, norows, cnc, "");
             ConfigRepository.Instance()["dlcm_AdditionalManipul115"] = metadatadisplayedonce;
             timestamp = UpdateLog(timestamp, "Ended Packing.", true, null, "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
-
         }
 
         private void btn_GoTemp_Click(object sender, EventArgs e)
@@ -6649,6 +7334,11 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     var xmlContents = Song2014.LoadFromFile(filezPath);
                     ArrangementType = null;
+                    if (xmlContents is null)
+                    {
+                        MessageBox.Show("issues at reading xml..please press restore");
+                        return;
+                    }
                     RouteMask = xmlContents.ArrangementProperties.RouteMask.ToString() == "0" ? xmlContents.Arrangement.ToString() : xmlContents.ArrangementProperties.RouteMask.ToString();
                 }
                 catch (Exception Exx)
@@ -6668,13 +7358,13 @@ namespace RocksmithToolkitGUI.DLCManager
                     var insertcmdd = "Arrangement_Name, CDLC_ID, Bonus, JSONFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlaythroughYBLink, CustomsForge_Link," +
                         "ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask," +
                         "XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, ConversionDateTime," +
-                        "SNGFileHash, Has_Sections, Comments, Start_Time, CleanedXML_Hash, Json_Hash, Part, MaxDifficulty, Default, Primary";
+                        "SNGFileHash, Has_Sections, Comments, Start_Time, CleanedXML_Hash, Json_Hash, Part, MaxDifficulty, Default, Primary, A440TunningFrecv, Alternate, Slide";
                     var insertvalues = "SELECT Arrangement_Name, " + txt_ID + ", Bonus, \"" + destination_dir + "\\manifests\\\"+right(JSONFilePath,len(JSONFilePath)-" +
                         "instr(JSONFilePath, '\\manifests')-10), \"" + destination_dir + "\\songs\\arr\\\"+right(XMLFilePath,len(XMLFilePath)-instr(XMLFilePath, '\\songs\\arr\\')-10)," +
                         " XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlaythroughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType," +
                         " String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID," +
                         " SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, ConversionDateTime, SNGFileHash, Has_Sections, \"Added from " + DLCID + " " + txt_Title + "\", (Start_Time+" + s2s + "), CleanedXML_Hash," +
-                        " Json_Hash, Part, MaxDifficulty, \"\", \"\" FROM Arrangements WHERE ID = " + ArrangID;
+                        " Json_Hash, Part, MaxDifficulty, \"\", \"\", \"\", Alternate, \"\" FROM Arrangements WHERE ID = " + ArrangID;
 
                     InsertIntoDBwValues("Arrangements", insertcmdd, insertvalues, cnb, 0, cnc);
                 }
@@ -6720,54 +7410,57 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             else
             {
-                DialogResult result11 = DialogResult.OK;
-                if (num_Lyrics == 0) result11 = MessageBox.Show("You are trying to shift the Arrangements notes by 0 seconds.\nDo you want to start even-Distribution workflow instead?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                //if (result11 == DialogResult.Yes)
-
-                //    ;
-                var bonus = "bonus";
-                if (txt_ID != DLCID && cmb_Tracks.ToString() != "")
+                DialogResult result11 = DialogResult.No;
+                if (not_t.Split(';')[0] == "0") result11 = MessageBox.Show("You are trying to shift the Arrangements notes by 0 seconds.\nDo you want to start even-Distribution workflow instead?", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result11 == DialogResult.Yes)
                 {
-                    var cmd = "SELECT XMLFilePath, XMLFileName, RouteMask, Start_Time, JSONFilePath,SNGFileName FROM Arrangements WHERE ID = " + ArrangID + " AND Bonus =\"True\" and RouteMask=\"" + dus.Tables[0].Rows[0].ItemArray[2].ToString() + "\"" + GetArrOfficSQLTxt(arrangoff);
-                    DataSet dis = new DataSet(); dis = SelectFromDB("Arrangements", cmd, "", cnb, cnc);
-                    noOfRec = GetNoRec(dis, cnb, cnc); //dis.Tables.Count <= 0 ? 0 : dis.Tables[0].Rows.Count;
-                    if (noOfRec > 0)
-                    {
-                        DialogResult result1 = MessageBox.Show("Normal Bonus track already existing. Not adding current proposed track. ", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Question);
-                        return;
-                    }
-                    else
-                        bonus = "True";
-                    //bonus = "false";
-
-                    var insertcmdd = "Arrangement_Name, CDLC_ID, Bonus, JSONFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlaythroughYBLink, CustomsForge_Link," +
-                        "ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask," +
-                        "XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, ConversionDateTime," +
-                        "SNGFileHash, Has_Sections, Comments, Start_Time, CleanedXML_Hash, Json_Hash, Part, MaxDifficulty, Default, PrimaryTrack, Favorite, Broken, Official, PersistentID, CapoFret";
-                    var insertvalues = "SELECT Arrangement_Name, " + txt_ID + ", Bonus, \"" + destination_dir + "\\manifests\\\"+right(JSONFilePath,len(JSONFilePath)-" +
-                        "instr(JSONFilePath, 'manifests')-9), \"" + destination_dir + "\\songs\\arr\\\"+right(XMLFilePath,len(XMLFilePath)-instr(XMLFilePath, '\\songs\\arr\\')-10)," +
-                        " XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlaythroughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType," +
-                        " String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID," +
-                        " SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, ConversionDateTime, SNGFileHash, Has_Sections, \"Added from " + DLCID + " " + txt_Title + "\", (Start_Time+" + s2s + "), CleanedXML_Hash," +
-                        " Json_Hash, Part, MaxDifficulty, Default, PrimaryTrack, Favorite, Broken, Official, PersistentID, CapoFret FROM Arrangements WHERE ID = " + ArrangID;
-
-                    InsertIntoDBwValues("Arrangements", insertcmdd, insertvalues, cnb, 0, cnc);
-
-                    try
-                    {
-                        if (!File.Exists(newXMLFilePath + ".old2") && File.Exists(newXMLFilePath)) File.Copy(newXMLFilePath, newXMLFilePath + ".old2", false);
-                        File.Copy(XMLFilePath, newXMLFilePath, false);
-                        if (!File.Exists(newJSONFilePath + ".old2") && File.Exists(newJSONFilePath)) File.Copy(newJSONFilePath, newJSONFilePath + ".old2", false);
-                        File.Copy(json, newJSONFilePath, false);
-                        //if (!File.Exists(newSNGFilePath + ".old2") && File.Exists(newSNGFilePath)) File.Copy(newSNGFilePath, newSNGFilePath + ".old2", true);
-                        //if (txt_ID.Text != DLCID) File.Copy(sng, newSNGFilePath, true);
-                    }
-                    catch (Exception ex)
-                    {
-                        tsst = "Error ..." + ex; timestamp = UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null);
-                    }
+                    MessageBox.Show("Not yet implemented"); return;
                 }
-                else newXMLFilePath = XMLFilePath;
+
+                var bonus = "bonus";
+                if (cmb_Tracks is not null)
+                    if (txt_ID != DLCID && cmb_Tracks.ToString() != "")
+                    {
+                        var cmd = "SELECT XMLFilePath, XMLFileName, RouteMask, Start_Time, JSONFilePath,SNGFileName FROM Arrangements WHERE ID = " + ArrangID + " AND Bonus =\"True\" and RouteMask=\"" + dus.Tables[0].Rows[0].ItemArray[2].ToString() + "\"" + GetArrOfficSQLTxt(arrangoff);
+                        DataSet dis = new DataSet(); dis = SelectFromDB("Arrangements", cmd, "", cnb, cnc);
+                        noOfRec = GetNoRec(dis, cnb, cnc); //dis.Tables.Count <= 0 ? 0 : dis.Tables[0].Rows.Count;
+                        if (noOfRec > 0)
+                        {
+                            DialogResult result1 = MessageBox.Show("Normal Bonus track already existing. Not adding current proposed track. ", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Question);
+                            return;
+                        }
+                        else
+                            bonus = "True";
+                        //bonus = "false";
+
+                        var insertcmdd = "Arrangement_Name, CDLC_ID, Bonus, JSONFilePath, XMLFilePath, XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlaythroughYBLink, CustomsForge_Link," +
+                            "ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType, String0, String1, String2, String3, String4, String5, PluckedType, RouteMask," +
+                            "XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID, SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, ConversionDateTime," +
+                            "SNGFileHash, Has_Sections, Comments, Start_Time, CleanedXML_Hash, Json_Hash, Part, MaxDifficulty, OrigSongTrack, PrimaryTrack, Favorite, Broken, Official, PersistentID, CapoFret, Alternate, A440TunningFrecv, Slide";
+                        var insertvalues = "SELECT Arrangement_Name, " + txt_ID + ", Bonus, \"" + destination_dir + "\\manifests\\\"+right(JSONFilePath,len(JSONFilePath)-" +
+                            "instr(JSONFilePath, 'manifests')-9), \"" + destination_dir + "\\songs\\arr\\\"+right(XMLFilePath,len(XMLFilePath)-instr(XMLFilePath, '\\songs\\arr\\')-10)," +
+                            " XMLFile_Hash, ScrollSpeed, Tunning, Rating, PlaythroughYBLink, CustomsForge_Link, ArrangementSort, TuningPitch, ToneBase, Idd, MasterId, ArrangementType," +
+                            " String0, String1, String2, String3, String4, String5, PluckedType, RouteMask, XMLFileName, XMLFileLLID, XMLFileUUID, SNGFileName, SNGFileLLID," +
+                            " SNGFileUUID, ToneMultiplayer, ToneA, ToneB, ToneC, ToneD, ConversionDateTime, SNGFileHash, Has_Sections, \"Added from " + DLCID + " " + txt_Title + "\", (Start_Time+" + s2s + "), CleanedXML_Hash," +
+                            " Json_Hash, Part, MaxDifficulty, OrigSongTrack, PrimaryTrack, Favorite, Broken, Official, PersistentID, CapoFret, Alternate, A440TunningFrecv, Slide FROM Arrangements WHERE ID = " + ArrangID;
+
+                        InsertIntoDBwValues("Arrangements", insertcmdd, insertvalues, cnb, 0, cnc);
+
+                        try
+                        {
+                            if (!File.Exists(newXMLFilePath + ".old2") && File.Exists(newXMLFilePath)) File.Copy(newXMLFilePath, newXMLFilePath + ".old2", false);
+                            File.Copy(XMLFilePath, newXMLFilePath, false);
+                            if (!File.Exists(newJSONFilePath + ".old2") && File.Exists(newJSONFilePath)) File.Copy(newJSONFilePath, newJSONFilePath + ".old2", false);
+                            File.Copy(json, newJSONFilePath, false);
+                            //if (!File.Exists(newSNGFilePath + ".old2") && File.Exists(newSNGFilePath)) File.Copy(newSNGFilePath, newSNGFilePath + ".old2", true);
+                            //if (txt_ID.Text != DLCID) File.Copy(sng, newSNGFilePath, true);
+                        }
+                        catch (Exception ex)
+                        {
+                            tsst = "Error ..." + ex; timestamp = UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                        }
+                    }
+                    else newXMLFilePath = XMLFilePath;
 
                 try
                 {
@@ -6816,10 +7509,15 @@ namespace RocksmithToolkitGUI.DLCManager
                             {
                                 tsst = "Error shifting timings..." + ex; timestamp = UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null);
                             }
-                        else // add variable diff to notes
+                        else // add variable diff to notes //shift notes
                             try
                             {
                                 xmlContent = Song2014.LoadFromFile(newXMLFilePath);
+                                if (xmlContent is null)
+                                {
+                                    MessageBox.Show("issues at reading xml..please press restore");
+                                    return;
+                                }
                                 for (var j = 0; j < xmlContent.PhraseIterations.Length; j++)
                                     if (xmlContent.PhraseIterations[j].Time > 0)
                                         xmlContent.PhraseIterations[j].Time = calcreltime(xmlContent.PhraseIterations[j].Time, not_t, xmlContent.PhraseIterations[0].Time, false, XMLFilePath
@@ -6899,7 +7597,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 sounds[k, 0] = calcreltime(sounds[k, 0], not_t, sounds[0, 0], false, XMLFilePath, (k > 0 ? sounds[k - 1, 0] : 0));
                                                 sounds[k, 3] = calcreltime(sounds[k, 3], not_t, sounds[0, 0], false, XMLFilePath, (k > 0 ? sounds[k - 1, 3] : 0));
                                             }
-                                        //reintegrate in  notes,chords separate arrays
+                                        //reintegrate in notes,chords separate arrays
                                         for (var k = 0; k < len; k++)
                                             if (sounds[k, 0] == 0) break;
                                             else if (sounds[k, 1] == 0)
@@ -6986,13 +7684,13 @@ namespace RocksmithToolkitGUI.DLCManager
                             }
 
                     using (var stream = File.Open(newXMLFilePath, FileMode.Create)) xmlContent.Serialize(stream);
-                    if (cmb_Tracks.ToString() != "")
-                    {
-                        var updatecmdd = "UPDATE Arrangements SET Comments=Comments+\" shifted by " + (not_t == "0" ? num_Lyrics.ToString() : shiftt)
-                            + "\", Start_Time=(VAL(Start_Time)+" + num_Lyrics.ToString()
-                            + "), XMLFile_Hash=\"" + GetHash(XMLFilePath) + "\", Bonus=\"" + bonus + "\" WHERE ID = " + ArrangID; ;
-                        UpdateDB("Arrangements", updatecmdd, cnb, cnc);
-                    }
+                    if (cmb_Tracks is not null) if (cmb_Tracks.ToString() != "")
+                        {
+                            var updatecmdd = "UPDATE Arrangements SET Comments=Comments+\" shifted by " + (not_t == "0" ? num_Lyrics.ToString() : shiftt)
+                                + "\", Start_Time=(VAL(Start_Time)+" + num_Lyrics.ToString()
+                                + "), XMLFile_Hash=\"" + GetHash(XMLFilePath) + "\", Bonus=\"" + bonus + "\" WHERE ID = " + ArrangID; ;
+                            UpdateDB("Arrangements", updatecmdd, cnb, cnc);
+                        }
                 }
                 catch (Exception ex)
                 {
@@ -7003,9 +7701,11 @@ namespace RocksmithToolkitGUI.DLCManager
             }
 
             if (tsst == "")
-                MessageBox.Show((cmb_Tracks is null ? "" : (cmb_Tracks.ToString() != "" ? "" : "(Single)")) + "Track " + lwnght + " shifted by " + shiftt);
+                MessageBox.Show((cmb_Tracks is null ? "" : (cmb_Tracks.ToString() != "" ? "" : "(Single)")) + "Track " + lwnght + " shifted by " +
+                    not_t.Split(';')[0] + "%" + ", starting time: " + not_t.Split(';')[1] + ", end time: " + not_t.Split(';')[2] + ", last actual note: " + not_t.Split(';')[5]);
             else
-                MessageBox.Show("Track " + dus.Tables[0].Rows[0].ItemArray[1].ToString() + " was NOT shifted by " + (not_t == "0" ? num_Lyrics : not_t + "%"));
+                MessageBox.Show("Track " + dus.Tables[0].Rows[0].ItemArray[1].ToString() + " was NOT shifted by " + (not_t == "0" ? num_Lyrics :
+                    not_t.Split(';')[0] + "%" + ", starting time: " + not_t.Split(';')[1] + ", end time: " + not_t.Split(';')[2] + ", last actual note: " + not_t.Split(';')[5]));
 
             not_t = "0";
             return;
@@ -7520,7 +8220,7 @@ namespace RocksmithToolkitGUI.DLCManager
             cmd += cm + (txt_Live_Details.Text != "" ? " AND Live_Details Like '%" + txt_Live_Details.Text + "%'" : "");
             cmd += (txt_Description.Text != "" ? " AND Description Like '%" + txt_Description.Text + "%'" : "");
             cmd += (txt_OldPath.Text != "" ? " AND Original_FileName Like '%" + txt_OldPath.Text + "%'" : "");
-            cmd += (txt_OldPath.Text != "" ? " AND Author Like '%" + txt_Author.Text + "%'" : "");
+            cmd += (txt_Author.Text != "" ? " AND Author Like '%" + txt_Author.Text + "%'" : "");
             cmd += (txt_ID.Text != "" ? " AND ID =" + txt_ID.Text + "" : "");
             cmd += " ORDER BY " + c("dlcm_OrderOfFields") + " ;";
 
@@ -7537,7 +8237,8 @@ namespace RocksmithToolkitGUI.DLCManager
             //Artist,Artist_Sort, Song_Title, Song_Title_Sort, Album, Album_Sort, Album_Year, AlbumArtPath, DLC_Name, DLC_AppID, " +
             //    "PreviewLenght, AudioBitrate, AudioSampleRate FROM Import_AuditTrail
             //    AND CDCL_ID not in ("+cmd+")
-            if (txt_Artist.Text is not null || txt_Title.Text is not null || txt_Album.Text is not null)
+            if (txt_Artist.Text is not null || txt_Title.Text is not null || txt_Album.Text is not null || txt_Description.Text != "" ||
+                txt_Live_Details.Text != "" || txt_OldPath.Text != "" || txt_Author.Text != "" || txt_ID.Text != "")
             {
                 DataSet dzs = new DataSet(); dzs = SelectFromDB("Import_AuditTrail", cmd, "", cnb, cnc);
                 var norecz = GetNoRec(dzs, cnb, cnc); //dzs.Tables.Count == 0 ? 0 : dzs.Tables[0].Rows.Count;
@@ -7565,7 +8266,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 {
                     additionallyfound = additionallyfound.Substring(0, additionallyfound.Length - 1);
                     MessageBox.Show("Some Entries shown (" + additionallyfound + ") " +
-                    "also due to addiitonal findings based on original metadata (Artist,title,Album)",
+                    "also due to additonal findings based on original, at import, metadata (Artist,title,Album, Author,Filename)",
                     MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
                     //            //for (int j = 0; j < norecs; j++)
@@ -7688,7 +8389,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void ContextMenuStrip_RightClick_Opening(object sender, CancelEventArgs e)
         {
-            var j = mouseLocation.RowIndex;
+            var j = mouseLocation is not null ? mouseLocation.RowIndex : -1;
             if (j < 0) return;
             ContextMenuMenu_Info.Text = "Info: " + databox.Rows[j].Cells["ID"].Value.ToString()
                 + " ," + databox.Rows[j].Cells["Artist"].Value.ToString()
@@ -7820,7 +8521,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (Album.IndexOf("AC/DC Live") >= 0)
                     ;
 
-                var ret = GetExtraAttributes(SongRecord[h].Original_FileName, SongDisplayName, SongDisplayName, SongDisplayName, SongRecord[h].Album, SongRecord[h].Author, SongRecord[h].DLC_Name, SongRecord[h].Artist);
+                var ret = GetExtraAttributes(SongRecord[h].Original_FileName, SongDisplayName, SongDisplayName, SongDisplayName, SongRecord[h].Album, SongRecord[h].Author, SongRecord[h].DLC_Name, SongRecord[h].Artist, SongRecord[h].Song_Title);
 
                 string[] ag = ret.ToString().Split(';');
                 Is_MultiTrack = ag[0]; MultiTrack_Version = ag[1]; IsLive = ag[2]; LiveDetails = ag[3]; IsAcoustic = ag[4]; IsSingle = ag[5]; IsSoundtrack = ag[6]; IsInstrumental = ag[7]; IsEP = ag[8]; IsUncensored = ag[9];
@@ -8249,7 +8950,7 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 i = databox.SelectedCells[0].RowIndex;
                 BasedOn_CF = databox.Rows[i].Cells["BasedOn_GP"].Value.ToString();
-                EoFPath = databox.Rows[i].Cells["BasedOn_GP"].Value.ToString();
+                EoFPath = databox.Rows[i].Cells["EoFPath"].Value.ToString();
             }
             string track = cmb_Tracks.Text.ToString();
             System.Windows.Forms.OpenFileDialog openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -8474,7 +9175,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_BasedOn_GP_Click(object sender, EventArgs e)
         {
-            Process.Start("IExplore.exe", txt_BasedOn_GP.Text);
+            StartProcesss(txt_BasedOn_GP.Text, null);
         }
 
         private void btn_BasedOn_Youtube_Click(object sender, EventArgs e)
@@ -8492,56 +9193,373 @@ namespace RocksmithToolkitGUI.DLCManager
             Process.Start("IExplore.exe", txt_BasedOn_Tabs.Text);
         }
 
-
-        //No Bass
-        //No Lead
-        //No Rhythm
-        //No Vocal
-        //(No Guitars)
-        //Only Bass
-        //Only Lead
-        //Only Rhythm
-        //Only Drums
-        //Only Vocal
-        //(Only BackTrack)
+        //1.No Bass
+        //2.No Lead
+        //3.No Rhythm
+        //4.No Guitar
+        //5.No Drums
+        //6.No Vocal
+        //7.No Guitars
+        //8.Only Bass
+        //9.Only Lead
+        //10.Only Rhythm
+        //11.Only Guitar
+        //12.Only Guitars
+        //13.Only Drums
+        //14.Only Vocal
+        //15.(Only BackTrack)
+        //16.(No Drums No Vocal)
+        //17.(No Guitar No Vocal)
+        //18.(No Bass No Vocal)
+        //19.(No Guitar No Drums)
+        //    if (wav.Contains("Only Bass")) v = "bass.ogg"; //1
+        //    else if (wav.Contains("Only Drums")) v = "drums.ogg";//2
+        //    else if (wav.Contains("(Only BackTrack)")) v = "instrumental.ogg";//3
+        //    else if (wav.Contains("Only Guitars")) v = "otherbass.ogg";//4
+        //    else if (wav.Contains("Only Guitar")) v = "other.ogg";//5
+        //    else if (wav.Contains("Only Vocal")) v = "vocals.ogg";//6
+        //    else if (wav.Contains("Only Lead")) v = "lead.ogg";//7
+        //    else if (wav.Contains("Only Rhythm")) v = "rhythm.ogg";//8
+        //    else if (wav.Contains("No Bass")) v = "otherdrumsvocals.ogg";//9
+        //    else if (wav.Contains("No Drums")) v = "otherbassvocals.ogg";//10
+        //    else if (wav.Contains("No Guitar")) v = "bassdrumsvocals.ogg";//11
+        //    else if (wav.Contains("No Vocal")) v = "otherbassdrums.ogg";//12
+        //    else if (wav.Contains("No Guitars")) v = "drumsvocals.ogg";//13
+        //    else if (wav.Contains("No Lead")) v = "bassrhythmdrumsvocals.ogg";//14
+        //    else if (wav.Contains("No Rhythm")) v = "bassleaddrumsvocals.ogg";//15
+        //    else if (wav.Contains("(No Drums No Vocal)"))  v = "otherbass.ogg";//16
+        //    else if (wav.Contains("(No Guitar No Vocal)")) v = "bassdrums.ogg";//17
+        //    else if (wav.Contains("(No Bass No Vocal)")) v = "otherdrums.ogg";//18
+        //    else if (wav.Contains("(No Guitar No Drums)")) v = "bassvocals.ogg";//19
         private void btn_AddAudioaMultitrack_Click(object sender, EventArgs e)
         {
+            var v = "";
             using (var fbd = new VistaFolderBrowserDialog())
             {
                 if (fbd.ShowDialog() != DialogResult.OK)
                     return;
                 var temppath = fbd.SelectedPath;
                 var audio = Directory.GetFiles(temppath, "*.wav", System.IO.SearchOption.AllDirectories);
+                var bass = ""; var guitar = ""; var vocals = ""; var back = ""; var drums = ""; var otherbassvocals = false; var bassvocals = false; var drumsvocals = false;
+                var otherdrumsvocals = false; var bassdrumsvocals = false; var otherbassdrums = false; var otherbass = false; var otherdrums = false; var bassdrums = false;
+                var rhythm = false; var lead = false;
+
+                if (audio.Length == 0)
+                { MessageBox.Show("Select afolder with more than 0 WAVs (fyi Stemroller generates bass.wav, drums.wav, instrumental.wav, other.wav, vocals.wav) "); return; }
 
                 foreach (var wav in audio)
                 {
-                    var v = "";
-                    if (wav.Contains("bass"))
+                    pB_ReadDLCs.Value = 0;
+                    pB_ReadDLCs.Step = 1;
+                    pB_ReadDLCs.Maximum = 7;
+                    v = "";
+                    if (wav.Contains("\\bass.wav")) //1only bass
+                        bass = wav;
+                    else if (wav.Contains("\\drums.wav")) //2only drums
+                        drums = wav;
+                    else if (wav.Contains("\\instrumental.wav")) //3only backtrack
+                        back = wav;
+                    else if (wav.Contains("\\other.wav")) //4onlyguitar (and others eg piano)
+                        guitar = wav;
+                    else if (wav.Contains("\\vocals.wav")) //5Only vocals
+                        vocals = wav;
+                    else if (wav.Contains("\\otherdrumsvocals.wav"))//6No Bass
+                        otherdrumsvocals = true;
+                    else if (wav.Contains("\\bassdrums.wav"))//7
+                        bassdrums = true;
+                    else if (wav.Contains("\\bassdrumsvocals.wav"))//8
+                        bassdrumsvocals = true;
+                    else if (wav.Contains("\\drumsvocals.wav")) //9Noguitars
+                        drumsvocals = true;
+                    else if (wav.Contains("\\otherbassdrums.wav"))//10
+                        otherbassdrums = true;
+                    else if (wav.Contains("\\otherbass.wav"))//11
+                        otherbass = true;
+                    else if (wav.Contains("\\otherdrums.wav"))//12
+                        otherdrums = true;
+                    else if (wav.Contains("\\otherbassvocals.wav"))//13
+                        otherbassvocals = true;
+                    else if (wav.Contains("\\bassvocals.wav"))//14
+                        bassvocals = true;
+                    else if (wav.Contains("\\rhythm.wav"))//15 only rhythm
+                        rhythm = true;
+                    else if (wav.Contains("\\lead.wav"))//16 only lead
+                        lead = true;
+                }
+                var AppWDg = ExternalApps.TOOLKIT_ROOT;
+                pB_ReadDLCs.Increment(1);
+                if (!otherdrums)
+                {
+                    var xx = Path.Combine(AppWDg, c("dlcm_SoX"));
+                    if (!File.Exists(xx)) { ErrorWindow frm1 = new ErrorWindow("Install SoX audio utility comamnd line.", c("dlcm_SoX_www"), c("dlcm_SoX_www"), false, false, true, "", "", "", false); frm1.ShowDialog(); return; }
+                    var yy = " -m \"" + guitar + "\" \"" + drums + "\" \"" + Path.GetDirectoryName(drums) + "\\otherdrums.wav" + "\"";
+                    var tst = "1/13" + yy; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    StartProcesss(@xx, yy);
+                }; pB_ReadDLCs.Increment(1);
+                if (!drumsvocals)
+                {
+                    var xx = Path.Combine(AppWDg, c("dlcm_SoX"));
+                    if (!File.Exists(xx)) { ErrorWindow frm1 = new ErrorWindow("Install SoX audio utility comamnd line.", c("dlcm_SoX_www"), c("dlcm_SoX_www"), false, false, true, "", "", "", false); frm1.ShowDialog(); return; }
+                    var yy = " -m \"" + drums + "\" \"" + vocals + "\" \"" + Path.GetDirectoryName(drums) + "\\drumsvocals.wav" + "\"";
+                    var tst = "2/13" + yy; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    StartProcesss(@xx, yy);
+                }; pB_ReadDLCs.Increment(1);
+                if (!otherbass)
+                {
+                    var xx = Path.Combine(AppWDg, c("dlcm_SoX"));
+                    if (!File.Exists(xx)) { ErrorWindow frm1 = new ErrorWindow("Install SoX audio utility comamnd line.", c("dlcm_SoX_www"), c("dlcm_SoX_www"), false, false, true, "", "", "", false); frm1.ShowDialog(); return; }
+                    var yy = " -m \"" + guitar + "\" \"" + bass + "\" \"" + Path.GetDirectoryName(drums) + "\\otherbass.wav" + "\"";
+                    var tst = "3/13" + yy; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    StartProcesss(@xx, yy);
+                }; pB_ReadDLCs.Increment(1);
+                if (!otherdrumsvocals)
+                {
+                    var xx = Path.Combine(AppWDg, c("dlcm_SoX"));
+                    if (!File.Exists(xx)) { ErrorWindow frm1 = new ErrorWindow("Install SoX audio utility comamnd line.", c("dlcm_SoX_www"), c("dlcm_SoX_www"), false, false, true, "", "", "", false); frm1.ShowDialog(); return; }
+                    var yy = " -m \"" + Path.GetDirectoryName(vocals) + "\\otherdrums.wav\" \"" + vocals + "\" \"" + Path.GetDirectoryName(vocals) + "\\otherdrumsvocals.wav" + "\"";
+                    var tst = "4/13" + yy; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    StartProcesss(@xx, yy);
+                }; pB_ReadDLCs.Increment(1);
+                if (!otherbassvocals)
+                {
+                    var xx = Path.Combine(AppWDg, c("dlcm_SoX"));
+                    if (!File.Exists(xx)) { ErrorWindow frm1 = new ErrorWindow("Install SoX audio utility comamnd line.", c("dlcm_SoX_www"), c("dlcm_SoX_www"), false, false, true, "", "", "", false); frm1.ShowDialog(); return; }
+                    var yy = " -m \"" + Path.GetDirectoryName(vocals) + "\\otherbass.wav\" \"" + vocals + "\" \"" + Path.GetDirectoryName(vocals) + "\\otherbassvocals.wav" + "\"";
+                    var tst = "5/13" + yy; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    StartProcesss(@xx, yy);
+                }; pB_ReadDLCs.Increment(1);
+                if (!bassdrums)
+                {
+                    var xx = Path.Combine(AppWDg, c("dlcm_SoX"));
+                    if (!File.Exists(xx)) { ErrorWindow frm1 = new ErrorWindow("Install SoX audio utility comamnd line.", c("dlcm_SoX_www"), c("dlcm_SoX_www"), false, false, true, "", "", "", false); frm1.ShowDialog(); return; }
+                    var yy = " -m \"" + Path.GetDirectoryName(vocals) + "\\bass.wav\" \"" + drums + "\" \"" + Path.GetDirectoryName(drums) + "\\bassdrums.wav" + "\"";
+                    var tst = "6/13" + yy; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    StartProcesss(@xx, yy);
+                }; pB_ReadDLCs.Increment(1);
+                if (!bassdrumsvocals)
+                {
+                    var xx = Path.Combine(AppWDg, c("dlcm_SoX"));
+                    if (!File.Exists(xx)) { ErrorWindow frm1 = new ErrorWindow("Install SoX audio utility comamnd line.", c("dlcm_SoX_www"), c("dlcm_SoX_www"), false, false, true, "", "", "", false); frm1.ShowDialog(); return; }
+                    var yy = " -m \"" + Path.GetDirectoryName(vocals) + "\\bassdrums.wav\" \"" + vocals + "\" \"" + Path.GetDirectoryName(vocals) + "\\bassdrumsvocals.wav" + "\"";
+                    var tst = "7/13" + yy; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    StartProcesss(@xx, yy);
+                }; pB_ReadDLCs.Increment(1);
+                if (!otherbassdrums)
+                {
+                    var xx = Path.Combine(AppWDg, c("dlcm_SoX"));
+                    if (!File.Exists(xx)) { ErrorWindow frm1 = new ErrorWindow("Install SoX audio utility comamnd line.", c("dlcm_SoX_www"), c("dlcm_SoX_www"), false, false, true, "", "", "", false); frm1.ShowDialog(); return; }
+                    var yy = " -m \"" + Path.GetDirectoryName(vocals) + "\\otherdrums.wav\" \"" + bass + "\" \"" + Path.GetDirectoryName(bass) + "\\otherbassdrums.wav" + "\"";
+                    var tst = "8/13" + yy; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    StartProcesss(@xx, yy);
+                }; pB_ReadDLCs.Increment(1);
+                if (!bassvocals)
+                {
+                    var xx = Path.Combine(AppWDg, c("dlcm_SoX"));
+                    if (!File.Exists(xx)) { ErrorWindow frm1 = new ErrorWindow("Install SoX audio utility comamnd line.", c("dlcm_SoX_www"), c("dlcm_SoX_www"), false, false, true, "", "", "", false); frm1.ShowDialog(); return; }
+                    var yy = " -m \"" + Path.GetDirectoryName(vocals) + "\\bass.wav\" \"" + vocals + "\" \"" + Path.GetDirectoryName(bass) + "\\bassvocals.wav" + "\"";
+                    var tst = "9/13" + yy; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    StartProcesss(@xx, yy);
+                }; pB_ReadDLCs.Increment(1);
+                if (!rhythm && File.Exists(Path.GetDirectoryName(vocals) + "\\rhythm.wav\""))
+                {
+                    var xx = Path.Combine(AppWDg, c("dlcm_SoX"));
+                    if (!File.Exists(xx)) { ErrorWindow frm1 = new ErrorWindow("Install SoX audio utility comamnd line.", c("dlcm_SoX_www"), c("dlcm_SoX_www"), false, false, true, "", "", "", false); frm1.ShowDialog(); return; }
+                    var yy = " -m \"" + Path.GetDirectoryName(vocals) + "\\bassdrumsvocals.wav\" \"" + Path.GetDirectoryName(vocals) + "\\rhythm.wav\"" + " \"" + Path.GetDirectoryName(bass) + "\\rhythmbassdrumsvocals.wav" + "\"";
+                    var tst = "10/13" + yy; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    StartProcesss(@xx, yy);
+                }; pB_ReadDLCs.Increment(1);
+                if (!lead && File.Exists(Path.GetDirectoryName(vocals) + "\\lead.wav\""))
+                {
+                    var xx = Path.Combine(AppWDg, c("dlcm_SoX"));
+                    if (!File.Exists(xx)) { ErrorWindow frm1 = new ErrorWindow("Install SoX audio utility comamnd line.", c("dlcm_SoX_www"), c("dlcm_SoX_www"), false, false, true, "", "", "", false); frm1.ShowDialog(); return; }
+                    var yy = " -m \"" + Path.GetDirectoryName(vocals) + "\\bassdrumsvocals.wav\" \"" + Path.GetDirectoryName(vocals) + "\\lead.wav\"" + " \"" + Path.GetDirectoryName(bass) + "\\leadbassdrumsvocals.wav" + "\"";
+                    var tst = "11/13" + yy; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+                    StartProcesss(@xx, yy);
+                }; pB_ReadDLCs.Increment(1);
+                audio = Directory.GetFiles(temppath, "*.wav", System.IO.SearchOption.AllDirectories);
+                var l = audio.Length;
+
+                DialogResult result1 = DialogResult.No; //var v = "";
+                v = "";
+                foreach (var wav in audio)
+                {
+                    if (wav.Contains("\\bass.wav") && (!File.Exists(wav.Replace(".wav", ".ogg")) || !File.Exists(wav.Replace(".wav", ".wem"))))//1
+                        v += "Only Bass, ";
+                    else if (wav.Contains("\\drums.wav") && (!File.Exists(wav.Replace(".wav", ".ogg")) || !File.Exists(wav.Replace(".wav", ".wem"))))//2
+                        v += "Only Drums, ";
+                    else if (wav.Contains("\\instrumental.wav") && (!File.Exists(wav.Replace(".wav", ".ogg")) || !File.Exists(wav.Replace(".wav", ".wem")))) //3same as novocal?
+                        v += "(Only BackTrack), ";
+                    else if (wav.Contains("\\other.wav") && (!File.Exists(wav.Replace(".wav", ".ogg")) || !File.Exists(wav.Replace(".wav", ".wem"))))//4
+                        v += "Only Guitars, ";
+                    else if (wav.Contains("\\vocals.wav") && (!File.Exists(wav.Replace(".wav", ".ogg")) || !File.Exists(wav.Replace(".wav", ".wem"))))//5
+                        v += "Only Vocal, ";
+                    else if (wav.Contains("otherdrumsvocals.wav") && (!File.Exists(wav.Replace(".wav", ".ogg")) || !File.Exists(wav.Replace(".wav", ".wem"))))//6
+                        v += "No Bass, ";
+                    else if (wav.Contains("otherbassvocals.wav") && (!File.Exists(wav.Replace(".wav", ".ogg")) || !File.Exists(wav.Replace(".wav", ".wem"))))//7
+                        v += "No Drums, ";
+                    else if (wav.Contains("bassdrumsvocals.wav") && (!File.Exists(wav.Replace(".wav", ".ogg")) || !File.Exists(wav.Replace(".wav", ".wem"))))//8
+                        v += "No Guitar, ";
+                    else if (wav.Contains("otherbassdrums.wav") && (!File.Exists(wav.Replace(".wav", ".ogg")) || !File.Exists(wav.Replace(".wav", ".wem")))) //9same as instrumental?
+                        v += "No Vocal, ";
+                    else if (wav.Contains("otherbass.wav") && (!File.Exists(wav.Replace(".wav", ".ogg")) || !File.Exists(wav.Replace(".wav", ".wem"))))//10
+                        v += "(No Drums No Vocal), ";
+                    else if (wav.Contains("bassdrums.wav") && (!File.Exists(wav.Replace(".wav", ".ogg")) || !File.Exists(wav.Replace(".wav", ".wem"))))//11
+                        v += "(No Guitar No Vocal), ";
+                    else if (wav.Contains("otherdrums.wav") && (!File.Exists(wav.Replace(".wav", ".ogg")) || !File.Exists(wav.Replace(".wav", ".wem"))))//12
+                        v += "(No Bass No Vocal), ";
+                    else if (wav.Contains("drumsvocals.wav") && (!File.Exists(wav.Replace(".wav", ".ogg")) || !File.Exists(wav.Replace(".wav", ".wem"))))//14
+                        v += "No Guitars, ";
+                    else if (wav.Contains("bassvocals.wav") && (!File.Exists(wav.Replace(".wav", ".ogg")) || !File.Exists(wav.Replace(".wav", ".wem"))))//15
+                        v += "(No Guitar No Drums), ";
+                    else if (wav.Contains("lead.wav") && (!File.Exists(wav.Replace(".wav", ".ogg")) || !File.Exists(wav.Replace(".wav", ".wem"))))//16
+                        v += "Only Lead, ";
+                    else if (wav.Contains("rhythm.wav") && (!File.Exists(wav.Replace(".wav", ".ogg")) || !File.Exists(wav.Replace(".wav", ".wem"))))//17
+                        v += "(Only Rhythm), ";
+                    else if (wav.Contains("rhythmbassdrumsvocals.wav") && (!File.Exists(wav.Replace(".wav", ".ogg")) || !File.Exists(wav.Replace(".wav", ".wem"))))//18
+                        v += "No Lead, ";
+                    else if (wav.Contains("leadbassdrumsvocals.wav") && (!File.Exists(wav.Replace(".wav", ".ogg")) || !File.Exists(wav.Replace(".wav", ".wem"))))//19
+                        v += "(No Rhythm), ";
+                    else if (!(File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem"))))
+                        MessageBox.Show("track unidentified !!\n\nplease add: bass.wav, drums.wav, instrumental.wav, other.wav, vocals.wav to filename, then reimport.\n\n" + wav);
+                }
+
+                var b = "";
+                foreach (var wav in audio)
+                {
+                    if (wav.Contains("\\bass.wav") && (File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem"))))//1
+                        b += "Only Bass, ";
+                    else if (wav.Contains("\\drums.wav") && (File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem"))))//2
+                        b += "Only Drums, ";
+                    else if (wav.Contains("\\instrumental.wav") && (File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem")))) //3same as novocal?
+                        b += "(Only BackTrack), ";
+                    else if (wav.Contains("\\other.wav") && (File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem"))))//4
+                        b += "Only Guitars, ";
+                    else if (wav.Contains("\\vocals.wav") && (File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem"))))//5
+                        b += "Only Vocal, ";
+                    else if (wav.Contains("otherdrumsvocals.wav") && (File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem"))))//6
+                        b += "No Bass, ";
+                    else if (wav.Contains("otherbassvocals.wav") && (File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem"))))//7
+                        b += "No Drums, ";
+                    else if (wav.Contains("bassdrumsvocals.wav") && (File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem"))))//8
+                        b += "No Guitar, ";
+                    else if (wav.Contains("otherbassdrums.wav") && (File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem")))) //9same as instrumental?
+                        b += "No Vocal, ";
+                    else if (wav.Contains("otherbass.wav") && (File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem"))))//10
+                        b += "(No Drums No Vocal), ";
+                    else if (wav.Contains("bassdrums.wav") && (File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem"))))//11
+                        b += "(No Guitar No Vocal), ";
+                    else if (wav.Contains("otherdrums.wav") && (File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem"))))//12
+                        b += "(No Bass No Vocal), ";
+                    else if (wav.Contains("drumsvocals.wav") && (File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem"))))//14
+                        b += "No Guitars, ";
+                    else if (wav.Contains("bassvocals.wav") && (File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem"))))//15
+                        b += "(No Guitar No Drums), ";
+                    else if (wav.Contains("lead.wav") && (File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem"))))//16
+                        b += "Only Lead, ";
+                    else if (wav.Contains("rhythm.wav") && (File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem"))))//17
+                        b += "(Only Rhythm), ";
+                    else if (wav.Contains("rhythmbassdrumsvocals.wav") && (File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem"))))//18
+                        b += "No Lead, ";
+                    else if (wav.Contains("leadbassdrumsvocals.wav") && (File.Exists(wav.Replace(".wav", ".ogg")) || File.Exists(wav.Replace(".wav", ".wem"))))//19
+                        b += "(No Rhythm), ";
+                }
+
+                if (v != "" || b != "")
+                {
+                    result1 = MessageBox.Show((v == "" ? "" : " Do you want to convert? existing wav-s to OGG/WEM \n\t" + v.Replace(", ", "\n\t") + "\n ")
+                        + (b == "" ? "" : "and Also (Yes) Overrite: \n\t" + b.Replace(", ", "\n\t") + "\n") + "in: \n\t" + txt_SongFolder.Text + "\\multitracks\\"
+                        + "\n(Cancel) or Stop the Import/Conversion", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                    if (result1 == DialogResult.Cancel) return;
+                }
+
+                pB_ReadDLCs.Value = 0; int i = 0; var t = 0;
+                foreach (var wav in audio)
+                {
+                    pB_ReadDLCs.Step = 1;
+                    pB_ReadDLCs.Maximum = l; pB_ReadDLCs.Value = i;
+                    v = ""; pB_ReadDLCs.Increment(1); i++;
+                    if (wav.Contains("\\bass.wav"))//1
                         v = "Only Bass";
-                    else if (wav.Contains("drums"))
+                    else if (wav.Contains("\\drums.wav"))//2
                         v = "Only Drums";
-                    else if (wav.Contains("instrumental"))
+                    else if (wav.Contains("\\instrumental.wav")) //3same as novocal?
                         v = "(Only BackTrack)";
-                    else if (wav.Contains("other"))
-                        v = "(No Drums No Vocal)";
-                    else if (wav.Contains("vocals"))
+                    else if (wav.Contains("\\other.wav"))//4
+                        v = "Only Guitars";
+                    else if (wav.Contains("\\vocals.wav"))//5
                         v = "Only Vocal";
-                    else MessageBox.Show("track unidentified !!\n\nplease add: bass, drums, instrumental, other, vocals to title, then reimport.\n\n" + wav);
+                    else if (wav.Contains("otherdrumsvocals.wav"))//6
+                        v = "No Bass";
+                    else if (wav.Contains("otherbassvocals.wav"))//7
+                        v = "No Drums";
+                    else if (wav.Contains("bassdrumsvocals.wav"))//8
+                        v = "No Guitar";
+                    else if (wav.Contains("otherbassdrums.wav")) //9same as instrumental?
+                        v = "No Vocal";
+                    else if (wav.Contains("otherbass.wav"))//10
+                        v = "(No Drums No Vocal)";
+                    else if (wav.Contains("bassdrums.wav"))//11
+                        v = "(No Guitar No Vocal)";
+                    else if (wav.Contains("otherdrums.wav"))//12
+                        v = "(No Bass No Vocal)";
+                    else if (wav.Contains("drumsvocals.wav"))//14
+                        v = "No Guitars";
+                    else if (wav.Contains("bassvocals.wav"))//15
+                        v = "(No Guitar No Drums)";
+                    else if (wav.Contains("lead.wav"))//16
+                        v = "Only Lead";
+                    else if (wav.Contains("rhythm.wav"))//17
+                        v = "(Only Rhythm)";
+                    else if (wav.Contains("rhythmbassdrumsvocals.wav"))//18
+                        v = "No Lead";
+                    else if (wav.Contains("leadbassdrumsvocals.wav"))//19
+                        v = "(No Rhythm)";
+                    else MessageBox.Show("track unidentified !!\n\nplease add: bass.wav, drums.wav, instrumental.wav, other.wav, vocals.wav to filename, then reimport.\n\n" + wav);
+
                     if (v != "")
                     {
-                        DeleteFromDB("Groups", "DELETE * FROM Groups WHERE Type=\"AudioAlternative\" AND CDLC_ID=\"" + txt_ID.Text + "\" AND Comments =\"" + wav + "\"", cnb, cnc);
+                        var tst = (12 + i) + "/" + (13 + l) + " Check audio: " + v; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
+                        var ogg = !checkaudioifreadable(txt_SongFolder.Text + "\\multitracks\\" + Path.GetFileName(wav.Replace(".wav", ".ogg")), AppWD, timestamp);
+                        var wem = !checkaudioifreadable(txt_SongFolder.Text + "\\multitracks\\" + Path.GetFileName(wav.Replace(".wav", ".wem")), AppWD, timestamp);
+                        if (!ogg || !wem || result1 == DialogResult.Yes)
+                        {
+                            DeleteFromDB("Groups", "DELETE * FROM Groups WHERE Type=\"AudioAlternative\" AND CDLC_ID=\"" + txt_ID.Text + "\" AND Comments =\"" + wav + "\"", cnb, cnc);
+                            if (File.Exists(txt_SongFolder.Text + "\\multitracks\\" + Path.GetFileName(wav.Replace(".wav", ".ogg"))))
+                                File.Delete(txt_SongFolder.Text + "\\multitracks\\" + Path.GetFileName(wav.Replace(".wav", ".ogg")));
+                            if (File.Exists(txt_SongFolder.Text + "\\multitracks\\" + Path.GetFileName(wav.Replace(".wav", ".wem"))))
+                                File.Delete(txt_SongFolder.Text + "\\multitracks\\" + Path.GetFileName(wav.Replace(".wav", ".wem")));
+                        }
+                        else if (result1 == DialogResult.No) { continue; t++; }
+
                         var insertcmdd = "CDLC_ID, Groupz, Type, Date_Added, Comments";
                         var insertvalues = "\"" + txt_ID.Text + "\", \"" + v + "\", \"AudioAlternative\", \"" + DateTime.Now.ToString("yyyyMMdd HHmmssfff") + "\",\"" + wav + "\"";
-                        InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0, cnc);
+                        tst = (12 + i) + "/" + (13 + l) + " convert and copy"; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+
                         if (!Directory.Exists(txt_SongFolder.Text + "\\multitracks\\")) Directory.CreateDirectory(txt_SongFolder.Text + "\\multitracks\\");
                         int audioQuality = 4;
                         Wwise.Wav2Wem(wav, wav.Replace(".wav", ".wem"), audioQuality);
-                        File.Copy(wav.Replace(".wav", ".wem"), txt_SongFolder.Text + "\\multitracks\\" + Path.GetFileName(wav.Replace(".wav", ".wem")), true);
-                        UtilitiesFunctions.Wav2Ogg(wav, wav.Replace(".wav", ".ogg"), audioQuality); // 4
-                        File.Copy(wav.Replace(".wav", ".ogg"), txt_SongFolder.Text + "\\multitracks\\" + Path.GetFileName(wav.Replace(".wav", ".ogg")), true);
-                        chbx_MultiTrack.Checked = true;
+                        if (!checkaudioifreadable(wav.Replace(".wav", ".wem"), AppWD, timestamp))
+                        {
+                            File.Copy(wav.Replace(".wav", ".wem"), txt_SongFolder.Text + "\\multitracks\\" + Path.GetFileName(wav.Replace(".wav", ".wem")), true);
+                            UtilitiesFunctions.Wav2Ogg(wav, wav.Replace(".wav", ".ogg"), audioQuality); // 4
+                            File.Copy(wav.Replace(".wav", ".ogg"), txt_SongFolder.Text + "\\multitracks\\" + Path.GetFileName(wav.Replace(".wav", ".ogg")), true);
+                            InsertIntoDBwValues("Groups", insertcmdd, insertvalues, cnb, 0, cnc);
+                            chbx_MultiTrack.Checked = true;
+                            chbx_AI_TrackAvail.Checked = true;
+                        }
+                        else
+                            continue;
+                        t++;
                     }
                 }
+
+                if (t == l) MessageBox.Show("bass, drums, instrumental, other, vocals and Combos-of-some copied");
+                else MessageBox.Show("incomplete multitrack copy, at conv, try again: " + t + "/" + l + " copied");
+                if (t > 1) { chbx_AlternateAvail.Checked = true; }
+                AddAlternativeAudioTracksAvailability(txt_ID.Text);
+                //clean TEmplate folders as now uniquie to each conversion
+                DeleteTempWwiseTemplateFolder(AppWD);
             }
         }
 
@@ -8595,18 +9613,21 @@ namespace RocksmithToolkitGUI.DLCManager
             SongRecord = GetRecord_s(cmd, cnb, cnc);
             pB_ReadDLCs.Maximum = SongRecord[0].NoRec.ToInt32();
             pB_ReadDLCs.Value = 0;
-            var tst = "Records to pass through to rebuild some individual atributes" + SongRecord[0].NoRec.ToInt32(); timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
+            var tst = "Records to pass through to rebuild some individual attributes" + SongRecord[0].NoRec.ToInt32(); timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
             pB_ReadDLCs.Value = 0; pB_ReadDLCs.Step = 1;
             pB_ReadDLCs.Maximum = SongRecord[0].NoRec.ToInt32();
-            tabControl.SelectedIndex = 0;
+            tabControl.SelectedIndex = 0; var main = 0; var arrang = 0;
+            DataSet dgr = new DataSet(); arrang++;
+
+            //Clear existing attributes
+            if (chbx_RebuildField.Text.Contains("(Arrangements)")) dgr = UpdateDB("Arrangements", "UPDATE Arrangements SET " + chbx_RebuildField.Text.Substring(0, chbx_RebuildField.Text.IndexOf("(") - 1) + "=\"\"", cnb, cnc) ;
+            if (chbx_RebuildField.Text.Contains("(Main)")) dgr = UpdateDB("Main", "UPDATE Main SET " + chbx_RebuildField.Text.Substring(0, chbx_RebuildField.Text.IndexOf("(") - 1) + "=\"\"", cnb, cnc);
+
             for (var h = 0; h < SongRecord[0].NoRec.ToInt32(); h++)
             {
                 pB_ReadDLCs.Value++;
-                //var Is_MultiTrack = SongRecord[h].Is_Multitrack; var MultiTrack_Version = SongRecord[h].MultiTrack_Version;
                 var changed = "";
                 var sel = "UPDATE Main SET ";
-                //if (SongRecord[h].Artist != Artist) { sel += "Artist=\"" + Artist + "\", Artist_Sort=\"" + Artist + "\", "; changed += "\nArtist=\"" + SongRecord[h].Artist + " -> " + Artist; }
-
 
                 //check Arrangements
                 var sect = "";
@@ -8624,6 +9645,8 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (chbx_RebuildField.Text.Contains("Sections")) sect = GetSections(ms2);
                     if (sect != "" && !sel.Contains("Has_Sections") && chbx_RebuildField.Text.Contains("Sections")) sel += "Has_Sections=\"Yes\", ";
                     if (sect != "" && !arr.Contains("Has_Sections") && chbx_RebuildField.Text.Contains("Sections")) arr += "Sections=\"Yes\", ";
+                    if (!sel.Contains("Alternate") && GetHasAlternate(ms2) && chbx_RebuildField.Text.Contains("Alternate") && chbx_RebuildField.Text.Contains("(Arrangements)")) arr += "Alternate=\"Yes\", ";
+                    if (!sel.Contains("Has_Alternate_Track") && GetHasAlternate(ms2) && chbx_RebuildField.Text.Contains("Has_Alternate_Track") && chbx_RebuildField.Text.Contains("(Main)")) sel += "Has_Alternate_Track=\"Yes\", ";
                     if (!sel.Contains("A440TunningFrecv") && chbx_RebuildField.Text.Contains("A440TunningFrecv") && chbx_RebuildField.Text.Contains("(Main)"))
                         sel += "A440TunningFrecv=\"" + GetTuningFrecv(ms2, false) + "\", ";
                     if (!arr.Contains("A440TunningFrecv") && chbx_RebuildField.Text.Contains("A440TunningFrecv") && chbx_RebuildField.Text.Contains("(Arrangements)"))
@@ -8632,8 +9655,8 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (chbx_RebuildField.Text.Contains("(Arrangements)") && arr.Contains("="))
                     {
                         arr += " WHERE ID=" + ID;
-                        DataSet dgr = new DataSet();
-                        dgr = UpdateDB("Arrangements", arr.Replace(", WHERE", " WHERE").Replace(",  WHERE", " WHERE") + ";", cnb, cnc);
+                        DataSet dfr = new DataSet(); arrang++;
+                        dfr = UpdateDB("Arrangements", arr.Replace(", WHERE", " WHERE").Replace(",  WHERE", " WHERE") + ";", cnb, cnc);
                         tst = SongRecord[h].ID + "/" + h + "/" + SongRecord[0].NoRec.ToInt32() + " - " + ms2; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
 
                     }
@@ -8642,13 +9665,14 @@ namespace RocksmithToolkitGUI.DLCManager
                 if (chbx_RebuildField.Text.Contains("(Main)") && sel.Contains("="))
                 {
                     sel += " WHERE ID=" + SongRecord[h].ID;
-                    DataSet ddr = new DataSet();
+                    DataSet ddr = new DataSet(); main++;
                     ddr = UpdateDB("Main", sel.Replace(", WHERE", " WHERE").Replace(",  WHERE", " WHERE") + ";", cnb, cnc);
                     tst = SongRecord[h].ID + "/" + h + "/" + SongRecord[0].NoRec.ToInt32() + " - " + SongRecord[h].Artist + " - " + SongRecord[h].Song_Title; timestamp = UpdateLog(timestamp, tst, true, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                 }
                 //else if (chbx_RebuildField.Text.Contains("(Arrangements)")) ddr = UpdateDB("Arrangements", arr.Replace(", WHERE", " WHERE").Replace(",  WHERE", " WHERE") + ";", cnb, cnc);
                 //}
             }
+            if (main > 0 || arrang > 0) MessageBox.Show(chbx_RebuildField.Text.Contains("(Main)") ? "Main updated " + main + " for the " + chbx_RebuildField.Text + " flag" : "Arrangements updated " + arrang + " for the " + chbx_RebuildField.Text + " flag");
         }
 
         private void btn_JavaSite_Click(object sender, EventArgs e)
@@ -8705,127 +9729,752 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void chbx_A_IsUkulele_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsUkulele.Checked = chbx_A_IsUkulele.Checked ? false : true;
+            //chbx_A_IsUkulele.Checked = chbx_A_IsUkulele.Checked ? false : true;
         }
 
         private void chbx_A_IsGreatestHits_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsGreatestHits.Checked = chbx_A_IsGreatestHits.Checked ? false : true;
+            //chbx_A_IsGreatestHits.Checked = chbx_A_IsGreatestHits.Checked ? false : true;
         }
 
         private void chbx_A_IsMetalCover_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsMetalCover.Checked = chbx_A_IsMetalCover.Checked ? false : true;
+            //chbx_A_IsMetalCover.Checked = chbx_A_IsMetalCover.Checked ? false : true;
         }
 
         private void chbx_A_IsUncensored_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsUncensored.Checked = chbx_A_IsUncensored.Checked ? false : true;
+            //chbx_A_IsUncensored.Checked = chbx_A_IsUncensored.Checked ? false : true;
         }
 
         private void chbx_A_IsTVTheme_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsTVTheme.Checked = chbx_A_IsTVTheme.Checked ? false : true;
+            //chbx_A_IsTVTheme.Checked = chbx_A_IsTVTheme.Checked ? false : true;
         }
 
         private void chbx_A_IsMidi_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsMidi.Checked = chbx_A_IsMidi.Checked ? false : true;
+            //chbx_A_IsMidi.Checked = chbx_A_IsMidi.Checked ? false : true;
         }
 
         private void chbx_A_IsInstrumental_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsInstrumental.Checked = chbx_A_IsInstrumental.Checked ? false : true;
+            //chbx_A_IsInstrumental.Checked = chbx_A_IsInstrumental.Checked ? false : true;
         }
 
         private void chbx_A_IsMultiStrings_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsMultiStrings.Checked = chbx_A_IsMultiStrings.Checked ? false : true;
+            //chbx_A_IsMultiStrings.Checked = chbx_A_IsMultiStrings.Checked ? false : true;
         }
 
         private void chbx_A_IsDemo_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsDemo.Checked = chbx_A_IsDemo.Checked ? false : true;
+            //chbx_A_IsDemo.Checked = chbx_A_IsDemo.Checked ? false : true;
         }
 
         private void chbx_A_IsDeluxe_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsDeluxe.Checked = chbx_A_IsDeluxe.Checked ? false : true;
+            //chbx_A_IsDeluxe.Checked = chbx_A_IsDeluxe.Checked ? false : true;
         }
 
         private void chbx_A_IsCover_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsCover.Checked = chbx_A_IsCover.Checked ? false : true;
+            //chbx_A_IsCover.Checked = chbx_A_IsCover.Checked ? false : true;
         }
 
         private void chbx_IntheWorks_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsInTheWorks.Checked = chbx_A_IsInTheWorks.Checked ? false : true;
+            //chbx_A_IsInTheWorks.Checked = chbx_A_IsInTheWorks.Checked ? false : true;
         }
 
         private void chbx_A_HasFeaturing_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_HasFeaturing.Checked = chbx_A_HasFeaturing.Checked ? false : true;
+            //chbx_A_HasFeaturing.Checked = chbx_A_HasFeaturing.Checked ? false : true;
         }
 
         private void chbx_A_IsFullAlbum_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsFullAlbum.Checked = chbx_A_IsFullAlbum.Checked ? false : true;
+            //chbx_A_IsFullAlbum.Checked = chbx_A_IsFullAlbum.Checked ? false : true;
         }
 
         private void chbx_A_IsAcoustic_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsAcoustic.Checked = chbx_A_IsAcoustic.Checked ? false : true;
+            //chbx_A_IsAcoustic.Checked = chbx_A_IsAcoustic.Checked ? false : true;
         }
 
         private void chbx_A_IsSoundtrack_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsSoundtrack.Checked = chbx_A_IsSoundtrack.Checked ? false : true;
+            //chbx_A_IsSoundtrack.Checked = chbx_A_IsSoundtrack.Checked ? false : true;
         }
 
         private void chbx_A_IsSingle_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsSingle.Checked = chbx_A_IsSingle.Checked ? false : true;
+            //chbx_A_IsSingle.Checked = chbx_A_IsSingle.Checked ? false : true;
         }
 
         private void chbx_A_HasTrackNo_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_HasTrackNo.Checked = chbx_A_HasTrackNo.Checked ? false : true;
+            //chbx_A_HasTrackNo.Checked = chbx_A_HasTrackNo.Checked ? false : true;
         }
 
         private void chbx_A_IsRemastered_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsRemastered.Checked = chbx_A_IsRemastered.Checked ? false : true;
+            //chbx_A_IsRemastered.Checked = chbx_A_IsRemastered.Checked ? false : true;
         }
 
         private void chbx_A_IsRemix_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsRemix.Checked = chbx_A_IsRemix.Checked ? false : true;
+            //chbx_A_IsRemix.Checked = chbx_A_IsRemix.Checked ? false : true;
         }
 
         private void chbx_A_IsLive_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsLive.Checked = chbx_A_IsLive.Checked ? false : true;
+            //chbx_A_IsLive.Checked = chbx_A_IsLive.Checked ? false : true;
         }
 
         private void chbx_A_IsMedley_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsMedley.Checked = chbx_A_IsMedley.Checked ? false : true;
+            //chbx_A_IsMedley.Checked = chbx_A_IsMedley.Checked ? false : true;
         }
 
         private void chbx_A_IsEP_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsEP.Checked = chbx_A_IsEP.Checked ? false : true;
+            //chbx_A_IsEP.Checked = chbx_A_IsEP.Checked ? false : true;
         }
 
         private void chbx_A_IsKaraoke_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_A_IsKaraoke.Checked = chbx_A_IsKaraoke.Checked ? false : true;
+            //chbx_A_IsKaraoke.Checked = chbx_A_IsKaraoke.Checked ? false : true;
         }
 
         private void chbx_Capo_CheckedChanged(object sender, EventArgs e)
         {
-            chbx_Capo.Checked = chbx_Capo.Checked ? false : true;
+            //chbx_Capo.Checked = chbx_Capo.Checked ? false : true;
+        }
+
+        private void label24_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_Export2ASCII_Click(object sender, EventArgs e)
+        {
+            var txt = "";
+
+            //string array
+            //column 1 is instrument/track
+            //column 2 is time
+            //column 3 is fret
+            //0 is time
+            //1 is string
+            //2 is chord or notes
+            string[,,] nt0 = new string[10, 3000, 5];//consolidation of all other timings(0), incl, is it cord or note(4)
+            string[,,] nt1 = new string[10, 3000, 5];
+            string[,,] nt2 = new string[10, 3000, 5];
+            string[,,] nt3 = new string[10, 3000, 5];
+            string[,,] nt4 = new string[10, 3000, 5];
+            string[,,] nt5 = new string[10, 3000, 5];
+            string[,,] nt6 = new string[10, 3000, 5];
+            string[,] chords = new string[2000, 7];
+            string[,] arg = new string[10, 7];
+            float min = float.Parse("100");
+
+            bool superOrg = false; var i = databox.SelectedCells[0].RowIndex;
+            var xml = ""; var Folder_Name = databox.Rows[i].Cells["Folder_Name"].Value.ToString();
+
+            DataSet dbn = new DataSet(); dbn = SelectFromDB("Arrangements", "SELECT ArrangementType, XMLFilePath, JSONFilePath, RouteMask FROM Arrangements WHERE ArrangementType IN (\"Bass\",\"Guitar\") AND CDLC_ID=\"" + txt_ID.Text + "\"" + GetArrOfficSQLTxt(arrangoff), "", cnb, cnc);
+            var norec = dbn.Tables.Count < 1 ? 0 : dbn.Tables[0].Rows.Count;
+            var t = 1; float snglng = 0;
+            if (norec > 0)
+                for (int k = 0; k < norec; k++)
+                {
+                    xml = dbn.Tables[0].Rows[k][1].ToString();//add items
+                    var json = dbn.Tables[0].Rows[k][2].ToString();
+                    if (dbn.Tables[0].Rows[k][0].ToString().ToLower() != "bass" && dbn.Tables[0].Rows[k][0].ToString().ToLower() != "guitar") continue;
+
+                    Platform platform = Folder_Name.GetPlatform();
+                    var manifestFunctions = new ManifestFunctions(platform.version);
+                    Song2014 xmlContent = null;
+                    try
+                    {
+                        xmlContent = Song2014.LoadFromFile(xml);
+                        snglng = xmlContent.SongLength;
+
+
+                        platform.version = RocksmithToolkitLib.GameVersion.RS2014;
+                        if (manifestFunctions.GetMaxDifficulty(xmlContent) > 0)
+                        {  //Save a copy
+                            if (!File.Exists(xml + ".old8")) File.Copy(xml, xml + ".old8", false);
+                            else File.Copy(xml, xml + ".old8", true);
+                            if (!File.Exists(json + ".old8")) File.Copy(json, json + ".old8", false);
+                            else File.Copy(json, json + ".old8", true);
+                            xml = xml + ".old8";
+                            json = json + ".old8";
+                            RemoveDD(Folder_Name, chbx_Original.Checked ? "Yes" : "No", xml, platform, false, false, chbx_UseInternalDDRemovalLogic.Checked ? "Yes" : "No");
+                            xmlContent = Song2014.LoadFromFile(xml);
+                        }
+
+                        arg[k, 0] = dbn.Tables[0].Rows[k][0].ToString().ToLower();
+                        arg[k, 1] = dbn.Tables[0].Rows[k][3].ToString().ToLower();
+                        arg[k, 2] = xml;
+                        for (var n = 0; n < xmlContent.ChordTemplates.Length; n++)
+                        {
+                            if (xmlContent.ChordTemplates[n].Fret0 > -1) chords[n, 1] = xmlContent.ChordTemplates[n].Fret0.ToString();
+                            if (xmlContent.ChordTemplates[n].Fret1 > -1) chords[n, 2] = xmlContent.ChordTemplates[n].Fret1.ToString();
+                            if (xmlContent.ChordTemplates[n].Fret2 > -1) chords[n, 3] = xmlContent.ChordTemplates[n].Fret2.ToString();
+                            if (xmlContent.ChordTemplates[n].Fret3 > -1) chords[n, 4] = xmlContent.ChordTemplates[n].Fret3.ToString();
+                            if (xmlContent.ChordTemplates[n].Fret4 > -1) chords[n, 5] = xmlContent.ChordTemplates[n].Fret4.ToString();
+                            if (xmlContent.ChordTemplates[n].Fret5 > -1) chords[n, 6] = xmlContent.ChordTemplates[n].Fret5.ToString();
+                        }
+
+                        if (xmlContent.Levels[0].Chords.Length > 0)
+                            for (var m = 0; m < xmlContent.Levels[0].Chords.Length; m++)
+                            {
+                                if (chords[xmlContent.Levels[0].Chords[m].ChordId, 1] is not null) { nt0[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt0[k, t, 3] = "c"; nt1[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt1[k, t, 1] = chords[xmlContent.Levels[0].Chords[m].ChordId, 1]; }
+                                if (chords[xmlContent.Levels[0].Chords[m].ChordId, 2] is not null) { nt0[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt0[k, t, 3] = "c"; nt2[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt2[k, t, 1] = chords[xmlContent.Levels[0].Chords[m].ChordId, 2]; }
+                                if (chords[xmlContent.Levels[0].Chords[m].ChordId, 3] is not null) { nt0[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt0[k, t, 3] = "c"; nt3[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt3[k, t, 1] = chords[xmlContent.Levels[0].Chords[m].ChordId, 3]; }
+                                if (chords[xmlContent.Levels[0].Chords[m].ChordId, 4] is not null) { nt0[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt0[k, t, 3] = "c"; nt4[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt4[k, t, 1] = chords[xmlContent.Levels[0].Chords[m].ChordId, 4]; }
+                                if (chords[xmlContent.Levels[0].Chords[m].ChordId, 5] is not null) { nt0[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt0[k, t, 3] = "c"; nt5[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt5[k, t, 1] = chords[xmlContent.Levels[0].Chords[m].ChordId, 5]; }
+                                if (chords[xmlContent.Levels[0].Chords[m].ChordId, 6] is not null) { nt0[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt0[k, t, 3] = "c"; nt6[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt6[k, t, 1] = chords[xmlContent.Levels[0].Chords[m].ChordId, 6]; }
+                                t++;
+                            }
+                        if (xmlContent.Levels[0].Notes.Length > 0)
+                            for (var n = 0; n < xmlContent.Levels[0].Notes.Length; n++)
+                            {
+                                if (xmlContent.Levels[0].Notes[n].String == 0) { nt0[k, n, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt0[k, t, 3] = "n"; nt1[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt1[k, t, 1] = xmlContent.Levels[0].Notes[n].Fret.ToString(); }
+                                else if (xmlContent.Levels[0].Notes[n].String == 1) { nt0[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt0[k, t, 3] = "n"; nt2[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt2[k, t, 1] = xmlContent.Levels[0].Notes[n].Fret.ToString(); }
+                                else if (xmlContent.Levels[0].Notes[n].String == 2) { nt0[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt0[k, t, 3] = "n"; nt3[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt3[k, t, 1] = xmlContent.Levels[0].Notes[n].Fret.ToString(); }
+                                else if (xmlContent.Levels[0].Notes[n].String == 3) { nt0[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt0[k, t, 3] = "n"; nt4[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt4[k, t, 1] = xmlContent.Levels[0].Notes[n].Fret.ToString(); }
+                                else if (xmlContent.Levels[0].Notes[n].String == 4) { nt0[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt0[k, t, 3] = "n"; nt5[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt5[k, t, 1] = xmlContent.Levels[0].Notes[n].Fret.ToString(); }
+                                else if (xmlContent.Levels[0].Notes[n].String == 5) { nt0[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt0[k, t, 3] = "n"; nt6[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt6[k, t, 1] = xmlContent.Levels[0].Notes[n].Fret.ToString(); }
+                                t++;
+                            }
+
+                        //sort
+                        for (var n = 1; n <= xmlContent.Levels[0].Notes.Length + xmlContent.Levels[0].Chords.Length - 1; n++)
+                            for (var m = n + 1; m <= xmlContent.Levels[0].Notes.Length + xmlContent.Levels[0].Chords.Length; m++)
+                            {
+                                var timesn = nt0[k, n, 0];
+                                var timesm = nt0[k, m, 0];
+                                if (timesn is not null && timesm is not null)
+                                {
+                                    if (float.Parse(timesn) > float.Parse(timesm))
+                                    {
+                                        var z0 = nt0[k, n, 0]; nt0[k, n, 0] = nt0[k, m, 0]; nt1[k, m, 1] = z0;
+                                        var z1 = nt1[k, n, 1]; nt1[k, n, 1] = nt1[k, m, 1]; nt1[k, m, 1] = z1; var u1 = nt1[k, n, 0]; nt1[k, n, 0] = nt1[k, m, 0]; nt1[k, m, 0] = u1;
+                                        var z2 = nt2[k, n, 1]; nt2[k, n, 1] = nt2[k, m, 1]; nt2[k, m, 1] = z2; var u2 = nt2[k, n, 0]; nt2[k, n, 0] = nt2[k, m, 0]; nt2[k, m, 0] = u2;
+                                        var z3 = nt3[k, n, 1]; nt3[k, n, 1] = nt3[k, m, 1]; nt3[k, m, 1] = z3; var u3 = nt3[k, n, 0]; nt3[k, n, 0] = nt3[k, m, 0]; nt3[k, m, 0] = u3;
+                                        var z4 = nt4[k, n, 1]; nt4[k, n, 1] = nt4[k, m, 1]; nt4[k, m, 1] = z4; var u4 = nt4[k, n, 0]; nt4[k, n, 0] = nt4[k, m, 0]; nt4[k, m, 0] = u4;
+                                        var z5 = nt5[k, n, 1]; nt5[k, n, 1] = nt5[k, m, 1]; nt5[k, m, 1] = z5; var u5 = nt5[k, n, 0]; nt5[k, n, 0] = nt5[k, m, 0]; nt5[k, m, 0] = u5;
+                                        var z6 = nt6[k, n, 1]; nt6[k, n, 1] = nt6[k, m, 1]; nt6[k, m, 1] = z6; var u6 = nt6[k, n, 0]; nt6[k, n, 0] = nt6[k, m, 0]; nt6[k, m, 0] = u6;
+                                    }
+                                    else if (float.Parse(timesn) == float.Parse(timesm) && nt0[k, n, 3] == "c")
+                                    {
+                                        ;
+                                        //var z0 = nt0[k, n, 0]; nt0[k, n, 0] = nt0[k, m, 0]; nt1[k, m, 1] = z0;
+                                        //var z1 = nt1[k, n, 1]; nt1[k, n, 1] = nt1[k, m, 1]; nt1[k, m, 1] = z1; var u1 = nt1[k, n, 0]; nt1[k, n, 0] = nt1[k, m, 0]; nt1[k, m, 0] = u1;
+                                        //var z2 = nt2[k, n, 1]; nt2[k, n, 1] = nt2[k, m, 1]; nt2[k, m, 1] = z2; var u2 = nt2[k, n, 0]; nt2[k, n, 0] = nt2[k, m, 0]; nt2[k, m, 0] = u2;
+                                        //var z3 = nt3[k, n, 1]; nt3[k, n, 1] = nt3[k, m, 1]; nt3[k, m, 1] = z3; var u3 = nt3[k, n, 0]; nt3[k, n, 0] = nt3[k, m, 0]; nt3[k, m, 0] = u3;
+                                        //var z4 = nt4[k, n, 1]; nt4[k, n, 1] = nt4[k, m, 1]; nt4[k, m, 1] = z4; var u4 = nt4[k, n, 0]; nt4[k, n, 0] = nt4[k, m, 0]; nt4[k, m, 0] = u4;
+                                        //var z5 = nt5[k, n, 1]; nt5[k, n, 1] = nt5[k, m, 1]; nt5[k, m, 1] = z5; var u5 = nt5[k, n, 0]; nt5[k, n, 0] = nt5[k, m, 0]; nt5[k, m, 0] = u5;
+                                        //var z6 = nt6[k, n, 1]; nt6[k, n, 1] = nt6[k, m, 1]; nt6[k, m, 1] = z6; var u6 = nt6[k, n, 0]; nt6[k, n, 0] = nt6[k, m, 0]; nt6[k, m, 0] = u6;
+                                    }
+
+                                    else if (float.Parse(timesn) == float.Parse(timesm) && nt0[k, m, 3] == "c")
+                                    {
+                                        var z0 = nt0[k, n, 0]; nt0[k, n, 0] = nt0[k, m, 0]; nt0[k, m, 0] = z0;
+                                        var z1 = nt1[k, n, 1]; nt1[k, n, 1] = nt1[k, m, 1]; nt1[k, m, 1] = z1; var u1 = nt1[k, n, 0]; nt1[k, n, 0] = nt1[k, m, 0]; nt1[k, m, 0] = u1;
+                                        var z2 = nt2[k, n, 1]; nt2[k, n, 1] = nt2[k, m, 1]; nt2[k, m, 1] = z2; var u2 = nt2[k, n, 0]; nt2[k, n, 0] = nt2[k, m, 0]; nt2[k, m, 0] = u2;
+                                        var z3 = nt3[k, n, 1]; nt3[k, n, 1] = nt3[k, m, 1]; nt3[k, m, 1] = z3; var u3 = nt3[k, n, 0]; nt3[k, n, 0] = nt3[k, m, 0]; nt3[k, m, 0] = u3;
+                                        var z4 = nt4[k, n, 1]; nt4[k, n, 1] = nt4[k, m, 1]; nt4[k, m, 1] = z4; var u4 = nt4[k, n, 0]; nt4[k, n, 0] = nt4[k, m, 0]; nt4[k, m, 0] = u4;
+                                        var z5 = nt5[k, n, 1]; nt5[k, n, 1] = nt5[k, m, 1]; nt5[k, m, 1] = z5; var u5 = nt5[k, n, 0]; nt5[k, n, 0] = nt5[k, m, 0]; nt5[k, m, 0] = u5;
+                                        var z6 = nt6[k, n, 1]; nt6[k, n, 1] = nt6[k, m, 1]; nt6[k, m, 1] = z6; var u6 = nt6[k, n, 0]; nt6[k, n, 0] = nt6[k, m, 0]; nt6[k, m, 0] = u6;
+                                    }
+                                }
+                            }
+
+                        //try
+                        //get the smallest space between notes
+                        for (var n = 1; n <= t; n++)
+                        {
+                            var timesn1 = nt0[k, n, 0];
+                            var timesn2 = nt0[k, n + 1, 0];
+                            if (timesn1 is not null && timesn2 is not null)
+                                if (float.Parse(timesn1) >= 0 && float.Parse(timesn2) >= 0)
+                                    if (float.Parse(timesn2) - float.Parse(timesn1) > 0)
+                                    { if (float.Parse(timesn2) - float.Parse(timesn1) < min) min = float.Parse(timesn2) - float.Parse(timesn1); }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        var tsst = "Error at consolid nostes 4 quick display ..." + ex; UpdateLog(DateTime.Now, tsst, false, "", "", "", null, null);
+                    }
+                }
+            //add header: song name, tunning
+            txt = "Song Title: " + txt_Title.Text;
+            txt += "\nArtist: " + txt_Artist.Text;
+            txt += "\nAlbum: " + txt_Album.Text;
+            txt += "\nTuning: " + txt_Tuning.Text;
+            txt += btn_PitchShift.Enabled ? "\nDetuning with Digitec Pedal: " + toolTip1.GetToolTip(btn_PitchShift).Replace("\n", "\n\t\t\t") : "";
+            txt += "\nSpace between notes: " + min;
+            txt += "\nMarker: every 10s";
+            txt += "\nsong Lenght: " + snglng;
+            //add content of tracks
+            //with 10s tracker bar
+            //with track headers
+            txt += "\n"; float z = 0; var done = false;
+            for (int k = 0; k < norec; k++)
+            {
+                txt += "\n" + k + "/" + norec + " " + arg[k, 0].ToUpper() + " - " + arg[k, 1] + "\n";
+                z = 0; done = false; var u = 10;
+                do
+                {
+                    if (((z + min) / u) > 1)
+                    { txt += "|"; u += 10; }
+                    else txt += "-";
+                    z = z + min;
+                }
+                while (z <= snglng);
+
+                txt += parsenotes(nt1, min, t, snglng, k);
+                txt += parsenotes(nt2, min, t, snglng, k);
+                txt += parsenotes(nt3, min, t, snglng, k);
+                txt += parsenotes(nt4, min, t, snglng, k);
+                txt += parsenotes(nt5, min, t, snglng, k);
+                txt += parsenotes(nt6, min, t, snglng, k);
+                if (arg[k, 0].Contains(".old8")) File.Delete(arg[k, 1]);
+            }
+
+            ErrorWindow frm1 = new ErrorWindow(txt, "", "Quick Tab display of song-tracks & Notes", true, false, false, "OK", "", "", true);
+            frm1.ShowDialog();
+        }
+        private string parsenotes(string[,,] trackarray, float min, int notesno, float songlenght, int track)
+        {
+            float z = 0; var done = false; var txt = "\n";
+            for (int n = 1; n <= notesno; n++)
+            {
+                string time = trackarray[track, n, 0];
+                string note = trackarray[track, n, 1];
+                float nextn = 0;
+                do
+                {
+                    if (time is not null)
+                    {
+                        nextn = float.Parse(time);
+                        if (float.Parse(time) <= z + min) { txt += note; done = true; }
+                        else txt += "-";
+                    }
+                    else
+                    {
+                        if (nextn == 0) for (int m = n + 1; m <= notesno; m++) { if (trackarray[track, m, 0] is not null) { nextn = float.Parse(trackarray[track, m, 0]); n = m - 1; break; } }
+                        txt += "-";
+                    }
+                    if (z + min < nextn) z = z + min;/*!done+ min && */
+                    else
+                    {
+                        done = true; z = z - min;
+                    }
+                }
+                while (!done && z <= songlenght && z < nextn);
+                done = false;
+            }
+            return txt;
+        }
+
+        private void btn_EoFPath_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new OpenFileDialog())
+            {
+                fbd.Title = "Select the Editor on Fire file path";
+                fbd.Filter = "EoF file (*.eof)|*.eof";
+                fbd.Multiselect = false;
+                //fbd.FileOk += OpenFileDialog_FileLimit; // Event handler
+                if (fbd.ShowDialog() != DialogResult.OK)
+                    return;
+                txt_EoFPath.Text = fbd.FileName;
+            }
+        }
+
+        private void button4_Click_3(object sender, EventArgs e)
+        {
+            using (var fbd = new OpenFileDialog())
+            {
+                fbd.Title = "Select you GuitarPro5 file";
+                fbd.Filter = "GP-5 file (*.gp5)|*.gp5";
+                fbd.Multiselect = false;
+                //fbd.FileOk += OpenFileDialog_FileLimit; // Event handler
+                if (fbd.ShowDialog() != DialogResult.OK)
+                    return;
+                //if (fbd.FileName == Path.Combine(Path.GetDirectoryName(info.Arrangements[0].SongXml.File)))
+                string[] filePaths = fbd.FileNames;
+
+                foreach (var filePath in filePaths)
+                {
+                    var tard = "";
+                    if (txt_EoFPath.Text == "") tard = Path.GetDirectoryName(txt_SongFolder.Text);
+                    else tard = Path.GetDirectoryName(txt_EoFPath.Text);
+                    FileCopy(fbd.InitialDirectory + "\\" + filePath, Path.Combine(tard, fbd.FileName), true, 0, false);
+                    txt_BasedOn_GP.Text += fbd.InitialDirectory + "\\" + filePath; //Path.Combine(Path.GetDirectoryName(info.Arrangements[0].SongXml.File), Path.GetFileName(fbd.SelectedPath));
+                }
+            }
+        }
+
+        private void btn_SetSpotifySongID_Click(object sender, EventArgs e)
+        {
+            Process.Start("IExplore.exe", txt_SpotifySongID.Text);
+        }
+
+        private void btn_OpenEoF_Click(object sender, EventArgs e)
+        {
+            StartProcesss(txt_EoFPath.Text, null);
+        }
+
+        private void button1_Click_3(object sender, EventArgs e)
+        {
+            savesettings();
+            SaveRecord();
+        }
+
+        private void txt_CustomsForge_Link_TextChanged(object sender, EventArgs e)
+        {
+            if (txt_CustomsForge_Link.Text != "")
+            {
+                btn_CustomForge_Link.Enabled = true;
+                chbx_Found_on_CF.Checked = true;
+            }
+            else
+            {
+                btn_CustomForge_Link.Enabled = false;
+                chbx_Found_on_CF.Checked = false;
+            }
+        }
+
+        private void txt_SpotifySongID_TextChanged(object sender, EventArgs e)
+        {
+            if (txt_SpotifySongID.Text != "") btn_SetSpotifySongID.Enabled = true;
+            else btn_SetSpotifySongID.Enabled = false;
+        }
+
+        private void txt_EoFPath_TextChanged(object sender, EventArgs e)
+        {
+            if (txt_EoFPath.Text != "") btn_OpenEoF.Enabled = true;
+            else btn_OpenEoF.Enabled = false;
+        }
+
+        private void txt_BasedOn_Youtube_TextChanged(object sender, EventArgs e)
+        {
+            if (txt_BasedOn_Youtube.Text != "") btn_BasedOn_Youtube.Enabled = true;
+            else btn_BasedOn_Youtube.Enabled = false;
+        }
+
+        private void txt_BasedOn_GP_TextChanged(object sender, EventArgs e)
+        {
+            if (txt_BasedOn_GP.Text != "") btn_BasedOn_GP.Enabled = true;
+            else btn_BasedOn_GP.Enabled = false;
+        }
+
+        private void txt_BasedOn_CF_TextChanged(object sender, EventArgs e)
+        {
+            if (txt_BasedOn_CF.Text != "") btn_BasedOn_CF.Enabled = true;
+            else btn_BasedOn_CF.Enabled = false;
+        }
+
+        private void txt_BasedOn_Tabs_TextChanged(object sender, EventArgs e)
+        {
+            if (txt_BasedOn_Tabs.Text != "") btn_BasedOn_Tabs.Enabled = true;
+            else btn_BasedOn_Tabs.Enabled = false;
+        }
+
+        private void txt_filePathonself_TextChanged(object sender, EventArgs e)
+        {
+            if (txt_filePathonself.Text != "")
+            {
+                btn_filePathonself.Enabled = true;
+                chbx_Found_on_CAPIRO.Checked = true;
+
+            }
+            else
+            {
+                btn_filePathonself.Enabled = false;
+                chbx_Found_on_CAPIRO.Checked = false;
+            }
+        }
+
+        private void txt_YouTube_Link_TextChanged(object sender, EventArgs e)
+        {
+            if (txt_YouTube_Link.Text != "") btn_Youtube.Enabled = true;
+            else btn_Youtube.Enabled = false;
+        }
+
+        private void txt_Playthrough_TextChanged(object sender, EventArgs e)
+        {
+            if (txt_Playthrough.Text != "") btn_Playthrough.Enabled = true;
+            else btn_Playthrough.Enabled = false;
+        }
+
+        private void chbx_A_IsInTheWorks_CheckedChanged(object sender, EventArgs e)
+        {
+            //chbx_A_IsInTheWorks.Checked = chbx_A_IsInTheWorks.Checked ? false : true;
+        }
+
+        private void chbx_A_IsTVTheme_CheckedChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chbx_A_IsSoundtrack_CheckedChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chbx_A_CatchAllAtributte_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (chbx_A_CatchAllAtributte.Text == "")
+                return;
+            //Update Song / Main DB
+            var connection = new OleDbConnection("Provider=Microsoft." + c("dlcm_AccessDLLVersion") + ";Data Source=" + c("dlcm_DBFolder"));
+            var command = connection.CreateCommand();
+            command.CommandText = "UPDATE Main SET ";
+            command.CommandText += chbx_A_CatchAllAtributte.Text + " = @param1 ";
+            //command.CommandText += "Has_Alternate_Audio = @param146 ";
+            command.CommandText += " WHERE ID = " + txt_ID.Text;
+
+            command.Parameters.AddWithValue("@param1", "Yes");
+
+            UpdateDBbyExecuteNonQuery(command, connection, cnc);
+            System.Threading.Thread.Sleep(2000);
+            MainDBfields[] SongRecord = new MainDBfields[20000];
+            SongRecord = GetRecord_s("SELECT * FROM Main WHERE ID=" + txt_ID.Text, cnb, cnc);
+            SetAttributes(SongRecord);
+        }
+
+        //how many instruments (lead rhythm, tunnings)
+        //pick up sections
+        private void btn_Process_ASCII_Click(object sender, EventArgs e)
+        {
+            ErrorWindow frm1 = new ErrorWindow("Paste the ASCI tab you need to expand (e.g. mutiply as pe x2 indication, consolidate multiple lines into 1 long) / process"
+                , "", "Process / Expand ASCII tabulature to GuitarPro Import", true, false, false, "Import ASCII"
+                , "", "", false);
+            frm1.ShowDialog();
+            if (frm1.erorrfeedback is not null)
+            {
+                //clean a little ASCII
+                var t = frm1.erorrfeedback;
+                t = t.Replace("\t", " ");
+                t = t.Replace("  ", " ").Replace("  ", " ").Replace("  ", " ").Replace("  ", " ").Replace("  ", " ");
+                t = t.Replace("\n\n", "\n").Replace("\n\n", "\n").Replace("\n\n", "\n").Replace("\n\n", "\n").Replace("\n\n", "\n");
+                t = t.Replace("\n \n", "\n");
+                t += "\n" + "\n" + "\n" + "\n" + "\n" + "\n" + "\n" + "\n" + "\n";//add7+ end of line not to have multiplayer gen fail
+
+                string[] ag = t.Split('\n');
+
+                //further clean of any 2 lines of txt between notes should be consolid in 1
+                for (var i = 0; i < ag.Length; i++)
+                {
+                    if (ag[i].Contains("|") && (ag[i].IndexOf("|") == 0 || ag[i].IndexOf("|") > 3))
+                    {
+                        ag[i] = ag[i].Replace("|", "");
+                        if (!ag[i - 1].Contains("|"))
+                        {
+                            ag[i - 1] += ag[i];
+                            for (var j = i; j < ag.Length - 1; j++) ag[j] = ag[j + 1];
+                            ag[ag.Length - 1] = "";
+                        }
+                        i--;
+                    }
+                }
+
+                string[,] neck = new string[11, 4];
+                string[] instruments = GetInstruments(ag);
+                //row 0 sections
+                //row 1-10 strings
+                //column 1-3 content per instrument; atm hardcoded for 1 instrument per file/txt pasted
+                // ignore column 0 :)
+                var line = false; var strng = 0; var instr = 1; var cord = ""; var multipl = 0;
+                for (var i = 0; i < ag.Length; i++)
+                {
+                    cord = ag[i].Trim();
+                    //decide if a line with notes else continue
+                    if (ag[i].Contains("|"))
+                    {
+                        if (!line) line = true;
+                        //ToDo: GetInstrument(); atm hardcoded for 1 instrument per file/txt pasted
+                        strng = GetString(cord, instruments, instr);
+                        multipl = multipl > 0 ? multipl : GetMultiplier(ag, i, i + 6 - strng);
+                        for (var j = 0; j < multipl; j++)
+                            neck[strng, instr] += cord.Substring(cord.IndexOf("|") + 1).Replace("x" + multipl, "").Trim();
+                    }
+                    else
+                    {
+                        line = false; strng = 1;
+
+                        //Get multiplier
+                        multipl = GetMultiplier(ag, i + 1, i + 1 + 6 - strng);
+
+                        //Add section name
+                        if (i + 1 < ag.Length) if (ag[i + 1].Contains("|"))
+                                for (var j = 0; j < multipl; j++)
+                                {
+                                    neck[0, instr] += cord.PadRight(ag[i + 1].Replace("x" + multipl, "").Trim().Length - 2);/*- cord.Length*/
+                                    cord = cord.PadRight(ag[i].Trim().Length - 2);
+                                }
+                    }
+                }
+
+                var tt = "";
+                for (var i = 0; i < 10; i++) tt = instruments[0] + "|" + neck[0, instr] + "\n" + instruments[1] + "|" + neck[1, instr] + "\n" + instruments[2] + "|" + neck[2, instr] + "\n" + instruments[3] + "|" + neck[3, instr] + "\n" +
+                        instruments[4] + "|" + neck[4, instr] + "\n" + instruments[5] + "|" + neck[5, instr] + "\n" + instruments[6] + "|" + neck[6, instr] + "\n" + instruments[7] + "|" + neck[7, instr];
+                ErrorWindow frm2 = new ErrorWindow(tt, "", "Result of the Process / Expand ASCII tabulature to GuitarPro Import:", true, false, false, "Okey", "", "", false);
+                frm2.ShowDialog();
+            }
+
+        }
+
+        private int GetString(string cord, string[] instruments, int instr)
+        {
+            string strng = cord.Split('|')[0];
+
+            for (var i = 0; i < 10; i++)
+            {
+                if (instruments[i] == strng) return i;
+
+            }
+            return 0;
+        }
+
+        private string[] GetInstruments(string[] a)
+        {
+            string[] instrumets = new string[10];
+            for (var i = 0; i < 10; i++) instrumets[i] = "";
+            var line = false; var instr = 0; var cord = "";
+            for (var i = 0; i < a.Length; i++)
+            {
+                cord = a[i];//.ToLower();
+                //decide if a line with notes else continue
+                if (cord.Contains("|") && cord.IndexOf("|") >= 1 && cord.IndexOf("|") < 4)
+                {
+                    if (!line) line = true;
+                    instr++;
+                    if (instrumets[instr] != cord.Substring(0, cord.IndexOf("|")) && instrumets[instr] != "")//.ToLower() 
+                        MessageBox.Show("There are more tunings than planned: " + cord);
+                    if (cord.Substring(0, cord.IndexOf("|")) == "" || cord.Substring(0, cord.IndexOf("|")).Length > 3)
+                    {
+                        MessageBox.Show("There are some no-tuning/ empty-tuning strings: " + cord);
+                        a[i] = a[i].Replace("|", "");
+                        if (!a[i - 1].Contains("|"))
+                        {
+                            a[i - 1] += a[i];
+                            for (var j = i; j < a.Length - 1; j++) a[j] = a[j + 1];
+                            a[a.Length - 1] = "";
+                        }
+                        i--;
+                    }
+                    if (instr > 6)
+                        MessageBox.Show("There are more than 6 strings: " + cord);
+                    instrumets[instr] = cord.Substring(0, cord.IndexOf("|"));
+                }
+                else
+                {
+                    if (cord.IndexOf("|") >= 4)
+                    {
+                        MessageBox.Show("Tunning name is longer than 2 char: " + cord);
+                        a[i] = a[i].Replace("|", "");
+                        if (!a[i - 1].Contains("|"))
+                        {
+                            a[i - 1] += a[i];
+                            for (var j = i; j < a.Length - 1; j++) a[j] = a[j + 1];
+                            a[a.Length - 1] = "";
+                        }
+                        i--;
+                    }
+                    if (line && (cord.Contains("lead") || cord.Contains("rhythm") || cord.Contains("bass"))) MessageBox.Show("There are more instruments than planned");
+                    line = false;
+                    instr = 0;
+                }
+            }
+
+            for (var i = 0; i < 9; i++)
+                for (var j = i + 1; j < 10; j++) if (instrumets[i] == instrumets[j] && instrumets[i] != "" && instrumets[j] != "") MessageBox.Show("Some strings are in the same tunning"); ;
+
+            return instrumets;
+        }
+
+        private int GetMultiplier(string[] g, int j, int k)
+        {
+            var multpl = "1";
+
+            for (var i = j; i <= k; i++)
+            {
+                if (k >= g.Length) return 0;
+                var cord = g[i].ToLower();
+                if (cord.Contains("|"))
+                {
+                    if (cord.Contains("x2") || cord.Contains("x3") || cord.Contains("x4")
+                        || cord.Contains("x5") || cord.Contains("x6") || cord.Contains("x7") || cord.Contains("x8")
+                        || cord.Contains("x9") || cord.Contains("x10") || cord.Contains("x11") || cord.Contains("x12") || cord.Contains("x13")
+                        || cord.Contains("x14") || cord.Contains("x15") || cord.Contains("x16"))
+                    {
+                        multpl = cord.Substring(cord.Length - 3).Trim().Replace("x", "");
+                        if ((cord.IndexOf("x2") < cord.Length - 2 && cord.IndexOf("x2") > 0) || (cord.IndexOf("x3") < cord.Length - 2 && cord.IndexOf("x3") > 0) || (cord.IndexOf("x4") < cord.Length - 3 && cord.IndexOf("x4") > 0)
+                            || (cord.IndexOf("x5") < cord.Length - 2 && cord.IndexOf("x5") > 0) || (cord.IndexOf("x6") < cord.Length - 2 && cord.IndexOf("x6") > 0) || (cord.IndexOf("x7") < cord.Length - 2 && cord.IndexOf("x7") > 0) || (cord.IndexOf("x8") < cord.Length - 2 && cord.IndexOf("x8") > 0)
+                            || (cord.IndexOf("x9") < cord.Length - 2 && cord.IndexOf("x9") > 0) || (cord.IndexOf("x10") < cord.Length - 3 && cord.IndexOf("x10") > 0) || (cord.IndexOf("x11") < cord.Length - 3 && cord.IndexOf("11") > 0) || (cord.IndexOf("x12") < cord.Length - 3 && cord.IndexOf("x12") > 0) || (cord.IndexOf("x13") < cord.Length - 3 && cord.IndexOf("x13") > 0)
+                            || (cord.IndexOf("x14") < cord.Length - 3 && cord.IndexOf("x14") > 0) || (cord.IndexOf("x15") < cord.Length - 3 && cord.IndexOf("x15") > 0) || (cord.IndexOf("x16") < cord.Length - 3 && cord.IndexOf("x16") > 0))
+                            MessageBox.Show("xmultiplier prb not as last chords in the string notes. Please move them to a new row before importing: " + cord);
+                        break;
+                    }
+                }
+            }
+
+            try { return multpl.ToInt32(); }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        private void chbx_A_IsSlide_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chbx_A_IsAmateurCover_CheckedChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chbx_A_IsMetalCover_CheckedChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_Gen_Orig_Audio_Click(object sender, EventArgs e)
+        {
+            var tgst = "Extract original audio in case it has been modified by the DLCManager tool e.g. reducinf the compression bitrate"; UpdateLog(DateTime.Now, tgst, false, c("dlcm_TempPath"), null, "MainDB", null, null);
+            RocksmithToolkitLib.Platform SourcePlatform = (c("dlcm_TempPath") + "\\0_old\\" + txt_OldPath.Text).GetPlatform();
+            var unpackedDir = Packer.Unpack(c("dlcm_TempPath") + "\\0_old\\" + Path.GetFileName(txt_OldPath.Text), c("dlcm_TempPath") + "\\0_temp\\", SourcePlatform, true, true);
+            StartProcesss(c("dlcm_TempPath") + "\\0_temp\\", null);
+            MessageBox.Show("Audio files in the " + txt_OldPath.Text + " extracted folder inside: " + c("dlcm_TempPath") + "\\0_temp\\");
+        }
+
+        private void chbx_AltTrack_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chbx_A440_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_RemoveMultiTracks_Click(object sender, EventArgs e)
+        {
+            DeleteFromDB("Groups", "DELETE * FROM Groups WHERE Type=\"AudioAlternative\" AND CDLC_ID=\"" + txt_ID.Text + "\"", cnb, cnc);
+            DeleteDirectory(txt_SongFolder.Text + "\\multitracks", false);
+        }
+
+        private void chbx_A_IsMultiStrings_CheckedChanged_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

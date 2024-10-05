@@ -1,0 +1,10 @@
+
+<h2>Passthrough Mix</h2>
+<p>直通混音。决定插件是否要生成代表直通（非空间化）混音的附加 Audio Object。</p>
+<ul>
+<li><strong>When Audio Device supports it</strong>:在音频设备支持时。插件查询总线管线末端的 Audio Device 来决定是否生成直通混音。只有 Audio Device 支持，才会生成直通混音。</li>
+<li><strong>Always</strong>:始终。无论 Audio Device 是否支持，都会生成直通混音。</li>
+<li><strong>Never</strong>:从不。无论 Audio Device 是否支持，都不生成直通混音。</li>
+</ul>
+<p><strong>备注</strong>:若不生成直通混音，将转而在 Main Mix 中对原本要在 Passthrough Mix 中混音的 Audio Object 进行混音。</p>
+<p>Default value: When Audio Device supports it<br/></p>

@@ -105,7 +105,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button btn_RestoreXML;
         private System.Windows.Forms.ComboBox cmb_Sections;
-        private System.Windows.Forms.CheckedListBox chbx_Tracks;
+        private System.Windows.Forms.CheckedListBox cmb_Tracks;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.RichTextBox txt_Description;
@@ -160,5 +160,13 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Button btn_Reload;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.ComponentModel.IContainer components;
+        private System.Windows.Forms.Button btn_VisualDistrib;
+        private System.Windows.Forms.TextBox txt_Backup;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label25;
     }
 }

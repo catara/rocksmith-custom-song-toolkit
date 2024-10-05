@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-54,-4)">
+        <g id="General_Cut_Normal" transform="matrix(0.9,0,0,0.9,11.8,1.4)">
+            <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(1.11111,0,0,1.11111,46.8889,2.88889)">
+                <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+            </g>
+            <g transform="matrix(0.833333,0,0,0.833333,48,4)">
+                <rect x="0" y="0" width="24" height="24" style="fill:none;fill-rule:nonzero;"/>
+            </g>
+            <g transform="matrix(0.833333,0,0,0.833333,48,4)">
+                <circle cx="6" cy="18" r="2" style="fill:none;"/>
+            </g>
+            <g transform="matrix(0.833333,0,0,0.833333,48,4)">
+                <circle cx="6" cy="6" r="2" style="fill:none;"/>
+            </g>
+            <g transform="matrix(1.11111,0,0,1.11111,-13.1111,-1.55556)">
+                <path d="M63.493,16.007L61.993,14.507L60.73,15.77C60.355,15.598 59.942,15.5 59.5,15.5C57.842,15.5 56.5,16.843 56.5,18.5C56.5,20.158 57.842,21.5 59.5,21.5C61.157,21.5 62.5,20.158 62.5,18.5C62.5,18.058 62.402,17.645 62.23,17.27L63.493,16.007ZM59.5,20C58.675,20 58,19.333 58,18.5C58,17.668 58.675,17 59.5,17C60.325,17 61,17.668 61,18.5C61,19.333 60.325,20 59.5,20ZM62.427,10.533C62.6,10.158 62.5,9.943 62.5,9.5C62.5,7.843 61.157,6.5 59.5,6.5C57.842,6.5 56.5,7.843 56.5,9.5C56.5,11.158 57.842,12.5 59.5,12.5C59.942,12.5 60.355,12.403 60.73,12.23L69.5,21L72,21L72,20.106L62.427,10.533ZM59.5,11C58.675,11 58,10.333 58,9.5C58,8.668 58.675,8 59.5,8C60.325,8 61,8.668 61,9.5C61,10.333 60.325,11 59.5,11ZM69.19,7L64.838,11.352L66.676,13.19L72.002,7.864L72,7L69.19,7Z" style="fill:white;fill-rule:nonzero;"/>
+            </g>
+        </g>
+    </g>
+</svg>

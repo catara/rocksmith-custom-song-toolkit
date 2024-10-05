@@ -619,8 +619,8 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
             }
 
             //save additional metadata
-            packageData.ToolkitInfo.PackageComment = ConfigRepository.Instance()["dlcm_GlobalTempVariable"] + packageData.ToolkitInfo.PackageComment;
-
+            PackageComment = ConfigRepository.Instance()["dlcm_GlobalTempVariable"] + packageData.ToolkitInfo.PackageComment;
+            
             try
             {
                 // Write Template with Relative Paths
@@ -1869,7 +1869,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     else if (!arrIdComment.Contains(TKI_ARRID))
                         arrIdComment = arrIdComment + " " + TKI_ARRID;
 
-                    packageData.ToolkitInfo.PackageComment = arrIdComment;
+                    packageData.ToolkitInfo.PackageComment += arrIdComment;
                 }
             }
 
@@ -1894,7 +1894,13 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                     //try { cnb.Close(); cnc.Close(); } catch (Exception ex) {; }
                     OpenDb();// (null, cnb, cnc);
                     PackNew frm = new DLCManager.PackNew(packageData, cnb, cnc); frm.ShowDialog();
-                    if (frm.StopPack) return null;
+                    if (frm.StopPack)
+                    {
+                        packageData.ToolkitInfo.PackageComment = ConfigRepository.Instance()["dlcm_GlobalTempVariable"] + packageData.ToolkitInfo.PackageComment.Replace("(Remastered by CDLC Creator)", "").Trim();
+                        PackageComment = packageData.ToolkitInfo.PackageComment;
+                        SaveTemplateFile(UnpackedDir);
+                        return null;
+                    }
                 }
                 catch (Exception exx)
                 {
@@ -1921,6 +1927,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 }
 
                 packageData.ToolkitInfo.PackageComment = ConfigRepository.Instance()["dlcm_GlobalTempVariable"] + packageData.ToolkitInfo.PackageComment.Replace("(Remastered by CDLC Creator)","").Trim();
+                PackageComment = packageData.ToolkitInfo.PackageComment;
                 SaveTemplateFile(UnpackedDir);
             }
 

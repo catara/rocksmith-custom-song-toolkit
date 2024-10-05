@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-7,-4)">
+        <g transform="matrix(1,0,0,1,-1689,-130)">
+            <g id="View3dToolbar_Camera_Pressed">
+                <g id="Follow-Object" serif:id="Follow Object">
+                    <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(0.95,0,0,0.95,1696,134)">
+                        <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+                    </g>
+                    <g transform="matrix(7.03092e-17,-1.22222,0.891797,5.75974e-17,1608.66,2160.78)">
+                        <path d="M1649.59,111.412L1651.4,111.393L1655,117L1646,117L1649.59,111.412Z"/>
+                    </g>
+                    <g transform="matrix(0.9,0,0,1.125,245.4,19.75)">
+                        <path d="M1624,107.36C1624,106.609 1623.33,106 1622.51,106L1615.49,106C1614.67,106 1614,106.609 1614,107.36L1614,112.64C1614,113.391 1614.67,114 1615.49,114L1622.51,114C1623.33,114 1624,113.391 1624,112.64L1624,107.36Z"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

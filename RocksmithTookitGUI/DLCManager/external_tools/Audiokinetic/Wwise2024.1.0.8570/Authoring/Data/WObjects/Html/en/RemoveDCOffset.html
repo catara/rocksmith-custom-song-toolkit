@@ -1,0 +1,15 @@
+
+<h2>Remove DC offset</h2>
+<p>Removes the <a href="HelpDoc=glossary#glossary_dc_offset">DC offset</a> in the converted audio files. DC offsets can cause clicking, volume loss, and distortion.</p>
+<p>It may be good to remove the DC offset in some cases, such as with:</p>
+<ul>
+<li>Poorly recorded source files, whose waveform is not centered; and</li>
+<li>Sounds with a cumulative offset caused by Effects. (This can be difficult to predict, but could be explored as a cause if you encounter problems.)</li>
+</ul>
+<p>Often, however, the DC offset should not be removed, including with:</p>
+<ul>
+<li>Sounds that will be added to sample accurate containers.</li>
+<li>Sounds that are normalized to 0 dB.</li>
+<li>Looping sounds, which are sample accurate. In fact, we recommend not removing the DC offset for looping sounds. The remove mechanism is a high-pass filter, so there is no guarantee that it will modify the first and last sample of the loop in the same way because it does not know they will play contiguously. This could create a discontinuity in the signal, which is audible as a click.</li>
+</ul>
+<p>Default value: false<br/></p>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-341,-4)">
+        <g transform="matrix(1,0,0,1,103,-119)">
+            <g id="General_SmallAddFolder_Disabled" opacity="0.3">
+                <g id="Icons" transform="matrix(1,0,0,1,240,126)">
+                    <g opacity="0.45">
+                        <g id="Base-Block" serif:id="Base Block" transform="matrix(1,0,0,1,-2.84217e-14,-0.0003)">
+                            <g transform="matrix(1,0,0,1,-40,-25)">
+                                <path d="M55,27.1C55,25.941 54.059,25 52.9,25L42.1,25C40.941,25 40,25.941 40,27.1L40,37.9C40,39.059 40.941,40 42.1,40L52.9,40C54.059,40 55,39.059 55,37.9L55,27.1Z" style="fill-opacity:0;"/>
+                            </g>
+                            <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(1,0,0,1,-2,-3)">
+                                <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+                            </g>
+                        </g>
+                        <g transform="matrix(1,0,0,1,1,1)">
+                            <g transform="matrix(2.16176,0,0,1.96875,-8.67647,-108.063)">
+                                <path d="M11.415,59.841L11.415,61.619C11.415,62.11 11.052,62.508 10.605,62.508L8.986,62.508C8.54,62.508 8.177,62.11 8.177,61.619L8.177,59.841C8.177,59.351 8.54,58.952 8.986,58.952L10.605,58.952C11.052,58.952 11.415,59.351 11.415,59.841ZM10.027,60.476L10.027,59.46L9.565,59.46L9.565,60.476L8.639,60.476L8.639,60.984L9.565,60.984L9.565,62L10.027,62L10.027,60.984L10.952,60.984L10.952,60.476L10.027,60.476Z" style="fill:white;"/>
+                            </g>
+                            <path d="M7.502,10L-0,10L-0,-0L5,-0L5,2L12,2L12,6.502L9.665,6.502C8.471,6.502 7.502,7.471 7.502,8.665L7.502,10Z" style="fill:white;"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

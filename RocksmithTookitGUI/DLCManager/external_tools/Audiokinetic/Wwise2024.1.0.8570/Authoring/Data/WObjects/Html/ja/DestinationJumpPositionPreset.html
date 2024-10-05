@@ -1,0 +1,12 @@
+
+<h2>Sync to</h2>
+<p>デスティネーションの再生を開始する、ミュージックオブジェクト内のポイントを設定する。以下のオプションから選択する。</p>
+<ul>
+<li><strong>Entry cue</strong>:デスティネーションの再生を、エントリキューから始める。</li>
+<li><strong>Same time as playing segment</strong>:デスティネーションの再生を、ソースセグメントと同じタイムマークから始める。例えば、ソースセグメントの再生が開始から15秒経過していれば、デスティネーションの再生も15秒経過した時点から開始する。</li>
+<li><strong>Random Cue</strong>:デスティネーションの再生を、ランダムに選択されたキューから始める。本オプションを選択すると、エントリキューや、フィルター条件にマッチする全てのカスタムキューを含め、どのキューも選択対象となる。Match source cue name、Match (jump to destination)を参照。</li>
+<li><strong>Random Custom Cue</strong>:フィルター条件にマッチするランダムに選択したカスタムキューから、デスティネーション再生を開始。Match source cue name、Match (specify cue name)を参照。このセグメントにカスタムキューがなければ、エントリキューが使用される。</li>
+<li><strong>Last Exit Position</strong>:デスティネーションの前回再生したセグメントを、経過した時間（elapsed time）だけオフセットしたところから、再生し始める。例えば、このデスティネーションを前回再生したときに、第3セグメントの15秒経過したところまで再生し終わっていれば、今回は、15秒経過したところから再生し始める。</li>
+</ul>
+<p><strong>注釈</strong>:<strong>Last Exit Position</strong>というオプションを適用できるのは、同じ再生インスタンス中に、親でMusic Containerのトランジションする場合に限る。</p>
+<p>Default value: Entry Cue<br/></p>

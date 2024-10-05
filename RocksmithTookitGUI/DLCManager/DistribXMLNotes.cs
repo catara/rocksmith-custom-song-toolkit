@@ -32,7 +32,6 @@ using X360.Other;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Xml.Linq;
 using System.Windows.Shapes;
-using System.IO;
 using Path = System.IO.Path;
 using Newtonsoft.Json.Linq;
 //using System.Web.Services.Description;
@@ -41,6 +40,12 @@ using Color = System.Drawing.Color;
 using Windows.Devices.WiFiDirect;
 using NLog.Targets;
 using Windows.Devices.Geolocation;
+using RocksmithToolkitLib.DLCPackage.Manifest.Functions;
+using Swan.Formatters;
+using Microsoft.VisualBasic.Devices;
+using System.Windows.Shell;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+using Windows.Devices.Lights.Effects;
 //using System.Windows.Media;
 
 namespace RocksmithToolkitGUI.DLCManager
@@ -100,7 +105,7 @@ namespace RocksmithToolkitGUI.DLCManager
             button4 = new Button();
             btn_RestoreXML = new Button();
             cmb_Sections = new ComboBox();
-            chbx_Tracks = new CheckedListBox();
+            cmb_Tracks = new CheckedListBox();
             label1 = new Label();
             label13 = new Label();
             txt_Description = new RichTextBox();
@@ -115,16 +120,19 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_CleanStartSong = new Button();
             chbx_removehandshapes = new CheckBox();
             groupBox1 = new GroupBox();
+            label22 = new Label();
+            label21 = new Label();
             txt_P3LNMili = new TextBox();
-            txt_P3FNMili = new TextBox();
             txt_P3LN = new DateTimePicker();
             label19 = new Label();
             txt_P3 = new TextBox();
             label17 = new Label();
-            txt_P3FN = new DateTimePicker();
-            label18 = new Label();
             btn_ApplyP3 = new Button();
             btn_AddSections = new Button();
+            label20 = new Label();
+            txt_P3FNMili = new TextBox();
+            txt_P3FN = new DateTimePicker();
+            label18 = new Label();
             groupBox2 = new GroupBox();
             txt_RealLastNoteMili = new TextBox();
             txt_RealLastNote = new DateTimePicker();
@@ -153,6 +161,11 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_SyncPh2Sect = new Button();
             btn_Reload = new Button();
             toolTip1 = new ToolTip(components);
+            btn_VisualDistrib = new Button();
+            txt_Backup = new TextBox();
+            label23 = new Label();
+            label24 = new Label();
+            this.label25 = new Label();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -277,7 +290,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_EOF
             // 
             btn_EOF.Font = new Font("Microsoft Sans Serif", 6.6F);
-            btn_EOF.Location = new Point(372, 628);
+            btn_EOF.Location = new Point(370, 644);
             btn_EOF.Margin = new Padding(2);
             btn_EOF.Name = "btn_EOF";
             btn_EOF.Size = new Size(87, 22);
@@ -289,7 +302,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_OpenGP5
             // 
             btn_OpenGP5.Font = new Font("Microsoft Sans Serif", 6F);
-            btn_OpenGP5.Location = new Point(370, 654);
+            btn_OpenGP5.Location = new Point(370, 664);
             btn_OpenGP5.Margin = new Padding(2, 3, 2, 3);
             btn_OpenGP5.Name = "btn_OpenGP5";
             btn_OpenGP5.Size = new Size(88, 18);
@@ -301,12 +314,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_OpenXML
             // 
             btn_OpenXML.Font = new Font("Microsoft Sans Serif", 6F);
-            btn_OpenXML.Location = new Point(372, 676);
+            btn_OpenXML.Location = new Point(370, 680);
             btn_OpenXML.Margin = new Padding(2, 3, 2, 3);
             btn_OpenXML.Name = "btn_OpenXML";
             btn_OpenXML.Size = new Size(87, 18);
             btn_OpenXML.TabIndex = 27;
-            btn_OpenXML.Text = "Open xML";
+            btn_OpenXML.Text = "Open (Master) XML";
             btn_OpenXML.UseVisualStyleBackColor = true;
             btn_OpenXML.Click += btn_OpenXML_Click;
             // 
@@ -329,12 +342,12 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_Track.AutoSize = true;
             lbl_Track.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold);
             lbl_Track.ForeColor = SystemColors.ControlText;
-            lbl_Track.Location = new Point(6, 16);
+            lbl_Track.Location = new Point(0, 1);
             lbl_Track.Margin = new Padding(2, 0, 2, 0);
             lbl_Track.Name = "lbl_Track";
-            lbl_Track.Size = new Size(56, 15);
+            lbl_Track.Size = new Size(216, 15);
             lbl_Track.TabIndex = 453;
-            lbl_Track.Text = "Section:";
+            lbl_Track.Text = "(Master) Track To-Change Section:";
             // 
             // txt_XMLPath
             // 
@@ -384,7 +397,7 @@ namespace RocksmithToolkitGUI.DLCManager
             label8.AutoSize = true;
             label8.Enabled = false;
             label8.ForeColor = SystemColors.ControlText;
-            label8.Location = new Point(376, 596);
+            label8.Location = new Point(326, 701);
             label8.Margin = new Padding(2, 0, 2, 0);
             label8.Name = "label8";
             label8.Size = new Size(63, 15);
@@ -397,7 +410,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Correction.CustomFormat = "hh:mm:ss";
             txt_Correction.Enabled = false;
             txt_Correction.Format = DateTimePickerFormat.Time;
-            txt_Correction.Location = new Point(424, 612);
+            txt_Correction.Location = new Point(374, 717);
             txt_Correction.Margin = new Padding(2);
             txt_Correction.Name = "txt_Correction";
             txt_Correction.ShowUpDown = true;
@@ -471,7 +484,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_CorrectionMili
             // 
             txt_CorrectionMili.Enabled = false;
-            txt_CorrectionMili.Location = new Point(374, 613);
+            txt_CorrectionMili.Location = new Point(324, 718);
             txt_CorrectionMili.Margin = new Padding(2);
             txt_CorrectionMili.Name = "txt_CorrectionMili";
             txt_CorrectionMili.Size = new Size(37, 23);
@@ -483,7 +496,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_addcorrection.Enabled = false;
             btn_addcorrection.Font = new Font("Microsoft Sans Serif", 9F);
-            btn_addcorrection.Location = new Point(410, 614);
+            btn_addcorrection.Location = new Point(360, 719);
             btn_addcorrection.Margin = new Padding(2);
             btn_addcorrection.Name = "btn_addcorrection";
             btn_addcorrection.Size = new Size(18, 20);
@@ -510,10 +523,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_RestoreXML
             // 
             btn_RestoreXML.ForeColor = Color.Green;
-            btn_RestoreXML.Location = new Point(294, 276);
+            btn_RestoreXML.Location = new Point(286, 280);
             btn_RestoreXML.Margin = new Padding(2);
             btn_RestoreXML.Name = "btn_RestoreXML";
-            btn_RestoreXML.Size = new Size(78, 59);
+            btn_RestoreXML.Size = new Size(86, 55);
             btn_RestoreXML.TabIndex = 22;
             btn_RestoreXML.Text = "RestoreXML";
             btn_RestoreXML.UseVisualStyleBackColor = true;
@@ -523,25 +536,25 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             cmb_Sections.DropDownWidth = 800;
             cmb_Sections.FormattingEnabled = true;
-            cmb_Sections.Location = new Point(56, 16);
+            cmb_Sections.Location = new Point(1, 16);
             cmb_Sections.Margin = new Padding(0);
             cmb_Sections.MaxDropDownItems = 100;
             cmb_Sections.Name = "cmb_Sections";
-            cmb_Sections.Size = new Size(252, 23);
+            cmb_Sections.Size = new Size(307, 23);
             cmb_Sections.TabIndex = 1;
             cmb_Sections.SelectedIndexChanged += cmb_Sections_SelectedIndexChanged;
             // 
-            // chbx_Tracks
+            // cmb_Tracks
             // 
-            chbx_Tracks.CheckOnClick = true;
-            chbx_Tracks.FormattingEnabled = true;
-            chbx_Tracks.HorizontalScrollbar = true;
-            chbx_Tracks.Location = new Point(0, 354);
-            chbx_Tracks.Margin = new Padding(0);
-            chbx_Tracks.Name = "chbx_Tracks";
-            chbx_Tracks.Size = new Size(370, 94);
-            chbx_Tracks.TabIndex = 23;
-            chbx_Tracks.UseWaitCursor = true;
+            cmb_Tracks.CheckOnClick = true;
+            cmb_Tracks.FormattingEnabled = true;
+            cmb_Tracks.HorizontalScrollbar = true;
+            cmb_Tracks.Location = new Point(0, 354);
+            cmb_Tracks.Margin = new Padding(0);
+            cmb_Tracks.Name = "cmb_Tracks";
+            cmb_Tracks.Size = new Size(370, 94);
+            cmb_Tracks.TabIndex = 23;
+            cmb_Tracks.UseWaitCursor = true;
             // 
             // label1
             // 
@@ -577,7 +590,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_Save
             // 
             btn_Save.ForeColor = Color.Green;
-            btn_Save.Location = new Point(376, 515);
+            btn_Save.Location = new Point(377, 552);
             btn_Save.Margin = new Padding(2);
             btn_Save.Name = "btn_Save";
             btn_Save.Size = new Size(82, 26);
@@ -592,9 +605,9 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_Distrib.Location = new Point(372, 354);
             btn_Distrib.Margin = new Padding(2);
             btn_Distrib.Name = "btn_Distrib";
-            btn_Distrib.Size = new Size(90, 92);
+            btn_Distrib.Size = new Size(90, 43);
             btn_Distrib.TabIndex = 492;
-            btn_Distrib.Text = "Distribute to Other Tracks";
+            btn_Distrib.Text = "Align to Other Tracks";
             btn_Distrib.UseVisualStyleBackColor = true;
             btn_Distrib.Click += btn_Distrib_Click;
             // 
@@ -622,10 +635,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_MoveAllNotesAfter.BackColor = Color.LightSteelBlue;
             btn_MoveAllNotesAfter.Font = new Font("Microsoft Sans Serif", 8.25F);
-            btn_MoveAllNotesAfter.Location = new Point(312, 16);
+            btn_MoveAllNotesAfter.Location = new Point(312, 1);
             btn_MoveAllNotesAfter.Margin = new Padding(0);
             btn_MoveAllNotesAfter.Name = "btn_MoveAllNotesAfter";
-            btn_MoveAllNotesAfter.Size = new Size(150, 23);
+            btn_MoveAllNotesAfter.Size = new Size(150, 38);
             btn_MoveAllNotesAfter.TabIndex = 495;
             btn_MoveAllNotesAfter.Text = "Move Notes";
             btn_MoveAllNotesAfter.UseVisualStyleBackColor = false;
@@ -699,51 +712,60 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(label22);
+            groupBox1.Controls.Add(label21);
             groupBox1.Controls.Add(txt_P3LNMili);
-            groupBox1.Controls.Add(txt_P3FNMili);
             groupBox1.Controls.Add(txt_P3LN);
             groupBox1.Controls.Add(label19);
             groupBox1.Controls.Add(txt_P3);
             groupBox1.Controls.Add(label17);
-            groupBox1.Controls.Add(txt_P3FN);
-            groupBox1.Controls.Add(label18);
             groupBox1.Controls.Add(btn_ApplyP3);
             groupBox1.Controls.Add(btn_AddSections);
             groupBox1.Location = new Point(2, 258);
             groupBox1.Margin = new Padding(2);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(2);
-            groupBox1.Size = new Size(285, 77);
+            groupBox1.Size = new Size(285, 74);
             groupBox1.TabIndex = 519;
             groupBox1.TabStop = false;
             groupBox1.Text = "3rd type of Calculation";
             // 
+            // label22
+            // 
+            label22.ForeColor = SystemColors.ControlText;
+            label22.Location = new Point(201, 41);
+            label22.Margin = new Padding(2, 0, 2, 0);
+            label22.Name = "label22";
+            label22.Size = new Size(25, 15);
+            label22.TabIndex = 527;
+            label22.Text = "ms";
+            // 
+            // label21
+            // 
+            label21.ForeColor = SystemColors.ControlText;
+            label21.Location = new Point(209, 18);
+            label21.Margin = new Padding(2, 0, 2, 0);
+            label21.Name = "label21";
+            label21.Size = new Size(14, 15);
+            label21.TabIndex = 526;
+            label21.Text = "%";
+            // 
             // txt_P3LNMili
             // 
             txt_P3LNMili.Enabled = false;
-            txt_P3LNMili.Location = new Point(189, 52);
+            txt_P3LNMili.Location = new Point(164, 37);
             txt_P3LNMili.Margin = new Padding(2);
             txt_P3LNMili.Name = "txt_P3LNMili";
             txt_P3LNMili.Size = new Size(38, 23);
             txt_P3LNMili.TabIndex = 524;
             txt_P3LNMili.UseWaitCursor = true;
             // 
-            // txt_P3FNMili
-            // 
-            txt_P3FNMili.Enabled = false;
-            txt_P3FNMili.Location = new Point(189, 35);
-            txt_P3FNMili.Margin = new Padding(2);
-            txt_P3FNMili.Name = "txt_P3FNMili";
-            txt_P3FNMili.Size = new Size(38, 23);
-            txt_P3FNMili.TabIndex = 523;
-            txt_P3FNMili.UseWaitCursor = true;
-            // 
             // txt_P3LN
             // 
             txt_P3LN.CustomFormat = "hh:mm:ss";
             txt_P3LN.Enabled = false;
             txt_P3LN.Format = DateTimePickerFormat.Time;
-            txt_P3LN.Location = new Point(116, 50);
+            txt_P3LN.Location = new Point(97, 37);
             txt_P3LN.Margin = new Padding(2);
             txt_P3LN.Name = "txt_P3LN";
             txt_P3LN.ShowUpDown = true;
@@ -754,20 +776,21 @@ namespace RocksmithToolkitGUI.DLCManager
             // label19
             // 
             label19.ForeColor = SystemColors.ControlText;
-            label19.Location = new Point(3, 53);
+            label19.Location = new Point(3, 37);
             label19.Margin = new Padding(2, 0, 2, 0);
             label19.Name = "label19";
-            label19.Size = new Size(98, 16);
+            label19.Size = new Size(90, 38);
             label19.TabIndex = 521;
-            label19.Text = "P3 XML LastNote";
+            label19.Text = "Estimated XML LastNote";
+            label19.Click += label19_Click;
             // 
             // txt_P3
             // 
             txt_P3.Enabled = false;
-            txt_P3.Location = new Point(189, 14);
+            txt_P3.Location = new Point(169, 14);
             txt_P3.Margin = new Padding(2);
             txt_P3.Name = "txt_P3";
-            txt_P3.Size = new Size(38, 23);
+            txt_P3.Size = new Size(45, 23);
             txt_P3.TabIndex = 519;
             txt_P3.UseWaitCursor = true;
             // 
@@ -779,30 +802,7 @@ namespace RocksmithToolkitGUI.DLCManager
             label17.Name = "label17";
             label17.Size = new Size(180, 16);
             label17.TabIndex = 520;
-            label17.Text = "Percentage (avg between-notes)";
-            // 
-            // txt_P3FN
-            // 
-            txt_P3FN.CustomFormat = "hh:mm:ss";
-            txt_P3FN.Enabled = false;
-            txt_P3FN.Format = DateTimePickerFormat.Time;
-            txt_P3FN.Location = new Point(116, 34);
-            txt_P3FN.Margin = new Padding(2);
-            txt_P3FN.Name = "txt_P3FN";
-            txt_P3FN.ShowUpDown = true;
-            txt_P3FN.Size = new Size(67, 23);
-            txt_P3FN.TabIndex = 518;
-            txt_P3FN.Value = new DateTime(2015, 5, 24, 0, 0, 0, 0);
-            // 
-            // label18
-            // 
-            label18.ForeColor = SystemColors.ControlText;
-            label18.Location = new Point(3, 35);
-            label18.Margin = new Padding(2, 0, 2, 0);
-            label18.Name = "label18";
-            label18.Size = new Size(116, 16);
-            label18.TabIndex = 517;
-            label18.Text = "P3 XML SecondNote";
+            label17.Text = "Space between-notes 2change";
             // 
             // btn_ApplyP3
             // 
@@ -812,7 +812,7 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_ApplyP3.Location = new Point(225, 14);
             btn_ApplyP3.Margin = new Padding(0);
             btn_ApplyP3.Name = "btn_ApplyP3";
-            btn_ApplyP3.Size = new Size(58, 62);
+            btn_ApplyP3.Size = new Size(58, 42);
             btn_ApplyP3.TabIndex = 516;
             btn_ApplyP3.Text = "Apply P3";
             btn_ApplyP3.UseVisualStyleBackColor = false;
@@ -830,6 +830,53 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_AddSections.Text = "+";
             btn_AddSections.UseVisualStyleBackColor = true;
             // 
+            // label20
+            // 
+            label20.ForeColor = SystemColors.ControlText;
+            label20.Location = new Point(215, 702);
+            label20.Margin = new Padding(2, 0, 2, 0);
+            label20.Name = "label20";
+            label20.Size = new Size(25, 15);
+            label20.TabIndex = 525;
+            label20.Text = "ms";
+            label20.Visible = false;
+            // 
+            // txt_P3FNMili
+            // 
+            txt_P3FNMili.Enabled = false;
+            txt_P3FNMili.Location = new Point(178, 701);
+            txt_P3FNMili.Margin = new Padding(2);
+            txt_P3FNMili.Name = "txt_P3FNMili";
+            txt_P3FNMili.Size = new Size(38, 23);
+            txt_P3FNMili.TabIndex = 523;
+            txt_P3FNMili.UseWaitCursor = true;
+            txt_P3FNMili.Visible = false;
+            // 
+            // txt_P3FN
+            // 
+            txt_P3FN.CustomFormat = "hh:mm:ss";
+            txt_P3FN.Enabled = false;
+            txt_P3FN.Format = DateTimePickerFormat.Time;
+            txt_P3FN.Location = new Point(112, 703);
+            txt_P3FN.Margin = new Padding(2);
+            txt_P3FN.Name = "txt_P3FN";
+            txt_P3FN.ShowUpDown = true;
+            txt_P3FN.Size = new Size(67, 23);
+            txt_P3FN.TabIndex = 518;
+            txt_P3FN.Value = new DateTime(2015, 5, 24, 0, 0, 0, 0);
+            txt_P3FN.Visible = false;
+            // 
+            // label18
+            // 
+            label18.ForeColor = SystemColors.ControlText;
+            label18.Location = new Point(17, 704);
+            label18.Margin = new Padding(2, 0, 2, 0);
+            label18.Name = "label18";
+            label18.Size = new Size(116, 16);
+            label18.TabIndex = 517;
+            label18.Text = "P3 XML 2ndNote";
+            label18.Visible = false;
+            // 
             // groupBox2
             // 
             groupBox2.Controls.Add(txt_RealLastNoteMili);
@@ -846,7 +893,7 @@ namespace RocksmithToolkitGUI.DLCManager
             groupBox2.Size = new Size(278, 64);
             groupBox2.TabIndex = 525;
             groupBox2.TabStop = false;
-            groupBox2.Text = "1st type of Calculation";
+            groupBox2.Text = "1st type of Calculation (old2decomm)";
             // 
             // txt_RealLastNoteMili
             // 
@@ -903,7 +950,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_ApplyP1
             // 
-            btn_ApplyP1.BackColor = Color.FromArgb(255, 224, 192);
+            btn_ApplyP1.BackColor = SystemColors.Control;
             btn_ApplyP1.Enabled = false;
             btn_ApplyP1.Font = new Font("Microsoft Sans Serif", 8.25F);
             btn_ApplyP1.Location = new Point(216, 14);
@@ -942,7 +989,7 @@ namespace RocksmithToolkitGUI.DLCManager
             groupBox3.Size = new Size(176, 63);
             groupBox3.TabIndex = 526;
             groupBox3.TabStop = false;
-            groupBox3.Text = "2nd type of Calculation";
+            groupBox3.Text = "2nd type (old2decomm)";
             // 
             // txt_corr
             // 
@@ -957,7 +1004,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_ApplyP2
             // 
-            btn_ApplyP2.BackColor = Color.Yellow;
+            btn_ApplyP2.BackColor = SystemColors.Control;
             btn_ApplyP2.Enabled = false;
             btn_ApplyP2.Font = new Font("Microsoft Sans Serif", 8.25F);
             btn_ApplyP2.Location = new Point(8, 40);
@@ -1037,12 +1084,13 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             label16.AutoSize = true;
             label16.ForeColor = SystemColors.ControlText;
-            label16.Location = new Point(376, 22);
+            label16.Location = new Point(363, 24);
             label16.Margin = new Padding(2, 0, 2, 0);
             label16.Name = "label16";
-            label16.Size = new Size(26, 15);
+            label16.Size = new Size(78, 15);
             label16.TabIndex = 516;
-            label16.Text = "Diff";
+            label16.Text = "Diff (cur-exp)";
+            toolTip1.SetToolTip(label16, "curent-expected");
             // 
             // txt_Lastnote
             // 
@@ -1057,7 +1105,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label12
             // 
             label12.ForeColor = SystemColors.ControlText;
-            label12.Location = new Point(229, 44);
+            label12.Location = new Point(268, 47);
             label12.Margin = new Padding(2, 0, 2, 0);
             label12.Name = "label12";
             label12.Size = new Size(58, 16);
@@ -1107,12 +1155,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // label10
             // 
             label10.ForeColor = SystemColors.ControlText;
-            label10.Location = new Point(229, 22);
+            label10.Location = new Point(216, 22);
             label10.Margin = new Padding(2, 0, 2, 0);
             label10.Name = "label10";
-            label10.Size = new Size(84, 16);
+            label10.Size = new Size(112, 16);
             label10.TabIndex = 512;
-            label10.Text = "Curent Lenght";
+            label10.Text = "Curent XML Lenght";
             // 
             // label7
             // 
@@ -1127,7 +1175,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_SyncPh2Sect
             // 
             btn_SyncPh2Sect.ForeColor = Color.Green;
-            btn_SyncPh2Sect.Location = new Point(374, 542);
+            btn_SyncPh2Sect.Location = new Point(375, 579);
             btn_SyncPh2Sect.Margin = new Padding(2);
             btn_SyncPh2Sect.Name = "btn_SyncPh2Sect";
             btn_SyncPh2Sect.Size = new Size(88, 54);
@@ -1149,20 +1197,84 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_Reload.UseVisualStyleBackColor = true;
             btn_Reload.Click += btn_Reload_Click;
             // 
+            // btn_VisualDistrib
+            // 
+            btn_VisualDistrib.ForeColor = Color.Green;
+            btn_VisualDistrib.Location = new Point(373, 401);
+            btn_VisualDistrib.Margin = new Padding(2);
+            btn_VisualDistrib.Name = "btn_VisualDistrib";
+            btn_VisualDistrib.Size = new Size(90, 43);
+            btn_VisualDistrib.TabIndex = 529;
+            btn_VisualDistrib.Text = "Visually align/Section";
+            btn_VisualDistrib.UseVisualStyleBackColor = true;
+            btn_VisualDistrib.Visible = false;
+            // 
+            // txt_Backup
+            // 
+            txt_Backup.Enabled = false;
+            txt_Backup.Location = new Point(286, 255);
+            txt_Backup.Margin = new Padding(2);
+            txt_Backup.Name = "txt_Backup";
+            txt_Backup.Size = new Size(86, 23);
+            txt_Backup.TabIndex = 517;
+            txt_Backup.UseWaitCursor = true;
+            // 
+            // label23
+            // 
+            label23.ForeColor = SystemColors.ControlText;
+            label23.Location = new Point(211, 54);
+            label23.Margin = new Padding(2, 0, 2, 0);
+            label23.Name = "label23";
+            label23.Size = new Size(25, 15);
+            label23.TabIndex = 528;
+            label23.Text = "ms";
+            label23.Visible = false;
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.ForeColor = SystemColors.ControlText;
+            label24.Location = new Point(298, 357);
+            label24.Margin = new Padding(2, 0, 2, 0);
+            label24.Name = "label24";
+            label24.Size = new Size(47, 15);
+            label24.TabIndex = 530;
+            label24.Text = "(Slaves)";
+            // 
+            // label25
+            // 
+            this.label25.ForeColor = SystemColors.ControlText;
+            this.label25.Location = new Point(438, 54);
+            this.label25.Margin = new Padding(2, 0, 2, 0);
+            this.label25.Name = "label25";
+            this.label25.Size = new Size(25, 15);
+            this.label25.TabIndex = 531;
+            this.label25.Text = "ms";
+            this.label25.Visible = false;
+            // 
             // DistribXMLNotes
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(466, 681);
+            ClientSize = new Size(466, 725);
+            Controls.Add(this.label25);
+            Controls.Add(label24);
+            Controls.Add(label23);
+            Controls.Add(txt_Backup);
+            Controls.Add(btn_VisualDistrib);
+            Controls.Add(label20);
             Controls.Add(btn_Reload);
             Controls.Add(btn_SyncPh2Sect);
+            Controls.Add(txt_P3FNMili);
             Controls.Add(groupBox4);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
+            Controls.Add(txt_P3FN);
             Controls.Add(chbx_removehandshapes);
+            Controls.Add(label18);
             Controls.Add(btn_CleanStartSong);
             Controls.Add(btn_CleanDescr);
             Controls.Add(btn_Close);
@@ -1175,7 +1287,7 @@ namespace RocksmithToolkitGUI.DLCManager
             Controls.Add(label13);
             Controls.Add(txt_Description);
             Controls.Add(label1);
-            Controls.Add(chbx_Tracks);
+            Controls.Add(cmb_Tracks);
             Controls.Add(cmb_Sections);
             Controls.Add(btn_RestoreXML);
             Controls.Add(button4);
@@ -1266,9 +1378,9 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_PercTime.Text = "";
 
             //Clean structures
-            chbx_Tracks.DataSource = null;
-            for (int i = chbx_Tracks.Items.Count - 1; i >= 0; --i)
-                chbx_Tracks.Items.RemoveAt(i);
+            cmb_Tracks.DataSource = null;
+            for (int i = cmb_Tracks.Items.Count - 1; i >= 0; --i)
+                cmb_Tracks.Items.RemoveAt(i);
             cmb_Sections.DataSource = null;
             for (int i = cmb_Sections.Items.Count - 1; i >= 0; --i)
                 cmb_Sections.Items.RemoveAt(i);
@@ -1291,7 +1403,6 @@ namespace RocksmithToolkitGUI.DLCManager
                 CDLC_ID = dus.Tables[0].Rows[0].ItemArray[6].ToString();
                 description = dus.Tables[0].Rows[0].ItemArray[7].ToString();
                 newXMLFilePath = destination_dir + "\\songs\\arr\\" + dus.Tables[0].Rows[0].ItemArray[1].ToString() + ".xml";
-
             }
             else
             {
@@ -1304,6 +1415,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         MessageBox.Show("issues at reading xml..please press restore");
                         return;
                     }
+
                     ArrangementType = null;
                     RouteMask = xmlContents.ArrangementProperties.RouteMask.ToString() == "0" ? xmlContents.Arrangement.ToString()
                         : xmlContents.ArrangementProperties.RouteMask.ToString();
@@ -1334,8 +1446,8 @@ namespace RocksmithToolkitGUI.DLCManager
             if (File.Exists(BasedOn_CF)) txt_GP5.Text = BasedOn_CF;
             else txt_GP5.Text = GetGPfile();
 
-            if (!File.Exists(txt_XMLPath.Text + ".old3")) btn_RestoreXML.Enabled = false;
-            else btn_RestoreXML.Enabled = true;
+            if (File.Exists(txt_XMLPath.Text + ".old3")) { btn_RestoreXML.Enabled = true; txt_Backup.Text = "old3 backup OK"; }
+            else { btn_RestoreXML.Enabled = false; ; txt_Backup.Text = "NOK backup"; }
             txt_Sections.Text = "";
             cmb_Sections = GenerateSectionsList(newXMLFilePath, cmb_Sections, tx, ty);//Add Sections
 
@@ -1349,16 +1461,27 @@ namespace RocksmithToolkitGUI.DLCManager
                 var XMLFileName = dis.Tables[0].Rows[k][1].ToString();
                 var RouteMasks = dis.Tables[0].Rows[k][2].ToString();
                 var Start_Time = dis.Tables[0].Rows[k][3].ToString();
-                chbx_Tracks.Items.Add(XMLFileName + " - " + RouteMasks + " - " + Start_Time);
+                cmb_Tracks.Items.Add(XMLFileName + " - " + RouteMasks + " - " + Start_Time);
             }
-            if (noOfRec == 0) { btn_Distrib.Enabled = false; chbx_Tracks.Items.Add("Lonely XML"); chbx_Tracks.Enabled = false; }
-            else { btn_Distrib.Enabled = true; chbx_Tracks.Enabled = true; }
+            if (noOfRec == 0)
+            {
+                if (sXml != null) { btn_Distrib.Enabled = false; cmb_Tracks.Items.Add("Lonely XML"); cmb_Tracks.Enabled = false; }
+                else
+                {
+                    var xmlz = Directory.GetFiles(Path.GetDirectoryName(FilePath), "*.xml", System.IO.SearchOption.TopDirectoryOnly);
+                    foreach (var xml in xmlz) if (xml != FilePath) cmb_Tracks.Items.Add(Path.GetFileName(xml));
+                }
+            }
+            else { btn_Distrib.Enabled = true; cmb_Tracks.Enabled = true; }
 
             //List Sections
             var xmlContent = Song2014.LoadFromFile(txt_XMLPath.Text);
             if (xmlContent.Sections is not null)
                 for (var j = 0; j < xmlContent.Sections.Length; j++)
                     txt_Sections.Text += xmlContent.Sections[j].Name + "=" + xmlContent.Sections[j].StartTime + ";\n";
+            //checkif no sections is the same as no of phrases
+            if (xmlContent.PhraseIterations.Length != xmlContent.Sections.Length) SaveSectionAndDescription();
+            this.Text = Path.GetFileName(txt_XMLPath.Text + " with " + cmb_Sections.Items.Count + " sections.");
         }
         public ComboBox GenerateSectionsList(string newXMLFilePath, ComboBox cmb_Sections, string firstnote, string lastnote)
         {
@@ -1386,8 +1509,8 @@ namespace RocksmithToolkitGUI.DLCManager
                     var st = GetTrackStartTime(newXMLFilePath, xmlContent.Arrangement, null, false, str);
                     var zt = GetTrackStartTime(newXMLFilePath, xmlContent.Arrangement, null, true, nd);
 
-                    v = st + " - " + zt + " - " + j + " - " + xmlContent.Sections[j].StartTime + " - " + xmlContent.Sections[j].Name
-                        + " - " + xmlContent.Sections[j].Number;
+                    v = "firstnote: " + st + " - endnote: " + zt + " - no_order: " + j + " - start_time: " + xmlContent.Sections[j].StartTime + " - sec_name: " + xmlContent.Sections[j].Name
+                        + " - sec_no: " + xmlContent.Sections[j].Number;
                     cmb_Sections.Items.Add(v);//add items
                     if (xmlContent.Sections[j].StartTime != xmlContent.PhraseIterations[j].Time) phrasediffthansect = true;
                 }
@@ -1403,6 +1526,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (phrasediffthansect) btn_SyncPh2Sect.Enabled = true;
             return cmb_Sections;
         }
+
         public string GetGPfile()
         {
             if (EoFPath == "") return "";
@@ -1485,15 +1609,17 @@ namespace RocksmithToolkitGUI.DLCManager
             var percp3 = Math.Round(100 * diff_LastNote_and_ExpectedEndNote /
                 (xml_last.Value.Hour * 3600 + xml_last.Value.Minute * 60 + xml_last.Value.Second + Math.Round(float.Parse(xml_lastMili.Text), 3))
             , 3).ToString(); percp3 = Math.Round((100 - float.Parse(txt_Percentage.Text)), 3).ToString();
-            txt_P3.Text = percp3; txt_P3LN.Value = DateTime.Parse("00:00:00");
+            txt_P3.Text = percp3;
+
+            txt_P3LN.Value = DateTime.Parse("00:00:00");
             d = xml_last.Value.Hour * 3600 + xml_last.Value.Minute * 60 + xml_last.Value.Second + Math.Round(float.Parse(xml_lastMili.Text), 3);
-            d = Math.Round(d - d * float.Parse(percp3) / 100, 3);
+            d = Math.Round(d - diff_LastNote_and_ExpectedEndNote, 3);
             txt_P3LN.Value = txt_P3LN.Value.AddSeconds(d);
-            //txt_P3LNMili.Text = (Math.Round((float.Parse(d.ToString()) - Math.Truncate(float.Parse(d.ToString()))), 3).ToString();
+            txt_P3LNMili.Text = (Math.Round(d - Math.Truncate(float.Parse(d.ToString())), 3)).ToString();
 
             d = get_second_note(txt_XMLPath.Text, firstno); txt_P3FN.Value = DateTime.Parse("00:00:00");
             d = Math.Round(firstno + (d - firstno) * float.Parse(percp3) / 100, 3);
-            txt_P3FN.Value = txt_P3LN.Value.AddSeconds(d);
+            txt_P3FN.Value = txt_P3FN.Value.AddSeconds(d);
             d = float.Parse(Math.Round((float.Parse(d.ToString()) - Math.Truncate(float.Parse(d.ToString()))), 3).ToString());
             txt_P3FNMili.Text = (Math.Round(float.Parse(d.ToString()) - float.Parse(d.ToString()) * float.Parse(percp3) / 100, 3)).ToString();
             //txt_RealLastNote.Value = txt_RealLastNote.Value.AddMinutes(txt_songLast.Value.Minute + perc * txt_songLast.Value.Minute);
@@ -1513,7 +1639,9 @@ namespace RocksmithToolkitGUI.DLCManager
             else if (p == "P2")
                 return txt_PercTime.Text + ";" + starttt + ";" + txt_Lastnote.Text + ";" + "p2" + ";" + chbx_removehandshapes.Checked + ";" + txt_PercTime.Text;
             else //if (p == "P3")
-                return txt_P3.Text + ";" + starttt + ";" + txt_Lastnote.Text + ";" + "p3" + ";" + chbx_removehandshapes.Checked + ";" + txt_PercTime.Text;
+                return txt_P3.Text + ";" + starttt + ";" + txt_Lastnote.Text + ";" + "p3" + ";" + chbx_removehandshapes.Checked + ";" +
+                    txt_P3LN.Value.Hour + ":" + txt_P3LN.Value.Minute + ":" + txt_P3LN.Value.Second + "." + Math.Round(float.Parse(txt_P3LNMili.Text), 3).ToString();//.Substring(2);
+            //percentage               starttime         last note                calc type            removehandshapes              unused
         }
         static float get_second_note(string xsml, float t)
         {
@@ -1530,6 +1658,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (xmlContent.Levels[j].Chords[k].Time == float.Parse(t.ToString()))
                         if (xmlContent.Levels[j].Chords.Length >= k + 1)
                             if (note < xmlContent.Levels[j].Chords[k + 1].Time) note = xmlContent.Levels[j].Chords[k + 1].Time;
+                break; // dont got to other levels
             }
             return note;
         }
@@ -1692,10 +1821,10 @@ namespace RocksmithToolkitGUI.DLCManager
             xml_last.Value = DateTime.Parse("00:00:00");
             var i = cmb_Sections.SelectedIndex;
 
-            string tx = cmb_Sections.Text; tx = tx.Replace("firstnote: ", "").Replace("endnote: ", "");
+            string tx = cmb_Sections.Text; tx = tx.Replace("firstnote: ", "");
             tx = tx.Substring(0, tx.IndexOf(" - "));// dus.Tables[0].Rows[0].ItemArray[3].ToString());
-            string ty = cmb_Sections.Text; ty = ty.Replace("firstnote: ", "").Replace("endnote: ", "").Replace(tx + " - ", ""); //cmb_Sections.Items[i + 1].ToString();
-            ty = i < cmb_Sections.Items.Count ? ty.Substring(0, ty.IndexOf(" - ")) : txt_Lastnote.Text;
+            string ty = cmb_Sections.Text; ty = ty.Substring(ty.IndexOf("endnote: ")); //cmb_Sections.Items[i + 1].ToString();
+            ty = i < cmb_Sections.Items.Count ? ty.Replace("endnote: ", "").Substring(0, ty.Replace("endnote: ", "").IndexOf(" - ")) : txt_Lastnote.Text;
 
             txt_Lastnote.Text = ty;
 
@@ -1776,17 +1905,25 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             var optionalfound = false; bool usephases = false;
             if (xmlContent.OptionalProperties is not null) optionalfound = true;
-            var sect = "<sections count = \"" + xmlContent.PhraseIterations.Length + "\">\n";
-            if (btn_SyncPh2Sect.Enabled && xmlContent.PhraseIterations.Length != xmlContent.Sections.Length)
+            var sect = "<sections count = \"" + xmlContent.Phrases.Length + "\">\n";
+            if (xmlContent.Phrases.Length != xmlContent.Sections.Length)/*btn_SyncPh2Sect.Enabled && */
             {
                 DialogResult result1 = MessageBox.Show("Discrepancy between Sections(" + xmlContent.Sections.Length + ") and phases ("
-                    + xmlContent.PhraseIterations.Length + ") has been observed.Override?"
+                    + xmlContent.Phrases.Length + ") has been observed. \n\n(Yes) Override no&Names of Sections with no&Names of Phrases\n\n(No) Override no&Names of Phrases with no&Names of Sectios?"
                     , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result1 == DialogResult.Yes) usephases = true;
             }
+            //else usephases = true;
+
+            int p = 0;
             if (usephases)
-                for (var j = 0; j < xmlContent.PhraseIterations.Length; j++)
+                for (var j = 0; j < xmlContent.Phrases.Length; j++)
+                {
+                    p++;
+                    if (j > 0) if (xmlContent.PhraseIterations[j].PhraseId == xmlContent.PhraseIterations[j - 1].PhraseId) p++;
+
                     sect += "<section name=\"" + xmlContent.Phrases[j].Name + "\" number=\"" + (j + 1) + "\" startTime=\"" + xmlContent.PhraseIterations[j].Time + "\"/>\n";
+                }
             //else
             //    for (var j = 0; j < xmlContent.Sections.Length; j++)
             //    {
@@ -1888,7 +2025,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (line.ToLower().Contains("<optional") && optionalfound)
                         line = "<optionalProperties japaneseArtistName = \"" + txt_Description.Text + ";" + perc_time_betw_notes + "\" />";
                     if (line.ToLower().Contains("<arrangementproperties") && !optionalfound)
-                        line += "\n<optionalProperties japaneseArtistName = \"" + txt_Description.Text.Replace("\n", "") + "\n" + perc_time_betw_notes.Replace("\n", "") + "\" />";
+                        line += "\n<optionalProperties japaneseArtistName = \"" + txt_Description.Text.Replace("\n", "") + perc_time_betw_notes.Replace("\n", "") + "\" />";
 
                     if (line != "") sw.WriteLine(line);
                 }
@@ -1916,97 +2053,506 @@ namespace RocksmithToolkitGUI.DLCManager
                 , txt_XMLPath.Text.Replace(Path.GetFileName(txt_XMLPath.Text), "") + "\\distr\\" + Path.GetFileName(txt_XMLPath.Text)
                 + "." + DateTime.Now.ToString().Replace("/", "").Replace(":", ""), true);
         }
+
+
+        static float GetNoOrdolf(float time, int t, int k, int main, string[,,] nt0, string[,,] nt1, string[,,] nt2, string[,,] nt3, string[,,] nt4, string[,,] nt5, string[,,] nt6)
+        {
+            float res = time;
+            try
+            {
+                for (var n = 1; n <= t; n++) //note n
+                {
+                    if (nt0[k, n, 0] is null) continue;
+                    var timesn = float.Parse(nt0[k, n, 0]);
+                    if (timesn == time) for (var m = 1; m <= t; m++)
+                            if (nt0[main, m, 5] is not null)
+                                //if (float.Parse(nt0[k, n, 5]) == float.Parse(nt0[main, m, 5])) //beastie boys taht has intro lead notes just like dank jone is not starting from right note
+                                if (float.Parse(nt0[main, m, 0]) >= time)
+                                {
+                                    res = float.Parse(nt0[main, m, 0]);
+                                    break;
+                                }
+                }
+            }
+            catch (Exception ex)
+            {
+                ;
+            }
+
+            return res;
+        }
+
+        static float GetNoOrd(float time, int t, int k, int main, string[,,] nt0, int startm, float startt)
+        {
+            float res = time; int o = -1;
+            try
+            {
+                for (var n = 1; n <= t; n++) //note n
+                {
+                    if (nt0[k, n, 0] is null) continue;
+                    var timesn = float.Parse(nt0[k, n, 0]);
+                    if (timesn >= startt) o++;
+                    if (timesn == time)
+                        res = float.Parse(nt0[main, startm + o, 0]);
+                    //for (var m = 1; m <= t; m++)
+                    //    if (nt0[main, m, 5] is not null)
+                    //        if (float.Parse(nt0[k, n, 5]) == float.Parse(nt0[main, m+startm+, 5])) //beastie boys taht has intro lead notes just like dank jone is not starting from right note
+                    //        //if (float.Parse(nt0[main, m, 0]) >= time)
+                    //        {
+                    //            res = float.Parse(nt0[main, m, 0]);
+                    //            break;
+                    //        }
+                }
+            }
+            catch (Exception ex)
+            {
+                ;
+            }
+
+            return res;
+        }
+
         //Read the Target Track
         //Read the backup of reference, closest note to ref, save location & diff
         //By count get the same note from corrected track and figure out
         private void btn_Distrib_Click(object sender, EventArgs e)
         {
             var tt = 0; var tth = 0; var tj = 0; var tn = 0; var tjh = 0; var tnh = 0;
-            var tst = "";
-            tth = chbx_Tracks.Items.Count;
-            for (var i = 0; i < tth; i++)
+            var tst = ""; tth = cmb_Tracks.Items.Count;
+            //nt1 1st string Nt6 th;
+            //nt0 just a TIME HOLDER
+            //string array             
+            //column 1 is instrument/track
+            //column 2 is notes
+            //column 3 is
+            //0 is time
+            //1 is fret
+            //2 is ?
+            //3 is chord or notes
+            //4 is Main/Slave
+            //5 is no of order
+            string[,,] nt0 = new string[10, 3000, 6];//consolidation of all other notes timings(1),(2) unused, incl, is it cord or note(3), or is it Master track to be copied (4),incl no of order(5)
+            string[,,] nt1 = new string[10, 3000, 3];
+            string[,,] nt2 = new string[10, 3000, 3];
+            string[,,] nt3 = new string[10, 3000, 3];
+            string[,,] nt4 = new string[10, 3000, 3];
+            string[,,] nt5 = new string[10, 3000, 3];
+            string[,,] nt6 = new string[10, 3000, 3];
+            string[,] chords = new string[2000, 7];
+            string[,] arg = new string[10, 7];
+            int main = 0;
+
+            DialogResult result1 = DialogResult.No; var r = "";
+            var xmlz = Directory.GetFiles(Path.GetDirectoryName(FilePath), "*.xml", System.IO.SearchOption.TopDirectoryOnly);
+            var u = "";
+            for (var k = 0; k < cmb_Tracks.SelectedItems.Count; k++) u += ";" + Path.GetDirectoryName(FilePath) + "\\" + cmb_Tracks.SelectedItems[k].ToString();
+
+            float startt = 0;// float.Parse(Math.Round(txt_songStart.Value.Hour * 3600 + txt_songStart.Value.Minute * 60 + txt_songStart.Value.Second + Math.Round(float.Parse(txt_songStartMili.Text), 3), 3).ToString());
+                             //float.Parse(Math.Round(xml_first.Value.Hour * 3600 + xml_first.Value.Minute * 60 + xml_first.Value.Second + Math.Round(float.Parse(xml_firstMili.Text), 3), 3).ToString());
+            float endt = 1; //cmb_Sections.Text == ""?:float.Parse(Math.Round(xml_last.Value.Hour * 3600 + xml_last.Value.Minute * 60 + xml_last.Value.Second + Math.Round(float.Parse(xml_lastMili.Text), 3), 3).ToString());
+
+            if (cmb_Sections.Text == "")
             {
-                var k = chbx_Tracks.GetItemChecked(i) ? Directory.GetParent(txt_XMLPath.Text) + "\\" + chbx_Tracks.Items[i].ToString().Substring(0, chbx_Tracks.Items[i].ToString().IndexOf(" - ")) + ".xml" : "";
-                if (!File.Exists(k)) continue;/*|| File.Exists(k + ".old3")*/
-                if (File.Exists(k + ".old7")) File.Copy(k + ".old7", k, true);
-                if (!File.Exists(k + ".old7")) File.Copy(k, k + ".old7", true);
-
-                tt++;
-
-                //for (var j = 0; j < xmlContent.Levels.Length; j++)
-                //{
-                //    for (var k = 0; k < xmlContent.Levels[j].Notes.Length; k++)
-                //        if (xmlContent.Levels[j].Notes[k].Time > 0)
-
-                var targf = Song2014.LoadFromFile(k);
-                var bkpref = Song2014.LoadFromFile(txt_XMLPath.Text + ".old3");
-                var reff = Song2014.LoadFromFile(txt_XMLPath.Text);
-
-                tjh = targf.Levels[0].Notes.Length;
-                for (var j = 0; j < tjh; j++)
-                {
-                    var targ_note = targf.Levels[0].Notes[j].Time;
-                    for (var m = 0; m < bkpref.Levels[0].Notes.Length - 1; m++)
-                    {
-                        var bkp_ref = bkpref.Levels[0].Notes[m].Time;
-                        var bkp_ref_next = bkpref.Levels[0].Notes[m + 1].Time;
-                        var ref_note = reff.Levels[0].Notes[m].Time;
-                        if (bkp_ref <= targ_note && bkp_ref_next >= targ_note)
-                        {
-                            targf.Levels[0].Notes[j].Time = (float)Math.Round(float.Parse((
-                                targ_note - (bkp_ref - ref_note)
-                                ).ToString()), 3);
-                            tj++;
-                            break;
-                        }
-                    }
-                }
-
-                tnh = targf.Levels[0].Chords is not null ? targf.Levels[0].Chords.Length : 0;
-                for (var j = 0; j < tnh; j++)
-                {
-                    var targ_note = targf.Levels[0].Chords[j].Time;
-                    for (var m = 0; m < bkpref.Levels[0].Chords.Length - 1; m++)
-                    {
-                        var bkp_ref = bkpref.Levels[0].Chords[m].Time;
-                        var bkp_ref_next = bkpref.Levels[0].Chords[m + 1].Time;
-                        var ref_note = reff.Levels[0].Chords[m].Time;
-                        if (bkp_ref <= targ_note && bkp_ref_next >= targ_note)
-                        {
-                            targf.Levels[0].Chords[j].Time = (float)Math.Round(float.Parse((
-                                targ_note - (bkp_ref - ref_note)
-                                ).ToString()), 3);
-                            tn++;
-                            break;
-                        }
-                    }
-                }
-
-                tnh = targf.Levels[0].Chords is not null ? targf.Levels[0].Chords.Length : 0;
-                //if (targf.Arrangement)
-                for (var j = 0; j < tnh; j++)
-                {
-                    var targ_note = targf.Levels[0].Chords[j].Time;
-                    for (var m = 0; m < bkpref.Levels[0].Notes.Length - 1; m++)
-                    {
-                        var bkp_ref = bkpref.Levels[0].Notes[m].Time;
-                        var bkp_ref_next = bkpref.Levels[0].Notes[m + 1].Time;
-                        var ref_note = reff.Levels[0].Notes[m].Time;
-                        if (bkp_ref <= targ_note && bkp_ref_next >= targ_note)
-                        {
-                            targf.Levels[0].Chords[j].Time = (float)Math.Round(float.Parse((
-                                targ_note - (bkp_ref - ref_note)
-                                ).ToString()), 3);
-                            tn++;
-                            break;
-                        }
-                    }
-                }
-
-                using (var stream = File.Open(k, FileMode.Create)) targf.Serialize(stream);
-                tst += "\n" + "Distribution applied. " + chbx_Tracks.Items[i].ToString().Substring(0, chbx_Tracks.Items[i].ToString().IndexOf(" - "))
-                    + " track: " + tt + "/" + tth + " ,notes: " + tj + "/" + tjh + ", cords: " + tn + "/" + tnh + ".";
+                startt = float.Parse(Math.Round(xml_first.Value.Hour * 3600 + xml_first.Value.Minute * 60 + xml_first.Value.Second + Math.Round(float.Parse(xml_firstMili.Text), 3), 3).ToString());
+                endt = float.Parse(Math.Round(xml_last.Value.Hour * 3600 + xml_last.Value.Minute * 60 + xml_last.Value.Second + Math.Round(float.Parse(xml_lastMili.Text), 3), 3).ToString());
             }
+            else
+            {
+                var st = cmb_Sections.Text.Replace("start_time: ", "").Replace(cmb_Sections.Text.Substring(0, cmb_Sections.Text.IndexOf(" - ") + 3), "");
+                st = st.Replace(st.Substring(0, st.IndexOf(" - ") + 3), "");
+                st = st.Replace(st.Substring(0, st.IndexOf(" - ") + 3), "");
+                st = st.Substring(0, st.IndexOf(" - ")).Trim();
+                startt = float.Parse(st);
+                var xmlContent = Song2014.LoadFromFile(txt_XMLPath.Text);
+                var snglng = xmlContent.SongLength;
+                var RouteMask = xmlContent.ArrangementProperties.RouteMask.ToString() == "0" ? xmlContent.Arrangement.ToString()
+            : xmlContent.ArrangementProperties.RouteMask.ToString();
+                float x = float.Parse(GetTrackStartTime(txt_XMLPath.Text, RouteMask, null, true, -1).ToString());
+                float y = float.Parse(Math.Round(xml_last.Value.Hour * 3600 + xml_last.Value.Minute * 60 + xml_last.Value.Second + Math.Round(float.Parse(xml_lastMili.Text), 3), 3).ToString());
+                endt = cmb_Sections.Text == "" ? (endt > x ? endt : x) : (y > 0 && y > x ? y : x);
+            }
+
+            result1 = MessageBox.Show("Do you want to (" + startt + ", end note: " + endt + "): \n\n1. (Yes) Sync Section "
+                + (cmb_Sections.Text == "" ? ": (none selected start note: " + startt + ", end note: " + endt + ")"
+                : "\"" + cmb_Sections.Text + "\"") + "\n\n of (MASTER):\n" + txt_XMLPath.Text + "\n\n to (SLAVE):\n" + u + "\n\n 2. (No) uses an internal algorhythm (broken atm)" +
+                "\n\n 3. (Cancel) Stops timing syncing between tracks."
+                   , MESSAGEBOX_CAPTION, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            u += ";" + txt_XMLPath.Text;
+            if (result1 == DialogResult.Cancel) return;
+            if (result1 == DialogResult.Yes)
+            {
+                for (var k = 0; k < xmlz.Count(); k++) //foreach (var xml in xmlz)
+                {
+                    var t = 1;
+                    var xml = xmlz[k].ToString();/*Path.GetDirectoryName(FilePath)+"\\"+*/
+                    if (!u.Contains(xml)) continue;
+                    Platform platform = (xml).GetPlatform();/*+ "..\\"*/
+                    var manifestFunctions = new ManifestFunctions(platform.version);
+                    Song2014 xmlContent = null;
+                    try
+                    {
+                        try
+                        {
+                            xmlContent = Song2014.LoadFromFile(xml);
+                            var snglng = xmlContent.SongLength;
+                            var RouteMask = xmlContent.ArrangementProperties.RouteMask.ToString() == "0" ? xmlContent.Arrangement.ToString()
+                        : xmlContent.ArrangementProperties.RouteMask.ToString();
+                        }
+                        catch (Exception ex)
+                        {
+                            continue;
+                        }
+                        platform.version = RocksmithToolkitLib.GameVersion.RS2014;
+                        if (manifestFunctions.GetMaxDifficulty(xmlContent) > 0)
+                        {  //Save a copy
+                            if (!File.Exists(xml + ".old8")) File.Copy(xml, xml + ".old8", false);
+                            else File.Copy(xml, xml + ".old8", true);
+                            xmlContent = Song2014.LoadFromFile(xml);
+                        }
+
+                        //var i = cmb_Tracks.GetItemChecked(k) ? xml : "";
+                        if (txt_XMLPath.Text.Contains(xml))
+                        {
+                            nt0[k, 0, 4] = "Main";
+                            main = k;
+                        }
+
+                        var a = xmlContent.ArrangementProperties.RouteMask.ToString();
+                        if (a == "Vocal" || a == "ShowLight" || a == "4") continue;
+
+                        //if (1 == 2) //we are only syncing "time" not adding notes(i.e. cords) and so this looks irrelevant
+                            for (var n = 0; n < xmlContent.ChordTemplates.Length; n++)
+                            {
+                                if (xmlContent.ChordTemplates[n].Fret0 > -1) chords[n, 1] = xmlContent.ChordTemplates[n].Fret0.ToString();
+                                if (xmlContent.ChordTemplates[n].Fret1 > -1) chords[n, 2] = xmlContent.ChordTemplates[n].Fret1.ToString();
+                                if (xmlContent.ChordTemplates[n].Fret2 > -1) chords[n, 3] = xmlContent.ChordTemplates[n].Fret2.ToString();
+                                if (xmlContent.ChordTemplates[n].Fret3 > -1) chords[n, 4] = xmlContent.ChordTemplates[n].Fret3.ToString();
+                                if (xmlContent.ChordTemplates[n].Fret4 > -1) chords[n, 5] = xmlContent.ChordTemplates[n].Fret4.ToString();
+                                if (xmlContent.ChordTemplates[n].Fret5 > -1) chords[n, 6] = xmlContent.ChordTemplates[n].Fret5.ToString();
+                            }
+
+                        if (xmlContent.Levels[0].Chords.Length > 0)
+                            for (var m = 0; m < xmlContent.Levels[0].Chords.Length; m++)
+                            {
+                                if (chords[xmlContent.Levels[0].Chords[m].ChordId, 1] is not null) if (xmlContent.Levels[0].Chords[m].Time.ToString() != "") { nt0[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt0[k, t, 3] = "c"; nt0[k, t, 5] = t.ToString(); nt1[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt1[k, t, 1] = chords[xmlContent.Levels[0].Chords[m].ChordId, 1]; }
+                                if (chords[xmlContent.Levels[0].Chords[m].ChordId, 2] is not null) if (xmlContent.Levels[0].Chords[m].Time.ToString() != "") { nt0[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt0[k, t, 3] = "c"; nt0[k, t, 5] = t.ToString(); nt2[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt2[k, t, 1] = chords[xmlContent.Levels[0].Chords[m].ChordId, 2]; }
+                                if (chords[xmlContent.Levels[0].Chords[m].ChordId, 3] is not null) if (xmlContent.Levels[0].Chords[m].Time.ToString() != "") { nt0[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt0[k, t, 3] = "c"; nt0[k, t, 5] = t.ToString(); nt3[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt3[k, t, 1] = chords[xmlContent.Levels[0].Chords[m].ChordId, 3]; }
+                                if (chords[xmlContent.Levels[0].Chords[m].ChordId, 4] is not null) if (xmlContent.Levels[0].Chords[m].Time.ToString() != "") { nt0[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt0[k, t, 3] = "c"; nt0[k, t, 5] = t.ToString(); nt4[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt4[k, t, 1] = chords[xmlContent.Levels[0].Chords[m].ChordId, 4]; }
+                                if (chords[xmlContent.Levels[0].Chords[m].ChordId, 5] is not null) if (xmlContent.Levels[0].Chords[m].Time.ToString() != "") { nt0[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt0[k, t, 3] = "c"; nt0[k, t, 5] = t.ToString(); nt5[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt5[k, t, 1] = chords[xmlContent.Levels[0].Chords[m].ChordId, 5]; }
+                                if (chords[xmlContent.Levels[0].Chords[m].ChordId, 6] is not null) if (xmlContent.Levels[0].Chords[m].Time.ToString() != "") { nt0[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt0[k, t, 3] = "c"; nt0[k, t, 5] = t.ToString(); nt6[k, t, 0] = xmlContent.Levels[0].Chords[m].Time.ToString(); nt6[k, t, 1] = chords[xmlContent.Levels[0].Chords[m].ChordId, 6]; }
+                                t++;
+                            }
+                        float ghosts = 0;
+                        if (xmlContent.Levels[0].Notes.Length > 0)
+                            for (var n = 0; n < xmlContent.Levels[0].Notes.Length; n++)
+                            {
+                                if (xmlContent.Levels[0].Notes[n].Time == ghosts) t--; ;
+                                ghosts = xmlContent.Levels[0].Notes[n].Time;
+                                if (xmlContent.Levels[0].Notes[n].String == 0) { nt0[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt0[k, t, 3] = "n"; nt0[k, t, 5] = t.ToString(); nt1[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt1[k, t, 1] = xmlContent.Levels[0].Notes[n].Fret.ToString(); }
+                                else if (xmlContent.Levels[0].Notes[n].String == 1) { nt0[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt0[k, t, 3] = "n"; nt0[k, t, 5] = t.ToString(); nt2[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt2[k, t, 1] = xmlContent.Levels[0].Notes[n].Fret.ToString(); }
+                                else if (xmlContent.Levels[0].Notes[n].String == 2) { nt0[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt0[k, t, 3] = "n"; nt0[k, t, 5] = t.ToString(); nt3[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt3[k, t, 1] = xmlContent.Levels[0].Notes[n].Fret.ToString(); }
+                                else if (xmlContent.Levels[0].Notes[n].String == 3) { nt0[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt0[k, t, 3] = "n"; nt0[k, t, 5] = t.ToString(); nt4[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt4[k, t, 1] = xmlContent.Levels[0].Notes[n].Fret.ToString(); }
+                                else if (xmlContent.Levels[0].Notes[n].String == 4) { nt0[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt0[k, t, 3] = "n"; nt0[k, t, 5] = t.ToString(); nt5[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt5[k, t, 1] = xmlContent.Levels[0].Notes[n].Fret.ToString(); }
+                                else if (xmlContent.Levels[0].Notes[n].String == 5) { nt0[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt0[k, t, 3] = "n"; nt0[k, t, 5] = t.ToString(); nt6[k, t, 0] = xmlContent.Levels[0].Notes[n].Time.ToString(); nt6[k, t, 1] = xmlContent.Levels[0].Notes[n].Fret.ToString(); }
+                                else;
+                                t++;
+                            }
+
+                        nt0[k, 0, 5] = t.ToString();
+
+                        //sort
+                        for (var n = 1; n <= t - 1; n++)
+                            for (var m = n + 1; m <= t; m++)
+                            {
+                                var timesn = nt0[k, n, 0];
+                                var timesm = nt0[k, m, 0];
+                                if (timesn is not null && timesm is not null)
+                                {
+                                    if (float.Parse(timesn) > float.Parse(timesm))
+                                    {
+                                        //if (n > 313 || m > 312) ;
+
+                                        var u0 = nt0[k, n, 0]; nt0[k, n, 0] = nt0[k, m, 0]; nt0[k, m, 0] = u0; //time
+                                        var j0 = nt0[k, n, 3]; nt0[k, n, 3] = nt0[k, m, 3]; nt0[k, m, 3] = j0; //notes/cord
+                                        var z0 = nt0[k, n, 5]; nt0[k, n, 5] = nt0[k, m, 5]; nt0[k, m, 5] = z0; //main/slave
+                                        var z1 = nt1[k, n, 1]; nt1[k, n, 1] = nt1[k, m, 1]; nt1[k, m, 1] = z1;/**/ var u1 = nt1[k, n, 0]; nt1[k, n, 0] = nt1[k, m, 0]; nt1[k, m, 0] = u1;
+                                        var z2 = nt2[k, n, 1]; nt2[k, n, 1] = nt2[k, m, 1]; nt2[k, m, 1] = z2; var u2 = nt2[k, n, 0]; nt2[k, n, 0] = nt2[k, m, 0]; nt2[k, m, 0] = u2;
+                                        var z3 = nt3[k, n, 1]; nt3[k, n, 1] = nt3[k, m, 1]; nt3[k, m, 1] = z3; var u3 = nt3[k, n, 0]; nt3[k, n, 0] = nt3[k, m, 0]; nt3[k, m, 0] = u3;
+                                        var z4 = nt4[k, n, 1]; nt4[k, n, 1] = nt4[k, m, 1]; nt4[k, m, 1] = z4; var u4 = nt4[k, n, 0]; nt4[k, n, 0] = nt4[k, m, 0]; nt4[k, m, 0] = u4;
+                                        var z5 = nt5[k, n, 1]; nt5[k, n, 1] = nt5[k, m, 1]; nt5[k, m, 1] = z5; var u5 = nt5[k, n, 0]; nt5[k, n, 0] = nt5[k, m, 0]; nt5[k, m, 0] = u5;
+                                        var z6 = nt6[k, n, 1]; nt6[k, n, 1] = nt6[k, m, 1]; nt6[k, m, 1] = z6; var u6 = nt6[k, n, 0]; nt6[k, n, 0] = nt6[k, m, 0]; nt6[k, m, 0] = u6;
+                                        //break;
+                                    }
+                                    else if (float.Parse(timesn) == float.Parse(timesm) && nt0[k, n, 3] == "c")
+                                    {
+                                        ;
+                                        //var z0 = nt0[k, n, 0]; nt0[k, n, 0] = nt0[k, m, 0]; nt1[k, m, 1] = z0;
+                                        //var z1 = nt1[k, n, 1]; nt1[k, n, 1] = nt1[k, m, 1]; nt1[k, m, 1] = z1; var u1 = nt1[k, n, 0]; nt1[k, n, 0] = nt1[k, m, 0]; nt1[k, m, 0] = u1;
+                                        //var z2 = nt2[k, n, 1]; nt2[k, n, 1] = nt2[k, m, 1]; nt2[k, m, 1] = z2; var u2 = nt2[k, n, 0]; nt2[k, n, 0] = nt2[k, m, 0]; nt2[k, m, 0] = u2;
+                                        //var z3 = nt3[k, n, 1]; nt3[k, n, 1] = nt3[k, m, 1]; nt3[k, m, 1] = z3; var u3 = nt3[k, n, 0]; nt3[k, n, 0] = nt3[k, m, 0]; nt3[k, m, 0] = u3;
+                                        //var z4 = nt4[k, n, 1]; nt4[k, n, 1] = nt4[k, m, 1]; nt4[k, m, 1] = z4; var u4 = nt4[k, n, 0]; nt4[k, n, 0] = nt4[k, m, 0]; nt4[k, m, 0] = u4;
+                                        //var z5 = nt5[k, n, 1]; nt5[k, n, 1] = nt5[k, m, 1]; nt5[k, m, 1] = z5; var u5 = nt5[k, n, 0]; nt5[k, n, 0] = nt5[k, m, 0]; nt5[k, m, 0] = u5;
+                                        //var z6 = nt6[k, n, 1]; nt6[k, n, 1] = nt6[k, m, 1]; nt6[k, m, 1] = z6; var u6 = nt6[k, n, 0]; nt6[k, n, 0] = nt6[k, m, 0]; nt6[k, m, 0] = u6;
+                                        //break;
+                                    }
+
+                                    else if (float.Parse(timesn) == float.Parse(timesm) && nt0[k, m, 3] == "c")
+                                    {
+                                        var z0 = nt0[k, n, 0]; nt0[k, n, 0] = nt0[k, m, 0]; nt1[k, m, 1] = z0;
+                                        var z1 = nt1[k, n, 1]; nt1[k, n, 1] = nt1[k, m, 1]; nt1[k, m, 1] = z1; var u1 = nt1[k, n, 0]; nt1[k, n, 0] = nt1[k, m, 0]; nt1[k, m, 0] = u1;
+                                        var z2 = nt2[k, n, 1]; nt2[k, n, 1] = nt2[k, m, 1]; nt2[k, m, 1] = z2; var u2 = nt2[k, n, 0]; nt2[k, n, 0] = nt2[k, m, 0]; nt2[k, m, 0] = u2;
+                                        var z3 = nt3[k, n, 1]; nt3[k, n, 1] = nt3[k, m, 1]; nt3[k, m, 1] = z3; var u3 = nt3[k, n, 0]; nt3[k, n, 0] = nt3[k, m, 0]; nt3[k, m, 0] = u3;
+                                        var z4 = nt4[k, n, 1]; nt4[k, n, 1] = nt4[k, m, 1]; nt4[k, m, 1] = z4; var u4 = nt4[k, n, 0]; nt4[k, n, 0] = nt4[k, m, 0]; nt4[k, m, 0] = u4;
+                                        var z5 = nt5[k, n, 1]; nt5[k, n, 1] = nt5[k, m, 1]; nt5[k, m, 1] = z5; var u5 = nt5[k, n, 0]; nt5[k, n, 0] = nt5[k, m, 0]; nt5[k, m, 0] = u5;
+                                        var z6 = nt6[k, n, 1]; nt6[k, n, 1] = nt6[k, m, 1]; nt6[k, m, 1] = z6; var u6 = nt6[k, n, 0]; nt6[k, n, 0] = nt6[k, m, 0]; nt6[k, m, 0] = u6;
+                                        break;
+                                    }
+                                }
+                            }
+                    }
+                    catch (Exception ex)
+                    {
+                        ;
+                    }
+                }
+
+                //check if the number of notes is comparable
+                var z = "Tracks and note&cord count per selected section is:\n\n"; var diff = false;
+                for (var k = 0; k < xmlz.Count(); k++)
+                {
+                    var at = 0;
+                    var xml = xmlz[k].ToString();
+                    if (!u.Contains(xml)) continue;
+                    int t = nt0[k, 0, 5].ToString().ToInt32();
+                    Platform platform = (Path.GetDirectoryName(xml) + "..\\").GetPlatform();
+                    var manifestFunctions = new ManifestFunctions(platform.version);
+                    Song2014 xmlContentf = null;
+                    try
+                    {
+                        try
+                        {
+                            xmlContentf = Song2014.LoadFromFile(xml);
+                            var snglng = xmlContentf.SongLength;
+                        }
+                        catch (Exception ex)
+                        {
+                            continue;
+                        }
+
+                        platform.version = RocksmithToolkitLib.GameVersion.RS2014;
+
+                        var a = xmlContentf.ArrangementProperties.RouteMask.ToString();
+                        if (a == "Vocal" || a == "ShowLight" || a == "4") continue;
+
+                        if (nt0[k, 0, 4] == "Main" || main == k) z += "\n\tmaster(" + xmlContentf.ArrangementProperties.RouteMask.ToString() + ")= ";
+                        else z += "\n\tslave(" + xmlContentf.ArrangementProperties.RouteMask.ToString() + ")= ";
+
+                        if (xmlContentf.Levels[0].Chords.Length > 0)
+                            for (var m = 0; m < xmlContentf.Levels[0].Chords.Length; m++)
+                            {
+                                if (chords[xmlContentf.Levels[0].Chords[m].ChordId, 1] is not null) { if (xmlContentf.Levels[0].Chords[m].Time >= startt && xmlContentf.Levels[0].Chords[m].Time <= endt) at++; }
+                                else if (chords[xmlContentf.Levels[0].Chords[m].ChordId, 2] is not null) { if (xmlContentf.Levels[0].Chords[m].Time >= startt && xmlContentf.Levels[0].Chords[m].Time <= endt) at++; }
+                                else if (chords[xmlContentf.Levels[0].Chords[m].ChordId, 3] is not null) { if (xmlContentf.Levels[0].Chords[m].Time >= startt && xmlContentf.Levels[0].Chords[m].Time <= endt) at++; }
+                                else if (chords[xmlContentf.Levels[0].Chords[m].ChordId, 4] is not null) { if (xmlContentf.Levels[0].Chords[m].Time >= startt && xmlContentf.Levels[0].Chords[m].Time <= endt) at++; }
+                                else if (chords[xmlContentf.Levels[0].Chords[m].ChordId, 5] is not null) { if (xmlContentf.Levels[0].Chords[m].Time >= startt && xmlContentf.Levels[0].Chords[m].Time <= endt) at++; }
+                                else if (chords[xmlContentf.Levels[0].Chords[m].ChordId, 6] is not null) { if (xmlContentf.Levels[0].Chords[m].Time >= startt && xmlContentf.Levels[0].Chords[m].Time <= endt) at++; }
+                            }
+                        float ghosts = 0;
+                        if (xmlContentf.Levels[0].Notes.Length > 0)
+                            for (var n = 0; n < xmlContentf.Levels[0].Notes.Length; n++)
+                            {
+                                if (xmlContentf.Levels[0].Notes[n].Time == ghosts) continue;
+                                ghosts = xmlContentf.Levels[0].Notes[n].Time;
+                                if (xmlContentf.Levels[0].Notes[n].String == 0) { if (xmlContentf.Levels[0].Notes[n].Time >= startt && xmlContentf.Levels[0].Notes[n].Time <= endt) at++; }
+                                else if (xmlContentf.Levels[0].Notes[n].String == 1) { if (xmlContentf.Levels[0].Notes[n].Time >= startt && xmlContentf.Levels[0].Notes[n].Time <= endt) at++; }
+                                else if (xmlContentf.Levels[0].Notes[n].String == 2) { if (xmlContentf.Levels[0].Notes[n].Time >= startt && xmlContentf.Levels[0].Notes[n].Time <= endt) at++; }
+                                else if (xmlContentf.Levels[0].Notes[n].String == 3) { if (xmlContentf.Levels[0].Notes[n].Time >= startt && xmlContentf.Levels[0].Notes[n].Time <= endt) at++; }
+                                else if (xmlContentf.Levels[0].Notes[n].String == 4) { if (xmlContentf.Levels[0].Notes[n].Time >= startt && xmlContentf.Levels[0].Notes[n].Time <= endt) at++; }
+                                else if (xmlContentf.Levels[0].Notes[n].String == 5) { if (xmlContentf.Levels[0].Notes[n].Time >= startt && xmlContentf.Levels[0].Notes[n].Time <= endt) at++; }
+                            }
+                        if (!z.Contains(at.ToString())) diff = true;
+                        z += at + ", ";
+                    }
+                    catch (Exception ex)
+                    {
+                        ;
+                    }
+                }
+                DialogResult result2 = DialogResult.Yes; ;
+
+                if (diff) result2 = MessageBox.Show("No of notes&chords from main to others are different! 1. (Yes) Continue?\n1. (No) Stop distribuion! \n\n" + z, MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result2 == DialogResult.No) return;
+
+                //get Master start note
+                int startMAster = 0; int endMAster = 0;
+                for (var m = 1; m <= nt0[main, 0, 5].ToString().ToInt32(); m++)
+                    if (nt0[main, m, 0] is not null)
+                        if (float.Parse(nt0[main, m, 0]) >= startt)
+                        {
+                            //if (float.Parse(nt0[main, m, 0]) > endt) { endMAster = m;
+                            //else if (startMAster == 0) 
+                            startMAster = m; break;
+                        }
+                //}
+
+                //sync notes with Main track ...for the Selected Section
+                var al = 0;
+                for (var k = 0; k < xmlz.Count(); k++)
+                {
+                    var xml = xmlz[k].ToString();
+                    if (!u.Contains(xml)) continue;
+                    //var i = cmb_Tracks.GetItemChecked(k) ? Directory.GetParent(xml) + "\\" + cmb_Tracks.Items[k].ToString().Substring(0, cmb_Tracks.Items[k].ToString().IndexOf(" - ")) + ".xml" : "";
+                    if (nt0[k, 0, 4] == "Main" || main == k) continue; //dont sync the Main track from which times are extracted :)
+                    int t = nt0[k, 0, 5].ToString().ToInt32();
+
+                    Platform platform = (Path.GetDirectoryName(xml) + "..\\").GetPlatform();
+                    var manifestFunctions = new ManifestFunctions(platform.version);
+                    Song2014 xmlContente = null;
+                    try
+                    {
+                        try
+                        {
+                            xmlContente = Song2014.LoadFromFile(xml);
+                            var snglng = xmlContente.SongLength;
+                        }
+                        catch (Exception ex)
+                        {
+                            continue;
+                        }
+
+                        platform.version = RocksmithToolkitLib.GameVersion.RS2014;
+                        //Save a backup
+                        if (!File.Exists(xml + ".old5")) File.Copy(xml, xml + ".old5", false);
+                        else File.Copy(xml, xml + ".old5", true);
+
+                        var a = xmlContente.ArrangementProperties.RouteMask.ToString();
+                        if (a == "Vocal" || a == "ShowLight" || a == "4") continue;
+
+                        //copy times from master incrementally to the
+                        if (xmlContente.Levels[0].Chords.Length > 0)
+                            for (var m = 0; m < xmlContente.Levels[0].Chords.Length; m++)
+                            {
+                               // if (chords[xmlContente.Levels[0].Chords[m].ChordId, 1] is not null) 
+                                    if (xmlContente.Levels[0].Chords[m].Time >= startt && xmlContente.Levels[0].Chords[m].Time <= endt) { al++; xmlContente.Levels[0].Chords[m].Time = GetNoOrd(xmlContente.Levels[0].Chords[m].Time, t, k, main, nt0, startMAster, startt); }
+                               // if (chords[xmlContente.Levels[0].Chords[m].ChordId, 2] is not null) 
+                                    if (xmlContente.Levels[0].Chords[m].Time >= startt && xmlContente.Levels[0].Chords[m].Time <= endt) { al++; xmlContente.Levels[0].Chords[m].Time = GetNoOrd(xmlContente.Levels[0].Chords[m].Time, t, k, main, nt0, startMAster, startt); }
+                                //if (chords[xmlContente.Levels[0].Chords[m].ChordId, 3] is not null) 
+                                    if (xmlContente.Levels[0].Chords[m].Time >= startt && xmlContente.Levels[0].Chords[m].Time <= endt) { al++; xmlContente.Levels[0].Chords[m].Time = GetNoOrd(xmlContente.Levels[0].Chords[m].Time, t, k, main, nt0, startMAster, startt); }
+                               // if (chords[xmlContente.Levels[0].Chords[m].ChordId, 4] is not null) 
+                                    if (xmlContente.Levels[0].Chords[m].Time >= startt && xmlContente.Levels[0].Chords[m].Time <= endt) { al++; xmlContente.Levels[0].Chords[m].Time = GetNoOrd(xmlContente.Levels[0].Chords[m].Time, t, k, main, nt0, startMAster, startt); }
+                               // if (chords[xmlContente.Levels[0].Chords[m].ChordId, 5] is not null)
+                                    if (xmlContente.Levels[0].Chords[m].Time >= startt && xmlContente.Levels[0].Chords[m].Time <= endt) { al++; xmlContente.Levels[0].Chords[m].Time = GetNoOrd(xmlContente.Levels[0].Chords[m].Time, t, k, main, nt0, startMAster, startt); }
+                    //            if (chords[xmlContente.Levels[0].Chords[m].ChordId, 6] is not null)
+                                    if (xmlContente.Levels[0].Chords[m].Time >= startt && xmlContente.Levels[0].Chords[m].Time <= endt) { al++; xmlContente.Levels[0].Chords[m].Time = GetNoOrd(xmlContente.Levels[0].Chords[m].Time, t, k, main, nt0, startMAster, startt); }
+                            }
+                        if (xmlContente.Levels[0].Notes.Length > 0)
+                            for (var n = 0; n < xmlContente.Levels[0].Notes.Length; n++)
+                            {
+                                if (n == 48)
+                                    ;
+                                if (xmlContente.Levels[0].Notes[n].String == 0) { if (xmlContente.Levels[0].Notes[n].Time >= startt && xmlContente.Levels[0].Notes[n].Time <= endt) { al++; xmlContente.Levels[0].Notes[n].Time = GetNoOrd(xmlContente.Levels[0].Notes[n].Time, t, k, main, nt0, startMAster, startt); } }
+                                else if (xmlContente.Levels[0].Notes[n].String == 1) { if (xmlContente.Levels[0].Notes[n].Time >= startt && xmlContente.Levels[0].Notes[n].Time <= endt) { al++; xmlContente.Levels[0].Notes[n].Time = GetNoOrd(xmlContente.Levels[0].Notes[n].Time, t, k, main, nt0, startMAster, startt); } }
+                                else if (xmlContente.Levels[0].Notes[n].String == 2) { if (xmlContente.Levels[0].Notes[n].Time >= startt && xmlContente.Levels[0].Notes[n].Time <= endt) { al++; xmlContente.Levels[0].Notes[n].Time = GetNoOrd(xmlContente.Levels[0].Notes[n].Time, t, k, main, nt0, startMAster, startt); } }
+                                else if (xmlContente.Levels[0].Notes[n].String == 3) { if (xmlContente.Levels[0].Notes[n].Time >= startt && xmlContente.Levels[0].Notes[n].Time <= endt) { al++; xmlContente.Levels[0].Notes[n].Time = GetNoOrd(xmlContente.Levels[0].Notes[n].Time, t, k, main, nt0, startMAster, startt); } }
+                                else if (xmlContente.Levels[0].Notes[n].String == 4) { if (xmlContente.Levels[0].Notes[n].Time >= startt && xmlContente.Levels[0].Notes[n].Time <= endt) { al++; xmlContente.Levels[0].Notes[n].Time = GetNoOrd(xmlContente.Levels[0].Notes[n].Time, t, k, main, nt0, startMAster, startt); } }
+                                else if (xmlContente.Levels[0].Notes[n].String == 5) { if (xmlContente.Levels[0].Notes[n].Time >= startt && xmlContente.Levels[0].Notes[n].Time <= endt) { al++; xmlContente.Levels[0].Notes[n].Time = GetNoOrd(xmlContente.Levels[0].Notes[n].Time, t, k, main, nt0, startMAster, startt); } }
+                            }
+                        using (var stream = File.Open(xml, FileMode.Create))
+                            xmlContente.Serialize(stream);
+                    }
+                    catch (Exception ex)
+                    {
+                        ;
+                    }
+                }
+
+                tst = "Aligned " + al + "/" + (nt0[1, 0, 5] is null ? 0 : nt0[1, 0, 5]) + " notes/cords, in-between timestamps: " + startt + " and " + endt + ".";
+            }
+            else
+                for (var i = 0; i < tth; i++)
+                {
+                    return;
+                    var k = cmb_Tracks.GetItemChecked(i) ? Directory.GetParent(txt_XMLPath.Text) + "\\" + cmb_Tracks.Items[i].ToString().Substring(0, cmb_Tracks.Items[i].ToString().IndexOf(" - ")) + ".xml" : "";
+                    if (!File.Exists(k)) continue;/*|| File.Exists(k + ".old3")*/
+                    if (File.Exists(k + ".old7")) File.Copy(k + ".old7", k, true);
+                    if (!File.Exists(k + ".old7")) File.Copy(k, k + ".old7", true);
+
+                    tt++;
+
+                    //for (var j = 0; j < xmlContent.Levels.Length; j++)
+                    //{
+                    //    for (var k = 0; k < xmlContent.Levels[j].Notes.Length; k++)
+                    //        if (xmlContent.Levels[j].Notes[k].Time > 0)
+
+                    var targf = Song2014.LoadFromFile(k);
+                    var bkpref = Song2014.LoadFromFile(txt_XMLPath.Text + ".old3");
+                    var reff = Song2014.LoadFromFile(txt_XMLPath.Text);
+
+                    tjh = targf.Levels[0].Notes.Length;
+                    for (var j = 0; j < tjh; j++)
+                    {
+                        var targ_note = targf.Levels[0].Notes[j].Time;
+                        for (var m = 0; m < bkpref.Levels[0].Notes.Length - 1; m++)
+                        {
+                            var bkp_ref = bkpref.Levels[0].Notes[m].Time;
+                            var bkp_ref_next = bkpref.Levels[0].Notes[m + 1].Time;
+                            var ref_note = reff.Levels[0].Notes[m].Time;
+                            if (bkp_ref <= targ_note && bkp_ref_next >= targ_note)
+                            {
+                                targf.Levels[0].Notes[j].Time = (float)Math.Round(float.Parse((
+                                    targ_note - (bkp_ref - ref_note)
+                                    ).ToString()), 3);
+                                tj++;
+                                break;
+                            }
+                        }
+                    }
+
+                    tnh = targf.Levels[0].Chords is not null ? targf.Levels[0].Chords.Length : 0;
+                    for (var j = 0; j < tnh; j++)
+                    {
+                        var targ_note = targf.Levels[0].Chords[j].Time;
+                        for (var m = 0; m < bkpref.Levels[0].Chords.Length - 1; m++)
+                        {
+                            var bkp_ref = bkpref.Levels[0].Chords[m].Time;
+                            var bkp_ref_next = bkpref.Levels[0].Chords[m + 1].Time;
+                            var ref_note = reff.Levels[0].Chords[m].Time;
+                            if (bkp_ref <= targ_note && bkp_ref_next >= targ_note)
+                            {
+                                targf.Levels[0].Chords[j].Time = (float)Math.Round(float.Parse((
+                                    targ_note - (bkp_ref - ref_note)
+                                    ).ToString()), 3);
+                                tn++;
+                                break;
+                            }
+                        }
+                    }
+
+                    tnh = targf.Levels[0].Chords is not null ? targf.Levels[0].Chords.Length : 0;
+                    //if (targf.Arrangement)
+                    for (var j = 0; j < tnh; j++)
+                    {
+                        var targ_note = targf.Levels[0].Chords[j].Time;
+                        for (var m = 0; m < bkpref.Levels[0].Notes.Length - 1; m++)
+                        {
+                            var bkp_ref = bkpref.Levels[0].Notes[m].Time;
+                            var bkp_ref_next = bkpref.Levels[0].Notes[m + 1].Time;
+                            var ref_note = reff.Levels[0].Notes[m].Time;
+                            if (bkp_ref <= targ_note && bkp_ref_next >= targ_note)
+                            {
+                                targf.Levels[0].Chords[j].Time = (float)Math.Round(float.Parse((
+                                    targ_note - (bkp_ref - ref_note)
+                                    ).ToString()), 3);
+                                tn++;
+                                break;
+                            }
+                        }
+                    }
+
+                    using (var stream = File.Open(k, FileMode.Create)) targf.Serialize(stream);
+                    tst += "\n" + "Distribution applied. " + cmb_Tracks.Items[i].ToString().Substring(0, cmb_Tracks.Items[i].ToString().IndexOf(" - "))
+                        + " track: " + tt + "/" + tth + " ,notes: " + tj + "/" + tjh + ", cords: " + tn + "/" + tnh + ".";
+                }
             MessageBox.Show(tst, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -2083,7 +2629,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 MessageBox.Show("Set a Start/EndTime!", MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            perc_time_betw_notes = calctime("P3");// float.Parse();
+            perc_time_betw_notes = calctime("P3");// txt_P3.Text + ";" + starttt + ";" + txt_Lastnote.Text + ";" + "p3" + ";" + chbx_removehandshapes.Checked + ";" + txt_PercTime.Text;
             perc_time_betw_notes += ";apply";
             Save();
             SaveSectionAndDescription();
@@ -2120,6 +2666,16 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             // DistribXMLNotes(sXml, FilePath, gPlatform, Arrangoff, BasedOn_CF, EoFPath, cnb, cnc);
             DistribXMLNotes_Load(null, null);
+        }
+
+        private void btn_VisualDistrib_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label19_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

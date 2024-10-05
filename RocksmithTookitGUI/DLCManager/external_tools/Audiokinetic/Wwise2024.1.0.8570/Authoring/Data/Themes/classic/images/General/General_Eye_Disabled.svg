@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-256,-4)">
+        <g id="General_Eye_Disabled" transform="matrix(1,0,0,1,208,-8.88178e-16)">
+            <g id="Transparent-BG" serif:id="Transparent BG" transform="matrix(1,0,0,1,48,4)">
+                <rect x="0" y="0" width="20" height="20" style="fill:white;fill-opacity:0;"/>
+            </g>
+            <g id="Eye" transform="matrix(0.625,0,0,0.625,50,7)">
+                <rect x="0" y="0" width="24" height="24" style="fill:none;fill-rule:nonzero;"/>
+                <g transform="matrix(1.6,0,0,1.6,-414.4,-11.2)">
+                    <path d="M267,9C263.364,9 260.258,11.281 259,14.5C260.258,17.719 263.364,20 267,20C270.636,20 273.742,17.719 275,14.5C273.742,11.281 270.636,9 267,9ZM266.986,10.47C269.218,10.47 271.03,12.276 271.03,14.5C271.03,16.724 269.218,18.53 266.986,18.53C264.754,18.53 262.942,16.724 262.942,14.5C262.942,12.276 264.754,10.47 266.986,10.47ZM265.762,12C266.449,12 267.007,12.558 267.007,13.245C267.007,13.933 266.449,14.491 265.762,14.491C265.075,14.491 264.517,13.933 264.517,13.245C264.517,12.558 265.075,12 265.762,12Z" style="fill:white;fill-rule:nonzero;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

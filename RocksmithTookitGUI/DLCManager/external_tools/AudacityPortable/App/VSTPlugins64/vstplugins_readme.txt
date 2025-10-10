@@ -1,0 +1,1 @@
+Place your VST plugins here and Audacity Portable will use them.

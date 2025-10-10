@@ -96,6 +96,7 @@ namespace RocksmithToolkitLib.DLCPackage
         public static string Unpack(string srcPath, string destDirPath, Platform overridePlatform = null, bool decodeAudio = false, bool overwriteSongXml = false)
         {
             var ps4 = false;//bcapi
+
             ExternalApps.VerifyExternalApps();
             Platform srcPlatform;
 
@@ -179,6 +180,12 @@ namespace RocksmithToolkitLib.DLCPackage
 
             // PERFORM QUALITY CONTROL CHECKS
             // Extract XML from SNG and check it against the EOF XML (correct bass tuning from older toolkit/EOF xml files)
+            if (Directory.Exists(unpackedDir + "//audio//generic//"))//bcapips4
+            {
+                ps4 = true;
+                srcPlatform.platform = GamePlatform.PS4;
+                //srcPlatform.IsConsole = true;
+            }
             if (srcPlatform.version == GameVersion.RS2014)
             {
                 try
@@ -208,8 +215,8 @@ namespace RocksmithToolkitLib.DLCPackage
                         if (!String.IsNullOrEmpty(jsonFiles) && jsonFiles.Any())
                             att = Manifest2014<Attributes2014>.LoadFromFile(jsonFiles).Entries.ToArray()[0].Value.ToArray()[0].Value;
 
-                    if (!ps4) //bcapi
-                    {// create the xml file from sng file
+                        //if (!ps4) //bcapi
+                        //{// create the xml file from sng file
                         // create the xml file from sng file
                         var sngContent = Sng2014File.LoadFromFile(sngFile, srcPlatform);
                         using (var outputStream = new FileStream(xmlSngFile, FileMode.Create, FileAccess.ReadWrite))
@@ -225,7 +232,7 @@ namespace RocksmithToolkitLib.DLCPackage
                                 {
                                     var sngFileName = Path.GetFileNameWithoutExtension(sngFile);
                                     var vocalType = sngFileName.IndexOf("jvocals", StringComparison.OrdinalIgnoreCase) >= 0 ? "jvocals" : "vocals";
-                                    var dlcName = att.DLCKey == null?null:att.DLCKey.ToLower();//bcapi
+                                    var dlcName = att.DLCKey == null ? null : att.DLCKey.ToLower();//bcapi
                                     var glyphsPath = Path.Combine(Path.GetDirectoryName(xmlSngFile), String.Format("lyrics_{0}_{1}.glyphs.xml", dlcName, vocalType));
                                     var glyphDefs = GlyphDefinitions.LoadFromSng(sngContent);
                                     glyphDefs.Serialize(glyphsPath);
@@ -278,7 +285,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
                         progress += step;
                         GlobalExtension.UpdateProgress.Value = (int)progress;
-                    }
+                        //}
 
                         //GlobalExtension.HideProgress();
                     }
@@ -409,7 +416,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     }
                 }
             }
-            catch (Exception ex) { var tsst = "Error ..." + ex; UpdateLog(DateTime.Now, tsst, false, "C:\t\0", "", "", null, null); }
+            catch (Exception ex) { var tsst = "Error ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, "C:\t\0", "", "", null, null); }
             //if (c("dlcm_Debug").ToLower() == "yes" && txt.ToLower().IndexOf("error") >= 0)
             //{
             //    ErrorWindow frm1 = new ErrorWindow(txt, "", "Error capture throughout the running odf the DLC Manager. If you wanna DEBUG do a Debug All" +
@@ -441,7 +448,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 });
 
                 //UpdateLog(DateTime.Now, "write " + srcDirPath, true, "C:\\t\\0", "", "DLCManager", null, null);
-                psarc.Write(psarcStream, !platform.IsConsole);
+                psarc.Write(psarcStream, !platform.IsConsole || platform.platform.ToString() == "PS4");
 
                 if (Path.GetExtension(destPath) != ".psarc")
                     destPath += ".psarc";
@@ -692,7 +699,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
             var psarcDatPaths = Directory.EnumerateFiles(PS3_EDAT, "*.psarc.dat").ToList();
             if (!psarcDatPaths.Any())
-                throw new FileLoadException("<ERROR> UnpackPS3Package Failed.  Could not find "+ outputFilename + " psarc.dat archive. " + Environment.NewLine + "Verify the OS Environmental Variable 'PATH' is configured properly for Java ..." + Environment.NewLine + Environment.NewLine);
+                throw new FileLoadException("<ERROR> UnpackPS3Package Failed.  Could not find " + outputFilename + " psarc.dat archive. " + Environment.NewLine + "Verify the OS Environmental Variable 'PATH' is configured properly for Java ..." + Environment.NewLine + Environment.NewLine);
             if (psarcDatPaths.Count > 1)
                 throw new FileLoadException("<ERROR> UnpackPS3Package Failed.  Found more than one psarc.dat archive. " + Environment.NewLine + Environment.NewLine);
 
@@ -700,9 +707,9 @@ namespace RocksmithToolkitLib.DLCPackage
             var psarcDatPath = psarcDatPaths.First();
             var artifactsDir = String.Empty;
 
-            if (!File.Exists(psarcDatPath) || psarcDatPath.IndexOf(",")>=0) //bcapi reducing file name to allow longe file names
+            if (!File.Exists(psarcDatPath) || psarcDatPath.IndexOf(",") >= 0) //bcapi reducing file name to allow longe file names
             {
-                File.Copy(psarcDatPath, psarcDatPath.Replace(Path.GetFileName(psarcDatPath),"1"), true);
+                File.Copy(psarcDatPath, psarcDatPath.Replace(Path.GetFileName(psarcDatPath), "1"), true);
                 psarcDatPath = psarcDatPath.Replace(Path.GetFileName(psarcDatPath), "1");
             }
             using (var outputFileStream = File.OpenRead(psarcDatPath))
@@ -818,7 +825,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
                 // delete friendly named ogg/wem audio files that may have been added by new LoadFromFolder method
                 var audioFiles = Directory.EnumerateFiles(srcPath, "song_*.*", SearchOption.AllDirectories).Where(fn => fn.EndsWith(".ogg")).ToList();/*|| fn.EndsWith(".wem")*///bcapi as friendfly names r cool
-                    foreach (var audioFile in audioFiles)
+                foreach (var audioFile in audioFiles)
                     File.Delete(audioFile);
 
                 // delete friendly named _fixed.ogg audio files that may have been added by LoadFromFolder method
@@ -859,130 +866,130 @@ namespace RocksmithToolkitLib.DLCPackage
         public static Platform GetPlatform(this string srcPath)
         {
             try
-            {            
-            // use the source file path to determine platform
-            if (File.Exists(srcPath))
             {
-                // get platform from magicHdr
-                var magicHdr = String.Empty;
-                using (Stream fs = new FileStream(srcPath, FileMode.Open, FileAccess.Read))
-                using (BinaryReader br = new BinaryReader(fs, Encoding.UTF8))
+                // use the source file path to determine platform
+                if (File.Exists(srcPath))
                 {
-                    magicHdr = Encoding.ASCII.GetString(br.ReadBytes(4));
-                    // prevents exception: 'The process cannot access the file'
-                    if (fs != null)
-                        fs.Close();
-                }
-
-                switch (magicHdr)
-                {
-                    case "CON ":
-                        return new Platform(GamePlatform.XBox360, GameVersion.RS2014);
-                    case "LIVE":
-                        return new Platform(GamePlatform.XBox360, GameVersion.RS2012);
-                    case "NPD\0":
-                        return new Platform(GamePlatform.PS3, GameVersion.RS2014);
-                    case "PSAR":
-                        return TryGetPlatformByEndName(srcPath);
-                    default:
-                        break; // keep looking
-                }
-
-                // get platform from file extension
-                switch (Path.GetExtension(srcPath))
-                {
-                    case ".dat":
-                        return new Platform(GamePlatform.Pc, GameVersion.RS2012);
-                    case ".edat":
-                        return new Platform(GamePlatform.PS3, GameVersion.RS2012);
-                    default:
-                        return new Platform(GamePlatform.None, GameVersion.None);
-                }
-            }
-            else
-            {
-                // use the source artifacts directory contents to determine platform
-                if (Directory.Exists(srcPath))
-                {
-                    var fullPathInfo = new DirectoryInfo(srcPath);
-                    // GET PLATFORM BY PACKAGE ROOT DIRECTORY
-                    if (File.Exists(Path.Combine(srcPath, "APP_ID")))
+                    // get platform from magicHdr
+                    var magicHdr = String.Empty;
+                    using (Stream fs = new FileStream(srcPath, FileMode.Open, FileAccess.Read))
+                    using (BinaryReader br = new BinaryReader(fs, Encoding.UTF8))
                     {
-                        // PC 2012
-                        return new Platform(GamePlatform.Pc, GameVersion.RS2012);
+                        magicHdr = Encoding.ASCII.GetString(br.ReadBytes(4));
+                        // prevents exception: 'The process cannot access the file'
+                        if (fs != null)
+                            fs.Close();
                     }
 
-                    string agg;
-
-                    if (File.Exists(Path.Combine(srcPath, "appid.appid")))
+                    switch (magicHdr)
                     {
-                        // PC / MAC 2014
-                        agg = fullPathInfo.EnumerateFiles("*.nt", SearchOption.TopDirectoryOnly).FirstOrDefault().FullName;
-                        var aggContent = File.ReadAllText(agg);
-
-                        if (aggContent.Contains("\"dx9\""))
-                            return new Platform(GamePlatform.Pc, GameVersion.RS2014);
-                        if (aggContent.Contains("\"macos\""))
-                            return new Platform(GamePlatform.Mac, GameVersion.RS2014);
-
-                        return new Platform(GamePlatform.Pc, GameVersion.RS2014); // Because appid.appid have only in RS2014
-                    }
-
-                    if (Directory.Exists(Path.Combine(srcPath, ROOT_XBOX360)))
-                    {
-                        // XBOX 2012/2014
-                        var hTxt = fullPathInfo.EnumerateFiles("*.txt", SearchOption.TopDirectoryOnly).FirstOrDefault().FullName;
-                        var hTxtContent = File.ReadAllText(hTxt);
-
-                        if (hTxtContent.Contains("Title ID: 55530873"))
-                            return new Platform(GamePlatform.XBox360, GameVersion.RS2012);
-                        if (hTxtContent.Contains("Title ID: 555308C0"))
+                        case "CON ":
                             return new Platform(GamePlatform.XBox360, GameVersion.RS2014);
-
-                        return new Platform(GamePlatform.XBox360, GameVersion.None);
-                    }
-
-                    if (srcPath.ToLower().EndsWith("_p") || srcPath.ToLower().EndsWith("_pc"))
-                    {
-                        return new Platform(GamePlatform.Pc, GameVersion.RS2014);
-                    }
-
-                    if (srcPath.ToLower().EndsWith("_ps4")) //bcapi temporarely treat as PC
-                    {
-                        return new Platform(GamePlatform.Pc, GameVersion.RS2014);
-                    }
-
-                    if (srcPath.ToLower().EndsWith("_m") || srcPath.ToLower().EndsWith("_mac"))
-                    {
-                        return new Platform(GamePlatform.Mac, GameVersion.RS2014);
-                    }
-
-                    // some RS1 detection
-                    if (srcPath.ToLower().EndsWith("_rs1_xbox"))
-                    {
-                        return new Platform(GamePlatform.XBox360, GameVersion.RS2012);
-                    }
-
-
-                    // PS3 2012/2014
-                    var vagg = fullPathInfo.EnumerateFiles("*.nt", SearchOption.TopDirectoryOnly); //bcapi to repack cache.psarc :)
-                    agg= vagg.Count() == 0 ? null : vagg.FirstOrDefault().FullName;
-
-                    if (agg!=null) if (agg.Any())
-                    {
-                        var aggContent = File.ReadAllText(agg);
-
-                        if (aggContent.Contains("\"PS3\""))
-                            return new Platform(GamePlatform.PS3, GameVersion.RS2012);
-                        if (aggContent.Contains("\"ps3\""))
+                        case "LIVE":
+                            return new Platform(GamePlatform.XBox360, GameVersion.RS2012);
+                        case "NPD\0":
                             return new Platform(GamePlatform.PS3, GameVersion.RS2014);
+                        case "PSAR":
+                            return TryGetPlatformByEndName(srcPath);
+                        default:
+                            break; // keep looking
+                    }
+
+                    // get platform from file extension
+                    switch (Path.GetExtension(srcPath))
+                    {
+                        case ".dat":
+                            return new Platform(GamePlatform.Pc, GameVersion.RS2012);
+                        case ".edat":
+                            return new Platform(GamePlatform.PS3, GameVersion.RS2012);
+                        default:
+                            return new Platform(GamePlatform.None, GameVersion.None);
+                    }
+                }
+                else
+                {
+                    // use the source artifacts directory contents to determine platform
+                    if (Directory.Exists(srcPath))
+                    {
+                        var fullPathInfo = new DirectoryInfo(srcPath);
+                        // GET PLATFORM BY PACKAGE ROOT DIRECTORY
+                        if (File.Exists(Path.Combine(srcPath, "APP_ID")))
+                        {
+                            // PC 2012
+                            return new Platform(GamePlatform.Pc, GameVersion.RS2012);
+                        }
+
+                        string agg;
+
+                        if (File.Exists(Path.Combine(srcPath, "appid.appid")))
+                        {
+                            // PC / MAC 2014
+                            agg = fullPathInfo.EnumerateFiles("*.nt", SearchOption.TopDirectoryOnly).FirstOrDefault().FullName;
+                            var aggContent = File.ReadAllText(agg);
+
+                            if (aggContent.Contains("\"dx9\""))
+                                return new Platform(GamePlatform.Pc, GameVersion.RS2014);
+                            if (aggContent.Contains("\"macos\""))
+                                return new Platform(GamePlatform.Mac, GameVersion.RS2014);
+
+                            return new Platform(GamePlatform.Pc, GameVersion.RS2014); // Because appid.appid have only in RS2014
+                        }
+
+                        if (Directory.Exists(Path.Combine(srcPath, ROOT_XBOX360)))
+                        {
+                            // XBOX 2012/2014
+                            var hTxt = fullPathInfo.EnumerateFiles("*.txt", SearchOption.TopDirectoryOnly).FirstOrDefault().FullName;
+                            var hTxtContent = File.ReadAllText(hTxt);
+
+                            if (hTxtContent.Contains("Title ID: 55530873"))
+                                return new Platform(GamePlatform.XBox360, GameVersion.RS2012);
+                            if (hTxtContent.Contains("Title ID: 555308C0"))
+                                return new Platform(GamePlatform.XBox360, GameVersion.RS2014);
+
+                            return new Platform(GamePlatform.XBox360, GameVersion.None);
+                        }
+
+                        if (srcPath.ToLower().EndsWith("_p") || srcPath.ToLower().EndsWith("_pc"))
+                        {
+                            return new Platform(GamePlatform.Pc, GameVersion.RS2014);
+                        }
+
+                        if (srcPath.ToLower().EndsWith("_ps4") || Directory.Exists(srcPath + "\\audio\\generic\\")) //bcapi -old: temporarely treat as PC
+                        {
+                            return new Platform(GamePlatform.PS4, GameVersion.RS2014);
+                        }
+
+                        if (srcPath.ToLower().EndsWith("_m") || srcPath.ToLower().EndsWith("_mac"))
+                        {
+                            return new Platform(GamePlatform.Mac, GameVersion.RS2014);
+                        }
+
+                        // some RS1 detection
+                        if (srcPath.ToLower().EndsWith("_rs1_xbox"))
+                        {
+                            return new Platform(GamePlatform.XBox360, GameVersion.RS2012);
+                        }
+
+
+                        // PS3 2012/2014
+                        var vagg = fullPathInfo.EnumerateFiles("*.nt", SearchOption.TopDirectoryOnly); //bcapi to repack cache.psarc :)
+                        agg = vagg.Count() == 0 ? null : vagg.FirstOrDefault().FullName;
+
+                        if (agg != null) if (agg.Any())
+                            {
+                                var aggContent = File.ReadAllText(agg);
+
+                                if (aggContent.Contains("\"PS3\""))
+                                    return new Platform(GamePlatform.PS3, GameVersion.RS2012);
+                                if (aggContent.Contains("\"ps3\""))
+                                    return new Platform(GamePlatform.PS3, GameVersion.RS2014);
+
+                                return TryGetPlatformByEndName(srcPath);
+                            }
 
                         return TryGetPlatformByEndName(srcPath);
                     }
-
-                    return TryGetPlatformByEndName(srcPath);
                 }
-            }
             }
             catch (Exception ee)
             {
@@ -1003,7 +1010,7 @@ namespace RocksmithToolkitLib.DLCPackage
             var name = Path.GetFileName(srcPath);
             var pIndex = name.LastIndexOf("_", StringComparison.Ordinal);
 
-           //if (srcPath.ToUpper().Contains("BLES01862") || srcPath.ToUpper().Contains("BLUS31182") || srcPath.ToUpper().Contains("BLJM61049")) return new Platform(GamePlatform.PS3, v);
+            //if (srcPath.ToUpper().Contains("BLES01862") || srcPath.ToUpper().Contains("BLUS31182") || srcPath.ToUpper().Contains("BLJM61049")) return new Platform(GamePlatform.PS3, v);
 
             if (Directory.Exists(srcPath))
             {// Pc, Mac, XBox360, PS3
@@ -1028,14 +1035,14 @@ namespace RocksmithToolkitLib.DLCPackage
                         return new Platform(GamePlatform.PS3, v);
                     case "_xbox":
                         return new Platform(GamePlatform.XBox360, v);
-                                           
+
                     default:
-                        if (srcPath.ToUpper().IndexOf("CUSA00745")>=0 || srcPath.ToUpper().IndexOf("CUSA00692")>=0) //bcapi temporarely treat as PC
+                        if (srcPath.ToUpper().IndexOf("CUSA00745") >= 0 || srcPath.ToUpper().IndexOf("CUSA00692") >= 0) //bcapi temporarily treat as PC
                         {
                             return new Platform(GamePlatform.Pc, v);
                         }
                         else
-                        return new Platform(GamePlatform.Pc, v);
+                            return new Platform(GamePlatform.Pc, v);
                 }
             }
         }
@@ -1225,7 +1232,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
                 // update manifestHeader (hsan) entry
                 var attributeHeaderDictionary = new Dictionary<string, AttributesHeader2014> { { "Attributes", new AttributesHeader2014(attr) } };
-                if (targetPlatform.IsConsole)
+                if (targetPlatform.IsConsole && targetPlatform.platform.ToString() != "PS4")
                 {
                     // One for each arrangements (Xbox360/PS3)
                     manifestHeader = new ManifestHeader2014<AttributesHeader2014>(targetPlatform);

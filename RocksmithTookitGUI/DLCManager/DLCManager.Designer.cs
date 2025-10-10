@@ -33,6 +33,8 @@ namespace RocksmithToolkitGUI.DLCManager
             components = new System.ComponentModel.Container();
             cbx_Export = new ComboBox();
             panel2 = new Panel();
+            chbx_InitialChecks = new CheckBox();
+            chbx_Last_Packed = new CheckBox();
             chbx_ShowMessages = new CheckBox();
             chbx_Upload2CF = new CheckBox();
             btn_Debug = new Button();
@@ -99,7 +101,6 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_TempPath = new TextBox();
             chbx_CleanTemp = new CheckBox();
             btn_SteamDLCFolder = new Button();
-            rtxt_StatisticsOnReadDLCs = new RichTextBox();
             btn_PopulateDB = new Button();
             btn_OpenMainDB = new Button();
             lbl_RocksmithDLCPath = new Label();
@@ -131,6 +132,9 @@ namespace RocksmithToolkitGUI.DLCManager
             button1 = new Button();
             btn_ApplyMultiFilters = new Button();
             btn_DistribNotes = new Button();
+            btn_Process_ASCII = new Button();
+            btn_LoadPrevMultiSelect = new Button();
+            button3 = new Button();
             chbx_Configurations = new ComboBox();
             lbl_Settings = new Label();
             cbx_Activ_Lyric_Info = new CheckBox();
@@ -144,16 +148,28 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_FilterParams = new RichTextBox();
             lbl_Log = new Label();
             lbGroups = new ListBox();
+            tab_DLCMain = new TabControl();
+            tabPage1 = new TabPage();
+            rtxt_StatisticsOnReadDLCs = new RichTextBox();
+            tabPage2 = new TabPage();
+            tabPage3 = new TabPage();
+            tabPage4 = new TabPage();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)txt_NoOfSplits).BeginInit();
             ((System.ComponentModel.ISupportInitialize)mainBindingSource).BeginInit();
+            tab_DLCMain.SuspendLayout();
+            tabPage1.SuspendLayout();
+            tabPage2.SuspendLayout();
+            tabPage3.SuspendLayout();
+            tabPage4.SuspendLayout();
             SuspendLayout();
             // 
             // cbx_Export
             // 
+            cbx_Export.DropDownWidth = 170;
             cbx_Export.FormattingEnabled = true;
-            cbx_Export.Items.AddRange(new object[] { "Excel", "WebPage", "HTML for a CustomForge upload" });
-            cbx_Export.Location = new System.Drawing.Point(128, 186);
+            cbx_Export.Items.AddRange(new object[] { "Excel", "WebPage (dlcm_ExportFields)", "Simple Version (dlcm_ExportFields2)", "Simpler Version (dlcm_ExportFields3)", "HTML for a CustomForge upload" });
+            cbx_Export.Location = new System.Drawing.Point(128, 184);
             cbx_Export.Margin = new Padding(2);
             cbx_Export.Name = "cbx_Export";
             cbx_Export.Size = new System.Drawing.Size(76, 23);
@@ -162,6 +178,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // panel2
             // 
+            panel2.Controls.Add(chbx_InitialChecks);
+            panel2.Controls.Add(chbx_Last_Packed);
             panel2.Controls.Add(chbx_ShowMessages);
             panel2.Controls.Add(chbx_Upload2CF);
             panel2.Controls.Add(btn_Debug);
@@ -186,13 +204,36 @@ namespace RocksmithToolkitGUI.DLCManager
             panel2.Location = new System.Drawing.Point(6, 64);
             panel2.Margin = new Padding(2);
             panel2.Name = "panel2";
-            panel2.Size = new System.Drawing.Size(382, 82);
+            panel2.Size = new System.Drawing.Size(400, 84);
             panel2.TabIndex = 204;
+            // 
+            // chbx_InitialChecks
+            // 
+            chbx_InitialChecks.Font = new System.Drawing.Font("Calibri", 8F);
+            chbx_InitialChecks.Location = new System.Drawing.Point(362, 2);
+            chbx_InitialChecks.Margin = new Padding(2);
+            chbx_InitialChecks.Name = "chbx_InitialChecks";
+            chbx_InitialChecks.Size = new System.Drawing.Size(35, 18);
+            chbx_InitialChecks.TabIndex = 440;
+            chbx_InitialChecks.Text = "IC";
+            toolTip1.SetToolTip(chbx_InitialChecks, "Show Messages (e.g. DB Type selection, OK only informal mss) if more than ONCE a day or not same machine or user)");
+            chbx_InitialChecks.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Last_Packed
+            // 
+            chbx_Last_Packed.Location = new System.Drawing.Point(298, 41);
+            chbx_Last_Packed.Margin = new Padding(2);
+            chbx_Last_Packed.Name = "chbx_Last_Packed";
+            chbx_Last_Packed.Size = new System.Drawing.Size(52, 18);
+            chbx_Last_Packed.TabIndex = 438;
+            chbx_Last_Packed.Text = "Last";
+            toolTip1.SetToolTip(chbx_Last_Packed, " Copy / Convert only the last Packed CDLC");
+            chbx_Last_Packed.UseVisualStyleBackColor = true;
             // 
             // chbx_ShowMessages
             // 
             chbx_ShowMessages.Font = new System.Drawing.Font("Calibri", 8F);
-            chbx_ShowMessages.Location = new System.Drawing.Point(347, 3);
+            chbx_ShowMessages.Location = new System.Drawing.Point(326, 2);
             chbx_ShowMessages.Margin = new Padding(2);
             chbx_ShowMessages.Name = "chbx_ShowMessages";
             chbx_ShowMessages.Size = new System.Drawing.Size(42, 18);
@@ -204,7 +245,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_Upload2CF
             // 
             chbx_Upload2CF.Font = new System.Drawing.Font("Calibri", 8F);
-            chbx_Upload2CF.Location = new System.Drawing.Point(313, 3);
+            chbx_Upload2CF.Location = new System.Drawing.Point(292, 2);
             chbx_Upload2CF.Margin = new Padding(2);
             chbx_Upload2CF.Name = "chbx_Upload2CF";
             chbx_Upload2CF.Size = new System.Drawing.Size(42, 18);
@@ -310,7 +351,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             chbx_iOS.Enabled = false;
             chbx_iOS.Font = new System.Drawing.Font("Calibri", 8F);
-            chbx_iOS.Location = new System.Drawing.Point(248, 4);
+            chbx_iOS.Location = new System.Drawing.Point(227, 3);
             chbx_iOS.Margin = new Padding(2);
             chbx_iOS.Name = "chbx_iOS";
             chbx_iOS.Size = new System.Drawing.Size(42, 18);
@@ -320,9 +361,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_PS4
             // 
-            chbx_PS4.Enabled = false;
             chbx_PS4.Font = new System.Drawing.Font("Calibri", 8F);
-            chbx_PS4.Location = new System.Drawing.Point(202, 4);
+            chbx_PS4.Location = new System.Drawing.Point(188, 3);
             chbx_PS4.Margin = new Padding(2);
             chbx_PS4.Name = "chbx_PS4";
             chbx_PS4.Size = new System.Drawing.Size(50, 18);
@@ -334,7 +374,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_GoRepack.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
             helpProvider1.SetHelpKeyword(btn_GoRepack, "Open the folder contaning Repack-ed CDLCs.");
-            btn_GoRepack.Location = new System.Drawing.Point(289, 4);
+            btn_GoRepack.Location = new System.Drawing.Point(268, 3);
             btn_GoRepack.Margin = new Padding(2);
             btn_GoRepack.Name = "btn_GoRepack";
             helpProvider1.SetShowHelp(btn_GoRepack, true);
@@ -358,7 +398,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_XBOX360
             // 
             chbx_XBOX360.Font = new System.Drawing.Font("Calibri", 8F);
-            chbx_XBOX360.Location = new System.Drawing.Point(134, 4);
+            chbx_XBOX360.Location = new System.Drawing.Point(123, 3);
             chbx_XBOX360.Margin = new Padding(2);
             chbx_XBOX360.Name = "chbx_XBOX360";
             chbx_XBOX360.Size = new System.Drawing.Size(72, 18);
@@ -382,7 +422,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_Mac
             // 
             chbx_Mac.Font = new System.Drawing.Font("Calibri", 8F);
-            chbx_Mac.Location = new System.Drawing.Point(88, 4);
+            chbx_Mac.Location = new System.Drawing.Point(80, 4);
             chbx_Mac.Margin = new Padding(2);
             chbx_Mac.Name = "chbx_Mac";
             chbx_Mac.Size = new System.Drawing.Size(46, 18);
@@ -395,7 +435,7 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_PS3.Checked = true;
             chbx_PS3.CheckState = CheckState.Checked;
             chbx_PS3.Font = new System.Drawing.Font("Calibri", 8F);
-            chbx_PS3.Location = new System.Drawing.Point(44, 4);
+            chbx_PS3.Location = new System.Drawing.Point(41, 4);
             chbx_PS3.Margin = new Padding(2);
             chbx_PS3.Name = "chbx_PS3";
             chbx_PS3.Size = new System.Drawing.Size(52, 18);
@@ -495,17 +535,17 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_Additional_Manipulations.FormattingEnabled = true;
             chbx_Additional_Manipulations.HorizontalScrollbar = true;
             chbx_Additional_Manipulations.Items.AddRange(new object[] { "00. @Pack Add Increment to all songs Title", "01. @Pack Add Increment to all songs Title per artist", "02. @Pack Make all DLC IDs unique (&save)", "03. @Pack Remove DD", "04. Backup DB during Startup", "05. @Pack Remove DD only for Bass Guitar", "06. When converting Audio use local folder structure", "07. @Pack skip Broken songs", "08. @Pack Name to cross-platform Compatible Filenames", "09. @Pack Add Preview if missing 00:30 for 30sec (&save)", "10. @Pack Make all DLC IDs unique", "11. <@PackAdd DD (5 Levels)>", "12. Add DD (5 Levels) when missing", "13. Import all Duplicates as Alternates", "14. Import any Custom as Alternate if an Original exists", "15. Move the Imported files to temp/0_old", "16. Import with Artist/Title same as Artist/Title/Album Sort", "17. Repack with Artist/Title same as Artist/Title/Album Sort", "18. <Import without The/Die at the beginning of Artist/Title Sort>", "19. <Pack without The/Die at the beginning of Artist/Title Sort>", "20. Import with the The/Die at the end of Title Sort", "21. Pack with The/Die at the end of Title/Title Sort", "22. Import with the The/Die only at the end of Artist/Album/xx Sort", "23. Pack with The/Die only at the end of Artist/Album/xx Sort", "24. @Import Use translation tables for naming standardization", "25. If Original don't add QAs (NOs;DLC/ORIG;etc.)", "26. When packing Add 5 Levels of DD only to Guitar tracks", "27. Convert and Transfer/FTP", "28. If Original don't add QAs (NOs;DLC/ORIG;etc.) except for File Names", "29. When NOT importing a Duplicate Move it to _duplicate", "30. When NOT importing a broken song Move it to _broken", "31. When removing DD use internal logic not DDC", "32. When importing alternates add newer/older instead of alt.0author", "33. Forcibly Update Import location of all DB fields", "34. @Import Add Preview if missing (lenght> as per config)", "35. Remove illegal characters from Songs Metadata", "36. Keep the Uncompressed Songs superorganized", "37. Import other formats but PC", "38. Import only the unpacked songs already in the \"0/\" Temp folder", "39. Encrypt PS3 Retails songs, with External tool", "40. Delete ORIG HSAN/OGG when Packing Retails songs", "41. Try to get Track No. &Details from Spotify (&yb links)", "42. Save Log After Import (Imported Folder)", "43. @Import Set the DLCID autom", "44. @Pack Set the DLCID autom", "45. <Convert Originals>", "46. Duplicate Mangement, Title added info is inbetween separators: []", "47. Add New Toolkit v. and RePackedByAuthor", "48. @Import Remove Multitrack/Live/Acoustic info from Title", "49. @Pack Also Copy/FTP", "50. @Import Manually assess duplicates at the end", "51. @Import&Unpack Overwrite the XML", "52. @Pack keep Bass DD if indicated so", "53. @Pack keep All DD if indicated so", "54. @Pack consider All songs as beta (place them top of the list)", "55. Gen Preview if Preview=Audio or Preview is longer than config (default 30s)", "56. Duplicate manag ignores Multitracks", "57. Don't save Author when generic (i.e. Custom Song Creator)", "58. @Pack try to get Track No again (&don't save)", "59. @Pack try to get Track No again (&save)", "60. @Rebuild don't overwrite Standard Song Info (Tit,Art,Alb,Prw,Aut,Des,Com)", "61. @Rebuild don't overwrite Standard Song Info (Cover,Year)", "62. <@Pack duplicate singleTracks L->R / R->L>", "63. @Pack Remove Remote File if GameData has been read", "64. @Pack ONLY Copy/FTP the Last Packed song", "65. @Pack ONLY Copy/FTP the Initially Imported song", "66. Duplicate manag. ignores Live Songs", "67. Import duplicates (hash)", "68. Delete obvious duplicates (hash) during dupli assesment", "69. Compress AudioFiles to 128VBR @Pack/Import if bigger than 136k", "70. @Repack pack Preview (bugfix)", "71. <@Import/Repack check if Original flag is in the Official list and correct>", "72. Import other formats but PC, as standalone", "73. Add Track Info&Comments beginning of Lyrics", "74. Add Track start into Vocals", "75. Copy to \\0\\0_Old (Overwrites 15 Move to old)", "76. Include Tones/arangements Db changes", "77. After Import open MainDB", "78. @Import Fix Audio Issues at end", "79. @Import Manually Asses All Suspicious Duplicates", "80. Duplicate manag. ignores Acoustic Songs", "81. Any Delete (non psarc) goes to RecycleBin", "82. Show warning that It will connect to Spotify", "83. Import All suspicious Duplicates as Duplicates (Ignore)", "84. When checking Songs validate wem bitrate (10% wem conversion raises the bitrate)", "85. Apply standard naming to all duplicates", "86. Keep XML Manipulations", "87. Use Latest Spotify API (Web)", "88. Gen Preview if Preview is shorter than config (default 10s)", "89. @Mass pack split into xxx (param in xml) songs", "90. When adding times into vocals(74) add only in seconds", "91. Add group to Filename", "92. Package for a HAN enabled PS3", "93. If packaging for a HAN Enabled PS3 then also copy Retail(RS2012) Songs", "94. After lyrics manipulation Open them in Notepad", "95. @Export create Package (in@0_temp)", "96. @Export create Tabs", "97. Pack only never packed Songs (Overwrites 98)", "98. Pack only never packed Songs for the target Platform", "99. <If Group pack ignore songs that are also in other Groups>", "x100. <Pack anew instead of converting (e.g. Pack Orig file)>", "x101. After packing check song", "<102. >", "<103. >", "<104. >", "<105. >", "<106. >", "<107. >", "<108. >", "<109. >", "<110. >", "<111. >", "<112. >", "<113. >", "<114. >", "<115. >", "<116. >", "<117. >", "<118. >", "<119. >", "<120. >", "<121. >", "<122. >", "<123. >", "<124. >", "<125. >", "<126. >", "<127. >", "<128. >", "<129. >", "<130. >", "<131. >", "<132. >", "<133. >", "<134. >", "<135. >", "<136. >", "<137. >", "<138. >", "<139. >", "<140. >", "<141. >", "<142. >", "<143. >", "<144. >", "<145. >", "<146. >", "<147. >", "<148. >", "<149. >", "<150. >", "<151. >", "<152. >", "<153. >", "<154. >", "<155. >", "<156. >", "<157. >", "<158. >", "<159. >", "<160. >", "<161. >", "<162. >", "<163. >", "<164. >", "<165. >", "<166. >", "<167. >", "<168. >", "<169. >", "<170. >", "<171. >", "<172. >", "<173. >", "<174. >", "<175. >", "<176. >", "<177. >", "<178. >", "<179. >", "<180. >", "<181. >", "<182. >", "<183. >", "<184. >", "<185. >", "<186. >", "<187. >", "<188. >", "<189. >", "<190. >", "<191. >", "<192. >", "<193. >", "<194. >", "<195. >", "<196. >", "<197. >", "<198. >", "<199. >", "<200. >" });
-            chbx_Additional_Manipulations.Location = new System.Drawing.Point(8, 388);
+            chbx_Additional_Manipulations.Location = new System.Drawing.Point(-1, 4);
             chbx_Additional_Manipulations.Margin = new Padding(0);
             chbx_Additional_Manipulations.Name = "chbx_Additional_Manipulations";
-            chbx_Additional_Manipulations.Size = new System.Drawing.Size(466, 94);
+            chbx_Additional_Manipulations.Size = new System.Drawing.Size(457, 139);
             chbx_Additional_Manipulations.TabIndex = 29;
             // 
             // lbl_Mask
             // 
             lbl_Mask.AutoSize = true;
             lbl_Mask.ForeColor = System.Drawing.SystemColors.ControlText;
-            lbl_Mask.Location = new System.Drawing.Point(6, 371);
+            lbl_Mask.Location = new System.Drawing.Point(6, 392);
             lbl_Mask.Margin = new Padding(2, 0, 2, 0);
             lbl_Mask.Name = "lbl_Mask";
             lbl_Mask.Size = new System.Drawing.Size(82, 15);
@@ -516,7 +556,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_Preview_Artist_Sort.BackColor = System.Drawing.SystemColors.Control;
             btn_Preview_Artist_Sort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            btn_Preview_Artist_Sort.Location = new System.Drawing.Point(522, 270);
+            btn_Preview_Artist_Sort.Location = new System.Drawing.Point(522, 280);
             btn_Preview_Artist_Sort.Margin = new Padding(2);
             btn_Preview_Artist_Sort.Name = "btn_Preview_Artist_Sort";
             btn_Preview_Artist_Sort.Size = new System.Drawing.Size(14, 14);
@@ -530,7 +570,7 @@ namespace RocksmithToolkitGUI.DLCManager
             cbx_Activ_Artist_Sort.AutoSize = true;
             cbx_Activ_Artist_Sort.Checked = true;
             cbx_Activ_Artist_Sort.CheckState = CheckState.Checked;
-            cbx_Activ_Artist_Sort.Location = new System.Drawing.Point(506, 270);
+            cbx_Activ_Artist_Sort.Location = new System.Drawing.Point(506, 281);
             cbx_Activ_Artist_Sort.Margin = new Padding(2);
             cbx_Activ_Artist_Sort.Name = "cbx_Activ_Artist_Sort";
             cbx_Activ_Artist_Sort.Size = new System.Drawing.Size(15, 14);
@@ -542,7 +582,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             lbl_Artist_Sort.AutoSize = true;
             lbl_Artist_Sort.ForeColor = System.Drawing.SystemColors.ControlText;
-            lbl_Artist_Sort.Location = new System.Drawing.Point(6, 272);
+            lbl_Artist_Sort.Location = new System.Drawing.Point(6, 278);
             lbl_Artist_Sort.Margin = new Padding(2, 0, 2, 0);
             lbl_Artist_Sort.Name = "lbl_Artist_Sort";
             lbl_Artist_Sort.Size = new System.Drawing.Size(59, 15);
@@ -554,7 +594,7 @@ namespace RocksmithToolkitGUI.DLCManager
             cbx_Artist_Sort.DropDownWidth = 280;
             cbx_Artist_Sort.FormattingEnabled = true;
             cbx_Artist_Sort.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Has/Is_Alternate>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Attributes>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Multi Track>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Slide>", "<Capo>", "<CapoFret>", "<AI Tracks Available>", "<Alternate Track>", "<A440>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Found on CF>", "<Uploaded on CF>", "<CF Author>", "<Based on RB>", "<Based on_CF>", "<Based on GP>", "<Based on Tabs>", "<Based on Youtube>" });
-            cbx_Artist_Sort.Location = new System.Drawing.Point(398, 268);
+            cbx_Artist_Sort.Location = new System.Drawing.Point(398, 276);
             cbx_Artist_Sort.Margin = new Padding(2);
             cbx_Artist_Sort.Name = "cbx_Artist_Sort";
             cbx_Artist_Sort.Size = new System.Drawing.Size(106, 23);
@@ -563,7 +603,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Artist_Sort
             // 
-            txt_Artist_Sort.Location = new System.Drawing.Point(68, 268);
+            txt_Artist_Sort.Location = new System.Drawing.Point(68, 276);
             txt_Artist_Sort.Margin = new Padding(2);
             txt_Artist_Sort.Name = "txt_Artist_Sort";
             txt_Artist_Sort.Size = new System.Drawing.Size(328, 23);
@@ -572,7 +612,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // pB_ReadDLCs
             // 
-            pB_ReadDLCs.Location = new System.Drawing.Point(6, 150);
+            pB_ReadDLCs.Location = new System.Drawing.Point(6, 149);
             pB_ReadDLCs.Margin = new Padding(2);
             pB_ReadDLCs.Maximum = 20000;
             pB_ReadDLCs.Name = "pB_ReadDLCs";
@@ -585,7 +625,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_Preview_File_Name.BackColor = System.Drawing.SystemColors.Control;
             btn_Preview_File_Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            btn_Preview_File_Name.Location = new System.Drawing.Point(522, 333);
+            btn_Preview_File_Name.Location = new System.Drawing.Point(522, 351);
             btn_Preview_File_Name.Margin = new Padding(2);
             btn_Preview_File_Name.Name = "btn_Preview_File_Name";
             btn_Preview_File_Name.Size = new System.Drawing.Size(14, 14);
@@ -598,7 +638,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_Preview_Album.BackColor = System.Drawing.SystemColors.Control;
             btn_Preview_Album.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            btn_Preview_Album.Location = new System.Drawing.Point(522, 291);
+            btn_Preview_Album.Location = new System.Drawing.Point(522, 302);
             btn_Preview_Album.Margin = new Padding(2);
             btn_Preview_Album.Name = "btn_Preview_Album";
             btn_Preview_Album.Size = new System.Drawing.Size(14, 14);
@@ -611,7 +651,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_Preview_Artist.BackColor = System.Drawing.SystemColors.Control;
             btn_Preview_Artist.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            btn_Preview_Artist.Location = new System.Drawing.Point(522, 250);
+            btn_Preview_Artist.Location = new System.Drawing.Point(522, 259);
             btn_Preview_Artist.Margin = new Padding(2);
             btn_Preview_Artist.Name = "btn_Preview_Artist";
             btn_Preview_Artist.Size = new System.Drawing.Size(14, 14);
@@ -624,7 +664,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_Preview_Title_Sort.BackColor = System.Drawing.SystemColors.Control;
             btn_Preview_Title_Sort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            btn_Preview_Title_Sort.Location = new System.Drawing.Point(522, 232);
+            btn_Preview_Title_Sort.Location = new System.Drawing.Point(522, 235);
             btn_Preview_Title_Sort.Margin = new Padding(2);
             btn_Preview_Title_Sort.Name = "btn_Preview_Title_Sort";
             btn_Preview_Title_Sort.Size = new System.Drawing.Size(14, 14);
@@ -651,7 +691,7 @@ namespace RocksmithToolkitGUI.DLCManager
             cbx_Activ_File_Name.AutoSize = true;
             cbx_Activ_File_Name.Checked = true;
             cbx_Activ_File_Name.CheckState = CheckState.Checked;
-            cbx_Activ_File_Name.Location = new System.Drawing.Point(506, 333);
+            cbx_Activ_File_Name.Location = new System.Drawing.Point(506, 352);
             cbx_Activ_File_Name.Margin = new Padding(2);
             cbx_Activ_File_Name.Name = "cbx_Activ_File_Name";
             cbx_Activ_File_Name.Size = new System.Drawing.Size(15, 14);
@@ -664,7 +704,7 @@ namespace RocksmithToolkitGUI.DLCManager
             cbx_Activ_Album.AutoSize = true;
             cbx_Activ_Album.Checked = true;
             cbx_Activ_Album.CheckState = CheckState.Checked;
-            cbx_Activ_Album.Location = new System.Drawing.Point(506, 291);
+            cbx_Activ_Album.Location = new System.Drawing.Point(506, 303);
             cbx_Activ_Album.Margin = new Padding(2);
             cbx_Activ_Album.Name = "cbx_Activ_Album";
             cbx_Activ_Album.Size = new System.Drawing.Size(15, 14);
@@ -677,7 +717,7 @@ namespace RocksmithToolkitGUI.DLCManager
             cbx_Activ_Artist.AutoSize = true;
             cbx_Activ_Artist.Checked = true;
             cbx_Activ_Artist.CheckState = CheckState.Checked;
-            cbx_Activ_Artist.Location = new System.Drawing.Point(506, 250);
+            cbx_Activ_Artist.Location = new System.Drawing.Point(506, 259);
             cbx_Activ_Artist.Margin = new Padding(2);
             cbx_Activ_Artist.Name = "cbx_Activ_Artist";
             cbx_Activ_Artist.Size = new System.Drawing.Size(15, 14);
@@ -690,7 +730,7 @@ namespace RocksmithToolkitGUI.DLCManager
             cbx_Activ_Title_Sort.AutoSize = true;
             cbx_Activ_Title_Sort.Checked = true;
             cbx_Activ_Title_Sort.CheckState = CheckState.Checked;
-            cbx_Activ_Title_Sort.Location = new System.Drawing.Point(506, 234);
+            cbx_Activ_Title_Sort.Location = new System.Drawing.Point(506, 236);
             cbx_Activ_Title_Sort.Margin = new Padding(2);
             cbx_Activ_Title_Sort.Name = "cbx_Activ_Title_Sort";
             cbx_Activ_Title_Sort.Size = new System.Drawing.Size(15, 14);
@@ -715,7 +755,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             lbl_Artist.AutoSize = true;
             lbl_Artist.ForeColor = System.Drawing.SystemColors.ControlText;
-            lbl_Artist.Location = new System.Drawing.Point(6, 250);
+            lbl_Artist.Location = new System.Drawing.Point(7, 255);
             lbl_Artist.Margin = new Padding(2, 0, 2, 0);
             lbl_Artist.Name = "lbl_Artist";
             lbl_Artist.Size = new System.Drawing.Size(35, 15);
@@ -727,7 +767,7 @@ namespace RocksmithToolkitGUI.DLCManager
             cbx_Artist.DropDownWidth = 280;
             cbx_Artist.FormattingEnabled = true;
             cbx_Artist.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Has/Is_Alternate>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Attributes>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Multi Track>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Slide>", "<Capo>", "<CapoFret>", "<AI Tracks Available>", "<Alternate Track>", "<A440>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Found on CF>", "<Uploaded on CF>", "<CF Author>", "<Based on RB>", "<Based on_CF>", "<Based on GP>", "<Based on Tabs>", "<Based on Youtube>" });
-            cbx_Artist.Location = new System.Drawing.Point(398, 250);
+            cbx_Artist.Location = new System.Drawing.Point(398, 253);
             cbx_Artist.Margin = new Padding(2);
             cbx_Artist.Name = "cbx_Artist";
             cbx_Artist.Size = new System.Drawing.Size(106, 23);
@@ -736,7 +776,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Artist
             // 
-            txt_Artist.Location = new System.Drawing.Point(68, 250);
+            txt_Artist.Location = new System.Drawing.Point(68, 253);
             txt_Artist.Margin = new Padding(2);
             txt_Artist.Name = "txt_Artist";
             txt_Artist.Size = new System.Drawing.Size(328, 23);
@@ -748,7 +788,7 @@ namespace RocksmithToolkitGUI.DLCManager
             cbx_Title.DropDownWidth = 280;
             cbx_Title.FormattingEnabled = true;
             cbx_Title.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Has/Is_Alternate>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Attributes>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Multi Track>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Slide>", "<Capo>", "<CapoFret>", "<AI Tracks Available>", "<Alternate Track>", "<A440>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Found on CF>", "<Uploaded on CF>", "<CF Author>", "<Based on RB>", "<Based on_CF>", "<Based on GP>", "<Based on Tabs>", "<Based on Youtube>" });
-            cbx_Title.Location = new System.Drawing.Point(398, 210);
+            cbx_Title.Location = new System.Drawing.Point(398, 209);
             cbx_Title.Margin = new Padding(2);
             cbx_Title.Name = "cbx_Title";
             cbx_Title.Size = new System.Drawing.Size(106, 23);
@@ -768,7 +808,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             lbl_File_Name.AutoSize = true;
             lbl_File_Name.ForeColor = System.Drawing.SystemColors.ControlText;
-            lbl_File_Name.Location = new System.Drawing.Point(6, 333);
+            lbl_File_Name.Location = new System.Drawing.Point(6, 351);
             lbl_File_Name.Margin = new Padding(2, 0, 2, 0);
             lbl_File_Name.Name = "lbl_File_Name";
             lbl_File_Name.Size = new System.Drawing.Size(60, 15);
@@ -779,7 +819,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             lbl_Album.AutoSize = true;
             lbl_Album.ForeColor = System.Drawing.SystemColors.ControlText;
-            lbl_Album.Location = new System.Drawing.Point(6, 291);
+            lbl_Album.Location = new System.Drawing.Point(6, 303);
             lbl_Album.Margin = new Padding(2, 0, 2, 0);
             lbl_Album.Name = "lbl_Album";
             lbl_Album.Size = new System.Drawing.Size(43, 15);
@@ -790,10 +830,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             lbl_Title_Sort.AutoSize = true;
             lbl_Title_Sort.ForeColor = System.Drawing.SystemColors.ControlText;
-            lbl_Title_Sort.Location = new System.Drawing.Point(6, 230);
+            lbl_Title_Sort.Location = new System.Drawing.Point(6, 235);
             lbl_Title_Sort.Margin = new Padding(2, 0, 2, 0);
             lbl_Title_Sort.Name = "lbl_Title_Sort";
-            lbl_Title_Sort.Size = new System.Drawing.Size(53, 15);
+            lbl_Title_Sort.Size = new System.Drawing.Size(54, 15);
             lbl_Title_Sort.TabIndex = 295;
             lbl_Title_Sort.Text = "Title Sort";
             // 
@@ -802,7 +842,7 @@ namespace RocksmithToolkitGUI.DLCManager
             cbx_File_Name.DropDownWidth = 280;
             cbx_File_Name.FormattingEnabled = true;
             cbx_File_Name.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Has/Is_Alternate>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Attributes>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Multi Track>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Slide>", "<Capo>", "<CapoFret>", "<AI Tracks Available>", "<Alternate Track>", "<A440>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Found on CF>", "<Uploaded on CF>", "<CF Author>", "<Based on RB>", "<Based on_CF>", "<Based on GP>", "<Based on Tabs>", "<Based on Youtube>" });
-            cbx_File_Name.Location = new System.Drawing.Point(398, 329);
+            cbx_File_Name.Location = new System.Drawing.Point(398, 347);
             cbx_File_Name.Margin = new Padding(2);
             cbx_File_Name.Name = "cbx_File_Name";
             cbx_File_Name.Size = new System.Drawing.Size(106, 23);
@@ -811,7 +851,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_File_Name
             // 
-            txt_File_Name.Location = new System.Drawing.Point(68, 329);
+            txt_File_Name.Location = new System.Drawing.Point(68, 347);
             txt_File_Name.Margin = new Padding(2);
             txt_File_Name.Name = "txt_File_Name";
             txt_File_Name.Size = new System.Drawing.Size(328, 23);
@@ -823,7 +863,7 @@ namespace RocksmithToolkitGUI.DLCManager
             cbx_Album.DropDownWidth = 280;
             cbx_Album.FormattingEnabled = true;
             cbx_Album.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Has/Is_Alternate>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Attributes>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Multi Track>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Slide>", "<Capo>", "<CapoFret>", "<AI Tracks Available>", "<Alternate Track>", "<A440>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Found on CF>", "<Uploaded on CF>", "<CF Author>", "<Based on RB>", "<Based on_CF>", "<Based on GP>", "<Based on Tabs>", "<Based on Youtube>" });
-            cbx_Album.Location = new System.Drawing.Point(398, 287);
+            cbx_Album.Location = new System.Drawing.Point(398, 299);
             cbx_Album.Margin = new Padding(2);
             cbx_Album.Name = "cbx_Album";
             cbx_Album.Size = new System.Drawing.Size(106, 23);
@@ -832,7 +872,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Album
             // 
-            txt_Album.Location = new System.Drawing.Point(68, 287);
+            txt_Album.Location = new System.Drawing.Point(68, 299);
             txt_Album.Margin = new Padding(2);
             txt_Album.Name = "txt_Album";
             txt_Album.Size = new System.Drawing.Size(328, 23);
@@ -844,7 +884,7 @@ namespace RocksmithToolkitGUI.DLCManager
             cbx_Title_Sort.DropDownWidth = 280;
             cbx_Title_Sort.FormattingEnabled = true;
             cbx_Title_Sort.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Has/Is_Alternate>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Attributes>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Multi Track>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Slide>", "<Capo>", "<CapoFret>", "<AI Tracks Available>", "<Alternate Track>", "<A440>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Found on CF>", "<Uploaded on CF>", "<CF Author>", "<Based on RB>", "<Based on_CF>", "<Based on GP>", "<Based on Tabs>", "<Based on Youtube>" });
-            cbx_Title_Sort.Location = new System.Drawing.Point(398, 230);
+            cbx_Title_Sort.Location = new System.Drawing.Point(398, 231);
             cbx_Title_Sort.Margin = new Padding(2);
             cbx_Title_Sort.Name = "cbx_Title_Sort";
             cbx_Title_Sort.Size = new System.Drawing.Size(106, 23);
@@ -867,7 +907,7 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_Title.Location = new System.Drawing.Point(6, 214);
             lbl_Title.Margin = new Padding(2, 0, 2, 0);
             lbl_Title.Name = "lbl_Title";
-            lbl_Title.Size = new System.Drawing.Size(29, 15);
+            lbl_Title.Size = new System.Drawing.Size(30, 15);
             lbl_Title.TabIndex = 300;
             lbl_Title.Text = "Title";
             // 
@@ -959,7 +999,7 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_CleanTemp.Location = new System.Drawing.Point(322, 24);
             chbx_CleanTemp.Margin = new Padding(2);
             chbx_CleanTemp.Name = "chbx_CleanTemp";
-            chbx_CleanTemp.Size = new System.Drawing.Size(113, 19);
+            chbx_CleanTemp.Size = new System.Drawing.Size(114, 19);
             chbx_CleanTemp.TabIndex = 17;
             chbx_CleanTemp.Text = "Clean DB&&Temp";
             toolTip1.SetToolTip(chbx_CleanTemp, "Cleans the Temp, Old, Duplicate, Repacked, Broken Folders");
@@ -976,17 +1016,6 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(btn_SteamDLCFolder, "Select an Importing CDLC Folder");
             btn_SteamDLCFolder.UseVisualStyleBackColor = true;
             btn_SteamDLCFolder.Click += btn_SteamDLCFolder_Click;
-            // 
-            // rtxt_StatisticsOnReadDLCs
-            // 
-            rtxt_StatisticsOnReadDLCs.Font = new System.Drawing.Font("Segoe UI", 7F);
-            rtxt_StatisticsOnReadDLCs.Location = new System.Drawing.Point(6, 523);
-            rtxt_StatisticsOnReadDLCs.Margin = new Padding(2);
-            rtxt_StatisticsOnReadDLCs.Name = "rtxt_StatisticsOnReadDLCs";
-            rtxt_StatisticsOnReadDLCs.ScrollBars = RichTextBoxScrollBars.Vertical;
-            rtxt_StatisticsOnReadDLCs.Size = new System.Drawing.Size(528, 35);
-            rtxt_StatisticsOnReadDLCs.TabIndex = 264;
-            rtxt_StatisticsOnReadDLCs.Text = "";
             // 
             // btn_PopulateDB
             // 
@@ -1045,7 +1074,7 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_TempFolders.Location = new System.Drawing.Point(4, 26);
             lbl_TempFolders.Margin = new Padding(2, 0, 2, 0);
             lbl_TempFolders.Name = "lbl_TempFolders";
-            lbl_TempFolders.Size = new System.Drawing.Size(99, 15);
+            lbl_TempFolders.Size = new System.Drawing.Size(100, 15);
             lbl_TempFolders.TabIndex = 258;
             lbl_TempFolders.Text = "Temp Folder Path";
             // 
@@ -1054,7 +1083,7 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_PreviewText.AutoEllipsis = true;
             lbl_PreviewText.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.125F);
             lbl_PreviewText.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            lbl_PreviewText.Location = new System.Drawing.Point(86, 373);
+            lbl_PreviewText.Location = new System.Drawing.Point(86, 393);
             lbl_PreviewText.Margin = new Padding(2, 0, 2, 0);
             lbl_PreviewText.Name = "lbl_PreviewText";
             lbl_PreviewText.Size = new System.Drawing.Size(448, 18);
@@ -1065,7 +1094,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_ApplyStandardization.BackColor = System.Drawing.SystemColors.Control;
             btn_ApplyStandardization.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            btn_ApplyStandardization.Location = new System.Drawing.Point(404, 87);
+            btn_ApplyStandardization.Location = new System.Drawing.Point(406, 86);
             btn_ApplyStandardization.Margin = new Padding(2);
             btn_ApplyStandardization.Name = "btn_ApplyStandardization";
             btn_ApplyStandardization.Size = new System.Drawing.Size(12, 62);
@@ -1093,7 +1122,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_Standardization.BackColor = System.Drawing.SystemColors.Control;
             btn_Standardization.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
-            btn_Standardization.Location = new System.Drawing.Point(416, 86);
+            btn_Standardization.Location = new System.Drawing.Point(417, 86);
             btn_Standardization.Margin = new Padding(2);
             btn_Standardization.Name = "btn_Standardization";
             btn_Standardization.Size = new System.Drawing.Size(62, 62);
@@ -1240,7 +1269,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_Param.BackColor = System.Drawing.SystemColors.Control;
             btn_Param.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            btn_Param.Location = new System.Drawing.Point(372, 182);
+            btn_Param.Location = new System.Drawing.Point(372, 180);
             btn_Param.Margin = new Padding(0);
             btn_Param.Name = "btn_Param";
             btn_Param.Size = new System.Drawing.Size(50, 15);
@@ -1269,7 +1298,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_Preview_Lyric_Info.BackColor = System.Drawing.SystemColors.Control;
             btn_Preview_Lyric_Info.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            btn_Preview_Lyric_Info.Location = new System.Drawing.Point(522, 355);
+            btn_Preview_Lyric_Info.Location = new System.Drawing.Point(522, 374);
             btn_Preview_Lyric_Info.Margin = new Padding(2);
             btn_Preview_Lyric_Info.Name = "btn_Preview_Lyric_Info";
             btn_Preview_Lyric_Info.Size = new System.Drawing.Size(14, 14);
@@ -1282,7 +1311,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_Preview_Album_Sort.BackColor = System.Drawing.SystemColors.Control;
             btn_Preview_Album_Sort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            btn_Preview_Album_Sort.Location = new System.Drawing.Point(522, 309);
+            btn_Preview_Album_Sort.Location = new System.Drawing.Point(522, 327);
             btn_Preview_Album_Sort.Margin = new Padding(2);
             btn_Preview_Album_Sort.Name = "btn_Preview_Album_Sort";
             btn_Preview_Album_Sort.Size = new System.Drawing.Size(14, 14);
@@ -1306,7 +1335,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_FilterParams
             // 
-            btn_FilterParams.Location = new System.Drawing.Point(476, 434);
+            btn_FilterParams.Location = new System.Drawing.Point(458, 51);
             btn_FilterParams.Margin = new Padding(2);
             btn_FilterParams.Name = "btn_FilterParams";
             btn_FilterParams.Size = new System.Drawing.Size(60, 48);
@@ -1320,7 +1349,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_Retail.BackColor = System.Drawing.SystemColors.Control;
             btn_Retail.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
-            btn_Retail.Location = new System.Drawing.Point(477, 86);
+            btn_Retail.Location = new System.Drawing.Point(478, 86);
             btn_Retail.Margin = new Padding(2);
             btn_Retail.Name = "btn_Retail";
             btn_Retail.Size = new System.Drawing.Size(45, 62);
@@ -1334,7 +1363,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             button1.BackColor = System.Drawing.SystemColors.Control;
             button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            button1.Location = new System.Drawing.Point(372, 195);
+            button1.Location = new System.Drawing.Point(372, 194);
             button1.Margin = new Padding(0);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(50, 15);
@@ -1347,7 +1376,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_ApplyMultiFilters
             // 
             btn_ApplyMultiFilters.Font = new System.Drawing.Font("Segoe UI", 7F);
-            btn_ApplyMultiFilters.Location = new System.Drawing.Point(476, 485);
+            btn_ApplyMultiFilters.Location = new System.Drawing.Point(460, 5);
             btn_ApplyMultiFilters.Margin = new Padding(2);
             btn_ApplyMultiFilters.Name = "btn_ApplyMultiFilters";
             btn_ApplyMultiFilters.Size = new System.Drawing.Size(61, 40);
@@ -1360,16 +1389,55 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_DistribNotes
             // 
             btn_DistribNotes.BackColor = System.Drawing.SystemColors.Control;
-            btn_DistribNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            btn_DistribNotes.Location = new System.Drawing.Point(387, 65);
+            btn_DistribNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
+            btn_DistribNotes.Location = new System.Drawing.Point(5, 5);
             btn_DistribNotes.Margin = new Padding(2);
             btn_DistribNotes.Name = "btn_DistribNotes";
-            btn_DistribNotes.Size = new System.Drawing.Size(17, 84);
+            btn_DistribNotes.Size = new System.Drawing.Size(297, 27);
             btn_DistribNotes.TabIndex = 436;
-            btn_DistribNotes.Text = "DistribNotes";
+            btn_DistribNotes.Text = "Distribute notes in XML files for EoF reimport";
             toolTip1.SetToolTip(btn_DistribNotes, "Distribute notes of the XML Track based on real timings, start and end. Reimport after in EoF!");
             btn_DistribNotes.UseVisualStyleBackColor = false;
             btn_DistribNotes.Click += btn_DistribNotes_Click_1;
+            // 
+            // btn_Process_ASCII
+            // 
+            btn_Process_ASCII.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
+            btn_Process_ASCII.Location = new System.Drawing.Point(5, 36);
+            btn_Process_ASCII.Margin = new Padding(2);
+            btn_Process_ASCII.Name = "btn_Process_ASCII";
+            btn_Process_ASCII.Size = new System.Drawing.Size(297, 23);
+            btn_Process_ASCII.TabIndex = 440;
+            btn_Process_ASCII.Text = "Format ASCII for Guitar Pro import";
+            toolTip1.SetToolTip(btn_Process_ASCII, "Show the Tabulature in ASCII format");
+            btn_Process_ASCII.UseVisualStyleBackColor = true;
+            btn_Process_ASCII.Click += btn_Process_ASCII_Click;
+            // 
+            // btn_LoadPrevMultiSelect
+            // 
+            btn_LoadPrevMultiSelect.Font = new System.Drawing.Font("Segoe UI", 7F);
+            btn_LoadPrevMultiSelect.Location = new System.Drawing.Point(460, 49);
+            btn_LoadPrevMultiSelect.Margin = new Padding(2);
+            btn_LoadPrevMultiSelect.Name = "btn_LoadPrevMultiSelect";
+            btn_LoadPrevMultiSelect.Size = new System.Drawing.Size(61, 40);
+            btn_LoadPrevMultiSelect.TabIndex = 436;
+            btn_LoadPrevMultiSelect.Text = "Load Prev MultiSelect";
+            toolTip1.SetToolTip(btn_LoadPrevMultiSelect, "Screen to manage the Game Default Screens for RS1Retail, RS1DLC, or RS2014 Retail packs, Crossplatform songs.");
+            btn_LoadPrevMultiSelect.UseVisualStyleBackColor = true;
+            btn_LoadPrevMultiSelect.Click += btn_LoadPrevMultiSelect_Click;
+            // 
+            // button3
+            // 
+            button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
+            button3.Location = new System.Drawing.Point(6, 63);
+            button3.Margin = new Padding(2);
+            button3.Name = "button3";
+            button3.Size = new System.Drawing.Size(297, 23);
+            button3.TabIndex = 441;
+            button3.Text = "Check && Fix Audio files";
+            toolTip1.SetToolTip(button3, "check & fix audio files");
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // chbx_Configurations
             // 
@@ -1388,7 +1456,7 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_Settings.AutoSize = true;
             lbl_Settings.Font = new System.Drawing.Font("Calibri", 9F);
             lbl_Settings.ForeColor = System.Drawing.SystemColors.ControlText;
-            lbl_Settings.Location = new System.Drawing.Point(292, 468);
+            lbl_Settings.Location = new System.Drawing.Point(406, 129);
             lbl_Settings.Margin = new Padding(2, 0, 2, 0);
             lbl_Settings.Name = "lbl_Settings";
             lbl_Settings.Size = new System.Drawing.Size(112, 14);
@@ -1400,7 +1468,7 @@ namespace RocksmithToolkitGUI.DLCManager
             cbx_Activ_Lyric_Info.AutoSize = true;
             cbx_Activ_Lyric_Info.Checked = true;
             cbx_Activ_Lyric_Info.CheckState = CheckState.Checked;
-            cbx_Activ_Lyric_Info.Location = new System.Drawing.Point(506, 355);
+            cbx_Activ_Lyric_Info.Location = new System.Drawing.Point(506, 375);
             cbx_Activ_Lyric_Info.Margin = new Padding(2);
             cbx_Activ_Lyric_Info.Name = "cbx_Activ_Lyric_Info";
             cbx_Activ_Lyric_Info.Size = new System.Drawing.Size(15, 14);
@@ -1412,7 +1480,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             lbl_LyricInfo.AutoSize = true;
             lbl_LyricInfo.ForeColor = System.Drawing.SystemColors.ControlText;
-            lbl_LyricInfo.Location = new System.Drawing.Point(6, 351);
+            lbl_LyricInfo.Location = new System.Drawing.Point(6, 370);
             lbl_LyricInfo.Margin = new Padding(2, 0, 2, 0);
             lbl_LyricInfo.Name = "lbl_LyricInfo";
             lbl_LyricInfo.Size = new System.Drawing.Size(55, 15);
@@ -1424,7 +1492,7 @@ namespace RocksmithToolkitGUI.DLCManager
             cbx_Lyric_Info.DropDownWidth = 280;
             cbx_Lyric_Info.FormattingEnabled = true;
             cbx_Lyric_Info.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Has/Is_Alternate>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Attributes>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Multi Track>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Slide>", "<Capo>", "<CapoFret>", "<AI Tracks Available>", "<Alternate Track>", "<A440>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Found on CF>", "<Uploaded on CF>", "<CF Author>", "<Based on RB>", "<Based on_CF>", "<Based on GP>", "<Based on Tabs>", "<Based on Youtube>" });
-            cbx_Lyric_Info.Location = new System.Drawing.Point(398, 351);
+            cbx_Lyric_Info.Location = new System.Drawing.Point(398, 371);
             cbx_Lyric_Info.Margin = new Padding(2);
             cbx_Lyric_Info.Name = "cbx_Lyric_Info";
             cbx_Lyric_Info.Size = new System.Drawing.Size(106, 23);
@@ -1433,7 +1501,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Lyric_Info
             // 
-            txt_Lyric_Info.Location = new System.Drawing.Point(68, 351);
+            txt_Lyric_Info.Location = new System.Drawing.Point(68, 371);
             txt_Lyric_Info.Margin = new Padding(2);
             txt_Lyric_Info.Name = "txt_Lyric_Info";
             txt_Lyric_Info.Size = new System.Drawing.Size(328, 23);
@@ -1445,7 +1513,7 @@ namespace RocksmithToolkitGUI.DLCManager
             cbx_Activ_Album_Sort.AutoSize = true;
             cbx_Activ_Album_Sort.Checked = true;
             cbx_Activ_Album_Sort.CheckState = CheckState.Checked;
-            cbx_Activ_Album_Sort.Location = new System.Drawing.Point(506, 313);
+            cbx_Activ_Album_Sort.Location = new System.Drawing.Point(506, 327);
             cbx_Activ_Album_Sort.Margin = new Padding(2);
             cbx_Activ_Album_Sort.Name = "cbx_Activ_Album_Sort";
             cbx_Activ_Album_Sort.Size = new System.Drawing.Size(15, 14);
@@ -1458,7 +1526,7 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_AlbumSort.AutoSize = true;
             lbl_AlbumSort.Font = new System.Drawing.Font("Calibri", 7.875F);
             lbl_AlbumSort.ForeColor = System.Drawing.SystemColors.ControlText;
-            lbl_AlbumSort.Location = new System.Drawing.Point(6, 313);
+            lbl_AlbumSort.Location = new System.Drawing.Point(6, 327);
             lbl_AlbumSort.Margin = new Padding(2, 0, 2, 0);
             lbl_AlbumSort.Name = "lbl_AlbumSort";
             lbl_AlbumSort.Size = new System.Drawing.Size(60, 13);
@@ -1470,7 +1538,7 @@ namespace RocksmithToolkitGUI.DLCManager
             cbx_Album_Sort.DropDownWidth = 280;
             cbx_Album_Sort.FormattingEnabled = true;
             cbx_Album_Sort.Items.AddRange(new object[] { "<Artist>", "<Title>", "<Version>", "<DLCName>", "<CDLC>", "<Album>", "<Track No.>", "<Year>", "<Rating>", "<Has/Is_Alternate>", "<Alternate Version>", "<Duplicate>", "<Has Official>", "<Description>", "<Live Details>", "<Attributes extended>", "<Attributes>", "<Avail. Instr.>", "<Tuning>", "<Instr. Rating.>", "<Multi Track Details>", "<Multi Track>", "<Group>", "<Groups>", "<GroupIndex>", "<GroupIndexAndName>", "<FirstGroupIndexAndName>", "<BetaOrGroupIndex>", "<Beta>", "<DD>", "<Broken>", "<File Name>", "<Bonus>", "<Artist Short>", "<Album Short>", "<Title Sort>", "<Artist Sort>", "<Album Sort>", "<Author>", "<Quality Assurance Attributes>", "<lastConversionDateTime>", "<Avail. Tracks>", "<Avail. Tracks w Bonus>", "<Avail. Tracks w Favorite>", "<Avail. Tracks w Bonus&Alternates&Favorites>", "<Avail. Tracks and Timings>", "<Avail. Tracks and ShortTimings>", "<Avail. Tracks and ShortTimings&Bonus>", "<Avail. Tracks and ShortTimings&Bonus&Favorite>", "<Bass Has DynamicDificulty>", "<Timestamp>", "<TimestampShort>", "<Live>", "<Acoustic>", "<Instrumental>", "<EP>", "<Uncensored>", "<SoundTrack>", "<Single>", "<Track Tile (potentially) removed details>", "<LyricsLanguage>", "<IntheWorks>", "<IntheWorksWDetails>", "<Karaoke>", "<Cover>", "<Demo>", "<Remix>", "<FullAlbum>", "<Remastered>", "<Manipulated>", "<Medley>", "<Multistrings>", "<Deluxe>", "<GreatestHits>", "<Midi>", "<GameSoundtrack>", "<TVTheme>", "<AmateurCover>", "<MetalCover>", "<Ukulele>", "<Slide>", "<Capo>", "<CapoFret>", "<AI Tracks Available>", "<Alternate Track>", "<A440>", "<Official>", "<Volume>", "<Preview Volume>", "<Import Date>", "<Bitrate>", "<ToDos>", "<CDLC_ID>", "<DLCM Release>", "<DLCM ReleaseName>", "<DLCM ReleaseVersion>", "<Date>", "<DigitechDropFlag>", "<DigitechDropDetails>", "<Found on CF>", "<Uploaded on CF>", "<CF Author>", "<Based on RB>", "<Based on_CF>", "<Based on GP>", "<Based on Tabs>", "<Based on Youtube>" });
-            cbx_Album_Sort.Location = new System.Drawing.Point(398, 309);
+            cbx_Album_Sort.Location = new System.Drawing.Point(398, 323);
             cbx_Album_Sort.Margin = new Padding(2);
             cbx_Album_Sort.Name = "cbx_Album_Sort";
             cbx_Album_Sort.Size = new System.Drawing.Size(106, 23);
@@ -1478,7 +1546,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Album_Sort
             // 
-            txt_Album_Sort.Location = new System.Drawing.Point(68, 309);
+            txt_Album_Sort.Location = new System.Drawing.Point(68, 323);
             txt_Album_Sort.Margin = new Padding(2);
             txt_Album_Sort.Name = "txt_Album_Sort";
             txt_Album_Sort.Size = new System.Drawing.Size(328, 23);
@@ -1487,7 +1555,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_FilterParams
             // 
-            txt_FilterParams.Location = new System.Drawing.Point(476, 388);
+            txt_FilterParams.Location = new System.Drawing.Point(458, 5);
             txt_FilterParams.Margin = new Padding(2);
             txt_FilterParams.Multiline = false;
             txt_FilterParams.Name = "txt_FilterParams";
@@ -1496,13 +1564,14 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_FilterParams.Size = new System.Drawing.Size(60, 42);
             txt_FilterParams.TabIndex = 431;
             txt_FilterParams.Text = "";
+            txt_FilterParams.TextChanged += txt_FilterParams_TextChanged;
             txt_FilterParams.KeyPress += txt_FilterParams_KeyPress;
             // 
             // lbl_Log
             // 
             lbl_Log.AutoSize = true;
             lbl_Log.ForeColor = System.Drawing.SystemColors.ControlText;
-            lbl_Log.Location = new System.Drawing.Point(460, 540);
+            lbl_Log.Location = new System.Drawing.Point(457, 120);
             lbl_Log.Margin = new Padding(2, 0, 2, 0);
             lbl_Log.Name = "lbl_Log";
             lbl_Log.Size = new System.Drawing.Size(54, 15);
@@ -1514,24 +1583,96 @@ namespace RocksmithToolkitGUI.DLCManager
             lbGroups.Font = new System.Drawing.Font("Segoe UI", 7F);
             lbGroups.FormattingEnabled = true;
             lbGroups.Items.AddRange(new object[] { "test1", "test2", "test 3", "test4" });
-            lbGroups.Location = new System.Drawing.Point(6, 485);
+            lbGroups.Location = new System.Drawing.Point(10, 5);
             lbGroups.Name = "lbGroups";
             lbGroups.SelectionMode = SelectionMode.MultiExtended;
-            lbGroups.Size = new System.Drawing.Size(468, 40);
+            lbGroups.Size = new System.Drawing.Size(445, 136);
             lbGroups.TabIndex = 434;
             lbGroups.SelectedIndexChanged += lbGroups_SelectedIndexChanged;
+            // 
+            // tab_DLCMain
+            // 
+            tab_DLCMain.Controls.Add(tabPage1);
+            tab_DLCMain.Controls.Add(tabPage2);
+            tab_DLCMain.Controls.Add(tabPage3);
+            tab_DLCMain.Controls.Add(tabPage4);
+            tab_DLCMain.Location = new System.Drawing.Point(10, 405);
+            tab_DLCMain.Name = "tab_DLCMain";
+            tab_DLCMain.SelectedIndex = 0;
+            tab_DLCMain.Size = new System.Drawing.Size(531, 178);
+            tab_DLCMain.TabIndex = 437;
+            // 
+            // tabPage1
+            // 
+            tabPage1.Controls.Add(rtxt_StatisticsOnReadDLCs);
+            tabPage1.Controls.Add(lbl_Log);
+            tabPage1.Location = new System.Drawing.Point(4, 24);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new System.Drawing.Size(523, 150);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "Live Log";
+            tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // rtxt_StatisticsOnReadDLCs
+            // 
+            rtxt_StatisticsOnReadDLCs.Font = new System.Drawing.Font("Segoe UI", 7F);
+            rtxt_StatisticsOnReadDLCs.Location = new System.Drawing.Point(5, 5);
+            rtxt_StatisticsOnReadDLCs.Margin = new Padding(2);
+            rtxt_StatisticsOnReadDLCs.Name = "rtxt_StatisticsOnReadDLCs";
+            rtxt_StatisticsOnReadDLCs.ScrollBars = RichTextBoxScrollBars.Vertical;
+            rtxt_StatisticsOnReadDLCs.Size = new System.Drawing.Size(513, 140);
+            rtxt_StatisticsOnReadDLCs.TabIndex = 265;
+            rtxt_StatisticsOnReadDLCs.Text = "";
+            // 
+            // tabPage2
+            // 
+            tabPage2.Controls.Add(btn_LoadPrevMultiSelect);
+            tabPage2.Controls.Add(btn_ApplyMultiFilters);
+            tabPage2.Controls.Add(lbGroups);
+            tabPage2.Location = new System.Drawing.Point(4, 24);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new Padding(3);
+            tabPage2.Size = new System.Drawing.Size(523, 150);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "Select by Filter";
+            tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tabPage3
+            // 
+            tabPage3.Controls.Add(button3);
+            tabPage3.Controls.Add(btn_Process_ASCII);
+            tabPage3.Controls.Add(btn_DistribNotes);
+            tabPage3.Location = new System.Drawing.Point(4, 24);
+            tabPage3.Name = "tabPage3";
+            tabPage3.Padding = new Padding(3);
+            tabPage3.Size = new System.Drawing.Size(523, 150);
+            tabPage3.TabIndex = 2;
+            tabPage3.Text = "Utilities";
+            tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // tabPage4
+            // 
+            tabPage4.Controls.Add(lbl_Settings);
+            tabPage4.Controls.Add(btn_FilterParams);
+            tabPage4.Controls.Add(chbx_Additional_Manipulations);
+            tabPage4.Controls.Add(txt_FilterParams);
+            tabPage4.Location = new System.Drawing.Point(4, 24);
+            tabPage4.Name = "tabPage4";
+            tabPage4.Padding = new Padding(3);
+            tabPage4.Size = new System.Drawing.Size(523, 150);
+            tabPage4.TabIndex = 3;
+            tabPage4.Text = "DLCM Options";
+            tabPage4.UseVisualStyleBackColor = true;
             // 
             // DLCManager
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            Controls.Add(btn_DistribNotes);
-            Controls.Add(btn_ApplyMultiFilters);
-            Controls.Add(lbGroups);
+            Controls.Add(tab_DLCMain);
             Controls.Add(button1);
+            Controls.Add(lbl_Mask);
             Controls.Add(btn_Retail);
-            Controls.Add(txt_FilterParams);
-            Controls.Add(btn_FilterParams);
             Controls.Add(btn_Album2SortA);
             Controls.Add(btn_Preview_Album_Sort);
             Controls.Add(cbx_Activ_Album_Sort);
@@ -1544,8 +1685,6 @@ namespace RocksmithToolkitGUI.DLCManager
             Controls.Add(cbx_Lyric_Info);
             Controls.Add(txt_Lyric_Info);
             Controls.Add(btn_Save);
-            Controls.Add(lbl_Log);
-            Controls.Add(lbl_Settings);
             Controls.Add(pB_ReadDLCs);
             Controls.Add(btn_Param);
             Controls.Add(btn_CopyDefaultDBtoTemp);
@@ -1566,8 +1705,6 @@ namespace RocksmithToolkitGUI.DLCManager
             Controls.Add(btn_Standardization);
             Controls.Add(cbx_Export);
             Controls.Add(Export_To);
-            Controls.Add(chbx_Additional_Manipulations);
-            Controls.Add(lbl_Mask);
             Controls.Add(btn_Preview_Artist_Sort);
             Controls.Add(cbx_Activ_Artist_Sort);
             Controls.Add(lbl_Artist_Sort);
@@ -1607,7 +1744,6 @@ namespace RocksmithToolkitGUI.DLCManager
             Controls.Add(txt_TempPath);
             Controls.Add(chbx_CleanTemp);
             Controls.Add(btn_SteamDLCFolder);
-            Controls.Add(rtxt_StatisticsOnReadDLCs);
             Controls.Add(btn_PopulateDB);
             Controls.Add(btn_OpenMainDB);
             Controls.Add(lbl_RocksmithDLCPath);
@@ -1625,6 +1761,13 @@ namespace RocksmithToolkitGUI.DLCManager
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)txt_NoOfSplits).EndInit();
             ((System.ComponentModel.ISupportInitialize)mainBindingSource).EndInit();
+            tab_DLCMain.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            tabPage1.PerformLayout();
+            tabPage2.ResumeLayout(false);
+            tabPage3.ResumeLayout(false);
+            tabPage4.ResumeLayout(false);
+            tabPage4.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1678,7 +1821,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private TextBox txt_TempPath;
         private CheckBox chbx_CleanTemp;
         private Button btn_SteamDLCFolder;
-        public RichTextBox rtxt_StatisticsOnReadDLCs;
         private Button btn_PopulateDB;
         private Button btn_OpenMainDB;
         private Label lbl_RocksmithDLCPath;
@@ -1741,10 +1883,21 @@ namespace RocksmithToolkitGUI.DLCManager
         private Button btn_Debug;
         private ListBox lbGroups;
         private Button btn_ApplyMultiFilters;
-        private Button button2;
+        //private Button button2;
         private Button btn_DistribNotes;
         private CheckBox chbx_Upload2CF;
         private CheckBox chbx_ShowMessages;
+        private TabControl tab_DLCMain;
+        private TabPage tabPage1;
+        public RichTextBox rtxt_StatisticsOnReadDLCs;
+        private TabPage tabPage2;
+        private TabPage tabPage3;
+        private TabPage tabPage4;
+        private Button btn_Process_ASCII;
+        private CheckBox chbx_Last_Packed;
+        private Button btn_LoadPrevMultiSelect;
+        private Button button3;
+        private CheckBox chbx_InitialChecks;
         //public static ProgressBar pB_ReadDLCs;
     }
 }

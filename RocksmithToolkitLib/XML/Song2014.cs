@@ -198,6 +198,35 @@ namespace RocksmithToolkitLib.XML
         {
         }
 
+
+        public static DateTime UpdateLog(DateTime dt, string txt, bool bbl, string tmpPath, string MultithreadNo, string form)
+        {
+            DateTime dtt = System.DateTime.Now;
+            string logPath = ConfigRepository.Instance()["dlcm_LogPath"] == "" ? ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log" : ConfigRepository.Instance()["dlcm_LogPath"];
+            var ismaindb = "";
+
+            var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
+
+            if (form == "MainDB")
+                ismaindb = "maindb";
+
+            Random randomp = new Random();// Write the string to a file. packid+
+            var packid = 0;
+            packid = randomp.Next(0, 100000);
+            var fn = (logPath == null || !Directory.Exists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + "current_" + ismaindb + "temp" + MultithreadNo + ".txt";
+            try
+            {
+                if (File.Exists(fn))
+                {
+                    using (StreamWriter sw = File.AppendText(fn))
+                    {
+                        sw.WriteLine(dtt.ToString() + " - " + ii.ToString() + " - " + txt.ToString());// This text is always added, making the file longer over time if it is not deleted.
+                    }
+                }
+            }
+            catch (Exception ex) { var tsst = "Error ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", ""); }
+            return dtt;
+        }
         public Song2014(Sng2014HSL.Sng sngData, Attributes2014 attr = null)
         {
             Version = "7";
@@ -305,9 +334,10 @@ namespace RocksmithToolkitLib.XML
             }
             catch (Exception ex)
             {
-                //Console.WriteLine("This XML Arrangement has no comments: " + ex.Message);
-                //return null;
-            }
+                var tsst = "Error ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "");
+            //Console.WriteLine("This XML Arrangement has no comments: " + ex.Message);
+            //return null;
+        }
         }
 
         /// <summary>
@@ -478,6 +508,7 @@ namespace RocksmithToolkitLib.XML
             }
             catch (Exception ex)
             {
+               var tsst = "Erro load from file ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "");
                 return null;
             }
             return t;
@@ -545,7 +576,7 @@ namespace RocksmithToolkitLib.XML
                 {
                     reader.MoveToContent();
                 }
-                catch (Exception ex) { return ArrangementType.Unknown; }
+                catch (Exception ex) { var tsst = "Erro son2014 ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", ""); return ArrangementType.Unknown; }
                 if (reader.LocalName == "vocals")
                     return ArrangementType.Vocal;
 

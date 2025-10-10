@@ -35,7 +35,7 @@ namespace RocksmithToolkitLib.DLCPackage
             var unpackedDir = Packer.Unpack(sourcePackage, tmpDir, sourcePlatform, false, true);
 
             // DESTINATION
-            var nameTemplate = (!targetPlatform.IsConsole) ? "{0}{1}.psarc" : "{0}{1}";
+            var nameTemplate = (!targetPlatform.IsConsole|| targetPlatform.platform.ToString() == "PS4") ? "{0}{1}.psarc" : "{0}{1}";
             var packageName = Path.GetFileNameWithoutExtension(sourcePackage).StripPlatformEndName();
             packageName = packageName.Replace(".", "_");
             var targetFileName = String.Format(nameTemplate, Path.Combine(Path.GetDirectoryName(sourcePackage), packageName), targetPlatform.GetPathName()[2]);
@@ -61,7 +61,7 @@ namespace RocksmithToolkitLib.DLCPackage
             var targetDir0 = targetPlatform.GetPathName()[0].ToLower();
             var targetDir1 = targetPlatform.GetPathName()[1].ToLower();
 
-            if (!targetPlatform.IsConsole)
+            if (!targetPlatform.IsConsole )//|| targetPlatform.platform.ToString() == "PS4"
             {
                 // Replace AppId
                 var appIdFile = Path.Combine(unpackedDir, "appid.appid");
@@ -111,7 +111,7 @@ namespace RocksmithToolkitLib.DLCPackage
         {
             var data = DLCPackageData.LoadFromFolder(unpackedDir, targetPlatform, sourcePlatform);
             // Update AppID
-            if (!targetPlatform.IsConsole)
+            if (!targetPlatform.IsConsole )/*|| targetPlatform.platform.ToString() == "PS4"*/
                 data.AppId = appId;
 
             // Build

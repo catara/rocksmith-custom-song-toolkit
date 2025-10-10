@@ -6,14 +6,14 @@ using MiscUtil.Conversion;
 
 namespace RocksmithToolkitLib
 {
-    public enum GamePlatform { Pc, Mac, XBox360, PS3, None };
+    public enum GamePlatform { Pc, Mac, XBox360, PS3, PS4, None };
     public enum GameVersion { RS2012, RS2014, None };
 
     public class Platform
     {
         public GamePlatform platform { get; set; }
         public GameVersion version { get; set; }
-        public bool IsConsole { get { return (platform == GamePlatform.XBox360 || platform == GamePlatform.PS3); } }
+        public bool IsConsole { get { return (platform == GamePlatform.XBox360 || platform == GamePlatform.PS3 || platform == GamePlatform.PS4); } }
 
         public Platform(GamePlatform platform, GameVersion version)
         {

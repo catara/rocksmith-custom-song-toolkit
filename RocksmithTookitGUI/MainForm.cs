@@ -24,7 +24,6 @@ namespace RocksmithToolkitGUI
     {
         internal BackgroundWorker bWorker;
         private ToolkitVersionOnline onlineVersion;
-
         public MainForm(string[] args)
         {
             // load order is important
@@ -283,7 +282,7 @@ namespace RocksmithToolkitGUI
             bool firstRun = ConfigRepository.Instance().GetBoolean("general_firstrun");
 
             // confirm and log App.config was properly loaded at runtime
-            var appConfigStatus = "<ERROR> Load Failed";
+            string appConfigStatus = "<ERROR> Load Failed";
             if (Convert.ToBoolean(ConfigurationManager.AppSettings["key"]))
                 appConfigStatus = "Load Successful";
 

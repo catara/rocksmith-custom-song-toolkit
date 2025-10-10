@@ -1,0 +1,50 @@
+# [ti:Stay Away (feat. Menahan Street Band)]
+# [ar:Charles Bradley]
+# [al:Black Velvet]
+# [by:catara]
+3040	127	text	Verse
+16350	2366	text	Monkey see, monkey do
+20998	1986	text	I don't know why
+27167	2578	text	I'd rather be dead than be uncool
+31815	1690	text	I don't know why
+37434	2832	text	Every line had the rhythms
+42632	1648	text	I don't know why
+48336	3887	text	Let's move, love is blind
+53406	2240	text	I don't know why
+55899	169	text	Chorus
+59322	3634	text	Stay, stay away
+64477	3803	text	Stay away, stay away
+68448	1310	text	Oh
+69970	169	text	Verse
+70392	2577	text	Give it up, take a smile
+74955	1775	text	I don't know why
+80575	2578	text	Fashion shirt, fashion style
+85561	1690	text	I don't know why
+91350	2620	text	Throw it out, keep it in
+96589	1775	text	I don't know why
+102885	2366	text	Hell, I had a potent skin
+107491	929	text	I don't know why
+109603	127	text	Chorus
+113491	3507	text	Stay, stay away
+118688	3803	text	Stay away, stay away
+122702	1141	text	Oh
+124223	169	text	Bridge
+124603	3169	text	Ooh,
+129589	169	text	ah
+133139	845	text	Baby
+134744	169	text	Verse
+135082	2746	text	Give an inch, take a smile
+139815	1859	text	I don't know why
+146110	2536	text	Fashion shirt, fashion style
+150716	1521	text	I don't know why
+153547	85	text	Chorus
+156632	3380	text	Stay, stay away
+161491	3845	text	Stay away, stay away
+166265	169	text	Outro
+167237	845	text	Stay away,
+170026	6971	text	yeahStay away, ooh
+178054	7437	text	AhAh
+185913	930	text	Ooh, stay away, babe
+187012	2831	text	Don't, Lord, no, nono, no
+190012	169	text	Ah
+190646	1225	text	Writer(s): Kurt Cobain

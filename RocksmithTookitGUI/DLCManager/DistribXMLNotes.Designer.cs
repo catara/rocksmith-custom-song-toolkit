@@ -38,25 +38,21 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
 
         }
-        private System.Windows.Forms.HelpProvider helpProvider1;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.LinkLabel lbl_Link;
-        private System.Windows.Forms.Button btn_B3;
-        private CueTextBox txt_TabLinks;
-        private CueTextBox txt_BasedOnYB;
-        private CueTextBox txt_YBLink;
-        private CueTextBox txt_Author;
-        private System.Windows.Forms.RichTextBox txt_toDos;
-        private CueTextBox txt_BasedOnCF;
-        private System.Windows.Forms.Label lbl_Settings;
-        private CueTextBox txt_CDLC_Name;
+        //private CueTextBox txt_TabLinks;
+        //private CueTextBox txt_BasedOnYB;
+        //private CueTextBox txt_YBLink;
+        //private CueTextBox txt_Author;
+        //private System.Windows.Forms.RichTextBox txt_toDos;
+        //private CueTextBox txt_BasedOnCF;
+        //private System.Windows.Forms.Label lbl_Settings;
+        //private CueTextBox txt_CDLC_Name;
         private System.Windows.Forms.Button btn_MoveAllNotesAfter;
         private System.Windows.Forms.Button btn_addcorrection;
         private System.Windows.Forms.Button btn_OpenXML;
         private System.Windows.Forms.Button btn_Album2SortA;
-        private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.CheckBox chbx_SaveInDB;
-        private System.Windows.Forms.CheckBox chbx_SaveInVerisonInfo;
+        //private System.Windows.Forms.LinkLabel linkLabel1;
+        //private System.Windows.Forms.CheckBox chbx_SaveInDB;
+        //private System.Windows.Forms.CheckBox chbx_SaveInVerisonInfo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RichTextBox txt_ToneDetails;
         private System.Windows.Forms.LinkLabel linkLabel2;
@@ -72,12 +68,12 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_EoFPath;
         private CueTextBox txt_UpdateDate;
         private CueTextBox txt_PackageDate;
-        private CueTextBox txt_GPFilePath;
-        private System.Windows.Forms.Button btn_DBFolder;
+        //private CueTextBox txt_GPFilePath;
+        //private System.Windows.Forms.Button btn_DBFolder;
         private System.Windows.Forms.Label lbl_Comments;
         private System.Windows.Forms.Button btn_Estimate;
-        private System.Windows.Forms.DateTimePicker txt_PreviewStart;
-        private System.Windows.Forms.DateTimePicker dateTimePicker3;
+        //private System.Windows.Forms.DateTimePicker txt_PreviewStart;
+        //private System.Windows.Forms.DateTimePicker dateTimePicker3;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
@@ -168,5 +164,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Button button2;
     }
 }

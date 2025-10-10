@@ -12,6 +12,7 @@ using RocksmithToolkitLib.DLCPackage.Manifest;
 using RocksmithToolkitLib.DLCPackage;
 using RocksmithToolkitLib.Sng2014HSL;
 using RocksmithToolkitLib.DLCPackage.Manifest2014;
+using RocksmithToolkitLib.PSARC;
 
 namespace RocksmithToTabLib
 {
@@ -76,10 +77,13 @@ namespace RocksmithToTabLib
                             currentSong = new SongInfo()
                             {
                                 Title = attributes["SongName"].ToString(),
+                                TitleSort = attributes["SongNameSort"].ToString(),
                                 Artist = attributes["ArtistName"].ToString(),
                                 ArtistSort = attributes["ArtistNameSort"].ToString(),
                                 Album = attributes["AlbumName"].ToString(),
+                                AlbumSort = attributes["AlbumNameSort"].ToString(),
                                 Year = attributes["SongYear"].ToString(),
+                                //Name = attributes["Name"].ToString(),
                                 Identifier = identifier,
                                 Arrangements = new List<string>()
                             };
@@ -215,11 +219,14 @@ namespace RocksmithToTabLib
     public class SongInfo
     {
         public string Title { get; set; }
+        public string TitleSort { get; set; }
         public string Artist { get; set; }
         public string ArtistSort { get; set; }
         public string Album { get; set; }
+        public string AlbumSort { get; set; }
         public string Year { get; set; }
         public string Identifier { get; set; }
+        //public string Name { get; set; }
         public IList<string> Arrangements { get; set; }
     }
 

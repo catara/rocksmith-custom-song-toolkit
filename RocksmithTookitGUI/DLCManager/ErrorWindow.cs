@@ -15,21 +15,28 @@ using RocksmithToolkitLib.Extensions; //dds
 using System.Diagnostics;
 using Ookii.Dialogs;
 using RocksmithToolkitLib.XmlRepository; //cue text
+using static RocksmithToolkitGUI.DLCManager.UtilitiesFunctions;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class ErrorWindow : Form
     {
-        public bool IgnoreSong { get; set; }
-        public bool StopImport { get; set; }
+        public bool B1 { get; set; }
+        public bool B2 { get; set; }
         public string erorrfeedback { get; set; }
-        public ErrorWindow(string mss, string link, string Title, bool B1Visi, bool B2Visi, bool B3Visi, string B1Txt, string B2Txt, string B3Txt, bool wordwrap)//string txt_DBFolder,string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete
+
+        static string AppWD = AppDomain.CurrentDomain.BaseDirectory + "DLCManager\\external_tools"; //when removing DDC
+        public ErrorWindow(string mss, string link, string Title, bool B1Visi, bool B2Visi, bool B3Visi, string B1Txt, string B2Txt, string B3Txt
+            , bool wordwrap)//string txt_DBFolder,string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete
         {
             InitializeComponent();
-            lbl_Link.Text = link;
+            var link1 = link;var link2 = "";
+            if (link.Contains(";")) link2 = link.Split(';')[1];
+            lbl_Link1.Text = link1; if (link1 != "" && link1 is not null) lbl_Link1.Visible = true; else lbl_Link1.Visible = false;
+            lbl_Link2.Text = link2; if (link2 != "" && link2 is not null) lbl_Link2.Visible = true; else lbl_Link2.Visible = false;
             txt_Description.Text = mss;
-            IgnoreSong = false;
-            StopImport = false;
+            B1 = false;
+            B2 = false;
             this.Text = Title;
             btn_B1.Visible = B1Visi;
             btn_B2.Visible = B2Visi;
@@ -59,8 +66,9 @@ namespace RocksmithToolkitGUI.DLCManager
             helpProvider1 = new HelpProvider();
             splitContainer1 = new SplitContainer();
             txt_Description = new RichTextBox();
+            lbl_Link2 = new LinkLabel();
             btn_B1 = new Button();
-            lbl_Link = new LinkLabel();
+            lbl_Link1 = new LinkLabel();
             btn_B2 = new Button();
             btn_B3 = new Button();
             ((ISupportInitialize)splitContainer1).BeginInit();
@@ -83,8 +91,9 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // splitContainer1.Panel2
             // 
+            splitContainer1.Panel2.Controls.Add(lbl_Link2);
             splitContainer1.Panel2.Controls.Add(btn_B1);
-            splitContainer1.Panel2.Controls.Add(lbl_Link);
+            splitContainer1.Panel2.Controls.Add(lbl_Link1);
             splitContainer1.Panel2.Controls.Add(btn_B2);
             splitContainer1.Panel2.Controls.Add(btn_B3);
             splitContainer1.Size = new Size(1105, 442);
@@ -104,46 +113,58 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_Description.TabIndex = 337;
             txt_Description.Text = "";
             // 
+            // lbl_Link2
+            // 
+            lbl_Link2.AutoSize = true;
+            lbl_Link2.Location = new Point(12, 19);
+            lbl_Link2.Name = "lbl_Link2";
+            lbl_Link2.Size = new Size(60, 15);
+            lbl_Link2.TabIndex = 9;
+            lbl_Link2.TabStop = true;
+            lbl_Link2.Text = "linkLabel2";
+            lbl_Link2.LinkClicked += lbl_Link2_LinkClicked;
+            // 
             // btn_B1
             // 
             btn_B1.Dock = DockStyle.Bottom;
-            btn_B1.Location = new Point(0, 47);
+            btn_B1.Location = new Point(0, 35);
             btn_B1.Name = "btn_B1";
             btn_B1.Size = new Size(1105, 30);
             btn_B1.TabIndex = 8;
             btn_B1.Text = "Ignore Song";
             btn_B1.UseVisualStyleBackColor = true;
-            btn_B1.Click += btn_StopImport_Click;
+            btn_B1.Click += btn_B1_Click;
             // 
-            // lbl_Link
+            // lbl_Link1
             // 
-            lbl_Link.AutoSize = true;
-            lbl_Link.Location = new Point(12, 17);
-            lbl_Link.Name = "lbl_Link";
-            lbl_Link.Size = new Size(60, 15);
-            lbl_Link.TabIndex = 7;
-            lbl_Link.TabStop = true;
-            lbl_Link.Text = "linkLabel1";
-            lbl_Link.LinkClicked += Lbl_Link_LinkClicked;
+            lbl_Link1.AutoSize = true;
+            lbl_Link1.Location = new Point(12, 4);
+            lbl_Link1.Name = "lbl_Link1";
+            lbl_Link1.Size = new Size(60, 15);
+            lbl_Link1.TabIndex = 7;
+            lbl_Link1.TabStop = true;
+            lbl_Link1.Text = "linkLabel1";
+            lbl_Link1.LinkClicked += Lbl_Link_LinkClicked;
             // 
             // btn_B2
             // 
             btn_B2.Dock = DockStyle.Bottom;
-            btn_B2.Location = new Point(0, 77);
+            btn_B2.Location = new Point(0, 65);
             btn_B2.Name = "btn_B2";
             btn_B2.Size = new Size(1105, 30);
             btn_B2.TabIndex = 6;
             btn_B2.Text = "Stop Import";
             btn_B2.UseVisualStyleBackColor = true;
             btn_B2.Visible = false;
-            btn_B2.Click += btn_Close_Click;
+            btn_B2.Click += btn_B2_Click;
             // 
             // btn_B3
             // 
             btn_B3.Dock = DockStyle.Bottom;
-            btn_B3.Location = new Point(0, 107);
+            btn_B3.Font = new Font("Segoe UI", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_B3.Location = new Point(0, 95);
             btn_B3.Name = "btn_B3";
-            btn_B3.Size = new Size(1105, 30);
+            btn_B3.Size = new Size(1105, 42);
             btn_B3.TabIndex = 5;
             btn_B3.Text = "OK";
             btn_B3.UseVisualStyleBackColor = true;
@@ -164,24 +185,26 @@ namespace RocksmithToolkitGUI.DLCManager
             ResumeLayout(false);
         }
 
-        private void btn_Close_Click(object sender, EventArgs e)
+        private void btn_B2_Click(object sender, EventArgs e)
         {
-            StopImport = true;
-erorrfeedback= txt_Description.Text.ToString();
+            B2 = true;
+            erorrfeedback = txt_Description.Text.ToString();
             this.Hide();
         }
 
         private void btn_OK_Click(object sender, EventArgs e)
         {
             ConfigRepository.Instance()["dlcm_Global2TempVariable"] = txt_Description.Text;
-            erorrfeedback= txt_Description.Text.ToString();            
+            erorrfeedback = txt_Description.Text.ToString();
             this.Hide();
         }
 
-        private void btn_StopImport_Click(object sender, EventArgs e)
+        private void btn_B1_Click(object sender, EventArgs e)
         {
-            IgnoreSong = true;
-            erorrfeedback= txt_Description.Text.ToString();
+            B1 = true;
+            erorrfeedback = txt_Description.Text.ToString();/*AppWD.Replace("DLCManager\\external_tools", "") + "\\" + c("dlcm_Database.NET")*/
+            if (btn_B1.Text.Contains("Install from local") || btn_B1.Text.Contains("Open SQLITE3 DB and run command manually from local "))
+                StartProcesss(btn_B1.Text.Replace("Install from local ", "").Replace("Open SQLITE3 DB and run command manually from local ", ""), null);
             this.Hide();
         }
 
@@ -193,7 +216,13 @@ erorrfeedback= txt_Description.Text.ToString();
         private void Lbl_Link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // Send the URL to the operating system.
-            Process.Start(lbl_Link.Text as string);
+            Process.Start(lbl_Link1.Text as string);
+        }
+
+        private void lbl_Link2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // Send the URL to the operating system.
+            Process.Start(lbl_Link2.Text as string);
         }
     }
 }

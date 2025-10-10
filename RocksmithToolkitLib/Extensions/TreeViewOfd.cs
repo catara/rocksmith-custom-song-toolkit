@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Linq;
+using System.ComponentModel;
 
 namespace RocksmithToolkitLib.Extensions
 {
@@ -21,7 +22,16 @@ namespace RocksmithToolkitLib.Extensions
             InitializeComponent();
         }
 
+        public TreeViewOfd(Dictionary<string, string> currentFilter)
+        {
+            CurrentFilter = currentFilter;
+        }
+
         private string title = "";
+        /// <summary>
+        /// Get/Set Custom TreeView OpenFileDialog Title
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         /// <summary>
         /// Get/Set Custom TreeView OpenFileDialog Title
         /// </summary>
@@ -39,6 +49,10 @@ namespace RocksmithToolkitLib.Extensions
         /// <summary>
         /// Get/Set Custom TreeView OpenFileDialog InitialDirectory
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        /// <summary>
+        /// Get/Set Custom TreeView OpenFileDialog InitialDirectory
+        /// </summary>
         public string InitialDirectory
         {
             get { return initialDirectory; }
@@ -50,6 +64,10 @@ namespace RocksmithToolkitLib.Extensions
         }
 
         private bool multiSelect = false;
+        /// <summary>
+        /// Get/Set Custom TreeView OpenFileDialog Multiselect boolean condition
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         /// <summary>
         /// Get/Set Custom TreeView OpenFileDialog Multiselect boolean condition
         /// </summary>
@@ -67,6 +85,10 @@ namespace RocksmithToolkitLib.Extensions
         /// <summary>
         /// Get/Set Custom TreeView ExpandedState save file path
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        /// <summary>
+        /// Get/Set Custom TreeView ExpandedState save file path
+        /// </summary>
         public string ExpandedStateSavePath
         {
             get { return expandedStateSavePath; }
@@ -74,6 +96,12 @@ namespace RocksmithToolkitLib.Extensions
         }
 
         private List<string> fileNames = new List<string>();
+        /// <summary>
+        /// Get/Set Custom TreeView Selected File Names/Paths
+        /// <para>Output from FileNames property preserves</para>
+        /// <para>the selection and custom ordering of items</para>
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         /// <summary>
         /// Get/Set Custom TreeView Selected File Names/Paths
         /// <para>Output from FileNames property preserves</para>
@@ -107,6 +135,11 @@ namespace RocksmithToolkitLib.Extensions
         /// Get/Set Custom TreeView OpenFileDialog Filter
         /// e.g. "Image Files (*.bmp, *.jpg)|*.bmp;*.jpg|All Files (*.*)|*.*" 
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        /// <summary>
+        /// Get/Set Custom TreeView OpenFileDialog Filter
+        /// e.g. "Image Files (*.bmp, *.jpg)|*.bmp;*.jpg|All Files (*.*)|*.*" 
+        /// </summary>
         public string Filter
         {
             get { return filter; }
@@ -114,6 +147,11 @@ namespace RocksmithToolkitLib.Extensions
         }
 
         private Dictionary<string, string> currentFilter = new Dictionary<string, string>();
+        /// <summary>
+        /// Get/Set Custom TreeView OpenFileDialog Filter as Dictionary 
+        /// e.g. "All Files (*.*)|*.*" where Key = "*.*", Value = "All Files (*.*)"
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         /// <summary>
         /// Get/Set Custom TreeView OpenFileDialog Filter as Dictionary 
         /// e.g. "All Files (*.*)|*.*" where Key = "*.*", Value = "All Files (*.*)"

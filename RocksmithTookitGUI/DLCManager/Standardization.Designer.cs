@@ -949,7 +949,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.TextBox txt_Year_Correction;
         private System.Windows.Forms.TextBox txt_Artist_Short;
         //private DLCManager.MainDBfields eXisting;
-        private DLCPackageData datas;
+        //private DLCPackageData datas;
         private string author;
         private string tkversion;
         private string dD;
@@ -974,7 +974,7 @@ namespace RocksmithToolkitGUI.DLCManager
            : this(txt_DBFolder, txt_TempPath, txt_RocksmithDLCPath, AllowEncript, AllowORIGDelete, cnnb, null, cnnc)
         {
             this.filed = filed;
-            datas = datas;
+            //datas = datas;
             this.author = author;
             this.tkversion = tkversion;
             this.dD = dD;

@@ -280,7 +280,7 @@ namespace RocksmithToolkitLib.Extensions
             }
             catch (Exception ex)
             {
-                var tsst = "Erro ..." + ex; //starttmp = UpdateLog(starttmp, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                var tsst = "Erro ..." + ex.Message; //starttmp = UpdateLog(starttmp, tsst, false, c("dlcm_TempPath"), "", "", null, null);
                 //MessageBox.Show(ex.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 //MessageBox.Show("Can not open Main DB connection in MainDB ! " + c("dlcm_DBFolder"));
             }

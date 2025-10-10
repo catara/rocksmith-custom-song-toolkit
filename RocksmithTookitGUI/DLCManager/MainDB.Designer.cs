@@ -258,6 +258,18 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_LeaF1 = new CheckBox();
             btn_RemoveMultiTracks = new Button();
             chbx_AI_TrackAvail = new CheckBox();
+            chbx_ExcludenonBlanks = new CheckBox();
+            btn_CleanAllBroken = new Button();
+            chbx_OnlyNo = new CheckBox();
+            btn_CheckOld = new Button();
+            chbx_A_IsCensored = new CheckBox();
+            chbx_FN = new CheckBox();
+            btn_SetSpecificFN = new Button();
+            chbx_SKU = new CheckBox();
+            chbx_A_HasAcoustic = new CheckBox();
+            chbx_Hide = new CheckBox();
+            btn_TuxGuitar = new Button();
+            chbx_A_ProductionReady = new CheckBox();
             splitContainer2 = new SplitContainer();
             tabControl = new TabControl();
             tabPage1 = new TabPage();
@@ -447,6 +459,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ContextMenuAttrib_FullAlbum = new ToolStripMenuItem();
             ContextMenuAttrib_Instrumental = new ToolStripMenuItem();
             ContextMenuAttrib_Soundtrack = new ToolStripMenuItem();
+            ContextMenuAttrib_Has_Acoustic = new ToolStripMenuItem();
             ContextMenuAttrib_Featuring = new ToolStripMenuItem();
             ContextMenuAttrib_Acoustic = new ToolStripMenuItem();
             ContextMenuAttrib_Karaoke = new ToolStripMenuItem();
@@ -473,6 +486,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ToolStripMenuItemAmateurCover = new ToolStripMenuItem();
             metalCoverToolStripMenuItem = new ToolStripMenuItem();
             ukuleleToolStripMenuItem = new ToolStripMenuItem();
+            ToolStripMenuItemCensored = new ToolStripMenuItem();
             ContextMenuMenu_Selected = new ToolStripMenuItem();
             ContextMenuMenu_Beta = new ToolStripMenuItem();
             ContextMenuMenu_Pack = new ToolStripMenuItem();
@@ -605,7 +619,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_Copy_old.Enabled = false;
             btn_Copy_old.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.3F);
-            btn_Copy_old.Location = new System.Drawing.Point(2, 242);
+            btn_Copy_old.Location = new System.Drawing.Point(2, 241);
             btn_Copy_old.Margin = new Padding(2);
             btn_Copy_old.Name = "btn_Copy_old";
             btn_Copy_old.Size = new System.Drawing.Size(69, 20);
@@ -693,11 +707,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_Last_Packed
             // 
-            chbx_Last_Packed.Enabled = false;
             chbx_Last_Packed.Location = new System.Drawing.Point(126, 81);
             chbx_Last_Packed.Margin = new Padding(2);
             chbx_Last_Packed.Name = "chbx_Last_Packed";
-            chbx_Last_Packed.Size = new System.Drawing.Size(66, 18);
+            chbx_Last_Packed.Size = new System.Drawing.Size(52, 18);
             chbx_Last_Packed.TabIndex = 334;
             chbx_Last_Packed.Text = "Last";
             toolTip1.SetToolTip(chbx_Last_Packed, " Copy / Convert only the last Packed CDLC");
@@ -1123,7 +1136,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_OpenRepackedFolder
             // 
-            btn_OpenRepackedFolder.Location = new System.Drawing.Point(161, 64);
+            btn_OpenRepackedFolder.Location = new System.Drawing.Point(172, 73);
             btn_OpenRepackedFolder.Margin = new Padding(2);
             btn_OpenRepackedFolder.Name = "btn_OpenRepackedFolder";
             btn_OpenRepackedFolder.Size = new System.Drawing.Size(10, 20);
@@ -1167,10 +1180,10 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_Copy.Location = new System.Drawing.Point(2, 49);
             chbx_Copy.Margin = new Padding(2);
             chbx_Copy.Name = "chbx_Copy";
-            chbx_Copy.Size = new System.Drawing.Size(75, 18);
+            chbx_Copy.Size = new System.Drawing.Size(79, 18);
             chbx_Copy.TabIndex = 326;
-            chbx_Copy.Text = "&&Copy";
-            toolTip1.SetToolTip(chbx_Copy, "&Copy or FTP");
+            chbx_Copy.Text = "Copy/FTP";
+            toolTip1.SetToolTip(chbx_Copy, "and also Copy or FTP");
             chbx_Copy.UseVisualStyleBackColor = true;
             // 
             // btn_SteamDLCFolder
@@ -1570,7 +1583,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_CopyOld.Enabled = false;
             btn_CopyOld.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            btn_CopyOld.Location = new System.Drawing.Point(110, 11);
+            btn_CopyOld.Location = new System.Drawing.Point(102, 11);
             btn_CopyOld.Margin = new Padding(0);
             btn_CopyOld.Name = "btn_CopyOld";
             btn_CopyOld.Size = new System.Drawing.Size(18, 16);
@@ -1597,7 +1610,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_OldFolder.Enabled = false;
             btn_OldFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            btn_OldFolder.Location = new System.Drawing.Point(92, 11);
+            btn_OldFolder.Location = new System.Drawing.Point(84, 11);
             btn_OldFolder.Margin = new Padding(0);
             btn_OldFolder.Name = "btn_OldFolder";
             btn_OldFolder.Size = new System.Drawing.Size(18, 16);
@@ -1717,7 +1730,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             chbx_LyricsLanguage.FormattingEnabled = true;
             chbx_LyricsLanguage.ItemHeight = 15;
-            chbx_LyricsLanguage.Items.AddRange(new object[] { "EN", "FR", "RO", "DE", "JP", "PR", "IT" });
+            chbx_LyricsLanguage.Items.AddRange(new object[] { "EN", "FR", "RO", "DE", "JP", "PT", "SP", "IT" });
             chbx_LyricsLanguage.Location = new System.Drawing.Point(100, 97);
             chbx_LyricsLanguage.Margin = new Padding(2);
             chbx_LyricsLanguage.Name = "chbx_LyricsLanguage";
@@ -1977,6 +1990,7 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_PackBeta.Text = "Add Beta";
             toolTip1.SetToolTip(chbx_PackBeta, "Add Beta Flag");
             chbx_PackBeta.UseVisualStyleBackColor = true;
+            chbx_PackBeta.CheckedChanged += chbx_PackBeta_CheckedChanged;
             // 
             // btn_RockBandSite
             // 
@@ -2080,11 +2094,12 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_Clean.Location = new System.Drawing.Point(2, 97);
             chbx_Clean.Margin = new Padding(2);
             chbx_Clean.Name = "chbx_Clean";
-            chbx_Clean.Size = new System.Drawing.Size(104, 18);
+            chbx_Clean.Size = new System.Drawing.Size(99, 18);
             chbx_Clean.TabIndex = 433;
             chbx_Clean.Text = "for CF upload";
             toolTip1.SetToolTip(chbx_Clean, "Copy / Convert directly the original (no DLC Manager Manipulation)");
             chbx_Clean.UseVisualStyleBackColor = true;
+            chbx_Clean.CheckedChanged += chbx_Clean_CheckedChanged;
             // 
             // chbx_A_IsKaraoke
             // 
@@ -2264,7 +2279,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_OldPath.Margin = new Padding(2);
             txt_OldPath.Name = "txt_OldPath";
             txt_OldPath.ScrollBars = ScrollBars.Horizontal;
-            txt_OldPath.Size = new System.Drawing.Size(365, 20);
+            txt_OldPath.Size = new System.Drawing.Size(344, 20);
             txt_OldPath.TabIndex = 334;
             toolTip1.SetToolTip(txt_OldPath, "Path where File originally imported was saved.");
             txt_OldPath.Visible = false;
@@ -2497,10 +2512,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_ExcludeBroken
             // 
-            chbx_ExcludeBroken.Location = new System.Drawing.Point(111, 97);
+            chbx_ExcludeBroken.Location = new System.Drawing.Point(99, 97);
             chbx_ExcludeBroken.Margin = new Padding(2);
             chbx_ExcludeBroken.Name = "chbx_ExcludeBroken";
-            chbx_ExcludeBroken.Size = new System.Drawing.Size(82, 18);
+            chbx_ExcludeBroken.Size = new System.Drawing.Size(63, 18);
             chbx_ExcludeBroken.TabIndex = 434;
             chbx_ExcludeBroken.Text = "Broken";
             toolTip1.SetToolTip(chbx_ExcludeBroken, "Exclude Broken Songs");
@@ -2837,7 +2852,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btnRefreshOld
             // 
             btnRefreshOld.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            btnRefreshOld.Location = new System.Drawing.Point(132, 10);
+            btnRefreshOld.Location = new System.Drawing.Point(124, 10);
             btnRefreshOld.Margin = new Padding(0);
             btnRefreshOld.Name = "btnRefreshOld";
             btnRefreshOld.Size = new System.Drawing.Size(26, 18);
@@ -3130,7 +3145,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_Export2ASCII
             // 
             btn_Export2ASCII.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.3F);
-            btn_Export2ASCII.Location = new System.Drawing.Point(330, 37);
+            btn_Export2ASCII.Location = new System.Drawing.Point(330, 39);
             btn_Export2ASCII.Margin = new Padding(2);
             btn_Export2ASCII.Name = "btn_Export2ASCII";
             btn_Export2ASCII.Size = new System.Drawing.Size(17, 20);
@@ -3193,7 +3208,7 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_A_CatchAllAtributte.DropDownWidth = 150;
             chbx_A_CatchAllAtributte.Font = new System.Drawing.Font("Segoe UI", 8F);
             chbx_A_CatchAllAtributte.FormattingEnabled = true;
-            chbx_A_CatchAllAtributte.Items.AddRange(new object[] { "IntheWorks", "Is_Instrumental", "Is_Single", "Is_Medley", "Is_MultiStrings", "Is_Soundtrack", "Is_EP", "Is_Uncensored", "Is_FullAlbum", "Has_Featuring", "Is_Cover", "Is_Deluxe", "Is_GreatestHits", "Is_Midi", "Is_MetalCover", "Is_GameSoundtrack", "Is_Ukulele", "Is_TVTheme", "Is_AmateurCover", "Is_Demo", "Is_Karaoke", "Is_Remix", "Is_Remastered", "Is_Live", "Is_Acoustic", "Has_Slide" });
+            chbx_A_CatchAllAtributte.Items.AddRange(new object[] { "IntheWorks", "Is_Instrumental", "Is_Single", "Is_Medley", "Is_MultiStrings", "Is_Soundtrack", "Is_EP", "Is_Uncensored", "Is_Censored", "Is_FullAlbum", "Has_Featuring", "Is_Cover", "Is_Deluxe", "Is_GreatestHits", "Is_Midi", "Is_MetalCover", "Is_GameSoundtrack", "Is_Ukulele", "Is_TVTheme", "Is_AmateurCover", "Is_Demo", "Is_Karaoke", "Is_Remix", "Is_Remastered", "Is_Live", "Is_Acoustic", "Has_Slide" });
             chbx_A_CatchAllAtributte.Location = new System.Drawing.Point(191, 31);
             chbx_A_CatchAllAtributte.Margin = new Padding(2);
             chbx_A_CatchAllAtributte.Name = "chbx_A_CatchAllAtributte";
@@ -3454,6 +3469,162 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_AI_TrackAvail, "On of the Tracks as a requirement for an Isntruments with non standard number of strings");
             chbx_AI_TrackAvail.UseVisualStyleBackColor = true;
             // 
+            // chbx_ExcludenonBlanks
+            // 
+            chbx_ExcludenonBlanks.AutoSize = true;
+            chbx_ExcludenonBlanks.Location = new System.Drawing.Point(537, 292);
+            chbx_ExcludenonBlanks.Margin = new Padding(2);
+            chbx_ExcludenonBlanks.Name = "chbx_ExcludenonBlanks";
+            chbx_ExcludenonBlanks.Size = new System.Drawing.Size(115, 19);
+            chbx_ExcludenonBlanks.TabIndex = 429;
+            chbx_ExcludenonBlanks.Text = "Only when Blank";
+            toolTip1.SetToolTip(chbx_ExcludenonBlanks, "Shows if Duplicates of DLC exists that are actually Official songs but from a Different Platform");
+            chbx_ExcludenonBlanks.UseVisualStyleBackColor = true;
+            // 
+            // btn_CleanAllBroken
+            // 
+            btn_CleanAllBroken.Location = new System.Drawing.Point(826, 91);
+            btn_CleanAllBroken.Margin = new Padding(2);
+            btn_CleanAllBroken.Name = "btn_CleanAllBroken";
+            btn_CleanAllBroken.Size = new System.Drawing.Size(341, 20);
+            btn_CleanAllBroken.TabIndex = 430;
+            btn_CleanAllBroken.Text = "Clean all Broken and MissingFiles";
+            toolTip1.SetToolTip(btn_CleanAllBroken, "Opens PKG Linker webserver for serving opackages to HAN (vulnerability) enabled devices (e.g. PS3 SUPER Slim)");
+            btn_CleanAllBroken.UseVisualStyleBackColor = true;
+            btn_CleanAllBroken.Click += btn_CleanAllBroken_Click;
+            // 
+            // chbx_OnlyNo
+            // 
+            chbx_OnlyNo.AutoSize = true;
+            chbx_OnlyNo.Location = new System.Drawing.Point(395, 292);
+            chbx_OnlyNo.Margin = new Padding(2);
+            chbx_OnlyNo.Name = "chbx_OnlyNo";
+            chbx_OnlyNo.Size = new System.Drawing.Size(102, 19);
+            chbx_OnlyNo.TabIndex = 431;
+            chbx_OnlyNo.Text = "Only when No";
+            toolTip1.SetToolTip(chbx_OnlyNo, "Shows if Duplicates of DLC exists that are actually Official songs but from a Different Platform");
+            chbx_OnlyNo.UseVisualStyleBackColor = true;
+            // 
+            // btn_CheckOld
+            // 
+            btn_CheckOld.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
+            btn_CheckOld.Location = new System.Drawing.Point(724, 173);
+            btn_CheckOld.Margin = new Padding(0);
+            btn_CheckOld.Name = "btn_CheckOld";
+            btn_CheckOld.Size = new System.Drawing.Size(26, 18);
+            btn_CheckOld.TabIndex = 460;
+            btn_CheckOld.Text = "chk";
+            toolTip1.SetToolTip(btn_CheckOld, "Check OLD/orig imported file if existing and if filesize biger than zero");
+            btn_CheckOld.UseVisualStyleBackColor = true;
+            btn_CheckOld.UseWaitCursor = true;
+            btn_CheckOld.Click += btn_CheckOld_Click;
+            // 
+            // chbx_A_IsCensored
+            // 
+            chbx_A_IsCensored.Appearance = Appearance.Button;
+            chbx_A_IsCensored.Font = new System.Drawing.Font("Segoe UI", 7F);
+            chbx_A_IsCensored.Location = new System.Drawing.Point(108, 52);
+            chbx_A_IsCensored.Margin = new Padding(2);
+            chbx_A_IsCensored.Name = "chbx_A_IsCensored";
+            chbx_A_IsCensored.Size = new System.Drawing.Size(70, 18);
+            chbx_A_IsCensored.TabIndex = 459;
+            chbx_A_IsCensored.Text = "Censored";
+            toolTip1.SetToolTip(chbx_A_IsCensored, "On of the Tracks as a requirement for an Isntruments with non standard number of strings");
+            chbx_A_IsCensored.UseVisualStyleBackColor = true;
+            chbx_A_IsCensored.Visible = false;
+            // 
+            // chbx_FN
+            // 
+            chbx_FN.Checked = true;
+            chbx_FN.CheckState = CheckState.Indeterminate;
+            chbx_FN.Location = new System.Drawing.Point(148, 97);
+            chbx_FN.Margin = new Padding(2);
+            chbx_FN.Name = "chbx_FN";
+            chbx_FN.Size = new System.Drawing.Size(42, 18);
+            chbx_FN.TabIndex = 440;
+            chbx_FN.Text = "FN";
+            toolTip1.SetToolTip(chbx_FN, "Keep Original FileName (this overrides MetaDataBased functionality)");
+            chbx_FN.UseVisualStyleBackColor = true;
+            chbx_FN.CheckStateChanged += chbx_FN_CheckStateChanged;
+            // 
+            // btn_SetSpecificFN
+            // 
+            btn_SetSpecificFN.Location = new System.Drawing.Point(554, 286);
+            btn_SetSpecificFN.Margin = new Padding(2);
+            btn_SetSpecificFN.Name = "btn_SetSpecificFN";
+            btn_SetSpecificFN.Size = new System.Drawing.Size(18, 20);
+            btn_SetSpecificFN.TabIndex = 441;
+            btn_SetSpecificFN.Text = "...";
+            toolTip1.SetToolTip(btn_SetSpecificFN, "Go to Internal Repacked Location");
+            btn_SetSpecificFN.UseVisualStyleBackColor = true;
+            btn_SetSpecificFN.Click += button1_Click_4;
+            // 
+            // chbx_SKU
+            // 
+            chbx_SKU.Checked = true;
+            chbx_SKU.CheckState = CheckState.Checked;
+            chbx_SKU.Location = new System.Drawing.Point(110, 67);
+            chbx_SKU.Margin = new Padding(2);
+            chbx_SKU.Name = "chbx_SKU";
+            chbx_SKU.Size = new System.Drawing.Size(54, 18);
+            chbx_SKU.TabIndex = 441;
+            chbx_SKU.Text = "SKU";
+            toolTip1.SetToolTip(chbx_SKU, "Add DLC in-game Flag");
+            chbx_SKU.UseVisualStyleBackColor = true;
+            // 
+            // chbx_A_HasAcoustic
+            // 
+            chbx_A_HasAcoustic.Appearance = Appearance.Button;
+            chbx_A_HasAcoustic.Font = new System.Drawing.Font("Segoe UI", 7F);
+            chbx_A_HasAcoustic.Location = new System.Drawing.Point(108, 53);
+            chbx_A_HasAcoustic.Margin = new Padding(2);
+            chbx_A_HasAcoustic.Name = "chbx_A_HasAcoustic";
+            chbx_A_HasAcoustic.Size = new System.Drawing.Size(70, 18);
+            chbx_A_HasAcoustic.TabIndex = 460;
+            chbx_A_HasAcoustic.Text = "Has Acoustic";
+            toolTip1.SetToolTip(chbx_A_HasAcoustic, "Has a track that seems to be an Acoustic Guitar");
+            chbx_A_HasAcoustic.UseVisualStyleBackColor = true;
+            chbx_A_HasAcoustic.Visible = false;
+            // 
+            // chbx_Hide
+            // 
+            chbx_Hide.Checked = true;
+            chbx_Hide.CheckState = CheckState.Checked;
+            chbx_Hide.Location = new System.Drawing.Point(130, 53);
+            chbx_Hide.Margin = new Padding(2);
+            chbx_Hide.Name = "chbx_Hide";
+            chbx_Hide.Size = new System.Drawing.Size(54, 18);
+            chbx_Hide.TabIndex = 442;
+            chbx_Hide.Text = "Hide";
+            toolTip1.SetToolTip(chbx_Hide, "shows purple marker w/ \"DLC\" text overlay");
+            chbx_Hide.UseVisualStyleBackColor = true;
+            // 
+            // btn_TuxGuitar
+            // 
+            btn_TuxGuitar.Location = new System.Drawing.Point(1113, 268);
+            btn_TuxGuitar.Margin = new Padding(2);
+            btn_TuxGuitar.Name = "btn_TuxGuitar";
+            btn_TuxGuitar.Size = new System.Drawing.Size(140, 20);
+            btn_TuxGuitar.TabIndex = 432;
+            btn_TuxGuitar.Text = "Tux Guitar";
+            toolTip1.SetToolTip(btn_TuxGuitar, "Open the utility to spilt a song into tracks");
+            btn_TuxGuitar.UseVisualStyleBackColor = true;
+            btn_TuxGuitar.Click += btn_TuxGuitar_Click;
+            // 
+            // chbx_A_ProductionReady
+            // 
+            chbx_A_ProductionReady.Appearance = Appearance.Button;
+            chbx_A_ProductionReady.Font = new System.Drawing.Font("Segoe UI", 7F);
+            chbx_A_ProductionReady.Location = new System.Drawing.Point(90, 53);
+            chbx_A_ProductionReady.Margin = new Padding(2);
+            chbx_A_ProductionReady.Name = "chbx_A_ProductionReady";
+            chbx_A_ProductionReady.Size = new System.Drawing.Size(92, 18);
+            chbx_A_ProductionReady.TabIndex = 461;
+            chbx_A_ProductionReady.Text = "ProductionReady";
+            toolTip1.SetToolTip(chbx_A_ProductionReady, "Has a track that seems to be an Acoustic Guitar");
+            chbx_A_ProductionReady.UseVisualStyleBackColor = true;
+            chbx_A_ProductionReady.Visible = false;
+            // 
             // splitContainer2
             // 
             splitContainer2.Dock = DockStyle.Fill;
@@ -3498,6 +3669,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(btn_CheckOld);
             tabPage1.Controls.Add(btn_cleanFilesIssuesAndBroken);
             tabPage1.Controls.Add(label17);
             tabPage1.Controls.Add(Panel1);
@@ -3523,6 +3695,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // Panel1
             // 
+            Panel1.Controls.Add(btn_SetSpecificFN);
             Panel1.Controls.Add(btn_Gen_Orig_Audio);
             Panel1.Controls.Add(btn_EOF);
             Panel1.Controls.Add(lbl_Comments);
@@ -3635,6 +3808,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             chbx_A440.Appearance = Appearance.Button;
             chbx_A440.AutoSize = true;
+            chbx_A440.Checked = true;
+            chbx_A440.CheckState = CheckState.Indeterminate;
             chbx_A440.Font = new System.Drawing.Font("Segoe UI", 7F);
             chbx_A440.Location = new System.Drawing.Point(50, 74);
             chbx_A440.Margin = new Padding(2);
@@ -3642,6 +3817,7 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_A440.Size = new System.Drawing.Size(36, 22);
             chbx_A440.TabIndex = 448;
             chbx_A440.Text = "A440";
+            chbx_A440.ThreeState = true;
             chbx_A440.UseVisualStyleBackColor = true;
             // 
             // chbx_HasAuthor
@@ -3681,6 +3857,7 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_Original.TabIndex = 425;
             chbx_Original.Text = "Official";
             chbx_Original.UseVisualStyleBackColor = true;
+            chbx_Original.CheckedChanged += chbx_Original_CheckedChanged;
             // 
             // chbx_HasPreview
             // 
@@ -3801,7 +3978,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_Platform
             // 
             txt_Platform.FormattingEnabled = true;
-            txt_Platform.Items.AddRange(new object[] { "PC", "PS3", "Mac", "XBOX360" });
+            txt_Platform.Items.AddRange(new object[] { "PC", "PS3", "PS4", "Mac", "XBOX360" });
             txt_Platform.Location = new System.Drawing.Point(432, 104);
             txt_Platform.Margin = new Padding(2);
             txt_Platform.Name = "txt_Platform";
@@ -3862,6 +4039,9 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // gbox_Pack
             // 
+            gbox_Pack.Controls.Add(chbx_Hide);
+            gbox_Pack.Controls.Add(chbx_SKU);
+            gbox_Pack.Controls.Add(chbx_FN);
             gbox_Pack.Controls.Add(chbx_GrpIndex);
             gbox_Pack.Controls.Add(txt_PackFTPFldNOK);
             gbox_Pack.Controls.Add(chbx_ExcludeBroken);
@@ -3909,7 +4089,7 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_Format.DropDownWidth = 100;
             chbx_Format.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             chbx_Format.FormattingEnabled = true;
-            chbx_Format.Items.AddRange(new object[] { "ImportFolder", "PC", "PS3_US", "Mac", "XBOX360", "<All>", "<PS4>", "<iOS>", "PS3_EU", "PS3_JP" });
+            chbx_Format.Items.AddRange(new object[] { "ImportFolder", "PC", "PS3_US", "PS4", "Mac", "XBOX360", "PS3_EU", "PS3_JP", "<All>", "<iOS>" });
             chbx_Format.Location = new System.Drawing.Point(51, 13);
             chbx_Format.Margin = new Padding(2);
             chbx_Format.Name = "chbx_Format";
@@ -3925,7 +4105,7 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_UniqueID.Location = new System.Drawing.Point(81, 50);
             chbx_UniqueID.Margin = new Padding(2);
             chbx_UniqueID.Name = "chbx_UniqueID";
-            chbx_UniqueID.Size = new System.Drawing.Size(103, 18);
+            chbx_UniqueID.Size = new System.Drawing.Size(99, 18);
             chbx_UniqueID.TabIndex = 329;
             chbx_UniqueID.Text = "UniqueDLCID";
             chbx_UniqueID.UseVisualStyleBackColor = true;
@@ -4055,6 +4235,9 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // gbox_QualityChecks
             // 
+            gbox_QualityChecks.Controls.Add(chbx_A_ProductionReady);
+            gbox_QualityChecks.Controls.Add(chbx_A_HasAcoustic);
+            gbox_QualityChecks.Controls.Add(chbx_A_IsCensored);
             gbox_QualityChecks.Controls.Add(chbx_A_IsSlide);
             gbox_QualityChecks.Controls.Add(chbx_A_CatchAllAtributte);
             gbox_QualityChecks.Controls.Add(chbx_A_IsMetalCover);
@@ -4330,7 +4513,7 @@ namespace RocksmithToolkitGUI.DLCManager
             CheckBox1.Location = new System.Drawing.Point(-154, 92);
             CheckBox1.Margin = new Padding(2);
             CheckBox1.Name = "CheckBox1";
-            CheckBox1.Size = new System.Drawing.Size(150, 19);
+            CheckBox1.Size = new System.Drawing.Size(149, 19);
             CheckBox1.TabIndex = 34;
             CheckBox1.Text = "Show only MessageBox";
             CheckBox1.UseVisualStyleBackColor = true;
@@ -4384,7 +4567,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // cmb_Tracks
             // 
-            cmb_Tracks.DropDownWidth = 800;
+            cmb_Tracks.DropDownWidth = 1100;
             cmb_Tracks.FormattingEnabled = true;
             cmb_Tracks.Location = new System.Drawing.Point(180, 63);
             cmb_Tracks.Margin = new Padding(0);
@@ -4915,7 +5098,7 @@ namespace RocksmithToolkitGUI.DLCManager
             label27.Location = new System.Drawing.Point(309, 82);
             label27.Margin = new Padding(2, 0, 2, 0);
             label27.Name = "label27";
-            label27.Size = new System.Drawing.Size(70, 15);
+            label27.Size = new System.Drawing.Size(71, 15);
             label27.TabIndex = 422;
             label27.Text = "Tone Details";
             // 
@@ -4925,7 +5108,7 @@ namespace RocksmithToolkitGUI.DLCManager
             label26.Location = new System.Drawing.Point(8, 82);
             label26.Margin = new Padding(2, 0, 2, 0);
             label26.Name = "label26";
-            label26.Size = new System.Drawing.Size(42, 15);
+            label26.Size = new System.Drawing.Size(43, 15);
             label26.TabIndex = 420;
             label26.Text = "To Dos";
             // 
@@ -5084,7 +5267,7 @@ namespace RocksmithToolkitGUI.DLCManager
             label19.Location = new System.Drawing.Point(8, 244);
             label19.Margin = new Padding(2, 0, 2, 0);
             label19.Name = "label19";
-            label19.Size = new System.Drawing.Size(82, 15);
+            label19.Size = new System.Drawing.Size(83, 15);
             label19.TabIndex = 396;
             label19.Text = "BasedOn_Tabs";
             // 
@@ -5301,6 +5484,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_Encrypt
             // 
+            btn_Encrypt.Controls.Add(btn_TuxGuitar);
+            btn_Encrypt.Controls.Add(chbx_OnlyNo);
+            btn_Encrypt.Controls.Add(btn_CleanAllBroken);
+            btn_Encrypt.Controls.Add(chbx_ExcludenonBlanks);
             btn_Encrypt.Controls.Add(btn_AudioConvSite);
             btn_Encrypt.Controls.Add(btn_JavaSite);
             btn_Encrypt.Controls.Add(chbx_RebuildField);
@@ -5368,7 +5555,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_RebuildField
             // 
             chbx_RebuildField.FormattingEnabled = true;
-            chbx_RebuildField.Items.AddRange(new object[] { "Sections (Main)", "Sections (Arrangements)", "A440TunningFrecv (Main)", "A440TunningFrecv (Arrangements)", "Has_Alternate_Track (Main)", "Has_Alternate_Track (Arrangements)" });
+            chbx_RebuildField.Items.AddRange(new object[] { "Sections (Main)", "Sections (Arrangements)", "A440TunningFrecv (Main)", "A440TunningFrecv (Arrangements)", "Has_Alternate_Track (Main)", "Has_Alternate_Track (Arrangements)", "Has_Arrangements (Main)", "Bass_Picking (Main)", "Bass_Picking (Main)", "PitchShiftableEsOrDd (Main)", "Volume (Main)", "Has_Acoustic (Main)" });
             chbx_RebuildField.Location = new System.Drawing.Point(538, 268);
             chbx_RebuildField.Margin = new Padding(2);
             chbx_RebuildField.Name = "chbx_RebuildField";
@@ -5960,7 +6147,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // ContextMenuMenu_Attributes
             // 
-            ContextMenuMenu_Attributes.DropDownItems.AddRange(new ToolStripItem[] { ContextMenuAttrib_UnCensored, ContextMenuAttrib_Manipulated, ContextMenuAttrib_FullAlbum, ContextMenuAttrib_Instrumental, ContextMenuAttrib_Soundtrack, ContextMenuAttrib_Featuring, ContextMenuAttrib_Acoustic, ContextMenuAttrib_Karaoke, ContextMenuAttrib_InTheWorks, ContextMenuAttrib_Single, ContextMenuAttrib_ReMastered, ContextMenuAttrib_Demo, ToolStripMenuItemLive, ToolStripMenuItemMedley, ToolStripMenuItemEP, ToolStripMenuItemAuthor, ToolStripMenuItemShowLights, ToolStripMenuItemSections, ToolStripMenuItemCover, ToolStripMenuItemTrackNo, ToolStripMenuItemPreview, ToolStripMenuItemRemix, ToolStripMenuItemMultiStrings, ToolStripMenuItemDeluxe, ToolStripMenuItemGreatestHits, ToolStripMenuItemMidi, ToolStripMenuItemGameSoundTrack, ToolStripMenuItemTVTheme, ToolStripMenuItemAmateurCover, metalCoverToolStripMenuItem, ukuleleToolStripMenuItem });
+            ContextMenuMenu_Attributes.DropDownItems.AddRange(new ToolStripItem[] { ContextMenuAttrib_UnCensored, ContextMenuAttrib_Manipulated, ContextMenuAttrib_FullAlbum, ContextMenuAttrib_Instrumental, ContextMenuAttrib_Soundtrack, ContextMenuAttrib_Has_Acoustic, ContextMenuAttrib_Featuring, ContextMenuAttrib_Acoustic, ContextMenuAttrib_Karaoke, ContextMenuAttrib_InTheWorks, ContextMenuAttrib_Single, ContextMenuAttrib_ReMastered, ContextMenuAttrib_Demo, ToolStripMenuItemLive, ToolStripMenuItemMedley, ToolStripMenuItemEP, ToolStripMenuItemAuthor, ToolStripMenuItemShowLights, ToolStripMenuItemSections, ToolStripMenuItemCover, ToolStripMenuItemTrackNo, ToolStripMenuItemPreview, ToolStripMenuItemRemix, ToolStripMenuItemMultiStrings, ToolStripMenuItemDeluxe, ToolStripMenuItemGreatestHits, ToolStripMenuItemMidi, ToolStripMenuItemGameSoundTrack, ToolStripMenuItemTVTheme, ToolStripMenuItemAmateurCover, metalCoverToolStripMenuItem, ukuleleToolStripMenuItem, ToolStripMenuItemCensored });
             ContextMenuMenu_Attributes.Name = "ContextMenuMenu_Attributes";
             ContextMenuMenu_Attributes.Size = new System.Drawing.Size(308, 22);
             ContextMenuMenu_Attributes.Text = "Attributes->";
@@ -5968,219 +6155,233 @@ namespace RocksmithToolkitGUI.DLCManager
             // ContextMenuAttrib_UnCensored
             // 
             ContextMenuAttrib_UnCensored.Name = "ContextMenuAttrib_UnCensored";
-            ContextMenuAttrib_UnCensored.Size = new System.Drawing.Size(169, 22);
+            ContextMenuAttrib_UnCensored.Size = new System.Drawing.Size(170, 22);
             ContextMenuAttrib_UnCensored.Text = "UnCensored";
             ContextMenuAttrib_UnCensored.Click += ContextMenuAttrib_UnCensored_Click;
             // 
             // ContextMenuAttrib_Manipulated
             // 
             ContextMenuAttrib_Manipulated.Name = "ContextMenuAttrib_Manipulated";
-            ContextMenuAttrib_Manipulated.Size = new System.Drawing.Size(169, 22);
+            ContextMenuAttrib_Manipulated.Size = new System.Drawing.Size(170, 22);
             ContextMenuAttrib_Manipulated.Text = "Manipulated";
             ContextMenuAttrib_Manipulated.Click += ContextMenuAttrib_Manipulated_Click;
             // 
             // ContextMenuAttrib_FullAlbum
             // 
             ContextMenuAttrib_FullAlbum.Name = "ContextMenuAttrib_FullAlbum";
-            ContextMenuAttrib_FullAlbum.Size = new System.Drawing.Size(169, 22);
+            ContextMenuAttrib_FullAlbum.Size = new System.Drawing.Size(170, 22);
             ContextMenuAttrib_FullAlbum.Text = "Full Album";
             ContextMenuAttrib_FullAlbum.Click += ContextMenuAttrib_FullAlbum_Click;
             // 
             // ContextMenuAttrib_Instrumental
             // 
             ContextMenuAttrib_Instrumental.Name = "ContextMenuAttrib_Instrumental";
-            ContextMenuAttrib_Instrumental.Size = new System.Drawing.Size(169, 22);
+            ContextMenuAttrib_Instrumental.Size = new System.Drawing.Size(170, 22);
             ContextMenuAttrib_Instrumental.Text = "Instrumental";
             ContextMenuAttrib_Instrumental.Click += instrumentalToolStripMenuItem_Click;
             // 
             // ContextMenuAttrib_Soundtrack
             // 
             ContextMenuAttrib_Soundtrack.Name = "ContextMenuAttrib_Soundtrack";
-            ContextMenuAttrib_Soundtrack.Size = new System.Drawing.Size(169, 22);
+            ContextMenuAttrib_Soundtrack.Size = new System.Drawing.Size(170, 22);
             ContextMenuAttrib_Soundtrack.Text = "Soundtrack";
             ContextMenuAttrib_Soundtrack.Click += soundtrackToolStripMenuItem_Click;
+            // 
+            // ContextMenuAttrib_Has_Acoustic
+            // 
+            ContextMenuAttrib_Has_Acoustic.Name = "ContextMenuAttrib_Has_Acoustic";
+            ContextMenuAttrib_Has_Acoustic.Size = new System.Drawing.Size(170, 22);
+            ContextMenuAttrib_Has_Acoustic.Text = "Has Acoustic";
+            ContextMenuAttrib_Has_Acoustic.Click += hasacousticToolStripMenuItem_Click;
             // 
             // ContextMenuAttrib_Featuring
             // 
             ContextMenuAttrib_Featuring.Name = "ContextMenuAttrib_Featuring";
-            ContextMenuAttrib_Featuring.Size = new System.Drawing.Size(169, 22);
+            ContextMenuAttrib_Featuring.Size = new System.Drawing.Size(170, 22);
             ContextMenuAttrib_Featuring.Text = "Featuring";
             ContextMenuAttrib_Featuring.Click += featuringToolStripMenuItem_Click;
             // 
             // ContextMenuAttrib_Acoustic
             // 
             ContextMenuAttrib_Acoustic.Name = "ContextMenuAttrib_Acoustic";
-            ContextMenuAttrib_Acoustic.Size = new System.Drawing.Size(169, 22);
+            ContextMenuAttrib_Acoustic.Size = new System.Drawing.Size(170, 22);
             ContextMenuAttrib_Acoustic.Text = "Acoustic";
             ContextMenuAttrib_Acoustic.Click += acousticToolStripMenuItem_Click;
             // 
             // ContextMenuAttrib_Karaoke
             // 
             ContextMenuAttrib_Karaoke.Name = "ContextMenuAttrib_Karaoke";
-            ContextMenuAttrib_Karaoke.Size = new System.Drawing.Size(169, 22);
+            ContextMenuAttrib_Karaoke.Size = new System.Drawing.Size(170, 22);
             ContextMenuAttrib_Karaoke.Text = "Karaoke";
             ContextMenuAttrib_Karaoke.Click += karaokeToolStripMenuItem_Click;
             // 
             // ContextMenuAttrib_InTheWorks
             // 
             ContextMenuAttrib_InTheWorks.Name = "ContextMenuAttrib_InTheWorks";
-            ContextMenuAttrib_InTheWorks.Size = new System.Drawing.Size(169, 22);
+            ContextMenuAttrib_InTheWorks.Size = new System.Drawing.Size(170, 22);
             ContextMenuAttrib_InTheWorks.Text = "In The Works";
             ContextMenuAttrib_InTheWorks.Click += inTheWorksToolStripMenuItem_Click;
             // 
             // ContextMenuAttrib_Single
             // 
             ContextMenuAttrib_Single.Name = "ContextMenuAttrib_Single";
-            ContextMenuAttrib_Single.Size = new System.Drawing.Size(169, 22);
+            ContextMenuAttrib_Single.Size = new System.Drawing.Size(170, 22);
             ContextMenuAttrib_Single.Text = "Single";
             ContextMenuAttrib_Single.Click += singleToolStripMenuItem_Click;
             // 
             // ContextMenuAttrib_ReMastered
             // 
             ContextMenuAttrib_ReMastered.Name = "ContextMenuAttrib_ReMastered";
-            ContextMenuAttrib_ReMastered.Size = new System.Drawing.Size(169, 22);
+            ContextMenuAttrib_ReMastered.Size = new System.Drawing.Size(170, 22);
             ContextMenuAttrib_ReMastered.Text = "ReMastered";
             ContextMenuAttrib_ReMastered.Click += reMasteredToolStripMenuItem_Click;
             // 
             // ContextMenuAttrib_Demo
             // 
             ContextMenuAttrib_Demo.Name = "ContextMenuAttrib_Demo";
-            ContextMenuAttrib_Demo.Size = new System.Drawing.Size(169, 22);
+            ContextMenuAttrib_Demo.Size = new System.Drawing.Size(170, 22);
             ContextMenuAttrib_Demo.Text = "Demo";
             ContextMenuAttrib_Demo.Click += demoToolStripMenuItem_Click;
             // 
             // ToolStripMenuItemLive
             // 
             ToolStripMenuItemLive.Name = "ToolStripMenuItemLive";
-            ToolStripMenuItemLive.Size = new System.Drawing.Size(169, 22);
+            ToolStripMenuItemLive.Size = new System.Drawing.Size(170, 22);
             ToolStripMenuItemLive.Text = "Live";
             ToolStripMenuItemLive.Click += liveToolStripMenuItem_Click;
             // 
             // ToolStripMenuItemMedley
             // 
             ToolStripMenuItemMedley.Name = "ToolStripMenuItemMedley";
-            ToolStripMenuItemMedley.Size = new System.Drawing.Size(169, 22);
+            ToolStripMenuItemMedley.Size = new System.Drawing.Size(170, 22);
             ToolStripMenuItemMedley.Text = "Medley";
             ToolStripMenuItemMedley.Click += medleyToolStripMenuItem_Click;
             // 
             // ToolStripMenuItemEP
             // 
             ToolStripMenuItemEP.Name = "ToolStripMenuItemEP";
-            ToolStripMenuItemEP.Size = new System.Drawing.Size(169, 22);
+            ToolStripMenuItemEP.Size = new System.Drawing.Size(170, 22);
             ToolStripMenuItemEP.Text = "EP";
             ToolStripMenuItemEP.Click += ePToolStripMenuItem_Click;
             // 
             // ToolStripMenuItemAuthor
             // 
             ToolStripMenuItemAuthor.Name = "ToolStripMenuItemAuthor";
-            ToolStripMenuItemAuthor.Size = new System.Drawing.Size(169, 22);
+            ToolStripMenuItemAuthor.Size = new System.Drawing.Size(170, 22);
             ToolStripMenuItemAuthor.Text = "Author";
             ToolStripMenuItemAuthor.Click += authorToolStripMenuItem_Click;
             // 
             // ToolStripMenuItemShowLights
             // 
             ToolStripMenuItemShowLights.Name = "ToolStripMenuItemShowLights";
-            ToolStripMenuItemShowLights.Size = new System.Drawing.Size(169, 22);
+            ToolStripMenuItemShowLights.Size = new System.Drawing.Size(170, 22);
             ToolStripMenuItemShowLights.Text = "ShowLights";
             ToolStripMenuItemShowLights.Click += showLightsToolStripMenuItem_Click;
             // 
             // ToolStripMenuItemSections
             // 
             ToolStripMenuItemSections.Name = "ToolStripMenuItemSections";
-            ToolStripMenuItemSections.Size = new System.Drawing.Size(169, 22);
+            ToolStripMenuItemSections.Size = new System.Drawing.Size(170, 22);
             ToolStripMenuItemSections.Text = "Sections";
             ToolStripMenuItemSections.Click += sectionsToolStripMenuItem_Click;
             // 
             // ToolStripMenuItemCover
             // 
             ToolStripMenuItemCover.Name = "ToolStripMenuItemCover";
-            ToolStripMenuItemCover.Size = new System.Drawing.Size(169, 22);
+            ToolStripMenuItemCover.Size = new System.Drawing.Size(170, 22);
             ToolStripMenuItemCover.Text = "Cover";
             ToolStripMenuItemCover.Click += coverToolStripMenuItem_Click;
             // 
             // ToolStripMenuItemTrackNo
             // 
             ToolStripMenuItemTrackNo.Name = "ToolStripMenuItemTrackNo";
-            ToolStripMenuItemTrackNo.Size = new System.Drawing.Size(169, 22);
+            ToolStripMenuItemTrackNo.Size = new System.Drawing.Size(170, 22);
             ToolStripMenuItemTrackNo.Text = "Track No.";
             ToolStripMenuItemTrackNo.Click += trackNoToolStripMenuItem_Click;
             // 
             // ToolStripMenuItemPreview
             // 
             ToolStripMenuItemPreview.Name = "ToolStripMenuItemPreview";
-            ToolStripMenuItemPreview.Size = new System.Drawing.Size(169, 22);
+            ToolStripMenuItemPreview.Size = new System.Drawing.Size(170, 22);
             ToolStripMenuItemPreview.Text = "Preview";
             ToolStripMenuItemPreview.Click += previewToolStripMenuItem_Click;
             // 
             // ToolStripMenuItemRemix
             // 
             ToolStripMenuItemRemix.Name = "ToolStripMenuItemRemix";
-            ToolStripMenuItemRemix.Size = new System.Drawing.Size(169, 22);
+            ToolStripMenuItemRemix.Size = new System.Drawing.Size(170, 22);
             ToolStripMenuItemRemix.Text = "Remix";
             ToolStripMenuItemRemix.Click += remixToolStripMenuItem_Click;
             // 
             // ToolStripMenuItemMultiStrings
             // 
             ToolStripMenuItemMultiStrings.Name = "ToolStripMenuItemMultiStrings";
-            ToolStripMenuItemMultiStrings.Size = new System.Drawing.Size(169, 22);
+            ToolStripMenuItemMultiStrings.Size = new System.Drawing.Size(170, 22);
             ToolStripMenuItemMultiStrings.Text = "MultiStrings";
             ToolStripMenuItemMultiStrings.Click += multiStringsToolStripMenuItem_Click;
             // 
             // ToolStripMenuItemDeluxe
             // 
             ToolStripMenuItemDeluxe.Name = "ToolStripMenuItemDeluxe";
-            ToolStripMenuItemDeluxe.Size = new System.Drawing.Size(169, 22);
+            ToolStripMenuItemDeluxe.Size = new System.Drawing.Size(170, 22);
             ToolStripMenuItemDeluxe.Text = "Deluxe";
             ToolStripMenuItemDeluxe.Click += deluxeToolStripMenuItem_Click;
             // 
             // ToolStripMenuItemGreatestHits
             // 
             ToolStripMenuItemGreatestHits.Name = "ToolStripMenuItemGreatestHits";
-            ToolStripMenuItemGreatestHits.Size = new System.Drawing.Size(169, 22);
+            ToolStripMenuItemGreatestHits.Size = new System.Drawing.Size(170, 22);
             ToolStripMenuItemGreatestHits.Text = "Greatest Hits";
             ToolStripMenuItemGreatestHits.Click += greatestHitsToolStripMenuItem_Click;
             // 
             // ToolStripMenuItemMidi
             // 
             ToolStripMenuItemMidi.Name = "ToolStripMenuItemMidi";
-            ToolStripMenuItemMidi.Size = new System.Drawing.Size(169, 22);
+            ToolStripMenuItemMidi.Size = new System.Drawing.Size(170, 22);
             ToolStripMenuItemMidi.Text = "Midi";
             ToolStripMenuItemMidi.Click += midiToolStripMenuItem_Click;
             // 
             // ToolStripMenuItemGameSoundTrack
             // 
             ToolStripMenuItemGameSoundTrack.Name = "ToolStripMenuItemGameSoundTrack";
-            ToolStripMenuItemGameSoundTrack.Size = new System.Drawing.Size(169, 22);
+            ToolStripMenuItemGameSoundTrack.Size = new System.Drawing.Size(170, 22);
             ToolStripMenuItemGameSoundTrack.Text = "Game SoundTrack";
             ToolStripMenuItemGameSoundTrack.Click += gameSoundTrackToolStripMenuItem_Click;
             // 
             // ToolStripMenuItemTVTheme
             // 
             ToolStripMenuItemTVTheme.Name = "ToolStripMenuItemTVTheme";
-            ToolStripMenuItemTVTheme.Size = new System.Drawing.Size(169, 22);
+            ToolStripMenuItemTVTheme.Size = new System.Drawing.Size(170, 22);
             ToolStripMenuItemTVTheme.Text = "TV Theme";
             ToolStripMenuItemTVTheme.Click += tVThemeToolStripMenuItem_Click;
             // 
             // ToolStripMenuItemAmateurCover
             // 
             ToolStripMenuItemAmateurCover.Name = "ToolStripMenuItemAmateurCover";
-            ToolStripMenuItemAmateurCover.Size = new System.Drawing.Size(169, 22);
+            ToolStripMenuItemAmateurCover.Size = new System.Drawing.Size(170, 22);
             ToolStripMenuItemAmateurCover.Text = "Amateur Cover";
             ToolStripMenuItemAmateurCover.Click += amateurCoverToolStripMenuItem_Click_1;
             // 
             // metalCoverToolStripMenuItem
             // 
             metalCoverToolStripMenuItem.Name = "metalCoverToolStripMenuItem";
-            metalCoverToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            metalCoverToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             metalCoverToolStripMenuItem.Text = "Metal Cover";
             metalCoverToolStripMenuItem.Click += metalCoverToolStripMenuItem_Click;
             // 
             // ukuleleToolStripMenuItem
             // 
             ukuleleToolStripMenuItem.Name = "ukuleleToolStripMenuItem";
-            ukuleleToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            ukuleleToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             ukuleleToolStripMenuItem.Text = "Ukulele";
             ukuleleToolStripMenuItem.Click += ukuleleToolStripMenuItem_Click;
+            // 
+            // ToolStripMenuItemCensored
+            // 
+            ToolStripMenuItemCensored.Name = "ToolStripMenuItemCensored";
+            ToolStripMenuItemCensored.Size = new System.Drawing.Size(170, 22);
+            ToolStripMenuItemCensored.Text = "Censored";
+            ToolStripMenuItemCensored.Click += ToolStripMenuItemCensored_Click;
             // 
             // ContextMenuMenu_Selected
             // 
@@ -6306,7 +6507,7 @@ namespace RocksmithToolkitGUI.DLCManager
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             AutoSize = true;
-            ClientSize = new System.Drawing.Size(1284, 759);
+            ClientSize = new System.Drawing.Size(1284, 701);
             Controls.Add(splitContainer2);
             Margin = new Padding(2);
             Name = "MainDB";
@@ -6694,6 +6895,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private ToolStripMenuItem ContextMenuAttrib_Soundtrack;
         private ToolStripMenuItem ContextMenuAttrib_Featuring;
         private ToolStripMenuItem ContextMenuAttrib_Acoustic;
+        private ToolStripMenuItem ContextMenuAttrib_Has_Acoustic;
         private ToolStripMenuItem ContextMenuAttrib_Karaoke;
         private ToolStripMenuItem ContextMenuAttrib_InTheWorks;
         private ToolStripMenuItem ContextMenuAttrib_Single;
@@ -6729,7 +6931,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private ToolStripMenuItem ToolStripMenuItemDeluxe;
         private ToolStripMenuItem ToolStripMenuItemGreatestHits;
         private TextBox txt_Album_OrigArtPath3;
-        private TextBox TextBox1;
+        //private TextBox TextBox1;
         private CheckBox chbx_A_IsMetalCover;
         private CheckBox chbx_A_IsMidi;
         private ToolStripMenuItem ToolStripMenuItemMidi;
@@ -6737,7 +6939,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private ToolStripMenuItem ToolStripMenuItemTVTheme;
         private CheckBox chbx_A440;
         private CheckBox chbx_A_IsTVTheme;
-        private CheckBox checkBox3;
+        //private CheckBox checkBox3;
         private CheckBox chbx_A_IsAmateurCover;
         private ToolStripMenuItem ToolStripMenuItemAmateurCover;
         private Button btn_EOF;
@@ -6767,7 +6969,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private TextBox txt_BasedOn_Tabs;
         private TextBox txt_BasedOn_CF;
         private TextBox txt_BasedOn_Youtube;
-        private RichTextBox richTextBox2;
+        //private RichTextBox richTextBox2;
         private Label label27;
         //private RichTextBox txt_ToDos;
         private Label label26;
@@ -6784,10 +6986,10 @@ namespace RocksmithToolkitGUI.DLCManager
         private Button btn_Delete;
         private CheckBox chbx_Broken2;
         private CheckBox chbx_Found_on_CAPIRO;
-        private CheckBox chbx_A_Ukulele;
+        //private CheckBox chbx_A_Ukulele;
         private ToolStripMenuItem metalCoverToolStripMenuItem;
         private ToolStripMenuItem ukuleleToolStripMenuItem;
-        private CheckBox checkBox4;
+        //private CheckBox checkBox4;
         private CheckBox chbx_A_IsGameSoundtrack;
         private CheckBox chbx_A_IsUkulele;
         private CheckBox chbx_AlternateAudioAvail;
@@ -6822,17 +7024,17 @@ namespace RocksmithToolkitGUI.DLCManager
         private CheckBox chbx_GrpIndex;
         private CheckBox chbx_AltTrack;
         private Button btn_RemoveMultiTracks;
-        private Button button10;
-        private Button button11;
-        private Button button12;
-        private Button button7;
-        private Button button8;
-        private Button button9;
+        //private Button button10;
+        //private Button button11;
+        //private Button button12;
+        //private Button button7;
+        //private Button button8;
+        //private Button button9;
         private Button btn_RhyF3;
         private Button btn_RhyF2;
         private Button btn_RhyF1;
-        private Button button3;
-        private Button button2;
+        //private Button button3;
+        //private Button button2;
         private Button btn_ComF1;
         private Button btn_BassF3;
         private Button btn_BassF2;
@@ -6858,5 +7060,18 @@ namespace RocksmithToolkitGUI.DLCManager
         private CheckBox chbx_LeaF2;
         private CheckBox chbx_LeaF1;
         private CheckBox chbx_AI_TrackAvail;
+        private CheckBox chbx_ExcludenonBlanks;
+        private Button btn_CleanAllBroken;
+        private CheckBox chbx_OnlyNo;
+        private Button btn_CheckOld;
+        private CheckBox chbx_A_IsCensored;
+        private ToolStripMenuItem ToolStripMenuItemCensored;
+        private CheckBox chbx_FN;
+        private Button btn_SetSpecificFN;
+        private CheckBox chbx_SKU;
+        private CheckBox chbx_A_HasAcoustic;
+        private CheckBox chbx_Hide;
+        private Button btn_TuxGuitar;
+        private CheckBox chbx_A_ProductionReady;
     }
 }

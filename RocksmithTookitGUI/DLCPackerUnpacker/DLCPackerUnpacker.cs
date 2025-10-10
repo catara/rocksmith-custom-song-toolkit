@@ -251,13 +251,16 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
                                 case GamePlatform.PS3:
                                     info.PS3 = true;
                                     break;
+                                case GamePlatform.PS4:
+                                    info.PS4 = true;
+                                    break;
                             }
 
                             packageCreator.FillPackageCreatorForm(info, unpackedDir);
                             // fix descrepancies
                             packageCreator.CurrentGameVersion = srcPlatform.version;
                             // console files do not have an AppId
-                            if (!srcPlatform.IsConsole)
+                            if (!srcPlatform.IsConsole )/*|| srcPlatform.platform.ToString() == "PS4"*/
                                 packageCreator.AppId = info.AppId;
 
                             packageCreator.SaveTemplateFile(unpackedDir, false);
@@ -345,7 +348,7 @@ namespace RocksmithToolkitGUI.DLCPackerUnpacker
                 var srcPlatform = srcFilePath.GetPlatform();
                 bwRepack.ReportProgress(progress, String.Format("Updating '{0}'", Path.GetFileName(srcFilePath)));
 
-                if (!srcPlatform.IsConsole)
+                if (!srcPlatform.IsConsole || srcPlatform.platform.ToString() == "PS4")
                 {
                     NoCloseStream dataStream = new NoCloseStream();
                     try

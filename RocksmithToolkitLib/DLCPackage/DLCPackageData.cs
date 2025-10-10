@@ -41,6 +41,7 @@ namespace RocksmithToolkitLib.DLCPackage
         public bool Mac { get; set; }
         public bool XBox360 { get; set; }
         public bool PS3 { get; set; }
+        public bool PS4 { get; set; }
         public bool DefaultShowlights { get; set; }
         public string AppId { get; set; }
         public string Name { get; set; } // aka DLCKey <=> SongKey //TODO: implement deserialize here, with workaround for DLCKey=Name and rename Name to DLCKey finnaly!
@@ -57,6 +58,43 @@ namespace RocksmithToolkitLib.DLCPackage
         // loads the old toolkit version info from template (if any)
         // writes current toolkit version to package template file
         private string _version;
+
+        public static DateTime UpdateLog(DateTime dt, string txt, bool bbl, string tmpPath, string MultithreadNo, string form, ProgressBar pB_ReadDLCs, RichTextBox rtxt_StatisticsOnReadDLCs)
+        {
+            DateTime dtt = System.DateTime.Now;
+            string logPath = ConfigRepository.Instance()["dlcm_LogPath"] == "" ? ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log" : ConfigRepository.Instance()["dlcm_LogPath"];
+            var ismaindb = "";
+            if (pB_ReadDLCs != null)
+            {
+                pB_ReadDLCs.CreateGraphics().Clear(System.Drawing.Color.HotPink);
+                pB_ReadDLCs.CreateGraphics().DrawString(txt, new Font("Arial", 7, FontStyle.Bold), Brushes.Blue, new PointF(1, pB_ReadDLCs.Height / 4));
+            }
+
+            var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
+            if (form != null && form != "" && rtxt_StatisticsOnReadDLCs != null)
+                rtxt_StatisticsOnReadDLCs.Text = dtt + " - " + ii + " - " + txt + "\n" + rtxt_StatisticsOnReadDLCs.Text;
+
+            if (form == "MainDB")
+                ismaindb = "maindb";
+
+            Random randomp = new Random();// Write the string to a file. packid+
+            var packid = 0;
+            packid = randomp.Next(0, 100000);
+            var fn = (logPath == null || !Directory.Exists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + "current_" + ismaindb + "temp" + MultithreadNo + ".txt";
+            try
+            {
+                if (File.Exists(fn))
+                {
+                    using (StreamWriter sw = File.AppendText(fn))
+                    {
+                        sw.WriteLine(dtt.ToString() + " - " + ii.ToString() + " - " + txt.ToString());// This text is always added, making the file longer over time if it is not deleted.
+                    }
+                }
+            }
+            catch (Exception ex) { var tsst = "Error ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
+            return dtt;
+        }
+
         public string Version
         {
             get
@@ -490,7 +528,7 @@ namespace RocksmithToolkitLib.DLCPackage
             data.OggPath = a.FullName;
 
             // AppID
-            if (!sourcePlatform.IsConsole)
+            if (!sourcePlatform.IsConsole || sourcePlatform.platform.ToString() == "PS4")
             {
                 if (!convert)
                 {
@@ -685,7 +723,7 @@ namespace RocksmithToolkitLib.DLCPackage
             // Enumerate *.bnk files
             var bnkWemList = new List<BnkWemData>();
             var bnkFiles = Directory.EnumerateFiles(unpackedDir, "song_*.bnk", SearchOption.AllDirectories).ToList();
-            if (!bnkFiles.Any()) // LOG, IGNORE, AND CONTINUE
+            if (!bnkFiles.Any()) //, IGNORE, AND CONTINUE
             {
                 var errMsg = "<WARNING> Did not find any *.bnk files ..." + Environment.NewLine + "You can still try loading an audio file by hand.  " + Environment.NewLine + Environment.NewLine;
                 if (ConfigRepository.Instance()["dlcm_MoreWEMBNK"] != "Yes") BetterDialog2.ShowDialog(errMsg, MESSAGEBOX_CAPTION, null, null, "OK", Bitmap.FromHicon(SystemIcons.Warning.Handle), "Warning ...", 150, 150);
@@ -817,7 +855,7 @@ namespace RocksmithToolkitLib.DLCPackage
             // Give ogg files friendly names  
             var fixedOggFiles = Directory.EnumerateFiles(unpackedDir, "*_fixed.ogg", SearchOption.AllDirectories).ToList();
             //>>>>>>> pr/40
-            DialogResult result111 = DialogResult.Yes; //bcapi to allow big sn g folders to load
+            DialogResult result111 = DialogResult.Yes; //bcapi to allow big song folders to load
             if (fixedOggFiles.Any())
                 if (fixedOggFiles.Count > 2)
                     if (ConfigRepository.Instance()["dlcm_MoreWEMBNK"] != "Yes") result111 = MessageBox.Show("<ERROR> Found too many *.ogg files ..." + Environment.NewLine + Environment.NewLine
@@ -917,7 +955,10 @@ namespace RocksmithToolkitLib.DLCPackage
                 }
 
             if (!wemFiles.Any() && !fixedOggFiles.Any())
-                throw new InvalidDataException("<ERROR> Did not find any audio files found ..." + Environment.NewLine + Environment.NewLine);
+                // throw new InvalidDataException("<ERROR> Did not find any audio files found ..." + Environment.NewLine + Environment.NewLine);
+                 UpdateLog(DateTime.Now, "Erro during rocksmith lib internal loading of folder...", false, ConfigRepository.Instance()["dlcm_TempPath"], null, null, null, null);
+            //errorsFound.AppendLine(ss);
+
 
             //AppID
             var appidFile = Directory.EnumerateFiles(unpackedDir, "*.appid", SearchOption.AllDirectories).FirstOrDefault();

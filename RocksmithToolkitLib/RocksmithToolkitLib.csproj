@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net9.0-windows10.0.22621.0</TargetFramework>
+    <TargetFramework>net10.0-windows10.0.22621.0</TargetFramework>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -59,9 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Extensions\TreeViewBrowser.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="Extensions\TreeViewBrowser.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\down.png" />
@@ -77,9 +75,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="RocksmithToolkitLib.Config.xml">

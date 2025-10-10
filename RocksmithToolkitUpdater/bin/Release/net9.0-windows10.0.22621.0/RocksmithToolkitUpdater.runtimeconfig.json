@@ -4,16 +4,17 @@
     "frameworks": [
       {
         "name": "Microsoft.NETCore.App",
-        "version": "9.0.0-rc.1.24431.7"
+        "version": "9.0.0"
       },
       {
         "name": "Microsoft.WindowsDesktop.App",
-        "version": "9.0.0-rc.1.24452.1"
+        "version": "9.0.0"
       }
     ],
     "configProperties": {
       "System.Reflection.Metadata.MetadataUpdater.IsSupported": false,
-      "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": false
+      "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": false,
+      "CSWINRT_USE_WINDOWS_UI_XAML_PROJECTIONS": false
     }
   }
 }

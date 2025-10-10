@@ -1,9 +1,9 @@
-﻿		# Date: 05.10.2024
+﻿		# Date: 10.10.2025
 		# Document Name: Rocksmith 2014 RM DLC Management tool README
 						(fork of rocksmith-custom-song-toolkit)
 		# Document purpose: To describe the project and capture a developmental history
 
-## Rocksmith 2014 RM DLC Library Manager v1 b7 (compiled beta available in https://github.com/catara/rocksmith-custom-song-toolkit/tree/Main/RocksmithTookitGUI/bin/Debug_Lite.7z )
+## Rocksmith 2014 RM DLC Library Manager v1 b8 r1 (compiled beta available in https://github.com/catara/rocksmith-custom-song-toolkit/tree/Main/RocksmithTookitGUI/bin/Debug_Lite.7z )
 *(forever to be unreleased version- for my own sake)*
 # App Description: MASS Manipulation of Rocksmith 2014 RM DLC Library
 
@@ -27,10 +27,11 @@
 - Mass rename songs (Standardization) e.g. Black Keys->The Black Keys and maintain changes in a local DB
 - Manipulates the Retail songs list of Rocksmith (Rocksmith 2014 disc, or Rocksmith 2012 DLC, or Rocksmith 2012 Import disc)
 	NEW-beta: ability to insert CDLC in (PC atm; PS3&PS4 later) Retail version core files
-- NEW'23: when building new DLC save some links to source files/todo/release notes etc
+- Songbuilder References When building new DLC save some links to source files/todo/release notes etc
 - Export HTML (web server ready) setlist
-- Shift Notes (NEW'24: Manipulate Arrangements to be distributed along a specific timeline from a GuitarPro file that is not time-synced)
-- NEW-latest: Export all metadata in HTML format for CustomFoge Upload
+- Shift Notes (NEW'early 24: Manipulate Arrangements to be distributed along a specific timeline from a GuitarPro file that is not time-synced)
+- NEW(NEW'mid 24): Export all metadata in HTML format for CustomFoge Upload
+- NEW-latest: Import ASCII multitrack in ready to Guitar Pro import formats
 
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot1.png" alt="Rocksmith DLC Library Manager Import&Pack"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot2.png" alt="Song Metadata DB Screen"/>
@@ -442,17 +443,8 @@ Bugs:
 	- already packed are they checked at import?
 - [ ] pack by artist
 - [ ] grp try gives erorr
-- [ ] tracks no are -1
 - [ ] when adding to hot if not playable then make try as well
 - [ ] if adding files inconsistencies remove word error (remove blacksabbath broken flag)
-- [ ] update programs
-	- [ ] 21.04 arm64 open jave
-	- [ ] access/sqllite/dotnet needs to be installed? add additional check/mss
-- [ ] add run local installer if avail. (e.g. audiokinetic)
-- [ ] improve no accdb found mss (also add sqlite default if indicated as such)
-- [ ] improve audikinetik discov as stanrad instal is missed
-- [ ] improve dlc builder opening ()
-- [ ] make track -1 into blank?
 - [ ] fix standardization
 - [ ] fix custom standard fields
 - [ ] redo monthly as last best played songs
@@ -481,85 +473,86 @@ Big topics:
 - [ ] prepare a package for all officials integration in cache.psarc
 - [ ] redo read library (incxl song comparison and hash for all files incl ftp)
 - [ ] add volume control/CHECK/correction
-
 - [ ] think to elongate all lyrics
 - [ ] think to check if guitar and bass notes align :)
 - [ ] improve copy eof song folder copy if imported from psarc song or from eof
 
 ## WiP:
 (this release) 
-1.0 b7 (05.10.2024) (rel2) Export to CF HTML hosting package + PoC ASCI notes display and auto section setting
-- [-] Improve cross-track alignment for Distribution of Notes Feature
-- [x] Add ASCII tab processer that takes and ascii tab from guitar uiltimate and prepares it for Guotar Pro imort, to be thzem used in EoF
-- [-] develop Export to CF
-	- [ ] why if fails when using uloadedFields for export to cf 
-	- [ ] ARM has issue with packing more than 2 formats or at checking w Thread abort is not supported on this platform. Source=System.Private.CoreLib
-- [x] added a mss if first select is empty (profile select) :)
-- [x] improved clean DB/Create folders (and fixed regressions)
-- [x] if audiokinetic empty trigegred the window to dwld 
-- [x] added CF author
-	- [x] missing new fields of sqlite in link.db
-	- [x] empty .db (missing grps,.standard?)
-- [x] removed  dependency on flag to use sqlite at technical selecting/updating/deleting/importing/UpdateDBbyExecuteNonQuery of records
-- [x] add save (existing) button in duplicate
-- [x] add add DD at pack
-- [x] improved meata clanup when atributes found (incl now any editable txt previously coded but not working)
-- [x] increased no of packs to more than 100 :)
-- [x] improv packing (added xbox check and copy)
-- [x] added missing column to search fields
-- [x] added selfhost
-- [x] make sort data lower capitaliation
-- [x] fixed ignoring song warning due to float integer bad comparison
-- [x] fixed adding lyrics old checkbox ref for imprtov w DM
-- [x] align duplicate manag vs and other fields
-- [x] added artist,album,songtitle into package comment maybe to use later when importing self gen diffatpack meta to ref to pure values
-- [x] cleanup Pack section in MainDB (rearrange a bit plus updating some options)
-	- [x] impl a FTP visual OK/NOK availabiltiy flag :)
-	- [x] ps3 loads first?(rererefix worked)
-- [-] add duplicate dropdown
-- [-] further improve duplicate screen 
-- [x] develop PoC Display ASCII track all in currier
-- [x] readded toolkit to BPM (for quick start)
-- [x] fix issue at assessing conflict ukulele metal cover switched in a pram sending receiving
-- [x] add duplicate of id in duplicate management screen
-- [x] add song info in replace txt/meta discov engine
-- [x] improved load of rec from main ...using field name
-- [x] improved gp5 export for vocals (txt)
-- [-] slide(? param: no)
-- [x] added logic to ensrure no packed file name is the same :) (or dlc name is the same evar :))
-- [x] improved the attributes setting checkbox/buttons (added a dropdown to be able to check new attributes)
-- [-] add ghost song names w the grp name
-- [x] add dont work grp
-- [-]  check/add Alternate/Bonus in the album names
-- [x] add flab p is playable (favorite already in)
-- [x] add to default and ps3 incubus, u2, tears for fears, sting
-- [x] check why grp is packing
-- [x] if mlti track dont use orig audio
-- [x] fixed search by author
-- [x] improve duplicates show some thigns are the same and add attributes fi different
-- [-] add alternate in arrangements and bring arangements scree up2date
-- [-] a440 is not in db/corectly determined
-- [-] add and recalc alternate, slide, a440
-- [-] added song info fields to Pack_AuditTRail_
-- [-] why one wo guitar and one simple cant coexist (made muti songs unique and also added a check for artist sort + song title sort)
-- [-] add manually favorites
-	- [] save manual flag 
-- [x] import (pc first) sorting (doenstwork :( )
-- [ ] moved bin to c:\github
+1.0 b9 (20.12.2025) Pre-Release(1) for PS4 individual DLC prep
+- Improve track align
+- update update log for all instances
+- ps4
+
+- [ ] why if fails when using uploadedFields for export to CF
+- [ ] ARM has issue with packing more than 2 formats or at checking w Thread abort is not supported on this platform. Source=System.Private.CoreLib
+- [ ] 2top 30(weekly)soft play   | Soft Play[CDLC-BLRRbV-MultiTrack by AI (No Guitar No Drums)-DD-noBDD]   | Chokehold [catara LBRRbV newer In The Works][(No Guitar No Drums)_ID_16535]   | chokehold [catara lbrrbv newer in the works][_(no guitar no drums)_id_16535]_dd_nobdd   | [MultiTrack by AI (No Guitar No Drums)-2018]Acts of Fear and Love[BLRRbV-DD-E Standard-Attributes: wBonus-IntheWorks]   | 2018-acts of fear and love   | SofPlaychokehold   | 16535         | CDLC-Soft_Play-2018-Acts_of_Fear_and_Love-Chokehold_[catara_LBRRbV_newer_In_The_Works]-MultiTrack_by_AI_(No_Guitar_No_Drums)_ps3.psarc.edat   | 
+- [ ] changing arrand id
+- [ ] improve start of lite
+- [ ] test billie
+- [ ] improve the ascii processing to incl multi instruments
+- [ ] restoring adding comments when distributing notes
+- [ ] improve audiokinetik discov as standard install is missed
+- [ ] improve dlc builder opening ()
+- [ ] slecting xmass,sandat adding query and button
+- [ ] adding or on search
+- [-] Add tool pkg,
+	- [ ] add description
+- [ ] Add de
+- [ ] clean exercise duplicatesscription on enabling win
+- [ ] fixed mass update a s2,64 s
+- [ ] if album contains rockmith add author :) ubisoft
+- [ ] erge DBs
+- [-] updated rocksmith to tab to latest libs and .net 10
+	-[ ]  read non pc too
+- [ ] improve no accdb found mss (also add sqlite default if indicated as such)
 
 ## done:
 (prev release)
-1.0 b6 (18.04.2024) (rel2-regression) b6 regression
-- [x] upgraded version of rocksmth2 tab2lib, added rocksmithprevlib regression fix from other fork, added assembly
-- [x] 2 Main.db new fields found CF upload and existence
-- [x] odd:amator,gamecover flgs on (db claned as part of a regression)(regression also on field order)
-- [x] some new flags cant be edited (action added to button/fhckboxes)
-- [x] dont add [] in filename (not the case)
-- [x] where are [] in metadata manually added in the meta field templates (regression)
-- [x] regression on grp no of order added to sorted data
-- [x] regression on multiselect
-- [x] regression tenacious fails cause album has a weid name (hopefulyl fixed behavior when editing meta to be cleansed)
-
+1.0 b8 (10.10.2025)Improve ASCII formatting, Notes Distrib, CHECK AUDIO, DUPLICATES, last, convert
+- [x] import existing queueu 06.10
+- [x] fixed a right click to try grp
+- [x] improved adding info to meta in-between separators as not to have ][
+- [x] check 2 imp ones from aug load (nothing to add to current beta grouping :))
+- [-] Activated only nos in regather attributes
+- [-] improv loggs to show only 1 as no multithreading spülit for pack
+- [-] generated new log for soft error
+- [-] removed double java notice
+- [-] improved adding tones not in order but based on pedalkey name of tone
+- [-] improve Export to CF
+- [-] improve new attributes insertion in title (also avail instr comparison label?)
+- [-] improved DB version usage (removed latest version config and improving the message)
+- [-] improved Check Library code (saying yes on cleanup actions was not triggering actual activs)
+	- [-] improved audio files (adding more logs info)
+- [-] improved re-Gathering of attributes (faster and just delta/empty(new checkbox) in case it crashes)
+	- [-] adding "blank"
+	- [ ] adding "no"
+- [-] fixed startup when as ""bin"" is in a different place than sinde your project
+- [-] improved detection of instrument (combo)
+- [x] fixed gather frecv and regather most
+- [x] make track -1 into blank? (WHEN PROCEssing as meta tag or as filename)
+	- [-] tracks no are -1
+- [ ] update programs
+	- [-] 21.05 arm64 open java (updated and added install local)
+	- [-] sqllite3 needs to be installed? add additional check/mss 
+		- [-] access/dotnet
+		- [-] add run local installer if avail. (e.g. audiokinetic)
+- [-] improving use last psarc
+		- [-] fix adding last 
+		- [-] add Last Pack in Manager (dlcm_AdditionalManipul64)
+		- [-] Add in Packaudittrial (either read psarc or packauditrail table for info)
+- [-] add SAve MultiSelect
+	- [-] Add last multiselect
+- [-] fixing select and add group
+- [-] updated rocksmith to tab to latest libs and .net 9
+- [x] improve distrib notes specially when having both single notes and chords
+- [-] import Ps4
+- [-] Pack Ps4
+- [-] generate an Acoustic flag
+- [x] a keep same fielname/add custom
+- [-]shipping
+- [-] sku
+- [-] Update volume
 
 # Version History(release date):
 	0.1(12.08.2014) prototype, 
@@ -601,9 +594,10 @@ Big topics:
 	1.0 b4 (29.07.2021) moved to .NET6 as to allow development in windows for ARM (Apple,etc.)added SQLite capabiltites (removes dependency on ACCESS on Windows for ARM as sometimes not being detected)
 	1.0 b5 (09.10.2022) startup/dependencies improvements, weekly dyanmic last 5 in monthly hot list and sqlite further integration
 	1.0 b6 (12.04.2024) Prototyping GuitarPro to Rocksmith workflow for simple time distribution for new songs
-	1.0 b7 (06.10.2024) Improvements to Audio conversion, audio trailExport for cusomForge and HTML page, ai track splitter better integration
-	1.0 (18.04.2025) (Pre1) Finalising addings songs directly to CACHE (Pc works, targetting Ps3 and Ps4)
-	1.0 b8(xx.11.2024) Released on Customforge and GitHub Release "tab" (2 versions one w all 3rd party software, one without; can be installed/decompressed and quickly used; 1 60sec video describing why you should use this)
+	1.0 b7 (05.10.2024) Improvements to Audio conversion, audio trail, Export for CustomForge and HTML page, ai track splitter better integration
+	1.0 b8 (10.10.2025) Improvement Export for ASCII Import, TRack sync, ExportCustomForge and HTML page,etc. 
+	1.0 b9 (tbc 20.12.2025) (Pre1) Ps4 packaging as single track
+	1.1(xx.11.2024) Released on Customforge and GitHub Release "tab" (2 versions one w all 3rd party software, one without; can be installed/decompressed and quickly used; 1 60sec video describing why you should use this)
 	1.1 (xx.12.2024) Reactivating Spotify checks
 
 # Implementation Tracking for the Main Features:
@@ -782,22 +776,28 @@ of this folder should be directed to the respective developer.
 		- MDB Viewver 2.63 - alternative view of mdb container DB
 		http://www.alexnolan.net/software/mdb_viewer_plus.htm
 
-		- Database .NET v35.2 (on win4ARM use Safe emulation in Compatibiltiy) - generic DB editor for .accdb (microsoft access) and .db (sqlite3)
+		- Database .NET v36.4 (on win4ARM use Safe emulation in Compatibiltiy, and have acces plugin 2016 32bit instlled) - generic DB editor for .accdb (microsoft access) and .db (sqlite3)
 		http://fishcodelib.com/Database.htm 
 
 		-DevOnly additional software
 			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC12(26-09-2020) http://ignition.customsforge.com/eof http://customsforge.com/topic/1529-latest-eof-releases-5-19-2016/page-86 https://github.com/raynebc/editor-on-fire -4 transforming lyrics into RS Vocals
-			UltraStar Creator 1.2 https://sourceforge.net/projects/usc/ - 4 creating lyrics files to import in EoF
+			UltraStar Creator 1.3.1 https://github.com/UltraStar-Deluxe/UltraStar-Creator/releases - 4 QUICKLY creating lyrics files to import in EoF
 			TotalCommander v11b1 x64 (doubleckick on zip to install plugin, pack with no compression for cache.ps3) https://gisler.com -4Encripting PS3 Retail Sog PSARCS (0 encription level only avail here)
-			MediaInfo CLI v23 x64 https://mediaarea.net/en/MediaInfo/Download/Windows -4checking wem bitrate
+			MediaInfo CLI v25.4 x64 https://mediaarea.net/en/MediaInfo/Download/Windows -4checking wem bitrate
 			WinMerge v2.16.28 x64 http://winmerge.org/?lang=en -used in comparing duplicates (and their respecitve differential track)
 			C3 Tools 4.1 https://rhythmgamingworld.com/forums/topic/c3-con-tools-v401-8142020-weve-only-just-begun/ -used to decompress songs made for Rockband to quickly copy their vocal track to Rocksmith
-			Rocksmith Mods 1.6.0.3 -for tweaking e.g. remove UI elements to allow streaming of overlay-ing of videos trough OBC https://github.com/Lovrom8/RSMods
+			Rocksmith Mods 1.2.8.0 - for tweaking e.g. remove UI elements to allow streaming of overlay-ing of videos trough OBC https://github.com/Lovrom8/RSMods
+				RS2014-Mod-Installer - Mods for RS2024 for win (e.g. clean UI  elements for OBS recording)
 			Custom DLC enabler OSX - only way to play songs not sold by Ubioft/Rocksmith-store on Mac https://github.com/aik002/RSBypass
 			Custom DLC enabler PC - only way to play songs not sold by Ubioft/Rocksmith-store on Windows https://customsforge.com/index.php?/topic/901-how-to-use-custom-dlcs-in-rs2014-remastered/
-			SQLite3 driver x64-for reading .db slq-lite-3 (windows 64 ONLY) database by commandLine or ODBC through Microsoft Access UI http://www.ch-werner.de/sqliteodbc/
-			DLC builder 3.11 - usefuly for generating a notes/EoF-file out a psarc https://github.com/iminashi/Rocksmith2014.NET
-			StemRoller 2.0.7 - AI splitting of tracks https://github.com/stemrollerapp
+			SQLite3 3.43.2 driver x64 0.99991 - for reading .db slq-lite-3 (windows 64 ONLY) database by commandLine or ODBC through Microsoft Access UI http://www.ch-werner.de/sqliteodbc/
+			DLC builder 3.50 - usefuly for generating a notes/EoF-file out a psarc https://github.com/iminashi/Rocksmith2014.NET
+			StemRoller 2.2.3 - AI splitting of tracks https://github.com/stemrollerapp
+			PKG Editor & Tool -  GUI & CLI PS4 fakepackage creator https://github.com/maxton/LibOrbisPkg
+			TUX Guitar 1.6.6 - Convert GP into GP5 https://github.com/helge17/tuxguitar
+			OBS
+			Open JDK - (part of TuxGuitar) to Convert/opackage for PS3/PS4
+			
 ## Contact
 
 mailto:bogdan@capi.ro  

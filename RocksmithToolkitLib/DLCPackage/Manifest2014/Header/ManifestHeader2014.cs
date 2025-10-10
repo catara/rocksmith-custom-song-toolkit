@@ -13,33 +13,36 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
         public int? IterationVersion { get; set; }
         public String InsertRoot { get; set; }
 
-        public ManifestHeader2014() { } 
+        public ManifestHeader2014() { }
 
         public ManifestHeader2014(Platform platform, DLCPackageType dlcType = DLCPackageType.Song)
         {
-            switch (dlcType) {
+            switch (dlcType)
+            {
                 case DLCPackageType.Song:
-                    if (platform.IsConsole) {
+                    if (platform.IsConsole && platform.platform.ToString() != "PS4")
+                    {
                         ModelName = "RSEnumerable_Song_Header";
                         IterationVersion = 2;
                     }
-                    InsertRoot = "Static.Songs.Headers"; 
+                    InsertRoot = "Static.Songs.Headers";
                     Entries = new Dictionary<string, Dictionary<string, T>>();
                     break;
                 case DLCPackageType.Lesson:
                     throw new NotImplementedException("Lesson package type not implemented yet :(");
                 case DLCPackageType.Inlay:
-                    if (platform.IsConsole) {
+                    if (platform.IsConsole && platform.platform.ToString() != "PS4")
+                    {
                         ModelName = "RSEnumerable_Guitar_Header";
                     }
                     InsertRoot = "Static.Guitars.Headers";
                     Entries = new Dictionary<string, Dictionary<string, T>>();
                     break;
             }
-            
+
         }
 
-        public void Serialize(Stream stream) 
+        public void Serialize(Stream stream)
         {
             var writer = new StreamWriter(stream);
             JsonSerializerSettings jss = new JsonSerializerSettings();
@@ -52,7 +55,8 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
 
         public static ManifestHeader2014<T> LoadFromFile(string manifestHeader2014FilePath)
         {
-            using (var reader = new StreamReader(manifestHeader2014FilePath)) {
+            using (var reader = new StreamReader(manifestHeader2014FilePath))
+            {
                 return JsonConvert.DeserializeObject<ManifestHeader2014<T>>(reader.ReadToEnd());
             }
         }

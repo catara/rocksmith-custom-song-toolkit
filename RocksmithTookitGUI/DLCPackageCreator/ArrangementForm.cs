@@ -203,7 +203,7 @@ namespace RocksmithToolkitGUI.DLCPackageCreator
                 rbArrangementBonus.Checked = value.BonusArr;
                 rbArrangementAlternate.Checked = !value.BonusArr && !value.Represent ? true : false;
 
-                var debugMe = "StopHere";
+                //var debugMe = "StopHere";
 
                 chkMetronome.Checked = value.Metronome == Metronome.Generate;
                 RouteMask = value.RouteMask;

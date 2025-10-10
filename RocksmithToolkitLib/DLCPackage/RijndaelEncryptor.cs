@@ -1,14 +1,15 @@
+using MiscUtil.Conversion;
+using MiscUtil.IO;
+using RocksmithToolkitLib.Extensions;
+using RocksmithToolkitLib.XmlRepository;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Windows.Forms;
-using MiscUtil.Conversion;
-using MiscUtil.IO;
 using zlib;
-using System.Linq;
-using RocksmithToolkitLib.Extensions;
 
 namespace RocksmithToolkitLib.DLCPackage
 {
@@ -60,7 +61,7 @@ namespace RocksmithToolkitLib.DLCPackage
             0x59, 0xDE, 0x7A, 0xDD, 0xA1, 0x8A, 0x3A, 0x30
         };
         //metadata
-        public static byte[] PCMetaDatKey = new byte[32] 
+        public static byte[] PCMetaDatKey = new byte[32]
         {
             0x5F, 0xB0, 0x23, 0xEF, 0x19, 0xD5, 0xDC, 0x37,
             0xAD, 0xDA, 0xC8, 0xF0, 0x17, 0xF8, 0x8F, 0x0E,
@@ -68,7 +69,7 @@ namespace RocksmithToolkitLib.DLCPackage
             0xA5, 0x9D, 0xE2, 0xBF, 0x05, 0x25, 0x12, 0xEB
         };
         //profile and other cdr profile.json stuff common for RS2\RS1
-        public static byte[] PCSaveKey = new byte[32] 
+        public static byte[] PCSaveKey = new byte[32]
         {
             0x72, 0x8B, 0x36, 0x9E, 0x24, 0xED, 0x01, 0x34,
             0x76, 0x85, 0x11, 0x02, 0x18, 0x12, 0xAF, 0xC0,
@@ -93,6 +94,38 @@ namespace RocksmithToolkitLib.DLCPackage
         /// <param name="outStream">Out stream.</param>
         /// <param name = "plainLen">Data size after decompress.</param>
         /// <param name = "rewind">Manual control for stream seek position.</param>
+        /// 
+
+        public static DateTime UpdateLog(DateTime dt, string txt, bool bbl, string tmpPath, string MultithreadNo, string form)
+        {
+            DateTime dtt = System.DateTime.Now;
+            string logPath = ConfigRepository.Instance()["dlcm_LogPath"] == "" ? ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log" : ConfigRepository.Instance()["dlcm_LogPath"];
+            var ismaindb = "";
+
+            var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
+
+            if (form == "MainDB")
+                ismaindb = "maindb";
+
+            Random randomp = new Random();// Write the string to a file. packid+
+            var packid = 0;
+            packid = randomp.Next(0, 100000);
+            var fn = (logPath == null || !Directory.Exists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + "current_" + ismaindb + "temp" + MultithreadNo + ".txt";
+            try
+            {
+                if (File.Exists(fn))
+                {
+                    using (StreamWriter sw = File.AppendText(fn))
+                    {
+                        sw.WriteLine(dtt.ToString() + " - " + ii.ToString() + " - " + txt.ToString());// This text is always added, making the file longer over time if it is not deleted.
+                    }
+                }
+            }
+            catch (Exception ex) { var tsst = "Error ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", ""); }
+            return dtt;
+        }
+
+
         public static void Unzip(Stream str, Stream outStream, bool rewind = true)
         {
             int len;
@@ -309,7 +342,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 input.Read(buffer, 0, size);
                 coder.Write(buffer, 0, size);
             }
-            
+
             if (pad > 0)
                 coder.Write(new byte[pad], 0, pad);
 
@@ -339,6 +372,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     version.StartInfo.Arguments = "-version";
                     version.StartInfo.CreateNoWindow = true;
                     version.StartInfo.UseShellExecute = false;
+                    version.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
                     // Java uses this output instead of stout.
                     version.StartInfo.RedirectStandardError = true;
                     version.Start();
@@ -346,7 +380,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
                     // Get the output into a string
                     var output = version.StandardError.ReadLine();
-                    if (output is not null)if(output.Contains("openjdk version")) return true;//bcapi for ARM architecture
+                    if (output is not null) if (output.Contains("openjdk version")) return true;//bcapi for ARM architecture
                     if (!output.Contains("java version"))
                         return false;
 
@@ -361,8 +395,9 @@ namespace RocksmithToolkitLib.DLCPackage
                     return false;
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                var tsst = "Error ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "");
                 return false;
             }
         }
@@ -390,7 +425,7 @@ namespace RocksmithToolkitLib.DLCPackage
             }
 
 
-            
+
             return String.IsNullOrEmpty(errors) ? Packer.EDAT_MSG : errors;
         }
 

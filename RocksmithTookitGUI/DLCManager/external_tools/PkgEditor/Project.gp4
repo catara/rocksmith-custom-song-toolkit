@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<psproject xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" fmt="gp4" version="1000">
+  <volume>
+    <volume_type>pkg_ps4_ac_data</volume_type>
+    <volume_ts>2025-03-17 14:16:58</volume_ts>
+    <package content_id="EP0001-CUSA00745_00-RS002SONG0000476" passcode="00000000000000000000000000000000" entitlement_key="00000000000000000000000000000000" c_date="2025-03-17" />
+  </volume>
+  <files img_no="0">
+    <file targ_path="sce_sys/param.sfo" orig_path="sce_sys/param.sfo" />
+    <file targ_path="sce_sys/icon0.png" orig_path="sce_sys/icon0.png" />
+    <file targ_path="DLC/3doobeli.psarc" orig_path="DLC/3doobeli.psarc" />
+    <file targ_path="DLC/TenDTrib.psarc" orig_path="DLC/TenDTrib.psarc" />
+  </files>
+  <rootdir>
+    <dir targ_name="sce_sys" />
+    <dir targ_name="DLC" />
+  </rootdir>
+</psproject>

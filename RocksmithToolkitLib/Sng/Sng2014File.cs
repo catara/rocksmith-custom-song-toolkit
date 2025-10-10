@@ -277,6 +277,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
             string[] order = (string[])getPropertyValue(obj, "order");
             foreach (string name in order) {
                 var value = getPropertyValue(obj, name);
+                if (value is null) return;
                 if (consoleMode)
                     Console.WriteLine("{0} = {1}", name, value);
                 if (value.GetType().IsArray || value.GetType().IsPrimitive)
@@ -332,6 +333,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
         }
 
         private object getPropertyValue(object obj, string propertyName) {
+            if (obj is null) throw new System.Exception("Unknown or unaccessible property");
             Type t = obj.GetType();
             PropertyInfo prop = t.GetProperty(propertyName);
             if (prop != null)

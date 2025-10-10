@@ -41,6 +41,7 @@ namespace RocksmithToolkitLib.DLCPackage
         private static readonly string PS3_WORKDIR = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "edat");
 
         private static readonly string[] PATH_PC = { "Windows", "Generic", "_p" };
+        private static readonly string[] PATH_PS4 = { "Generic", "Generic", "" };
         private static readonly string[] PATH_MAC = { "Mac", "MacOS", "_m" };
         private static readonly string[] PATH_XBOX = { "XBox360", "XBox360", "_xbox" };
         private static readonly string[] PATH_PS3 = { "PS3", "PS3", "_ps3" };
@@ -80,6 +81,8 @@ namespace RocksmithToolkitLib.DLCPackage
             {
                 case GamePlatform.Pc:
                     return PATH_PC;
+                case GamePlatform.PS4:
+                    return PATH_PS4;
                 case GamePlatform.Mac:
                     return PATH_MAC;
                 case GamePlatform.XBox360:
@@ -152,6 +155,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 switch (platform.platform)
                 {
                     case GamePlatform.Pc:
+                    case GamePlatform.PS4:
                     case GamePlatform.Mac:
                         switch (platform.version)
                         {
@@ -202,7 +206,7 @@ namespace RocksmithToolkitLib.DLCPackage
             if (pnum <= 1)// doesn't trigger for last one, should be ? == 1 when last package generated.
                 DeleteTmpFiles(TMPFILES_ART);
 
-            if (!File.Exists(archivePath)) archivePath="missing file: "+er;
+            if (!File.Exists(archivePath)) archivePath = "missing file: " + er;
             return archivePath;
         }
 
@@ -446,7 +450,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 // AUDIO
                 var audioFile = info.OggPath;
                 if (File.Exists(audioFile))
-                    if (platform.IsConsole != audioFile.GetAudioPlatform().IsConsole)
+                    if (platform.IsConsole != audioFile.GetAudioPlatform().IsConsole && platform.platform.ToString() != "PS4")
                         soundStream = OggFile.ConvertAudioPlatform(audioFile);
                     else
                         soundStream = File.OpenRead(audioFile);
@@ -456,7 +460,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 // AUDIO PREVIEW
                 var previewAudioFile = info.OggPreviewPath;
                 if (File.Exists(previewAudioFile))
-                    if (platform.IsConsole != previewAudioFile.GetAudioPlatform().IsConsole)
+                    if (platform.IsConsole != previewAudioFile.GetAudioPlatform().IsConsole && platform.platform.ToString() != "PS4")
                         soundPreviewStream = OggFile.ConvertAudioPlatform(previewAudioFile);
                     else
                         soundPreviewStream = File.OpenRead(previewAudioFile);
@@ -487,7 +491,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     packPsarc.AddEntry("toolkit.version", toolkitVersionStream);
 
                     // APP ID
-                    if (!platform.IsConsole)
+                    if (!platform.IsConsole )/*|| platform.platform.ToString() == "PS4"*/
                     {
                         GenerateAppId(appIdStream, info.AppId, platform);
                         packPsarc.AddEntry("appid.appid", appIdStream);
@@ -560,7 +564,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         //    attribute.Representative = arrangement.BonusArr ? 0 : 1;
                         //    attribute.ArrangementProperties.Represent = arrangement.BonusArr ? 0 : 1;
 
-                        //    attribute.SongPartition = songPartitionCount.GetSongPartition(arrangement.Name, arrangement.ArrangementType);
+                            attribute.SongPartition = songPartitionCount.GetSongPartition(arr.ArrangementName, arr.ArrangementType);
                         //    if (attribute.SongPartition > 1 && !arrangement.BonusArr)
                         //    {
                         //        // for alternate arrangement then both represent and bonus are set to "0"
@@ -578,12 +582,13 @@ namespace RocksmithToolkitLib.DLCPackage
 
                         const string jsonPathPC = "manifests/songs_dlc_{0}/{0}_{1}.json";
                         const string jsonPathConsole = "manifests/songs_dlc/{0}_{1}.json";
-                        packPsarc.AddEntry(String.Format((platform.IsConsole ? jsonPathConsole : jsonPathPC), dlcName, arrangementFileName), manifestStream);
+                        var pth = (platform.IsConsole && platform.platform.ToString() != "PS4" ? jsonPathConsole : jsonPathPC);
+                        packPsarc.AddEntry(String.Format(pth, dlcName, arrangementFileName), manifestStream);
 
                         // MANIFEST HEADER
                         var attributeHeaderDictionary = new Dictionary<string, AttributesHeader2014> { { "Attributes", new AttributesHeader2014(attribute) } };
 
-                        if (platform.IsConsole)
+                        if (platform.IsConsole && platform.platform.ToString() != "PS4") //bcapiPs4
                         {
                             // One for each arrangements (Xbox360/PS3)
                             manifestHeader = new ManifestHeader2014<AttributesHeader2014>(platform);
@@ -601,7 +606,7 @@ namespace RocksmithToolkitLib.DLCPackage
                         }
                     }
 
-                    if (!platform.IsConsole)
+                    if (!platform.IsConsole || platform.platform.ToString() == "PS4") //bcapiPs4
                     {
                         manifestHeader.Serialize(manifestHeaderHSANStream);
                         manifestHeaderHSANStream.Seek(0, SeekOrigin.Begin);
@@ -653,7 +658,8 @@ namespace RocksmithToolkitLib.DLCPackage
                     packPsarc.AddEntry(String.Format("gamexblocks/nsongs/{0}.xblock", dlcName), xblockStream);
 
                     // WRITE PACKAGE
-                    packPsarc.Write(output, !platform.IsConsole);
+                    var cons = platform.IsConsole && platform.platform.ToString() != "PS4" ? true : false;
+                    packPsarc.Write(output, !cons);
                     //}
                     output.WriteTmpFile(String.Format("{0}.psarc", dlcName), platform);
                 }
@@ -720,7 +726,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     }
                 }
             }
-            catch (Exception ex) { var tsst = "Error ..." + ex; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
+            catch (Exception ex) { var tsst = "Error ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
             return dtt;
         }
 
@@ -810,7 +816,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     packPsarc.AddEntry("toolkit.version", toolkitVersionStream);
 
                     // APP ID
-                    if (!platform.IsConsole)
+                    if (!platform.IsConsole || platform.platform.ToString() == "PS4")
                     {
                         GenerateAppId(appIdStream, info.AppId, platform);
                         packPsarc.AddEntry("appid.appid", appIdStream);
@@ -845,7 +851,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     manifestStream.Seek(0, SeekOrigin.Begin);
                     const string jsonPathPC = "manifests/songs_dlc_{0}/dlc_guitar_{0}.json";
                     const string jsonPathConsole = "manifests/songs_dlc/dlc_guitar_{0}.json";
-                    packPsarc.AddEntry(String.Format((platform.IsConsole ? jsonPathConsole : jsonPathPC), dlcName), manifestStream);
+                    packPsarc.AddEntry(String.Format((platform.IsConsole && platform.platform.ToString() != "PS4" ? jsonPathConsole : jsonPathPC), dlcName), manifestStream);
 
                     // MANIFEST HEADER
                     var attributeHeaderDictionary = new Dictionary<string, InlayAttributes2014> { { "Attributes", attribute } };
@@ -855,7 +861,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     manifestHeaderStream.Seek(0, SeekOrigin.Begin);
                     const string hsanPathPC = "manifests/songs_dlc_{0}/dlc_{0}.hsan";
                     const string hsonPathConsole = "manifests/songs_dlc/dlc_{0}.hson";
-                    packPsarc.AddEntry(String.Format((platform.IsConsole ? hsonPathConsole : hsanPathPC), dlcName), manifestHeaderStream);
+                    packPsarc.AddEntry(String.Format((platform.IsConsole && platform.platform.ToString() != "PS4"? hsonPathConsole : hsanPathPC), dlcName), manifestHeaderStream);
 
                     // XBLOCK
                     GameXblock<Entity2014> game = GameXblock<Entity2014>.Generate2014(info, platform, DLCPackageType.Inlay);
@@ -872,7 +878,7 @@ namespace RocksmithToolkitLib.DLCPackage
                     packPsarc.AddEntry(String.Format("assets/gameplay/inlay/{0}.nif", dlcName), nifStream);
 
                     // WRITE PACKAGE
-                    packPsarc.Write(output, !platform.IsConsole);
+                    packPsarc.Write(output, !platform.IsConsole || platform.platform.ToString() == "PS4");
                     output.WriteTmpFile(String.Format("{0}.psarc", dlcName), platform);
                 }
             }
@@ -1274,7 +1280,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
         private static void WriteTmpFile(this Stream memoryStream, string fileName, Platform platform)
         {
-            if (platform.IsConsole)
+            if (platform.IsConsole && platform.platform.ToString() != "PS4")
             {
                 string workDir = platform.platform == GamePlatform.XBox360 ? XBOX_WORKDIR : PS3_WORKDIR;
                 string filePath = Path.Combine(workDir, fileName);

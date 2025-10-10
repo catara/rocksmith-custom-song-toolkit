@@ -76,7 +76,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Third-party Apps", "Third-p
 		Third-party Apps\CLI_RestorePID.bat = Third-party Apps\CLI_RestorePID.bat
 		Third-party Apps\CLI_Unpacker.bat = Third-party Apps\CLI_Unpacker.bat
 		Third-party Apps\CLI_WritePID.bat = Third-party Apps\CLI_WritePID.bat
-		ThirdPartyApps\Template.wproj = ThirdPartyApps\Template.wproj
 		Third-party Apps\Wwise2010.tar.bz2 = Third-party Apps\Wwise2010.tar.bz2
 		Third-party Apps\Wwise2013.tar.bz2 = Third-party Apps\Wwise2013.tar.bz2
 		Third-party Apps\Wwise2014.tar.bz2 = Third-party Apps\Wwise2014.tar.bz2
@@ -86,6 +85,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Third-party Apps", "Third-p
 		Third-party Apps\Wwise2018.tar.bz2 = Third-party Apps\Wwise2018.tar.bz2
 		ThirdPartyApps\Wwise2019.tar.bz2 = ThirdPartyApps\Wwise2019.tar.bz2
 		ThirdPartyApps\Wwise2022.tar.bz2 = ThirdPartyApps\Wwise2022.tar.bz2
+		ThirdPartyApps\Wwise2023.tar.bz2 = ThirdPartyApps\Wwise2023.tar.bz2
+		ThirdPartyApps\Wwise2024.tar.bz2 = ThirdPartyApps\Wwise2024.tar.bz2
+		ThirdPartyApps\Wwise2025.tar.bz2 = ThirdPartyApps\Wwise2025.tar.bz2
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{68A001D7-F5BF-4D2C-9FF9-4C0A62D4118F}"

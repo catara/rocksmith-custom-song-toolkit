@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using RocksmithToTabLib;
+using RocksmithToolkitLib.DLCPackage;
+using RocksmithToolkitLib.Extensions;
 
 namespace RocksmithToTabGUI
 {
@@ -87,6 +90,30 @@ namespace RocksmithToTabGUI
         {
             // sanity check: test if given Rocksmith folder is legit
             string songsPsarc = Path.Combine(RocksmithFolder.Text, "songs.psarc");
+
+            //bcapi debug
+            var browser = new PsarcBrowser("C:\\t\\0\\0_repacked\\PS3\\CDLC-Bowling_For_Soup-2005-Disneymania,_Vol_3-The_Bare_Necessities_ps3.psarc.edat");
+            var songList = browser.GetSongList();
+            var songInfo = "";
+            DLCPackageData dataPs3 = new DLCPackageData();
+            foreach (var song in songList)
+            {
+                //                        data.SongInfo.SongDisplayName + "\",\"" + data.SongInfo.SongDisplayNameSort + "\"" +
+                //",\"" + data.SongInfo.Album + "\",\"" + data.SongInfo.AlbumSort + "\",\"" + data.SongInfo.Artist + "\",\""
+                //+ data.SongInfo.ArtistSort + "\"";
+                dataPs3.SongInfo.SongDisplayName = song.Title;
+                dataPs3.SongInfo.SongDisplayNameSort = song.TitleSort;
+                dataPs3.SongInfo.Album = song.Album;
+                dataPs3.SongInfo.AlbumSort = song.AlbumSort;
+                dataPs3.SongInfo.SongYear = song.Year.ToString().ToInt32();
+                dataPs3.SongInfo.Artist = song.Artist;
+                dataPs3.SongInfo.ArtistSort = song.ArtistSort;
+                songInfo += String.Format("[{0}]  {1} - {2}  ({3}, {4})  {{{5}}}", song.Identifier,
+                                          song.Artist, song.Title, song.Album, song.Year,
+                                          string.Join(", ", song.Arrangements));
+                songInfo += Environment.NewLine;
+            }
+
             if (!File.Exists(songsPsarc))
             {
                 MessageBox.Show("Could not find songs.psarc file in the Rocksmith folder. Are you sure you provided the correct path to your Rocksmith 2014 installation directory?", "Rocksmith 2014 path invalid");

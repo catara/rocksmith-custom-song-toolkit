@@ -211,7 +211,7 @@ namespace RocksmithToolkitLib.DLCPackage
         }
 //=======
 //>>>>>>> c7d902e63baa725649519d722a2c7540c837ad77
-        private static byte[] Header(int id, int didxSize, bool isConsole)
+        private static byte[] Header(int id, int didxSize, bool isConsole, Platform currentPlatform)
         {
             int soundbankVersion = 91;
             int soundbankID = id;
@@ -226,7 +226,7 @@ namespace RocksmithToolkitLib.DLCPackage
                 chunk.Write(languageID);
                 chunk.Write(hasFeedback);
 
-                int alignSize = isConsole ? 2048 : 16;
+                int alignSize = isConsole && currentPlatform.platform.ToString() != "PS4" ? 2048 : 16;
                 int dataSize = (int)chunkStream.Length;
                 int junkSize = 24 + didxSize;
                 int paddingSize = (dataSize + junkSize) % alignSize;
@@ -261,7 +261,7 @@ namespace RocksmithToolkitLib.DLCPackage
 
         private const byte HIERARCHY_SOUND = 2;
 
-        private static byte[] HierarchySound(int id, int fileid, int mixerid, float volume, bool preview, bool isConsole)
+        private static byte[] HierarchySound(int id, int fileid, int mixerid, float volume, bool preview, bool isConsole, Platform currentPlatform)
         {
             int soundID = id;
             int pluginID = 262145;
@@ -272,7 +272,7 @@ namespace RocksmithToolkitLib.DLCPackage
             byte overrideParent = 0;
             byte numFX = 0;
             int parentBusID = RandomGenerator.NextInt();
-            int directParentID = isConsole ? 134217984 : 65536; // TODO: changes on console
+            int directParentID = isConsole && currentPlatform.platform.ToString() != "PS4" ? 134217984 : 65536; // TODO: changes on console
             uint unkID1 = (preview) ? 4178100890 : 0;
             int mixerID = mixerid;
             byte priorityOverrideParent = 0;
@@ -471,13 +471,13 @@ namespace RocksmithToolkitLib.DLCPackage
             }
         }
 
-        private static byte[] Hierarchy(int bankid, int soundid, int fileid, string name, float volume, bool preview, bool isConsole)
+        private static byte[] Hierarchy(int bankid, int soundid, int fileid, string name, float volume, bool preview, bool isConsole, Platform platform)
         {
             int mixerID = 650605636;
             int actionID = RandomGenerator.NextInt();
 
             int numObjects = 0;
-            byte[] sound = HierarchySound(soundid, fileid, mixerID, volume, preview, isConsole);
+            byte[] sound = HierarchySound(soundid, fileid, mixerID, volume, preview, isConsole, platform);
             numObjects++;
             byte[] actormixer = HierarchyActorMixer(mixerID, soundid);
             numObjects++;
@@ -542,9 +542,9 @@ namespace RocksmithToolkitLib.DLCPackage
             var audioReader = new EndianBinaryReader(_bitConverter, audioStream);
             byte[] dataChunk = audioReader.ReadBytes(51200); // wwise is based on audio length, we'll just make it up(prefetch lookup is 100ms)
             byte[] dataIndexChunk = DataIndex(fileID, dataChunk.Length);
-            byte[] headerChunk = Header(soundbankID, dataIndexChunk.Length, platform.IsConsole);
+            byte[] headerChunk = Header(soundbankID, dataIndexChunk.Length, platform.IsConsole,platform);
             byte[] stringIdChunk = StringID(soundbankID, soundbankName);
-            byte[] hierarchyChunk = Hierarchy(soundbankID, soundID, fileID, soundbankName, volume, preview, platform.IsConsole);
+            byte[] hierarchyChunk = Hierarchy(soundbankID, soundID, fileID, soundbankName, volume, preview, platform.IsConsole,platform);
 
             var bankWriter = new EndianBinaryWriter(_bitConverter, outStream);
             WriteChunk(bankWriter, "BKHD", headerChunk);

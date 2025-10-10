@@ -67,6 +67,7 @@ namespace RocksmithToolkitGUI.DLCManager
             components = new Container();
             helpProvider1 = new HelpProvider();
             splitContainer1 = new SplitContainer();
+            txt_CF_Author = new CueTextBox();
             btn_GotoRockband = new Button();
             txt_RockBand = new CueTextBox();
             lbl_Descri = new Label();
@@ -114,7 +115,8 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_LinkYB = new LinkLabel();
             btn_B3 = new Button();
             toolTip1 = new ToolTip(components);
-            this.txt_CF_Author = new CueTextBox();
+            this.chbx_ProductionReady = new CheckBox();
+            this.chbx_Has_Acoustic = new CheckBox();
             ((ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -132,7 +134,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // splitContainer1.Panel1
             // 
             splitContainer1.Panel1.AutoScroll = true;
-            splitContainer1.Panel1.Controls.Add(this.txt_CF_Author);
+            splitContainer1.Panel1.Controls.Add(txt_CF_Author);
             splitContainer1.Panel1.Controls.Add(btn_GotoRockband);
             splitContainer1.Panel1.Controls.Add(txt_RockBand);
             splitContainer1.Panel1.Controls.Add(lbl_Descri);
@@ -170,6 +172,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // splitContainer1.Panel2
             // 
+            splitContainer1.Panel2.Controls.Add(this.chbx_Has_Acoustic);
+            splitContainer1.Panel2.Controls.Add(this.chbx_ProductionReady);
             splitContainer1.Panel2.Controls.Add(chbx_RequiresSlide);
             splitContainer1.Panel2.Controls.Add(txt_RemoteFolder);
             splitContainer1.Panel2.Controls.Add(btn_Cancel);
@@ -186,6 +190,17 @@ namespace RocksmithToolkitGUI.DLCManager
             splitContainer1.SplitterDistance = 450;
             splitContainer1.SplitterWidth = 2;
             splitContainer1.TabIndex = 336;
+            // 
+            // txt_CF_Author
+            // 
+            txt_CF_Author.Cue = "CF Author-s";
+            txt_CF_Author.Font = new Font("Microsoft Sans Serif", 8.25F);
+            txt_CF_Author.ForeColor = Color.Gray;
+            txt_CF_Author.Location = new Point(224, 5);
+            txt_CF_Author.Margin = new Padding(2);
+            txt_CF_Author.Name = "txt_CF_Author";
+            txt_CF_Author.Size = new Size(141, 20);
+            txt_CF_Author.TabIndex = 454;
             // 
             // btn_GotoRockband
             // 
@@ -572,7 +587,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // chbx_RequiresSlide
             // 
-            chbx_RequiresSlide.Location = new Point(275, 60);
+            chbx_RequiresSlide.Location = new Point(275, 55);
             chbx_RequiresSlide.Margin = new Padding(2);
             chbx_RequiresSlide.Name = "chbx_RequiresSlide";
             chbx_RequiresSlide.Size = new Size(144, 18);
@@ -712,16 +727,29 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_B3.UseVisualStyleBackColor = true;
             btn_B3.Click += btn_OK_Click;
             // 
-            // txt_CF_Author
+            // chbx_ProductionReady
             // 
-            this.txt_CF_Author.Cue = "CF Author-s";
-            this.txt_CF_Author.Font = new Font("Microsoft Sans Serif", 8.25F);
-            this.txt_CF_Author.ForeColor = Color.Gray;
-            this.txt_CF_Author.Location = new Point(224, 5);
-            this.txt_CF_Author.Margin = new Padding(2);
-            this.txt_CF_Author.Name = "txt_CF_Author";
-            this.txt_CF_Author.Size = new Size(141, 20);
-            this.txt_CF_Author.TabIndex = 454;
+            this.chbx_ProductionReady.Checked = true;
+            this.chbx_ProductionReady.CheckState = CheckState.Checked;
+            this.chbx_ProductionReady.Location = new Point(275, 86);
+            this.chbx_ProductionReady.Margin = new Padding(2);
+            this.chbx_ProductionReady.Name = "chbx_ProductionReady";
+            this.chbx_ProductionReady.Size = new Size(144, 18);
+            this.chbx_ProductionReady.TabIndex = 441;
+            this.chbx_ProductionReady.Text = "Requires slide";
+            toolTip1.SetToolTip(this.chbx_ProductionReady, "Copy folder to remote location");
+            this.chbx_ProductionReady.UseVisualStyleBackColor = true;
+            // 
+            // chbx_Has_Acoustic
+            // 
+            this.chbx_Has_Acoustic.Location = new Point(275, 70);
+            this.chbx_Has_Acoustic.Margin = new Padding(2);
+            this.chbx_Has_Acoustic.Name = "chbx_Has_Acoustic";
+            this.chbx_Has_Acoustic.Size = new Size(144, 18);
+            this.chbx_Has_Acoustic.TabIndex = 442;
+            this.chbx_Has_Acoustic.Text = "Has Acoustic";
+            toolTip1.SetToolTip(this.chbx_Has_Acoustic, "Copy folder to remote location");
+            this.chbx_Has_Acoustic.UseVisualStyleBackColor = true;
             // 
             // PackNew
             // 
@@ -759,14 +787,15 @@ namespace RocksmithToolkitGUI.DLCManager
                  (chbx_SaveInDB.Checked ? "Yes" : "No") + ";" + (chbx_SaveRemotely.Checked ? "Yes" : "No") + ";" + ConfigRepository.Instance()["dlcm_EoFPath"] + ";" + //15-17
                 txt_PackageDate.Text + ";" + txt_UpdateDate.Text + ";" + txt_GPFilePath.Text + ";" +//18-20
                info.SongInfo.SongDisplayName + ";" + info.SongInfo.Artist + ";" + info.SongInfo.Album + ";" +//21-23                                                                                                           //  
-                txt_Descriptions.Text + ";" + txt_RockBand.Text + ";" + (chbx_RequiresSlide.Checked ? "Yes" : "No") + ";" + txt_CF_Author.Text + ";"
+                txt_Descriptions.Text + ";" + txt_RockBand.Text + ";" + (chbx_RequiresSlide.Checked ? "Yes" : "No") + ";" + txt_CF_Author.Text + ";" +
+                (chbx_Has_Acoustic.Checked ? "Yes" : "No") + ";" + (chbx_ProductionReady.Checked ? "Yes" : "No") + ";"
                 + "Author,DLC_Name,TrackNo," +
                 "Version,CDLCID,txt_EoFPath," +
                 "YBLink,BasedOnYB,BasedOnCF," +
                 "TabLinks,Spotify,Description," +
                 "toDo,ToneDetails,SaveInVerisonInfo," +
                 "SaveInDB,SaveRemotely,SaveRemotelyPath," +
-                "PackageDate,UpdateDate,BasedOn_GP,Songtitle,Artist,Album,PackageDetails,BaseOnRB,Has_Slide,CF_Author;");
+                "PackageDate,UpdateDate,BasedOn_GP,Songtitle,Artist,Album,PackageDetails,BaseOnRB,Has_Slide,CF_Author,Has_Acoustic,ProductionReady;");
 
             if (chbx_SaveRemotely.Checked)
             {
@@ -834,15 +863,15 @@ namespace RocksmithToolkitGUI.DLCManager
                         txt_Author.Text = ag[0].Replace("Repacked by ", "");//\" Value=\"Repacked by catara\"
                         if (ag.Length >= 20)
                         {
-                            if (!ag[ag.Length - 2].ToLower().Contains("author") || ag[0].Contains("Yes"))
+                            if (!ag[ag.Length - 4].ToLower().Contains("author") || ag[0].Contains("Yes"))
                             {
                                 string[] a = ag[ag.Length - 2].Split(',');
                                 var a1 = ""; var a2 = ""; var a3 = ""; var a4 = ""; var a5 = "";
-                                try { a1 = a[0] + ": " + ag[0] + "\n" + a[1] + ": " + ag[1] + "\n" + a[2] + ": " + ag[2] + "\n" + a[3] + ": " + ag[3] + "\n" + a[4] + ": " + ag[4] + "\n" + a[5] + ": " + ag[5] + "\n" + a[6] + ": " + ag[6] + "\n" + ag[7] + "\n" + a[8] + ": " + ag[8] + "\n" + a[9] + ": " + ag[9] + "\n"; } catch (Exception e1) { MessageBox.Show("error 9-"); }
-                                try { a2 = a[10] + ": " + ag[10] + "\n" + a[11] + ": " + ag[11] + "\n" + a[12] + ": " + ag[12] + "\n" + a[13] + ": " + ag[13] + "\n" + a[14] + ": " + ag[14] + "\n" + a[15] + ": " + ag[15] + "\n" + a[16] + ": " + ag[16] + "\n" + a[17]; } catch (Exception e1) { MessageBox.Show("error 17-"); }
-                                try { a3 = ": " + ag[17] + "\n" + a[18] + ": " + ag[18] + "\n" + a[19] + ": " + ag[19] + "\n" + a[20] + ": " + ag[20] + "\n"; } catch (Exception e1) { MessageBox.Show("error 20-"); }
-                                try { a4 = a[21] + ": " + ag[21] + "\n" + a[22] + ": " + a[22] + "\n" + a[23] + ": " + ag[23]; } catch (Exception e1) { MessageBox.Show("error 21+"); }
-                                try { a5 = a[24] + ": " + ag[25] + "\n" + a[26] + "\n" + a[27]; } catch (Exception e1) { MessageBox.Show("error 24+"); }
+                                try { a1 = a[0] + ": " + ag[0] + "\n" + a[1] + ": " + ag[1] + "\n" + a[2] + ": " + ag[2] + "\n" + a[3] + ": " + ag[3] + "\n" + a[4] + ": " + ag[4] + "\n" + a[5] + ": " + ag[5] + "\n" + a[6] + ": " + ag[6] + "\n" + ag[7] + "\n" + a[8] + ": " + ag[8] + "\n" + a[9] + ": " + ag[9] + "\n"; } catch (Exception e1) { MessageBox.Show("error 9-" + e1.Message); }
+                                try { a2 = a[10] + ": " + ag[10] + "\n" + a[11] + ": " + ag[11] + "\n" + a[12] + ": " + ag[12] + "\n" + a[13] + ": " + ag[13] + "\n" + a[14] + ": " + ag[14] + "\n" + a[15] + ": " + ag[15] + "\n" + a[16] + ": " + ag[16] + "\n" + a[17]; } catch (Exception e1) { MessageBox.Show("error 17-" + e1.Message); }
+                                try { a3 = ": " + ag[17] + "\n" + a[18] + ": " + ag[18] + "\n" + a[19] + ": " + ag[19] + "\n" + a[20] + ": " + ag[20] + "\n"; } catch (Exception e1) { MessageBox.Show("error 20-" + e1.Message); }
+                                try { a4 = a[21] + ": " + ag[21] + "\n" + a[22] + ": " + a[22] + "\n" + a[23] + ": " + ag[23]; } catch (Exception e1) { MessageBox.Show("error 21+" + e1.Message); }
+                                try { a5 = a[24] + ": " + ag[25] + "\n" + a[26] + "\n" + a[27] + "\n" + a[28] + "\n" + a[29]; } catch (Exception e1) { MessageBox.Show("error 24+" + e1.Message); }
                                 MessageBox.Show("There is something wrong with the NEW Song Metadata saved in the project XML PackageComment tag. Please fix and reload" + "\n:\n\n" + a1 + a2 + a3 + a4 + a5);
                                 return;/*+ "\n" + a[28]; */
                             }
@@ -857,12 +886,12 @@ namespace RocksmithToolkitGUI.DLCManager
                                 txt_BasedOnCF.Text = ag[8]; txt_TabLinks.Text = ag[9]; txt_Spotify.Text = ag[10]; txt_Description.Text = ag[11]; txt_toDos.Text = ag[12]; txt_ToneDetails.Text = ag[13];
                                 chbx_SaveInVerisonInfo.Checked = ag[14] == "Yes" ? true : false; chbx_SaveInDB.Checked = ag[15] == "Yes" ? true : false; chbx_SaveRemotely.Checked = ag[16] == "Yes" ? true : false;
                                 //txt_PackageDate.Text = ag[18];
-                                txt_GPFilePath.Text = ag[20];txt_CF_Author.Text = ag[27]; 
+                                txt_GPFilePath.Text = ag[20]; txt_CF_Author.Text = ag[27];
                                 txt_Descriptions.Text = ag[24]; txt_RockBand.Text = ag[25]; chbx_RequiresSlide.Checked = ag[26] == "Yes" ? true : false;
                                 //ConfigRepository.Instance()["dlcm_EoFPath"] + ";"
                                 //"Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate,BasedOn_GP;"
                             }
-                            catch (Exception e1) { MessageBox.Show("error at read meta in comment"); }
+                            catch (Exception e1) { MessageBox.Show("error at read meta in comment: " + e1.Message); }
 
                             var sel = "SELECT ID FROM Main WHERE LCASE(DLC_Name)=LCASE(\"" + info.Name + "\");";
                             DataSet dds = new DataSet(); if (txt_CDLCID.Text == "") dds = SelectFromDB("Main", sel, c("dlcm_DBFolder"), cnb, cnc);
@@ -1027,14 +1056,15 @@ namespace RocksmithToolkitGUI.DLCManager
      (chbx_SaveInDB.Checked ? "Yes" : "No") + ";" + (chbx_SaveRemotely.Checked ? "Yes" : "No") + ";" + ConfigRepository.Instance()["dlcm_EoFPath"] + ";" + //15-17
     txt_PackageDate.Text + ";" + txt_UpdateDate.Text + ";" + txt_GPFilePath.Text + ";" +//18-20
    info.SongInfo.SongDisplayName + ";" + info.SongInfo.Artist + ";" + info.SongInfo.Album + ";" +//21-23    
-   txt_Descriptions.Text + ";" + txt_RockBand.Text + ";" + (chbx_RequiresSlide.Checked ? "Yes" : "No") + ";"+ txt_CF_Author +";"// 
+   txt_Descriptions.Text + ";" + txt_RockBand.Text + ";" + (chbx_RequiresSlide.Checked ? "Yes" : "No") + ";" + txt_CF_Author +
+   ";" + (chbx_Has_Acoustic.Checked ? "Yes" : "No") + ";" + (chbx_ProductionReady.Checked ? "Yes" : "No") + ";"// 
                 + "Author,DLC_Name,TrackNo," +
     "Version,CDLCID,txt_EoFPath," +
     "YBLink,BasedOnYB,BasedOnCF," +
     "TabLinks,Spotify,Description," +
     "toDo,ToneDetails,SaveInVerisonInfo," +
     "SaveInDB,SaveRemotely,SaveRemotelyPath," +
-    "PackageDate,UpdateDate,BasedOn_GP,Songtitle,Artist,Album,PackageDetails,BaseOnRB,Has_Slide,CF_Author;");
+    "PackageDate,UpdateDate,BasedOn_GP,Songtitle,Artist,Album,PackageDetails,BaseOnRB,Has_Slide,CF_Author,Has_Acoustic,ProductionReady;");
 
             StopPack = true;
             this.Hide();

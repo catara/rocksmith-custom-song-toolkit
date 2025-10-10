@@ -42,8 +42,9 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.RichTextBox txt_Description;
         private System.Windows.Forms.Button btn_B1;
-        private System.Windows.Forms.LinkLabel lbl_Link;
+        private System.Windows.Forms.LinkLabel lbl_Link1;
         private System.Windows.Forms.Button btn_B2;
         private System.Windows.Forms.Button btn_B3;
+        private System.Windows.Forms.LinkLabel lbl_Link2;
     }
 }

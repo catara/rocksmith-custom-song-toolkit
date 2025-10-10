@@ -290,7 +290,7 @@ namespace RocksmithToolkitLib.PSARC
                 }
                 catch (Exception ex)
                 {
-                    var tsst = "Error at psarc packing songs.psarc" + ex;
+                    var tsst = "Error at psarc packing songs.psarc" + ex.Message;
                     //UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
                 }
             }
@@ -608,7 +608,7 @@ namespace RocksmithToolkitLib.PSARC
                 }
                 catch (Exception ex)
                 {
-                    var tsst = "Error at psarc packing songs.psarc" + ex;
+                    var tsst = "Error at psarc packing songs.psarc" + ex.Message;
                     //UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
                 }
             }

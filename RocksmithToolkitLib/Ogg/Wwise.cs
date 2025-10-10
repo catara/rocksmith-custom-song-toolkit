@@ -17,6 +17,35 @@ namespace RocksmithToolkitLib.Ogg
     {
         static OggFile.WwiseVersion Selected { get; set; }
 
+        public static DateTime UpdateLog(DateTime dt, string txt, bool bbl, string tmpPath, string MultithreadNo, string form)
+        {
+            DateTime dtt = System.DateTime.Now;
+            string logPath = ConfigRepository.Instance()["dlcm_LogPath"] == "" ? ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log" : ConfigRepository.Instance()["dlcm_LogPath"];
+            var ismaindb = "";
+
+            var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
+
+            if (form == "MainDB")
+                ismaindb = "maindb";
+
+            Random randomp = new Random();// Write the string to a file. packid+
+            var packid = 0;
+            packid = randomp.Next(0, 100000);
+            var fn = (logPath == null || !Directory.Exists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + "current_" + ismaindb + "temp" + MultithreadNo + ".txt";
+            try
+            {
+                if (File.Exists(fn))
+                {
+                    using (StreamWriter sw = File.AppendText(fn))
+                    {
+                        sw.WriteLine(dtt.ToString() + " - " + ii.ToString() + " - " + txt.ToString());// This text is always added, making the file longer over time if it is not deleted.
+                    }
+                }
+            }
+            catch (Exception ex) { var tsst = "Erro ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", ""); }
+            return dtt;
+        }
+
         /// <summary>
         /// Covert Wav to Wem using WwiseCLI.exe
         /// for faster conversion, source path should be wav file
@@ -43,6 +72,7 @@ namespace RocksmithToolkitLib.Ogg
                 catch (Exception ex)
                 {
                     //overridden ex, can't get real ex/msg, use log + throw;
+                    var tsst = "Erro  overridden ex, can't get real ex/msg, use log + throw"+ ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "");
                     try
                     {
                         System.Threading.Thread.Sleep(5000);
@@ -55,12 +85,13 @@ namespace RocksmithToolkitLib.Ogg
                     {
                         System.Threading.Thread.Sleep(15000);
                         GetWwiseFiles(destinationPath, wwiseTemplateDir);
+                        tsst = "Erro ..." + exx.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "");
                     }
                 }
             }
             catch (Exception ex)
             {
-                ;
+                var tsst = "Erro ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "");
             }
         }
 
@@ -78,7 +109,7 @@ namespace RocksmithToolkitLib.Ogg
             if (String.IsNullOrEmpty(wwiseRoot))
                 throw new FileNotFoundException("Could not find Audiokinetic Wwise installation." + Environment.NewLine +
                     "Please confirm that either Wwise v2013.2.x v2014.1.x 2015.1.x or 2016.2.xx or 2017.1.xx or" +
-                    " 2018.1.x or 2019.2.x or 2021.1.13(latest w CLI support) or 2022.1.x or 2023.1.x or 2024.1.x beta series is installed." + Environment.NewLine);
+                    " 2018.1.x or 2019.2.x or 2021.1.13(latest w CLI support) or 2022.1.x or 2023.1.x or 2024.1.x or 2025.1.x beta series is installed." + Environment.NewLine);
 
             var wwiseCLIPath = Directory.EnumerateFiles(wwiseRoot, "WwiseC*.exe", SearchOption.AllDirectories);
             if (!wwiseCLIPath.Any())
@@ -91,7 +122,7 @@ namespace RocksmithToolkitLib.Ogg
             if (!wwiseCLIPath.Any())
                 throw new FileNotFoundException("Could not find WwiseCLI.exe/WwiseConsole.exe in " + wwiseRoot + Environment.NewLine +
                     "Please confirm that either Wwise v2013.2.x v2014.1.x 2015.1.x or 2016.2.x or 2017.1.xx or" +
-                    " 2018.1.x or 2019.2.xx (latest with no issues on PS3) or 2021.1.13(latest w CLI support) or 2022.1.x or 2023.1.x or 2024.1.x beta series is installed." + Environment.NewLine);
+                    " 2018.1.x or 2019.2.xx (latest with no issues on PS3) or 2021.1.13(latest w CLI support) or 2022.1.x or 2023.1.x or 2024.1.x or 2025.1.x beta series is installed." + Environment.NewLine);
 
             //win32 = 32bit x64 = 64bit
             string wwiseCLIexe = wwiseCLIPath.AsParallel().SingleOrDefault(e => e.Contains("Authoring\\Win32"));
@@ -130,6 +161,8 @@ namespace RocksmithToolkitLib.Ogg
                 Selected = OggFile.WwiseVersion.Wwise2023;
             else if (wwiseVersion.StartsWith("2024"))
                 Selected = OggFile.WwiseVersion.Wwise2024;
+            else if (wwiseVersion.StartsWith("2025"))
+                Selected = OggFile.WwiseVersion.Wwise2025;
             // add support for new versions here, code is expandable
             //else if (wwiseVersion.StartsWith("xxxx.x"))
             //    Selected = OggFile.WwiseVersion.WwiseXXXX;
@@ -139,7 +172,8 @@ namespace RocksmithToolkitLib.Ogg
             if (Selected == OggFile.WwiseVersion.None)
                 throw new FileNotFoundException("You have no compatible version of Audiokinetic Wwise installed." + Environment.NewLine +
                     "Install supportend Wwise version, which are v2013.2.x || v2014.1.x || v2015.1.x || v2016.2.x series || v2017.1.x series" +
-                    " || v2018.1.x series || v2019.2.x series (last not generating ps3 weird tape-delay issues) || 2021.1.13(latest w CLI support) || v2022.1.x series || 2023.1.6 series || 2024.1.x beta series " + Environment.NewLine +
+                    " || v2018.1.x series || v2019.2.x series (last not generating ps3 weird tape-delay issues) || v2021.1.13(latest w CLI support)" +
+                    " || v2022.1.x series || v2023.1.6 series || v2024.1.x series || v2025.1.x beta series " + Environment.NewLine +
                     "if you would like to use toolkit's Wwise autoconvert feature. Did you remember to set the Wwise" + Environment.NewLine +
                     "installation path in the toolkit General Config menu?" + Environment.NewLine);
             return wwiseCLIexe;
@@ -182,6 +216,7 @@ namespace RocksmithToolkitLib.Ogg
                 case OggFile.WwiseVersion.Wwise2022:
                 case OggFile.WwiseVersion.Wwise2023:
                 case OggFile.WwiseVersion.Wwise2024:
+                case OggFile.WwiseVersion.Wwise2025:
                     break;
                 default:
                     throw new FileNotFoundException("<ERROR> Wwise path is incompatible." + Environment.NewLine);
@@ -240,7 +275,7 @@ namespace RocksmithToolkitLib.Ogg
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Error at load template");//var timestamp = GenericFunctions.UpdateLog(timestamp, "error at copy wav: "+ sourcePreviewWave, true, ConfigRepository.Instance()["dlcm_TempPath"], "", "MainDB", null, null);
+                        MessageBox.Show("Error at load template"+ex.Message);//var timestamp = GenericFunctions.UpdateLog(timestamp, "error at copy wav: "+ sourcePreviewWave, true, ConfigRepository.Instance()["dlcm_TempPath"], "", "MainDB", null, null);
                     }
             }
 

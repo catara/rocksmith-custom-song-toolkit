@@ -68,6 +68,10 @@ namespace RocksmithToolkitLib.Extensions
         /// <summary>
         /// The default folders in the TreeView
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        /// <summary>
+        /// The default folders in the TreeView
+        /// </summary>
         public List<string> DefaultFolders
         {
             get { return defaultFolders; }
@@ -75,6 +79,10 @@ namespace RocksmithToolkitLib.Extensions
         }
 
         private string initialDirectory = "";
+        /// <summary>
+        /// Gets/Sets the TreeView startup state InitialDirectory
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         /// <summary>
         /// Gets/Sets the TreeView startup state InitialDirectory
         /// </summary>
@@ -89,6 +97,11 @@ namespace RocksmithToolkitLib.Extensions
         /// Get/Set a key/value dictionary Filter extension/name
         /// that is converted from a Windows style OFD Filter
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        /// <summary>
+        /// Get/Set a key/value dictionary Filter extension/name
+        /// that is converted from a Windows style OFD Filter
+        /// </summary>
         public Dictionary<string, string> Filter
         {
             get { return filter; }
@@ -96,6 +109,10 @@ namespace RocksmithToolkitLib.Extensions
         }
 
         private bool multiselect = false;
+        /// <summary>
+        /// Gets/Sets the TreeView Multiselect boolean condition
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         /// <summary>
         /// Gets/Sets the TreeView Multiselect boolean condition
         /// </summary>
@@ -109,6 +126,10 @@ namespace RocksmithToolkitLib.Extensions
         /// <summary>
         /// Get/Set boolean whether or not to list directories in TreeView
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        /// <summary>
+        /// Get/Set boolean whether or not to list directories in TreeView
+        /// </summary>
         public bool ListDirectories
         {
             get { return listDirectories; }
@@ -116,6 +137,10 @@ namespace RocksmithToolkitLib.Extensions
         }
 
         private bool listFiles = true;
+        /// <summary>
+        /// Get/Set boolean whether or not to list files in TreeView
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         /// <summary>
         /// Get/Set boolean whether or not to list files in TreeView
         /// </summary>
@@ -404,6 +429,7 @@ namespace RocksmithToolkitLib.Extensions
         }
 
         private ArrayList m_coll;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public ArrayList SelectedNodes
         {
             get

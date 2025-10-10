@@ -110,7 +110,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
             DLC = true; // false = requires UPlay to unlock
 
             // TODO: monitor this change
-            if (info.ToolkitInfo == null || info.ToolkitInfo.PackageAuthor == "Ubisoft")
+            if (info.ToolkitInfo == null || info.ToolkitInfo.PackageAuthor == "Ubisoft" || ConfigRepository.Instance()["dlcm_AdditionalManipul102"] == "Yes")
                 SKU = "RS2"; // shows purple marker w/ "DLC" text overlay
             else
                 SKU = ""; // hides album artwork marker in-game setlist
@@ -132,14 +132,14 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest2014.Header
             if (arrangement.Sng2014 == null) //bcapi
                 CapoFret = 0;
             else CapoFret = (arrangement.Sng2014.Metadata.CapoFretId == 0xFF) ? CapoFret = 0 : Convert.ToDecimal(arrangement.Sng2014.Metadata.CapoFretId);
-            DNA_Chords = arrangement.Sng2014 is null ? null:arrangement.Sng2014.DNACount[(int)DNAId.Chord];
+            DNA_Chords = arrangement.Sng2014 is null ? null : arrangement.Sng2014.DNACount[(int)DNAId.Chord];
             DNA_Riffs = arrangement.Sng2014 is null ? null : arrangement.Sng2014.DNACount[(int)DNAId.Riff];
             DNA_Solo = arrangement.Sng2014 is null ? null : arrangement.Sng2014.DNACount[(int)DNAId.Solo];
             NotesEasy = arrangement.Sng2014 is null ? null : arrangement.Sng2014.NoteCount[0];
             NotesMedium = arrangement.Sng2014 is null ? null : arrangement.Sng2014.NoteCount[1];
             NotesHard = arrangement.Sng2014 is null ? null : arrangement.Sng2014.NoteCount[2];
-            EasyMastery = Math.Round((double)(NotesEasy / NotesHard), 9);
-            MediumMastery = Math.Round((double)(NotesMedium / NotesHard), 9);
+            EasyMastery = NotesEasy == 0 || NotesHard == 0 ? 1 : Math.Round((double)(NotesEasy / NotesHard), 9);
+            MediumMastery = NotesMedium == 0 || NotesHard == 0 ? 1 : Math.Round((double)(NotesMedium / NotesHard), 9);
             Metronome = arrangement.Metronome == Sng.Metronome.None ? null : (int?)arrangement.Metronome;
 
             // TODO: monitor this change

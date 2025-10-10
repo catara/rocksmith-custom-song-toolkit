@@ -960,7 +960,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     //}
 
                 }
-                catch (Exception ex) { var tust = "Spotify Error ..." + ex; UpdateLog(timestamp, tust, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
+                catch (Exception ex) { var tust = "Spotify Error ..." + ex.Message; UpdateLog(timestamp, tust, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
             }
 
             //Get Album Covers of Album Covers that went missing
@@ -1323,7 +1323,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 catch (Exception ex)
                 {
-                    var tsst = "Error ..." + ex; timestamp = UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                    var tsst = "Error ..." + ex.Message; timestamp = UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null);
                     MessageBox.Show(ex.Message + "Can't run Search ! " + SearchCmd);
                 }
             else MessageBox.Show("Add a search criteria");
@@ -1502,7 +1502,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 catch (Exception ex)
                 {
-                    var tsst = "Error ..." + ex; timestamp = UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                    var tsst = "Error ..." + ex.Message; timestamp = UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null);
                     MessageBox.Show(ex.Message + "Can't run Search ! " + SearchCmd);
                 }
             else MessageBox.Show("Add a search criteria");

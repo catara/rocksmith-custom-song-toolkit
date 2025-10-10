@@ -1,0 +1,137 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "packer/1.0.0": {
+        "dependencies": {
+          "NDesk.Options": "0.2.1.0",
+          "RocksmithToolkitGUI": "2.9.2.1",
+          "RocksmithToolkitLib": "2.9.2.1",
+          "runtimepack.Microsoft.Windows.SDK.NET.Ref": "10.0.22621.57"
+        },
+        "runtime": {
+          "packer.dll": {}
+        }
+      },
+      "runtimepack.Microsoft.Windows.SDK.NET.Ref/10.0.22621.57": {
+        "runtime": {
+          "Microsoft.Windows.SDK.NET.dll": {
+            "assemblyVersion": "10.0.22621.38",
+            "fileVersion": "10.0.22621.55"
+          },
+          "WinRT.Runtime.dll": {
+            "assemblyVersion": "2.2.0.0",
+            "fileVersion": "2.2.0.48161"
+          }
+        }
+      },
+      "NDesk.Options/0.2.1.0": {
+        "runtime": {
+          "NDesk.Options.dll": {
+            "assemblyVersion": "0.2.1.0",
+            "fileVersion": "0.2.1.0"
+          }
+        }
+      },
+      "RocksmithToolkitGUI/2.9.2.1": {
+        "runtime": {
+          "RocksmithToolkitGUI.dll": {
+            "assemblyVersion": "2.9.2.1",
+            "fileVersion": "2.9.2.1"
+          }
+        }
+      },
+      "RocksmithToolkitLib/2.9.2.1": {
+        "runtime": {
+          "RocksmithToolkitLib.dll": {
+            "assemblyVersion": "2.9.2.1",
+            "fileVersion": "2.9.2.1"
+          }
+        }
+      },
+      "X360/1.0.0.41": {
+        "runtime": {
+          "X360.dll": {
+            "assemblyVersion": "1.0.0.41",
+            "fileVersion": "1.0.0.41"
+          }
+        }
+      },
+      "MiscUtil/1.0.0.0": {
+        "runtime": {
+          "MiscUtil.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.285"
+          }
+        }
+      },
+      "ICSharpCode.SharpZipLib/0.86.0.518": {
+        "runtime": {
+          "ICSharpCode.SharpZipLib.dll": {
+            "assemblyVersion": "0.86.0.518",
+            "fileVersion": "0.86.0.518"
+          }
+        }
+      },
+      "zlib.net/1.0.3.0": {
+        "runtime": {
+          "zlib.net.dll": {
+            "assemblyVersion": "1.0.3.0",
+            "fileVersion": "1.0.3.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "packer/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "runtimepack.Microsoft.Windows.SDK.NET.Ref/10.0.22621.57": {
+      "type": "runtimepack",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NDesk.Options/0.2.1.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "RocksmithToolkitGUI/2.9.2.1": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "RocksmithToolkitLib/2.9.2.1": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "X360/1.0.0.41": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MiscUtil/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ICSharpCode.SharpZipLib/0.86.0.518": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "zlib.net/1.0.3.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

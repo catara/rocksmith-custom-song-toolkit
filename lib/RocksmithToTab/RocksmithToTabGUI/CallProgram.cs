@@ -13,11 +13,13 @@ namespace RocksmithToTabGUI
 {
     public partial class CallProgram : Form
     {
+#pragma warning disable WFO1000 // Missing code serialization configuration for property content
         public string RocksmithPath { get; set; }
         public string OutputPath { get; set; }
         public string FileNameTemplate { get; set; }
         public string FileFormat { get; set; }
         public bool OnlyNewFiles { get; set; }
+#pragma warning restore WFO1000 // Missing code serialization configuration for property content
 
         private Process process = null;
         private delegate void AddOutputDelegate(string output);

@@ -28,7 +28,7 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph
         {
             StreamWriter writer = new StreamWriter(str);
 
-            if (platform.IsConsole)
+            if (platform.IsConsole && platform.platform.ToString() != "PS4") //bcapips4
             {
                 foreach (var x in SongFiles)
                     writer.WriteLine("<urn:uuid:{0}> <http://emergent.net/aweb/1.0/tag> \"{1}\".", x.UUID, platformPathNames[0]);

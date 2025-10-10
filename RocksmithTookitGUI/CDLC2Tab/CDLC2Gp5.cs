@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using RocksmithToolkitLib;
+﻿using RocksmithToolkitLib;
 using RocksmithToolkitLib.DLCPackage.Manifest.Functions;
 using RocksmithToolkitLib.XML;
+using RocksmithToolkitLib.XmlRepository;
 using RocksmithToTabLib;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using static RocksmithToolkitGUI.DLCManager.UtilitiesFunctions;//bcapi
 
 namespace RocksmithToolkitGUI.CDLC2Tab
 {
@@ -71,6 +74,8 @@ namespace RocksmithToolkitGUI.CDLC2Tab
         /// <param name="songId"></param>
         /// <param name="arrangement"></param>
         /// <returns>Song2014</returns>
+        /// 
+
         public Song2014 PsarcToSong2014(string inputFilePath, string songId = null, string arrangement = null)
         {
             var browser = new PsarcBrowser(inputFilePath);
@@ -112,7 +117,7 @@ namespace RocksmithToolkitGUI.CDLC2Tab
             }
             catch (Exception ex)
             {
-                ;
+                var timestamp = UpdateLog(DateTime.Now, "Distributing notes Load issues: " + ex.Message, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
             }
             return arrSong2014;
         }

@@ -223,25 +223,25 @@ namespace RocksmithToolkitGUI.DLCManager
 
         public WEM2OGGCorrespondence()
         {
-            this.filed = filed;
-            datas = datas;
-            this.author = author;
-            this.tkversion = tkversion;
-            this.dD = dD;
-            this.bass = bass;
-            this.guitar = guitar;
-            this.combo = combo;
-            this.rhythm = rhythm;
-            this.lead = lead;
-            this.tunnings = tunnings;
-            this.i = i;
-            this.norows = norows;
-            this.original_FileName = original_FileName;
-            this.art_hash = art_hash;
-            this.audio_hash = audio_hash;
-            this.audioPreview_hash = audioPreview_hash;
-            this.alist = alist;
-            this.blist = blist;
+            //this.filed = filed;
+            //datas = datas;
+            //this.author = author;
+            //this.tkversion = tkversion;
+            //this.dD = dD;
+            //this.bass = bass;
+            //this.guitar = guitar;
+            //this.combo = combo;
+            //this.rhythm = rhythm;
+            //this.lead = lead;
+            //this.tunnings = tunnings;
+            //this.i = i;
+            //this.norows = norows;
+            //this.original_FileName = original_FileName;
+            //this.art_hash = art_hash;
+            //this.audio_hash = audio_hash;
+            //this.audioPreview_hash = audioPreview_hash;
+            //this.alist = alist;
+            //this.blist = blist;
         }
 
         private System.Windows.Forms.Button btn_Close;

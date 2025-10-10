@@ -24,16 +24,16 @@ namespace RocksmithToolkitGUI.DLCManager
 {
     public partial class Selection : Form
     {
-        public bool IgnoreSong { get; set; }
-        public bool StopImport { get; set; }
+        public bool B1 { get; set; }
+        public bool B2 { get; set; }
         public Selection(string slct, string B2Txt, string B3Txt)//string txt_DBFolder,string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete
         {/*string link, string Title, bool B1Visi, bool B2Visi, bool B3Visi, string B1Txt,*/
             InitializeComponent();
             //lbl_Link.Text = link;
             // txt_Description.Text = mss;
             this.Text = "Options at " + (B3Txt.IndexOf(" ") > 0 ? B3Txt.Substring(B3Txt.IndexOf(" "), B3Txt.Length - B3Txt.IndexOf(" ") - 1) : "Packing").Trim();
-            IgnoreSong = false;
-            StopImport = false;
+            B1 = false;
+            B2 = false;
             //ErrorWindow.ActiveForm.Text = Title;
             //btn_B1.Visible = B1Visi;
             if (B2Txt != "") btn_B2.Visible = true;
@@ -220,7 +220,7 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_B2.Text = "OK";
             btn_B2.UseVisualStyleBackColor = true;
             btn_B2.Visible = false;
-            btn_B2.Click += btn_Close_Click;
+            btn_B2.Click += btn_B2_Click;
             // 
             // btn_B3
             // 
@@ -248,7 +248,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ResumeLayout(false);
         }
 
-        private void btn_Close_Click(object sender, EventArgs e)
+        private void btn_B2_Click(object sender, EventArgs e)
         {
             saveOptions(chbx_Additional_Manipulations);
             this.Hide();
@@ -256,13 +256,13 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void btn_OK_Click(object sender, EventArgs e)
         {
-            StopImport = true;
+            B2 = true;
             this.Hide();
         }
 
-        private void btn_StopImport_Click(object sender, EventArgs e)
+        private void btn_B3_Click(object sender, EventArgs e)
         {
-            IgnoreSong = true;
+            B1 = true;
             this.Hide();
         }
 

@@ -97,6 +97,8 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest
                 int masterId = isVocal ? 1 : arr.MasterId;
                 attribute.MasterID_PS3 = masterId;
                 attribute.MasterID_Xbox360 = masterId;
+                attribute.MasterID_RDV = masterId;
+                attribute.MasterID_Xbox360 = masterId;
 
                 if (!isVocal)
                     attribute.MaxPhraseDifficulty = manifestFunctions.GetMaxDifficulty(song);

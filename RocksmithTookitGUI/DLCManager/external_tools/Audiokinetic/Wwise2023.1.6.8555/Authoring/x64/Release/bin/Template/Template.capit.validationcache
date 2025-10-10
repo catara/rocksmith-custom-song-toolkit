@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ValidationCache Version="1" SchemaVersion="119">
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Virtual Acoustics\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Triggers\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Template.wproj" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Switches\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\States\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Soundcaster Sessions\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\SoundBanks\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Queries\Factory Queries.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Queries\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Presets\Factory Spatial Audio.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Presets\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Modulators\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Mixing Sessions\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Metadata\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Master-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Interactive Music Hierarchy\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Game Parameters\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Events\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Effects\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Dynamic Dialogue\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Conversion Settings\Factory Conversion Settings.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Conversion Settings\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Control Surface Sessions\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Audio Devices\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Attenuations\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\bin\Debug\net8.0-windows10.0.22621.0\Template\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1697543498" DateHigh="0"/>
+</ValidationCache>

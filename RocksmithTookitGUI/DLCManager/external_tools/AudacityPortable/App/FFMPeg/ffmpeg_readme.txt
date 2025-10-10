@@ -1,0 +1,1 @@
+Place the avformat-XX.dll file and all other library files in this directory and Audacity Portable will use the FFMpeg encoder.  You will still need to enable it by clicking into the Libraries section of Audacity's settings and clicking Locate and then OK.

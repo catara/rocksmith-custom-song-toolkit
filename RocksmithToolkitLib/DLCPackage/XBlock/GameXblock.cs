@@ -70,7 +70,7 @@ namespace RocksmithToolkitLib.DLCPackage.XBlock
                         entity.Iterations = 0;
 
                         entity.Properties = new List<Property2014>();
-                        if (platform.IsConsole)
+                        if (platform.IsConsole && platform.platform.ToString() != "PS4")
                             entity.Properties.Add(new Property2014() { Name = "Header", Set = new Set() { Value = String.Format(URN_TEMPLATE, TagValue.Database.GetDescription(), TagValue.HsonDB.GetDescription(), String.Format(AggregateGraph2014.AggregateGraph2014.NAME_ARRANGEMENT, dlcName, arrangementFileName.ToLower())) } });
                         else
                             entity.Properties.Add(new Property2014() { Name = "Header", Set = new Set() { Value = String.Format(URN_TEMPLATE, TagValue.Database.GetDescription(), TagValue.HsanDB.GetDescription(), String.Format("songs_dlc_{0}", dlcName)) } });
@@ -102,7 +102,7 @@ namespace RocksmithToolkitLib.DLCPackage.XBlock
                     inlayEntity.Iterations = 0;
 
                     inlayEntity.Properties = new List<Property2014>();
-                    if (platform.IsConsole)
+                    if (platform.IsConsole && platform.platform.ToString() != "PS4")
                         inlayEntity.Properties.Add(new Property2014() { Name = "Header", Set = new Set() { Value = String.Format(URN_TEMPLATE, TagValue.Database.GetDescription(), TagValue.HsonDB.GetDescription(), String.Format("dlc_{0}", dlcName)) } });
                     else
                         inlayEntity.Properties.Add(new Property2014() { Name = "Header", Set = new Set() { Value = String.Format(URN_TEMPLATE, TagValue.Database.GetDescription(), TagValue.HsanDB.GetDescription(), String.Format("dlc_{0}", dlcName)) } });

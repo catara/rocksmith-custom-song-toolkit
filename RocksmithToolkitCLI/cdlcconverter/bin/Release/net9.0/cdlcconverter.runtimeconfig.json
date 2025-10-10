@@ -3,7 +3,7 @@
     "tfm": "net9.0",
     "framework": {
       "name": "Microsoft.NETCore.App",
-      "version": "9.0.0-preview.7.24405.7"
+      "version": "9.0.0"
     },
     "configProperties": {
       "System.Reflection.Metadata.MetadataUpdater.IsSupported": false,

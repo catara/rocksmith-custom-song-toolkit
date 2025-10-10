@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ValidationCache Version="1" SchemaVersion="97">
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Virtual Acoustics\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Triggers\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Template.wproj" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Switches\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\States\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Soundcaster Sessions\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\SoundBanks\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Queries\Factory Queries.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Queries\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Presets\Factory Spatial Audio.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Presets\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Modulators\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Mixing Sessions\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Master-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Interactive Music Hierarchy\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Game Parameters\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Events\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Effects\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Dynamic Dialogue\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Conversion Settings\Factory Conversion Settings.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Conversion Settings\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Control Surface Sessions\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Audio Devices\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Attenuations\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+	<ValidationCacheItem File="C:\GitHub\bin\Template\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1695605184" DateHigh="0"/>
+</ValidationCache>

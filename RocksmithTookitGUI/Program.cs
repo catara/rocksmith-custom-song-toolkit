@@ -1,17 +1,20 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Windows.Forms;
-using System.Security.Permissions;
-using RocksmithToolkitLib.Extensions;
-using RocksmithToolkitLib;
-using RocksmithToolkitLib.XmlRepository;
-using System.Threading;
+﻿using NLog;
 using RocksmithToolkitGUI.Config;
-using NLog;
+using RocksmithToolkitLib;
+using RocksmithToolkitLib.Extensions;
+using RocksmithToolkitLib.XmlRepository;
+using System;
+using System.Diagnostics;
+using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Permissions;
+using System.Threading;
+using System.Windows.Forms;
+
+using static RocksmithToolkitGUI.DLCManager.UtilitiesFunctions;//bcapi
 
 namespace RocksmithToolkitGUI
 {
@@ -22,6 +25,8 @@ namespace RocksmithToolkitGUI
         /// </summary>
         [STAThread]
         [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.ControlAppDomain)]
+
+       
         static void Main(string[] args)
         {
             // make the logger available globally in application
@@ -40,6 +45,7 @@ namespace RocksmithToolkitGUI
             }
             catch (Exception e)
             {
+                var timestamp = UpdateLog(DateTime.Now, "Main progvramm issue: " + e.Message, true, ConfigRepository.Instance()["dlcm_TempPath"], "", "DLCManager", null, null);
                 //MessageBox.Show(e.Message + "\n\n" + e.ToString());/Bcapi migrated project to CORE.NET (6) as to be able to debug on ARM (windows) architecture
                 /* DO NOTHING */
             }

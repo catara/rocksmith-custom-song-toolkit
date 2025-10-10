@@ -89,5 +89,9 @@ namespace RocksmithToolkitGUI.DLCManager
         private CueTextBox txt_RockBand;
         private System.Windows.Forms.CheckBox chbx_RequiresSlide;
         private CueTextBox txt_CF_Author;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chbx_Has_Acoustic;
+        private System.Windows.Forms.CheckBox chbx_ProductionReady;
     }
 }

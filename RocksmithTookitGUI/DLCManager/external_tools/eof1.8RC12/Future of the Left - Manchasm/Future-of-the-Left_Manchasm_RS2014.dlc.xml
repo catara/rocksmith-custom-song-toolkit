@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DLCPackageData xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.DLCPackage">
+  <AlbumArtPath>Curses_(Future_of_the_Left_album).jpg</AlbumArtPath>
+  <AppId>248750</AppId>
+  <Arrangements>
+    <Arrangement>
+      <ArrangementName>Bass</ArrangementName>
+      <ArrangementPropeties xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.XML">
+        <d4p1:BarreChords>0</d4p1:BarreChords>
+        <d4p1:BassPick>0</d4p1:BassPick>
+        <d4p1:Bends>0</d4p1:Bends>
+        <d4p1:DoubleStops>0</d4p1:DoubleStops>
+        <d4p1:DropDPower>0</d4p1:DropDPower>
+        <d4p1:FifthsAndOctaves>0</d4p1:FifthsAndOctaves>
+        <d4p1:FingerPicking>0</d4p1:FingerPicking>
+        <d4p1:FretHandMutes>0</d4p1:FretHandMutes>
+        <d4p1:Harmonics>0</d4p1:Harmonics>
+        <d4p1:Hopo>0</d4p1:Hopo>
+        <d4p1:NonStandardChords>0</d4p1:NonStandardChords>
+        <d4p1:OpenChords>0</d4p1:OpenChords>
+        <d4p1:PalmMutes>0</d4p1:PalmMutes>
+        <d4p1:PickDirection>0</d4p1:PickDirection>
+        <d4p1:PinchHarmonics>0</d4p1:PinchHarmonics>
+        <d4p1:PowerChords>0</d4p1:PowerChords>
+        <d4p1:Represent>1</d4p1:Represent>
+        <d4p1:SlapPop>0</d4p1:SlapPop>
+        <d4p1:Slides>0</d4p1:Slides>
+        <d4p1:StandardTuning>0</d4p1:StandardTuning>
+        <d4p1:Sustain>1</d4p1:Sustain>
+        <d4p1:Syncopation>0</d4p1:Syncopation>
+        <d4p1:Tapping>0</d4p1:Tapping>
+        <d4p1:Tremolo>0</d4p1:Tremolo>
+        <d4p1:TwoFingerPicking>0</d4p1:TwoFingerPicking>
+        <d4p1:UnpitchedSlides>0</d4p1:UnpitchedSlides>
+        <d4p1:Vibrato>0</d4p1:Vibrato>
+        <d4p1:BonusArr>0</d4p1:BonusArr>
+        <d4p1:Metronome>0</d4p1:Metronome>
+        <d4p1:PathBass>1</d4p1:PathBass>
+        <d4p1:PathLead>0</d4p1:PathLead>
+        <d4p1:PathRhythm>0</d4p1:PathRhythm>
+        <d4p1:RouteMask>0</d4p1:RouteMask>
+      </ArrangementPropeties>
+      <ArrangementSort>0</ArrangementSort>
+      <ArrangementType>Bass</ArrangementType>
+      <BonusArr>false</BonusArr>
+      <CapoFret>0</CapoFret>
+      <GlyphsXmlPath i:nil="true" />
+      <Id>e3037cf8-6224-4065-9c9d-c2779f10c18d</Id>
+      <LyricsArtPath i:nil="true" />
+      <MasterId>33465413</MasterId>
+      <Metronome>None</Metronome>
+      <PluckedType>NotPicked</PluckedType>
+      <Represent>true</Represent>
+      <RouteMask>Bass</RouteMask>
+      <ScrollSpeed>13</ScrollSpeed>
+      <Sng2014 xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.Sng2014HSL" i:nil="true" />
+      <SongFile xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.DLCPackage.AggregateGraph">
+        <d4p1:UUID>4a0292d9-dba1-4f27-812c-623e909162c9</d4p1:UUID>
+        <d4p1:File></d4p1:File>
+        <d4p1:Version i:nil="true" />
+      </SongFile>
+      <SongXml xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.DLCPackage.AggregateGraph">
+        <d4p1:UUID>785ef325-2140-4643-9ad1-66e4c2bf61aa</d4p1:UUID>
+        <d4p1:File>PART REAL_BASS_RS2.xml</d4p1:File>
+        <d4p1:Version i:nil="true" />
+      </SongXml>
+      <ToneA>Bass_Distortion</ToneA>
+      <ToneB>Default_Bass</ToneB>
+      <ToneBase>Bass_Distortion</ToneBase>
+      <ToneC>Bass_Synth</ToneC>
+      <ToneD></ToneD>
+      <ToneMultiplayer i:nil="true" />
+      <Tuning>Drop D</Tuning>
+      <TuningPitch>440</TuningPitch>
+      <TuningStrings xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.XML">
+        <d4p1:String0>-2</d4p1:String0>
+        <d4p1:String1>0</d4p1:String1>
+        <d4p1:String2>0</d4p1:String2>
+        <d4p1:String3>0</d4p1:String3>
+        <d4p1:String4>0</d4p1:String4>
+        <d4p1:String5>0</d4p1:String5>
+      </TuningStrings>
+    </Arrangement>
+    <Arrangement>
+      <ArrangementName>Vocals</ArrangementName>
+      <ArrangementPropeties xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.XML" i:nil="true" />
+      <ArrangementSort>0</ArrangementSort>
+      <ArrangementType>Vocal</ArrangementType>
+      <BonusArr>false</BonusArr>
+      <CapoFret>0</CapoFret>
+      <GlyphsXmlPath i:nil="true" />
+      <Id>0035d6a5-a51b-4521-8ba5-d6750c15bbcc</Id>
+      <LyricsArtPath i:nil="true" />
+      <MasterId>113259408</MasterId>
+      <Metronome>None</Metronome>
+      <PluckedType>NotPicked</PluckedType>
+      <Represent>false</Represent>
+      <RouteMask>None</RouteMask>
+      <ScrollSpeed>13</ScrollSpeed>
+      <Sng2014 xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.Sng2014HSL" i:nil="true" />
+      <SongFile xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.DLCPackage.AggregateGraph">
+        <d4p1:UUID>6e6a42f9-669b-4640-be4d-048de9e7e8ce</d4p1:UUID>
+        <d4p1:File></d4p1:File>
+        <d4p1:Version i:nil="true" />
+      </SongFile>
+      <SongXml xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.DLCPackage.AggregateGraph">
+        <d4p1:UUID>37e3b338-e32a-4e86-8aca-725153a657fb</d4p1:UUID>
+        <d4p1:File>PART VOCALS_RS2.xml</d4p1:File>
+        <d4p1:Version i:nil="true" />
+      </SongXml>
+      <ToneA></ToneA>
+      <ToneB></ToneB>
+      <ToneBase>Bass_Distortion</ToneBase>
+      <ToneC></ToneC>
+      <ToneD></ToneD>
+      <ToneMultiplayer i:nil="true" />
+      <Tuning>E Standard</Tuning>
+      <TuningPitch>440</TuningPitch>
+      <TuningStrings xmlns:d4p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.XML">
+        <d4p1:String0>0</d4p1:String0>
+        <d4p1:String1>0</d4p1:String1>
+        <d4p1:String2>0</d4p1:String2>
+        <d4p1:String3>0</d4p1:String3>
+        <d4p1:String4>0</d4p1:String4>
+        <d4p1:String5>0</d4p1:String5>
+      </TuningStrings>
+    </Arrangement>
+  </Arrangements>
+  <ArtFiles i:nil="true" />
+  <DefaultShowlights>false</DefaultShowlights>
+  <GameVersion>RS2014</GameVersion>
+  <Inlay i:nil="true" />
+  <Mac>true</Mac>
+  <Name>RepFOTLManchasm</Name>
+  <OggPath>guitar.wem</OggPath>
+  <OggPreviewPath>guitar_preview.wem</OggPreviewPath>
+  <OggQuality>4</OggQuality>
+  <PS3>false</PS3>
+  <PS4>false</PS4>
+  <Pc>true</Pc>
+  <PreviewVolume>-5</PreviewVolume>
+  <SignatureType>CON</SignatureType>
+  <SongInfo>
+    <Album>Curses</Album>
+    <AlbumSort>Curses</AlbumSort>
+    <Artist>Future of the Left</Artist>
+    <ArtistSort>Future of the Left</ArtistSort>
+    <AverageTempo>120</AverageTempo>
+    <JapaneseArtistName></JapaneseArtistName>
+    <JapaneseSongName></JapaneseSongName>
+    <SongDisplayName>Manchasm</SongDisplayName>
+    <SongDisplayNameSort>Manchasm</SongDisplayNameSort>
+    <SongYear>2007</SongYear>
+  </SongInfo>
+  <Tones xmlns:d2p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.DLCPackage.Manifest.Tone" />
+  <TonesRS2014 xmlns:d2p1="http://schemas.datacontract.org/2004/07/RocksmithToolkitLib.DLCPackage.Manifest2014.Tone">
+    <d2p1:Tone2014>
+      <d2p1:GearList>
+        <d2p1:Amp>
+          <d2p1:Category>Amp</d2p1:Category>
+          <d2p1:KnobValues xmlns:d6p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+            <d6p1:KeyValueOfstringfloat>
+              <d6p1:Key>Amp_OrangeAD50_Gain</d6p1:Key>
+              <d6p1:Value>88</d6p1:Value>
+            </d6p1:KeyValueOfstringfloat>
+            <d6p1:KeyValueOfstringfloat>
+              <d6p1:Key>Amp_OrangeAD50_Bass</d6p1:Key>
+              <d6p1:Value>75</d6p1:Value>
+            </d6p1:KeyValueOfstringfloat>
+            <d6p1:KeyValueOfstringfloat>
+              <d6p1:Key>Amp_OrangeAD50_Treble</d6p1:Key>
+              <d6p1:Value>66</d6p1:Value>
+            </d6p1:KeyValueOfstringfloat>
+            <d6p1:KeyValueOfstringfloat>
+              <d6p1:Key>Amp_OrangeAD50_Mid</d6p1:Key>
+              <d6p1:Value>66</d6p1:Value>
+            </d6p1:KeyValueOfstringfloat>
+          </d2p1:KnobValues>
+          <d2p1:PedalKey>Amp_OrangeAD50</d2p1:PedalKey>
+          <d2p1:Skin i:nil="true" />
+          <d2p1:SkinIndex i:nil="true" />
+          <d2p1:Type>Amps</d2p1:Type>
+        </d2p1:Amp>
+        <d2p1:Cabinet>
+          <d2p1:Category>Dynamic_Cone</d2p1:Category>
+          <d2p1:KnobValues xmlns:d6p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+          <d2p1:PedalKey>Cab_OrangeJimmyBean_57_Cone</d2p1:PedalKey>
+          <d2p1:Skin i:nil="true" />
+          <d2p1:SkinIndex i:nil="true" />
+          <d2p1:Type>Cabinets</d2p1:Type>
+        </d2p1:Cabinet>
+        <d2p1:PostPedal1 i:nil="true" />
+        <d2p1:PostPedal2 i:nil="true" />
+        <d2p1:PostPedal3 i:nil="true" />
+        <d2p1:PostPedal4 i:nil="true" />
+        <d2p1:PrePedal1 i:nil="true" />
+        <d2p1:PrePedal2 i:nil="true" />
+        <d2p1:PrePedal3 i:nil="true" />
+        <d2p1:PrePedal4 i:nil="true" />
+        <d2p1:Rack1 i:nil="true" />
+        <d2p1:Rack2 i:nil="true" />
+        <d2p1:Rack3 i:nil="true" />
+        <d2p1:Rack4 i:nil="true" />
+      </d2p1:GearList>
+      <d2p1:IsCustom>true</d2p1:IsCustom>
+      <d2p1:Key>Bass_Distortion</d2p1:Key>
+      <d2p1:Name>Bass_Distortion</d2p1:Name>
+      <d2p1:NameSeparator> - </d2p1:NameSeparator>
+      <d2p1:SortOrder>0</d2p1:SortOrder>
+      <d2p1:ToneDescriptors xmlns:d4p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+        <d4p1:string>$[35720]CLEAN</d4p1:string>
+      </d2p1:ToneDescriptors>
+      <d2p1:Volume>-12</d2p1:Volume>
+    </d2p1:Tone2014>
+    <d2p1:Tone2014>
+      <d2p1:GearList>
+        <d2p1:Amp>
+          <d2p1:Category>Amp</d2p1:Category>
+          <d2p1:KnobValues xmlns:d6p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+            <d6p1:KeyValueOfstringfloat>
+              <d6p1:Key>Amp_OrangeAD50_Gain</d6p1:Key>
+              <d6p1:Value>88</d6p1:Value>
+            </d6p1:KeyValueOfstringfloat>
+            <d6p1:KeyValueOfstringfloat>
+              <d6p1:Key>Amp_OrangeAD50_Bass</d6p1:Key>
+              <d6p1:Value>75</d6p1:Value>
+            </d6p1:KeyValueOfstringfloat>
+            <d6p1:KeyValueOfstringfloat>
+              <d6p1:Key>Amp_OrangeAD50_Treble</d6p1:Key>
+              <d6p1:Value>66</d6p1:Value>
+            </d6p1:KeyValueOfstringfloat>
+            <d6p1:KeyValueOfstringfloat>
+              <d6p1:Key>Amp_OrangeAD50_Mid</d6p1:Key>
+              <d6p1:Value>66</d6p1:Value>
+            </d6p1:KeyValueOfstringfloat>
+          </d2p1:KnobValues>
+          <d2p1:PedalKey>Amp_OrangeAD50</d2p1:PedalKey>
+          <d2p1:Skin i:nil="true" />
+          <d2p1:SkinIndex i:nil="true" />
+          <d2p1:Type>Amps</d2p1:Type>
+        </d2p1:Amp>
+        <d2p1:Cabinet>
+          <d2p1:Category>Dynamic_Cone</d2p1:Category>
+          <d2p1:KnobValues xmlns:d6p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+          <d2p1:PedalKey>Cab_OrangeJimmyBean_57_Cone</d2p1:PedalKey>
+          <d2p1:Skin i:nil="true" />
+          <d2p1:SkinIndex i:nil="true" />
+          <d2p1:Type>Cabinets</d2p1:Type>
+        </d2p1:Cabinet>
+        <d2p1:PostPedal1 i:nil="true" />
+        <d2p1:PostPedal2 i:nil="true" />
+        <d2p1:PostPedal3 i:nil="true" />
+        <d2p1:PostPedal4 i:nil="true" />
+        <d2p1:PrePedal1 i:nil="true" />
+        <d2p1:PrePedal2 i:nil="true" />
+        <d2p1:PrePedal3 i:nil="true" />
+        <d2p1:PrePedal4 i:nil="true" />
+        <d2p1:Rack1 i:nil="true" />
+        <d2p1:Rack2 i:nil="true" />
+        <d2p1:Rack3 i:nil="true" />
+        <d2p1:Rack4 i:nil="true" />
+      </d2p1:GearList>
+      <d2p1:IsCustom>true</d2p1:IsCustom>
+      <d2p1:Key>Default_Bass</d2p1:Key>
+      <d2p1:Name>Default_Bass</d2p1:Name>
+      <d2p1:NameSeparator> - </d2p1:NameSeparator>
+      <d2p1:SortOrder>0</d2p1:SortOrder>
+      <d2p1:ToneDescriptors xmlns:d4p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+        <d4p1:string>$[35720]CLEAN</d4p1:string>
+      </d2p1:ToneDescriptors>
+      <d2p1:Volume>-12</d2p1:Volume>
+    </d2p1:Tone2014>
+    <d2p1:Tone2014>
+      <d2p1:GearList>
+        <d2p1:Amp>
+          <d2p1:Category>Amp</d2p1:Category>
+          <d2p1:KnobValues xmlns:d6p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+            <d6p1:KeyValueOfstringfloat>
+              <d6p1:Key>Amp_OrangeAD50_Gain</d6p1:Key>
+              <d6p1:Value>88</d6p1:Value>
+            </d6p1:KeyValueOfstringfloat>
+            <d6p1:KeyValueOfstringfloat>
+              <d6p1:Key>Amp_OrangeAD50_Bass</d6p1:Key>
+              <d6p1:Value>75</d6p1:Value>
+            </d6p1:KeyValueOfstringfloat>
+            <d6p1:KeyValueOfstringfloat>
+              <d6p1:Key>Amp_OrangeAD50_Treble</d6p1:Key>
+              <d6p1:Value>66</d6p1:Value>
+            </d6p1:KeyValueOfstringfloat>
+            <d6p1:KeyValueOfstringfloat>
+              <d6p1:Key>Amp_OrangeAD50_Mid</d6p1:Key>
+              <d6p1:Value>66</d6p1:Value>
+            </d6p1:KeyValueOfstringfloat>
+          </d2p1:KnobValues>
+          <d2p1:PedalKey>Amp_OrangeAD50</d2p1:PedalKey>
+          <d2p1:Skin i:nil="true" />
+          <d2p1:SkinIndex i:nil="true" />
+          <d2p1:Type>Amps</d2p1:Type>
+        </d2p1:Amp>
+        <d2p1:Cabinet>
+          <d2p1:Category>Dynamic_Cone</d2p1:Category>
+          <d2p1:KnobValues xmlns:d6p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+          <d2p1:PedalKey>Cab_OrangeJimmyBean_57_Cone</d2p1:PedalKey>
+          <d2p1:Skin i:nil="true" />
+          <d2p1:SkinIndex i:nil="true" />
+          <d2p1:Type>Cabinets</d2p1:Type>
+        </d2p1:Cabinet>
+        <d2p1:PostPedal1 i:nil="true" />
+        <d2p1:PostPedal2 i:nil="true" />
+        <d2p1:PostPedal3 i:nil="true" />
+        <d2p1:PostPedal4 i:nil="true" />
+        <d2p1:PrePedal1 i:nil="true" />
+        <d2p1:PrePedal2 i:nil="true" />
+        <d2p1:PrePedal3 i:nil="true" />
+        <d2p1:PrePedal4 i:nil="true" />
+        <d2p1:Rack1 i:nil="true" />
+        <d2p1:Rack2 i:nil="true" />
+        <d2p1:Rack3 i:nil="true" />
+        <d2p1:Rack4 i:nil="true" />
+      </d2p1:GearList>
+      <d2p1:IsCustom>true</d2p1:IsCustom>
+      <d2p1:Key>Bass_Synth</d2p1:Key>
+      <d2p1:Name>Bass_Synth</d2p1:Name>
+      <d2p1:NameSeparator> - </d2p1:NameSeparator>
+      <d2p1:SortOrder>0</d2p1:SortOrder>
+      <d2p1:ToneDescriptors xmlns:d4p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+        <d4p1:string>$[35720]CLEAN</d4p1:string>
+      </d2p1:ToneDescriptors>
+      <d2p1:Volume>-12</d2p1:Volume>
+    </d2p1:Tone2014>
+  </TonesRS2014>
+  <ToolkitInfo>
+    <PackageAuthor i:nil="true" />
+    <PackageComment>catara;RepFOTLManchasm;4;0.1;;C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Future of the Left - Manchasm\notes.eof;;;;https://tabs.ultimate-guitar.com/tab/future-of-the-left/manchasm-bass-755968;;initial version;improve backing vocals towards end
+add tones;;Yes;Yes;Yes;DLCManager\external_tools\eof1.8RC12\eof.exe;8/11/2025 9:21:29 PM;8/11/2025 9:21:29 PM;;Manchasm;Future of the Left;Curses;;;No;;Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate,BasedOn_GP,Songtitle,Artist,Album,PackageDetails,BaseOnRB,Has_Slide,CF_Author;catara;RepFOTLManchasm;4;0.1;;C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Future of the Left - Manchasm\notes.eof;;;;https://tabs.ultimate-guitar.com/tab/future-of-the-left/manchasm-bass-755968;;initial version;improve backing vocals towards end
+add tones;;Yes;Yes;Yes;DLCManager\external_tools\eof1.8RC12\eof.exe;8/11/2025 9:21:29 PM;8/11/2025 9:21:29 PM;;Manchasm;Future of the Left;Curses;;;No;;Author,DLC_Name,TrackNo,Version,CDLCID,txt_EoFPath,YBLink,BasedOnYB,BasedOnCF,TabLinks,Spotify,Description,toDo,ToneDetails,SaveInVerisonInfo,SaveInDB,SaveRemotely,SaveRemotelyPath,PackageDate,UpdateDate,BasedOn_GP,Songtitle,Artist,Album,PackageDetails,BaseOnRB,Has_Slide,CF_Author;(Arrangement ID by CDLC Creator) (Remastered by CDLC Creator) (Remastered by CDLC Creator)</PackageComment>
+    <PackageRating i:nil="true" />
+    <PackageVersion>0.1</PackageVersion>
+    <ToolkitVersion i:nil="true" />
+  </ToolkitInfo>
+  <Version>Toolkit Version 2.9.2.1-a60453fa DEBUG</Version>
+  <Volume>-7</Volume>
+  <XBox360>false</XBox360>
+  <XBox360Licenses />
+</DLCPackageData>

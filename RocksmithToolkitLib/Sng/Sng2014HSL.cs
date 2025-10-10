@@ -1,8 +1,9 @@
 // AUTO-GENERATED FILE, DO NOT MODIFY!
+using MiscUtil.IO;
+using RocksmithToolkitLib.XmlRepository;
 using System;
 using System.Diagnostics;
 using System.IO;
-using MiscUtil.IO;
 
 namespace RocksmithToolkitLib.Sng2014HSL
 {
@@ -21,7 +22,8 @@ namespace RocksmithToolkitLib.Sng2014HSL
             "PhraseIteration",
             "Mask"
         };
-        public string[] order { get { return _order; } }
+        public string[] order { get { return _order; } }        
+
         public void read(EndianBinaryReader r)
         {
             Time = r.ReadSingle();
@@ -38,6 +40,35 @@ namespace RocksmithToolkitLib.Sng2014HSL
 
         public string[] _order = { "Count", "BPMs" };
         public string[] order { get { return _order; } }
+
+        public static DateTime UpdateLog(DateTime dt, string txt, bool bbl, string tmpPath, string MultithreadNo, string form)
+        {
+            DateTime dtt = System.DateTime.Now;
+            string logPath = ConfigRepository.Instance()["dlcm_LogPath"] == "" ? ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log" : ConfigRepository.Instance()["dlcm_LogPath"];
+            var ismaindb = "";
+
+            var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
+
+            if (form == "MainDB")
+                ismaindb = "maindb";
+
+            Random randomp = new Random();// Write the string to a file. packid+
+            var packid = 0;
+            packid = randomp.Next(0, 100000);
+            var fn = (logPath == null || !Directory.Exists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + "current_" + ismaindb + "temp" + MultithreadNo + ".txt";
+            try
+            {
+                if (File.Exists(fn))
+                {
+                    using (StreamWriter sw = File.AppendText(fn))
+                    {
+                        sw.WriteLine(dtt.ToString() + " - " + ii.ToString() + " - " + txt.ToString());// This text is always added, making the file longer over time if it is not deleted.
+                    }
+                }
+            }
+            catch (Exception ex) { var tsst = "Erro ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", ""); }
+            return dtt;
+        }
 
         public void read(EndianBinaryReader r)
         {
@@ -57,6 +88,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
                 // incomplete song information may cause exceptions during conversion
                 // such as, "End of Stream reached with 4 bytes left to read" 
                 //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+                var tsst = "Erro ..." + ex.Message; var timw = UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "");
             }
         }
     }
@@ -103,6 +135,36 @@ namespace RocksmithToolkitLib.Sng2014HSL
             "Phrases"
         };
         public string[] order { get { return _order; } }
+
+        public static DateTime UpdateLog(DateTime dt, string txt, bool bbl, string tmpPath, string MultithreadNo, string form)
+        {
+            DateTime dtt = System.DateTime.Now;
+            string logPath = ConfigRepository.Instance()["dlcm_LogPath"] == "" ? ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log" : ConfigRepository.Instance()["dlcm_LogPath"];
+            var ismaindb = "";
+
+            var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
+
+            if (form == "MainDB")
+                ismaindb = "maindb";
+
+            Random randomp = new Random();// Write the string to a file. packid+
+            var packid = 0;
+            packid = randomp.Next(0, 100000);
+            var fn = (logPath == null || !Directory.Exists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + "current_" + ismaindb + "temp" + MultithreadNo + ".txt";
+            try
+            {
+                if (File.Exists(fn))
+                {
+                    using (StreamWriter sw = File.AppendText(fn))
+                    {
+                        sw.WriteLine(dtt.ToString() + " - " + ii.ToString() + " - " + txt.ToString());// This text is always added, making the file longer over time if it is not deleted.
+                    }
+                }
+            }
+            catch (Exception ex) { var tsst = "Erro ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", ""); }
+            return dtt;
+        }
+
         public void read(EndianBinaryReader r)
         {
             try //bcapi
@@ -117,6 +179,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
                 // incomplete song information may cause exceptions during conversion
                 // such as, "End of Stream reached with 4 bytes left to read" 
                 //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+                var tsst = "Erro ..." + ex.Message; var timw = UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "");
             }
         }
     }
@@ -159,6 +222,36 @@ namespace RocksmithToolkitLib.Sng2014HSL
             "Chords"
         };
         public string[] order { get { return _order; } }
+
+        public static DateTime UpdateLog(DateTime dt, string txt, bool bbl, string tmpPath, string MultithreadNo, string form)
+        {
+            DateTime dtt = System.DateTime.Now;
+            string logPath = ConfigRepository.Instance()["dlcm_LogPath"] == "" ? ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log" : ConfigRepository.Instance()["dlcm_LogPath"];
+            var ismaindb = "";
+
+            var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
+
+            if (form == "MainDB")
+                ismaindb = "maindb";
+
+            Random randomp = new Random();// Write the string to a file. packid+
+            var packid = 0;
+            packid = randomp.Next(0, 100000);
+            var fn = (logPath == null || !Directory.Exists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + "current_" + ismaindb + "temp" + MultithreadNo + ".txt";
+            try
+            {
+                if (File.Exists(fn))
+                {
+                    using (StreamWriter sw = File.AppendText(fn))
+                    {
+                        sw.WriteLine(dtt.ToString() + " - " + ii.ToString() + " - " + txt.ToString());// This text is always added, making the file longer over time if it is not deleted.
+                    }
+                }
+            }
+            catch (Exception ex) { var tsst = "Erro ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", ""); }
+            return dtt;
+        }
+
         public void read(EndianBinaryReader r)
         {
             try //bcapi
@@ -171,6 +264,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
                 // incomplete song information may cause exceptions during conversion
                 // such as, "End of Stream reached with 4 bytes left to read" 
                 //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+                var tsst = "Erro ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "");
             }
         }
     }
@@ -272,6 +366,36 @@ namespace RocksmithToolkitLib.Sng2014HSL
             "ChordNotes"
         };
         public string[] order { get { return _order; } }
+
+        public static DateTime UpdateLog(DateTime dt, string txt, bool bbl, string tmpPath, string MultithreadNo, string form)
+        {
+            DateTime dtt = System.DateTime.Now;
+            string logPath = ConfigRepository.Instance()["dlcm_LogPath"] == "" ? ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log" : ConfigRepository.Instance()["dlcm_LogPath"];
+            var ismaindb = "";
+
+            var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
+
+            if (form == "MainDB")
+                ismaindb = "maindb";
+
+            Random randomp = new Random();// Write the string to a file. packid+
+            var packid = 0;
+            packid = randomp.Next(0, 100000);
+            var fn = (logPath == null || !Directory.Exists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + "current_" + ismaindb + "temp" + MultithreadNo + ".txt";
+            try
+            {
+                if (File.Exists(fn))
+                {
+                    using (StreamWriter sw = File.AppendText(fn))
+                    {
+                        sw.WriteLine(dtt.ToString() + " - " + ii.ToString() + " - " + txt.ToString());// This text is always added, making the file longer over time if it is not deleted.
+                    }
+                }
+            }
+            catch (Exception ex) { var tsst = "Erro ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", ""); }
+            return dtt;
+        }
+
         public void read(EndianBinaryReader r)
         {
             try //bcapi
@@ -284,6 +408,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
                 // incomplete song information may cause exceptions during conversion
                 // such as, "End of Stream reached with 4 bytes left to read" 
                 //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+                var tsst = "Erro ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "");
             }
         }
     }
@@ -320,6 +445,36 @@ namespace RocksmithToolkitLib.Sng2014HSL
             "Vocals"
         };
         public string[] order { get { return _order; } }
+
+        public static DateTime UpdateLog(DateTime dt, string txt, bool bbl, string tmpPath, string MultithreadNo, string form)
+        {
+            DateTime dtt = System.DateTime.Now;
+            string logPath = ConfigRepository.Instance()["dlcm_LogPath"] == "" ? ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log" : ConfigRepository.Instance()["dlcm_LogPath"];
+            var ismaindb = "";
+
+            var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
+
+            if (form == "MainDB")
+                ismaindb = "maindb";
+
+            Random randomp = new Random();// Write the string to a file. packid+
+            var packid = 0;
+            packid = randomp.Next(0, 100000);
+            var fn = (logPath == null || !Directory.Exists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + "current_" + ismaindb + "temp" + MultithreadNo + ".txt";
+            try
+            {
+                if (File.Exists(fn))
+                {
+                    using (StreamWriter sw = File.AppendText(fn))
+                    {
+                        sw.WriteLine(dtt.ToString() + " - " + ii.ToString() + " - " + txt.ToString());// This text is always added, making the file longer over time if it is not deleted.
+                    }
+                }
+            }
+            catch (Exception ex) { var tsst = "Erro ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", ""); }
+            return dtt;
+        }
+
         public void read(EndianBinaryReader r)
         {
             try //bcapi
@@ -332,6 +487,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
                 // incomplete song information may cause exceptions during conversion
                 // such as, "End of Stream reached with 4 bytes left to read" 
                 //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+                var tsst = "Erro ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "");
             }
         }
     }
@@ -519,6 +675,36 @@ namespace RocksmithToolkitLib.Sng2014HSL
         };
         public string[] order { get { return _order; } }
 
+        public static DateTime UpdateLog(DateTime dt, string txt, bool bbl, string tmpPath, string MultithreadNo, string form)
+        {
+            DateTime dtt = System.DateTime.Now;
+            string logPath = ConfigRepository.Instance()["dlcm_LogPath"] == "" ? ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log" : ConfigRepository.Instance()["dlcm_LogPath"];
+            var ismaindb = "";
+
+            var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
+
+            if (form == "MainDB")
+                ismaindb = "maindb";
+
+            Random randomp = new Random();// Write the string to a file. packid+
+            var packid = 0;
+            packid = randomp.Next(0, 100000);
+            var fn = (logPath == null || !Directory.Exists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + "current_" + ismaindb + "temp" + MultithreadNo + ".txt";
+            try
+            {
+                if (File.Exists(fn))
+                {
+                    using (StreamWriter sw = File.AppendText(fn))
+                    {
+                        sw.WriteLine(dtt.ToString() + " - " + ii.ToString() + " - " + txt.ToString());// This text is always added, making the file longer over time if it is not deleted.
+                    }
+                }
+            }
+            catch (Exception ex) { var tsst = "Erro ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", ""); }
+            return dtt;
+        }
+
+
         public void read(EndianBinaryReader r)
         {
             try //bcapi
@@ -531,6 +717,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
                 // incomplete song information may cause exceptions during conversion
                 // such as, "End of Stream reached with 4 bytes left to read" 
                 //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+                var tsst = "Erro ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "");
             }
         }
     }
@@ -572,6 +759,34 @@ namespace RocksmithToolkitLib.Sng2014HSL
             "PhraseExtraInfoByLevel"
         };
         public string[] order { get { return _order; } }
+        public static DateTime UpdateLog(DateTime dt, string txt, bool bbl, string tmpPath, string MultithreadNo, string form)
+        {
+            DateTime dtt = System.DateTime.Now;
+            string logPath = ConfigRepository.Instance()["dlcm_LogPath"] == "" ? ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log" : ConfigRepository.Instance()["dlcm_LogPath"];
+            var ismaindb = "";
+
+            var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
+
+            if (form == "MainDB")
+                ismaindb = "maindb";
+
+            Random randomp = new Random();// Write the string to a file. packid+
+            var packid = 0;
+            packid = randomp.Next(0, 100000);
+            var fn = (logPath == null || !Directory.Exists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + "current_" + ismaindb + "temp" + MultithreadNo + ".txt";
+            try
+            {
+                if (File.Exists(fn))
+                {
+                    using (StreamWriter sw = File.AppendText(fn))
+                    {
+                        sw.WriteLine(dtt.ToString() + " - " + ii.ToString() + " - " + txt.ToString());// This text is always added, making the file longer over time if it is not deleted.
+                    }
+                }
+            }
+            catch (Exception ex) { var tsst = "Erro ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", ""); }
+            return dtt;
+        }
         public void read(EndianBinaryReader r)
         {
             try //bcapi
@@ -584,6 +799,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
                 // incomplete song information may cause exceptions during conversion
                 // such as, "End of Stream reached with 4 bytes left to read" 
                 //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+                var tsst = "Erro ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "");
             }
         }
     }
@@ -1214,6 +1430,35 @@ namespace RocksmithToolkitLib.Sng2014HSL
             "MaxDifficulty"
         };
         public string[] order { get { return _order; } }
+
+        public static DateTime UpdateLog(DateTime dt, string txt, bool bbl, string tmpPath, string MultithreadNo, string form)
+        {
+            DateTime dtt = System.DateTime.Now;
+            string logPath = ConfigRepository.Instance()["dlcm_LogPath"] == "" ? ConfigRepository.Instance()["dlcm_TempPath"] + "\\0_log" : ConfigRepository.Instance()["dlcm_LogPath"];
+            var ismaindb = "";
+
+            var ii = Math.Abs(Math.Round((dt - dtt).TotalSeconds, 2)).ToString().PadLeft(4, '0');
+
+            if (form == "MainDB")
+                ismaindb = "maindb";
+
+            Random randomp = new Random();// Write the string to a file. packid+
+            var packid = 0;
+            packid = randomp.Next(0, 100000);
+            var fn = (logPath == null || !Directory.Exists(logPath) ? tmpPath + "\\0_log" : logPath) + "\\" + "current_" + ismaindb + "temp" + MultithreadNo + ".txt";
+            try
+            {
+                if (File.Exists(fn))
+                {
+                    using (StreamWriter sw = File.AppendText(fn))
+                    {
+                        sw.WriteLine(dtt.ToString() + " - " + ii.ToString() + " - " + txt.ToString());// This text is always added, making the file longer over time if it is not deleted.
+                    }
+                }
+            }
+            catch (Exception ex) { var tsst = "Erro ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", ""); }
+            return dtt;
+        }
         public void read(EndianBinaryReader r)
         {
             try
@@ -1239,6 +1484,7 @@ namespace RocksmithToolkitLib.Sng2014HSL
                 // incomplete song information may cause exceptions during conversion
                 // such as, "End of Stream reached with 4 bytes left to read" 
                 //bcapi throw new Exception("Corrupt CDLC ... Regenerating or Converting the original with Creator GUI may fix it." + Environment.NewLine + "Make sure the song information is complete and correct, including Song Year and Avg Tempo information. (HINT)" + Environment.NewLine + ex.Message + Environment.NewLine + Environment.NewLine);
+                var tsst = "Erro ..." + ex.Message; var timw=UpdateLog(DateTime.Now, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "");
             }
         }
     }

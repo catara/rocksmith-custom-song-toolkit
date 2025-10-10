@@ -1309,11 +1309,9 @@
         private System.Windows.Forms.CheckBox chbx_Favorite;
         private System.Windows.Forms.Button btn_ReprocessArrangements;
         private System.Windows.Forms.Button btn_ResetFilter;
-        private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox chbx_Has_Slide;
         private System.Windows.Forms.CheckBox chbx_Alternate;
         private System.Windows.Forms.Label label32;
-        private CueTextBox cueTextBox1;
         private System.Windows.Forms.Label label31;
         private CueTextBox txt_CapoFret;
         private CueTextBox txt_A440;

@@ -974,7 +974,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 command.CommandText += "Favorite = @param42, ";
                 command.CommandText += "Slide = @param43, ";
                 command.CommandText += "Alternate = @param44, ";
-                command.CommandText += "A440TuningFrecv = @param45, ";
+                command.CommandText += "A440TunningFrecv = @param45, ";
                 command.CommandText += "CapoFret = @param46,";
                 command.CommandText += "Official = @param47 ";
 
@@ -1251,7 +1251,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         for (var j = 0; j < xmlContent.Vocal.Length; j++)
                             xmlContent.Vocal[j].Time = xmlContent.Vocal[j].Time + float.Parse(num_Lyrics.Value.ToString());
                     }
-                    catch (Exception ex) { var tsst = "Error ..." + ex; UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
+                    catch (Exception ex) { var tsst = "Error ..." + ex.Message; UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null); }
 
                 using (var stream = File.Open(XMLFilePath, FileMode.Create))
                     xmlContent.Serialize(stream);
@@ -1318,7 +1318,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         }
                         catch (Exception ex)
                         {
-                            var tsst = "Error shifting timings..." + ex; UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                            var tsst = "Error shifting timings..." + ex.Message; UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
                         }
 
                     using (var stream = File.Open(newXMLFilePath, FileMode.Create)) xmlContent.Serialize(stream);
@@ -1330,7 +1330,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 }
                 catch (Exception ex)
                 {
-                    var tsst = "Error ..." + ex; UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
+                    var tsst = "Error ..." + ex.Message; UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
                 }
 
             }
@@ -1406,8 +1406,8 @@ namespace RocksmithToolkitGUI.DLCManager
                     if ((startr != "" && startr != null && startr != "0") || reoutemask == "ShowLight") continue;
                     var xml = dss.Tables[0].Rows[k].ItemArray[5].ToString();//XMLFilePath
                     var cdlcid = dss.Tables[0].Rows[k].ItemArray[2].ToString();
-                    var Has_Capo = ""; var Has_Showlights = ""; var Has_JVocals = ""; var PitchShiftableEsOrDd = ""; var LastConversionDateTime = "";
-                    var sections = 0; var startt = ""; var Capo = 0;
+                    var Has_Capo = "";/* var Has_Showlights = ""; var Has_JVocals = ""; var PitchShiftableEsOrDd = ""; var LastConversionDateTime = "";
+                    var sections = 0; var startt = "";*/ var Capo = 0;
 
                     // LOAD DATA(4 correct capo pickup)
                     DLCPackageData info = null;
@@ -1423,7 +1423,7 @@ namespace RocksmithToolkitGUI.DLCManager
                             info = DLCPackageData.LoadFromFolder(dsz.Tables[0].Rows[0].ItemArray[0].ToString(), srcPlatform); //Generating preview with different name
                             foreach (var arg in info.Arrangements)
                             {
-                                if (arg.CapoFret != null && arg.CapoFret.ToString() != "" && arg.CapoFret > 0)
+                                if (arg.CapoFret.ToString() != null && arg.CapoFret.ToString() != "" && arg.CapoFret.ToString().ToInt32() > 0)
                                     Has_Capo = "Yes";
                             }
                         }
@@ -1516,7 +1516,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         //datemax = "12-13-11 13:11";
                     }
                 }
-                catch (Exception ex) { var tsst = "Error at arrangement processing ..." + ex; timestamp = UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null); }
+                catch (Exception ex) { var tsst = "Error at arrangement processing ..." + ex.Message; timestamp = UpdateLog(timestamp, tsst, false, c("dlcm_TempPath"), "", "", null, null); }
             }
         }
 

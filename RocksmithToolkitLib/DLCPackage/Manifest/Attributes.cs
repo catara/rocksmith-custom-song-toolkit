@@ -42,6 +42,7 @@ namespace RocksmithToolkitLib.DLCPackage.Manifest
         public string LastConversionDateTime { get; set; }
         public int MasterID_PS3 { get; set; }
         public int MasterID_Xbox360 { get; set; }
+        public int MasterID_RDV { get; set; }
         public int MaxPhraseDifficulty { get; set; }
         public bool OpenChords { get; set; }
         public bool PalmMutes { get; set; }

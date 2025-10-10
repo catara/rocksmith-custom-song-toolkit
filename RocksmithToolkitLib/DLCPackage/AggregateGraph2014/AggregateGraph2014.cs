@@ -105,7 +105,7 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
             GameXblock.Add(xbl);
 
             JsonDB = new List<GraphItem>();
-            if (currentPlatform.IsConsole)
+            if (currentPlatform.IsConsole && currentPlatform.platform.ToString() != "PS4")
                 HsonDB = new List<GraphItem>();
 
             SongXml = new List<GraphItemLLID>();
@@ -120,7 +120,7 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
                 // JsonDB
                 var json = new GraphItem();
                 json.Name = name;
-                json.Canonical = currentPlatform.IsConsole ? CANONICAL_MANIFEST_CONSOLE : String.Format(CANONICAL_MANIFEST_PC, dlcName);
+                json.Canonical = currentPlatform.IsConsole && currentPlatform.platform.ToString() != "PS4" ? CANONICAL_MANIFEST_CONSOLE : String.Format(CANONICAL_MANIFEST_PC, dlcName);
                 json.RelPathDirectory = json.Canonical;
                 json.Tag = new List<string>();
                 json.Tag.Add(TagValue.Database.GetDescription());
@@ -130,7 +130,7 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
                 JsonDB.Add(json);
 
                 //One file for each arrangement (Xbox360 / PS3 only)
-                if (currentPlatform.IsConsole)
+                if (currentPlatform.IsConsole && currentPlatform.platform.ToString() != "PS4") //bcapiPs4
                 {
                     // HsonDB
                     var hson = new GraphItem();
@@ -169,9 +169,9 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
                 sng.Tag = new List<string>();
                 sng.Tag.Add(TagValue.Application.GetDescription());
                 sng.Tag.Add(TagValue.MusicgameSong.GetDescription());
-                if (currentPlatform.IsConsole)
+                if (currentPlatform.IsConsole && currentPlatform.platform.ToString() != "PS4")//bcapips4
                     sng.Tag.Add(GraphItem.GetPlatformTagDescription(currentPlatform.platform));
-                sng.UUID = arrangement.SongFile.UUID;
+                sng.UUID = arrangement.SongFile is null ? Guid.NewGuid():arrangement.SongFile.UUID; //bcapiaddedvocals
                 sng.LLID = IdGenerator.LLIDGuid();
                 sng.RelPathFile = String.Format("{0}.sng", sng.Name);
                 sng.LogPathFile = sng.RelPathFile;
@@ -181,7 +181,7 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
             if (currentPlatform.version == GameVersion.RS2014)
             {
                 //One file for all arrangement (PC / Mac only)
-                if (!currentPlatform.IsConsole)
+                if (!currentPlatform.IsConsole || currentPlatform.platform.ToString() == "PS4") //bcapiPs4
                 {
                     // HsanDB
                     var hsan = new GraphItem();
@@ -217,9 +217,9 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
             // Image Art (DDS)
             var aArtArray = new string[] { info.AlbumArtPath };
             if (currentPlatform.version == GameVersion.RS2014)
-                aArtArray = new string[] { 
-                    String.Format("album_{0}_256.dds", dlcName), 
-                    String.Format("album_{0}_128.dds", dlcName), 
+                aArtArray = new string[] {
+                    String.Format("album_{0}_256.dds", dlcName),
+                    String.Format("album_{0}_128.dds", dlcName),
                     String.Format ("album_{0}_64.dds", dlcName)
                 };
             ImageArt = new List<GraphItemLLID>();
@@ -243,8 +243,8 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
             // Lyrics Font Texture (DDS)
             var lyricArtPath = String.Empty;
             if (info.Arrangements.Any(arr => arr.HasCustomFont))
-                lyricArtPath = info.Arrangements.Find(arr => arr.HasCustomFont).LyricsArtPath;           
-            
+                lyricArtPath = info.Arrangements.Find(arr => arr.HasCustomFont).LyricsArtPath;
+
             // TOC ENTRY /assets/ui/lyrics/[dlcName]/lyrics_[dlcName].dds
             if (!String.IsNullOrEmpty(lyricArtPath))
             {
@@ -321,7 +321,7 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
             JsonDB = new List<GraphItem>();
             var json = new GraphItem();
             json.Name = String.Format("dlc_guitar_{0}", dlcName);
-            json.Canonical = currentPlatform.IsConsole ? CANONICAL_MANIFEST_CONSOLE : String.Format(CANONICAL_MANIFEST_PC, dlcName);
+            json.Canonical = currentPlatform.IsConsole && currentPlatform.platform.ToString() != "PS4" ? CANONICAL_MANIFEST_CONSOLE : String.Format(CANONICAL_MANIFEST_PC, dlcName);
             json.RelPathDirectory = json.Canonical;
             json.Tag = new List<string>();
             json.Tag.Add(TagValue.Database.GetDescription());
@@ -330,7 +330,7 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
             json.RelPathFile = String.Format("dlc_guitar_{0}.json", dlcName);
             JsonDB.Add(json);
 
-            if (currentPlatform.IsConsole)
+            if (currentPlatform.IsConsole && currentPlatform.platform.ToString() != "PS4")
             {
                 // HsonDB - One file for each manifest (Xbox360 / PS3 only)
                 HsonDB = new List<GraphItem>();
@@ -363,9 +363,9 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
             ImageArt = new List<GraphItemLLID>();
 
             // Inlay Icon (DDS)
-            var aArtArray = new string[] { String.Format("reward_inlay_{0}_512", dlcName), 
+            var aArtArray = new string[] { String.Format("reward_inlay_{0}_512", dlcName),
                                            String.Format("reward_inlay_{0}_256", dlcName),
-                                           String.Format("reward_inlay_{0}_128", dlcName), 
+                                           String.Format("reward_inlay_{0}_128", dlcName),
                 String.Format ("reward_inlay_{0}_64", dlcName)
             };
 
@@ -427,7 +427,7 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
                     json.Write(writer);
 
             // HSON
-            if (currentPlatform.IsConsole)
+            if (currentPlatform.IsConsole && currentPlatform.platform.ToString() != "PS4")
                 if (HsonDB != null)
                     foreach (var hson in HsonDB)
                         hson.Write(writer);
@@ -435,7 +435,7 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
             if (currentPlatform.version == GameVersion.RS2014)
             {
                 // HSAN
-                if (!currentPlatform.IsConsole)
+                if (!currentPlatform.IsConsole || currentPlatform.platform.ToString() == "PS4")
                     if (HsanDB != null)
                         HsanDB.Write(writer);
 
@@ -580,8 +580,8 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
                     File.Delete(hsan);
             }
         }
-        
-        public static string DoLikeSongPack(string srcPath, string appId = "248750", string bin="generic", string audio="windows")
+
+        public static string DoLikeSongPack(string srcPath, string appId = "248750", string bin = "generic", string audio = "windows")
         {
             // create SongPack directory structure
             var dlcName = Path.GetFileName(srcPath).ToLower();
@@ -609,31 +609,31 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
             // populate SongPack temporary directory
             var audioWemFiles = Directory.EnumerateFiles(srcPath, "*.wem", SearchOption.AllDirectories).ToArray();
             foreach (var wem in audioWemFiles)
-                File.Copy(wem, Path.Combine(audioWindowDir, Path.GetFileName(wem)),true);
+                File.Copy(wem, Path.Combine(audioWindowDir, Path.GetFileName(wem)), true);
 
             var audioBnkFiles = Directory.EnumerateFiles(srcPath, "*.bnk", SearchOption.AllDirectories).ToArray();
             foreach (var bnk in audioBnkFiles)
-                File.Copy(bnk, Path.Combine(audioWindowDir, Path.GetFileName(bnk)),true);
+                File.Copy(bnk, Path.Combine(audioWindowDir, Path.GetFileName(bnk)), true);
 
             var xblockFiles = Directory.EnumerateFiles(srcPath, "*.xblock", SearchOption.AllDirectories).ToArray();
             foreach (var xblock in xblockFiles)
-                File.Copy(xblock, Path.Combine(gamexblocksNsongsDir, Path.GetFileName(xblock)),true);
+                File.Copy(xblock, Path.Combine(gamexblocksNsongsDir, Path.GetFileName(xblock)), true);
 
             var albumArtFiles = Directory.EnumerateFiles(srcPath, "*.dds", SearchOption.AllDirectories).ToArray();
             foreach (var albumArt in albumArtFiles)
-                File.Copy(albumArt, Path.Combine(gfxassetsAlbumArtDir, Path.GetFileName(albumArt)),true);
+                File.Copy(albumArt, Path.Combine(gfxassetsAlbumArtDir, Path.GetFileName(albumArt)), true);
 
             var jsonFiles = Directory.EnumerateFiles(srcPath, "*.json", SearchOption.AllDirectories).ToArray();
             foreach (var json in jsonFiles)
-                File.Copy(json, Path.Combine(manifestSongsDir, Path.GetFileName(json)),true);
+                File.Copy(json, Path.Combine(manifestSongsDir, Path.GetFileName(json)), true);
 
             var hsanFiles = Directory.EnumerateFiles(srcPath, "*.hsan", SearchOption.AllDirectories).ToArray();
             foreach (var hsan in hsanFiles)
-                File.Copy(hsan, Path.Combine(manifestSongsDir, Path.GetFileName(hsan)),true);
+                File.Copy(hsan, Path.Combine(manifestSongsDir, Path.GetFileName(hsan)), true);
 
             var sngFiles = Directory.EnumerateFiles(srcPath, "*.sng", SearchOption.AllDirectories).ToArray();
             foreach (var sng in sngFiles)
-                File.Copy(sng, Path.Combine(binGenericDir, Path.GetFileName(sng)),true);
+                File.Copy(sng, Path.Combine(binGenericDir, Path.GetFileName(sng)), true);
 
             // declare variables one time for use in DDC generation   
             DDCSettings.Instance.LoadConfigXml();
@@ -663,7 +663,7 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014
                 File.Copy(xml, xmlSongPack, true);
 
                 // skip vocal and showlight xml files
-                if (xml.EndsWith("_vocals.xml") || xml.EndsWith("_showlights.xml") || xml.EndsWith("_jvocals.xml") 
+                if (xml.EndsWith("_vocals.xml") || xml.EndsWith("_showlights.xml") || xml.EndsWith("_jvocals.xml")
                     || xml.Contains("VOCALS_RS2") || xml.Contains("VOCALS_RS42") || xml.EndsWith("lyric.xml")) //bcapi to not import japanese lyrics
                     continue;
 

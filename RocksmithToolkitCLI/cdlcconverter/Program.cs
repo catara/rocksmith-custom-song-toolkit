@@ -108,7 +108,7 @@ namespace cdlcconverter
                     return 1;
                 }
 
-                if ((!arguments.TargetPlatform.IsConsole) && String.IsNullOrEmpty(arguments.AppId))
+                if ((!arguments.TargetPlatform.IsConsole || arguments.TargetPlatform.platform.ToString() == "PS4") && String.IsNullOrEmpty(arguments.AppId))
                 {
                     ShowHelpfulError("'appid' is required for 'Pc' or 'Mac' target platform.");
                     return 1;

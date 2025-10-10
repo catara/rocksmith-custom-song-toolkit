@@ -46,6 +46,8 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014 {
         Xbox360, //Only for XBox 360
         [Description("ps3")]
         PS3, //Only for PS3
+        //[Description("ps4")]
+        //PS4, //Only for PS4
         [Description("emergent-world")]
         EmergentWorld,
         [Description("x-world")]
@@ -160,13 +162,15 @@ namespace RocksmithToolkitLib.DLCPackage.AggregateGraph2014 {
             switch (platform)
             {
                 case GamePlatform.Pc:
-                    return TagValue.DX9.GetDescription();
                 case GamePlatform.Mac:
                     return TagValue.MacOS.GetDescription();
                 case GamePlatform.XBox360:
                     return TagValue.Xbox360.GetDescription();
                 case GamePlatform.PS3:
                     return TagValue.PS3.GetDescription();
+                case GamePlatform.PS4:
+                    return TagValue.DX9.GetDescription();
+                   // return TagValue.PS4.GetDescription();
                 default:
                     throw new InvalidOperationException("Unexpected game platform value");
             }

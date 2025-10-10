@@ -73,6 +73,7 @@ namespace RocksmithToolkitLib.Extensions
 
         public static string GetValidAppIdSixDigits(this string value)
         {            
+            if (value is null) return "";
             value = value.Trim();
             
             // social engineering code

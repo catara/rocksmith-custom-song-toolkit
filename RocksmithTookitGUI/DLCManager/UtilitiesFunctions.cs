@@ -4616,7 +4616,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         UpdateLog(timestamp, p + "/" + j + "/" + i + "/" + noOfRecs + "-" + wemo + "-" + wem + " Adding preview ", true, c("dlcm_TempPath"), "", "MainDB", pB_ReadDLCs, rtxt_StatisticsOnReadDLCs);
                         var startInfo = new ProcessStartInfo
                         {
-                            FileName = System.IO.Path.Combine(AppWD, AppWD.Contains("DLCManager")?"":"DLCManager\\external_tools", "oggcut.exe"),
+                            FileName = System.IO.Path.Combine(AppWD, AppWD.Contains("DLCManager") ? "" : "DLCManager\\external_tools", "oggcut.exe"),
                             WorkingDirectory = AppWD
                         };
                         var t = oggo;
@@ -7114,8 +7114,8 @@ namespace RocksmithToolkitGUI.DLCManager
             DataSet dms = new DataSet(); dms = SelectFromDB(tab, "SELECT max(val(" + field + ")) as ID FROM " + tab, null, cnb, cnc);
             //if (dms.Tables.Count > 0)
             //{
-            if (GetNoRec(dms, cnb, cnc) > 0) return (float.Parse((dms.Tables[0].Rows[0].ItemArray[0].ToString() == "" ? "0" 
-                : dms.Tables[0].Rows[0].ItemArray[0].ToString())) ).ToString();//+ 1
+            if (GetNoRec(dms, cnb, cnc) > 0) return (float.Parse((dms.Tables[0].Rows[0].ItemArray[0].ToString() == "" ? "0"
+                : dms.Tables[0].Rows[0].ItemArray[0].ToString()))).ToString();//+ 1
             else return "0";//dms.Tables[0].Rows.Count > 0
             //}
             //else return "0";
@@ -7541,7 +7541,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 catch (Exception ex)
                 {
                     var message2 = string.Format("Package generation failed. See below: {0}{1}{0}" + ex.Message, Environment.NewLine, errorsFound);
-                    var tsst = "Erro9 ..." + ex.Message ; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
+                    var tsst = "Erro9 ..." + ex.Message; UpdateLog(DateTime.Now, tsst, false, c("dlcm_TempPath"), "", "", null, null);
                     //MessageBox.Show(message2, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 }
@@ -7710,6 +7710,19 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             return noOfRec;
         }
+        public static void OpenLink(string txt)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(new ProcessStartInfo
+                {
+                    FileName = txt,
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            { }
+        }
 
         public static void CheckJava()
         {
@@ -7726,10 +7739,10 @@ namespace RocksmithToolkitGUI.DLCManager
                     if (!frm1.B1 && !frm1.B2) t = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, c("dlcm_javax86"));
                     else t = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, c("dlcm_javaARM"));
                     ErrorWindow frm2 = new ErrorWindow("\nIf you want to convert/pack to PS3 in DLCManager\n,please download & Install Java" +
-                        " \n\n\n\t1. 64bit if Windows is in 64bit https://www.java.com/en/download/manual.jsp \nn\t2. Chose OpenJDK (e.g. 21.0.6) for Win4ARM" +
+                        " \n\n\n\t1. 64bit if Windows is in 64bit https://www.java.com/en/download/manual.jsp \nn\t2. Chose OpenJDK (e.g. 25 LTS) for Win4ARM or AArch64 / ARM64" +
                         " architecture at https://docs.microsoft.com/en-us/java/openjdk/download)" + Environment.NewLine + "\nfyi: A restart is required" + Environment.NewLine,
                         "http://www.java.com/en/download/win10.jsp;https://docs.microsoft.com/en-us/java/openjdk/download", "Warning Java is missing", (File.Exists(t) ? true : false), false, true
-                        , (File.Exists(t) ? "Install from local" : ""), "", "", false);
+                        , (File.Exists(t) ? "Install from local" : ""), "", "Continue", false);
                     frm2.ShowDialog();
                     if (frm2.B1) StartProcesss(@t, null);
                 }

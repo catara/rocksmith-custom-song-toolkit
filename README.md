@@ -1,9 +1,9 @@
-﻿		# Date: 10.10.2025
+﻿		# Date: 17.10.2025
 		# Document Name: Rocksmith 2014 RM DLC Management tool README
 						(fork of rocksmith-custom-song-toolkit)
 		# Document purpose: To describe the project and capture a developmental history
 
-## Rocksmith 2014 RM DLC Library Manager v1 b8 r1 (compiled beta available in https://github.com/catara/rocksmith-custom-song-toolkit/tree/Main/RocksmithTookitGUI/bin/Debug_Lite.7z )
+## Rocksmith 2014 RM DLC Library Manager v1 b8 r2 (compiled beta available in https://github.com/catara/rocksmith-custom-song-toolkit/tree/Main/RocksmithTookitGUI/bin/Debug_Lite.7z )
 *(forever to be unreleased version- for my own sake)*
 # App Description: MASS Manipulation of Rocksmith 2014 RM DLC Library
 
@@ -478,7 +478,7 @@ Big topics:
 - [ ] improve copy eof song folder copy if imported from psarc song or from eof
 
 ## WiP:
-(this release) 
+(next release) 
 1.0 b9 (20.12.2025) Pre-Release(1) for PS4 individual DLC prep
 - Improve track align
 - update update log for all instances

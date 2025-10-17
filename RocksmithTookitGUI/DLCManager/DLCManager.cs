@@ -421,12 +421,12 @@ namespace RocksmithToolkitGUI.DLCManager
                 ErrorWindow frm2 = new ErrorWindow("In order to use decompress Songs for listening/previewing purposes, " +
                                             "please Install Wwise Launcher then Wwise v: " +
                                             "v2013.2.x, v2014.1.x, 2015.1.x, 2016.2.xx or 2017.1.xx, 2018.1.x, 2019.2.x, 2021.1.13(latest w CLI support)" +
-                                            ", 2022.1.x or 2023.1.beta series" +
+                                            ", 2022.1.x or 2023.1., 2024.1.x or 2025 beta series" +
                                             ", with Authoring binaries!"
                                             + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be successful," +
                                             " else the errors can be captured through the Missing Files Query" +
                                             "(generically) Expected path: " + ConfigRepository.Instance()["general_wwisepath"] + " + Environment.NewLine"
-                                            , "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true, true, "", "", "", false);
+                                            , "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true, true, "Install AudioKinetic", "Stop Program", "Continue", false);
                 frm2.ShowDialog();
                 //if (frm2.IgnoreSong) exit;
                 //if (frm2.B2)
@@ -456,20 +456,22 @@ namespace RocksmithToolkitGUI.DLCManager
                 System.Diagnostics.Process.Start("setx", tt);
                 tt = " - m JAVA \"" + xx.Replace("TuxGuitar.exe", "").Replace("tuxguitar.bat", "") + "jre\\bin\\java";
                 System.Diagnostics.Process.Start("setx", tt);
-                CheckJava();
 
-                var startInfo = new ProcessStartInfo();
-                startInfo.FileName = xx;
-                startInfo.WorkingDirectory = AppWD.Replace("external_tools", "");
-                startInfo.UseShellExecute = false; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+                //.-------------testing how to use java local installation
+                //CheckJava();
 
-                if (File.Exists(xx)) //&& File.Exists(replace(c("dlcm_DBFolder")))
-                    if (!RijndaelEncryptor.IsJavaInstalled())
-                        using (var DDC = new Process())
-                        {
-                            DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 10 * 1);
-                        }
-                CheckJava();
+                //var startInfo = new ProcessStartInfo();
+                //startInfo.FileName = xx;
+                //startInfo.WorkingDirectory = AppWD.Replace("external_tools", "");
+                //startInfo.UseShellExecute = false; startInfo.CreateNoWindow = true; //startInfo.RedirectStandardOutput = true; startInfo.RedirectStandardError = true;
+
+                //if (File.Exists(xx)) //&& File.Exists(replace(c("dlcm_DBFolder")))
+                //    if (!RijndaelEncryptor.IsJavaInstalled())
+                //        using (var DDC = new Process())
+                //        {
+                //            DDC.StartInfo = startInfo; DDC.Start(); DDC.WaitForExit(1000 * 10 * 1);
+                //        }
+                //CheckJava();
             }
 
         }
@@ -727,6 +729,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //    }if () 
                 //}
             }
+            var dbsq = ConfigRepository.Instance()["dlcm_AdditionalManipul114"];
             if (norec > 0)
             {
                 //ConfigRepository.Instance()["dlcm_Groups"] = "";
@@ -735,7 +738,8 @@ namespace RocksmithToolkitGUI.DLCManager
                 for (int j = 0; j < norec; j++)
                 {
                     if (ds.Tables[0].Rows[j].ItemArray[1].ToString() == "dlcm_DBFolder") newdb = ds.Tables[0].Rows[j].ItemArray[0].ToString();
-                    if (ds.Tables[0].Rows[j].ItemArray[1].ToString() == "dlcm_Configurations") conff = ds.Tables[0].Rows[j].ItemArray[0].ToString();
+                    else if (ds.Tables[0].Rows[j].ItemArray[1].ToString() == "dlcm_Configurations") conff = ds.Tables[0].Rows[j].ItemArray[0].ToString();
+                    //else if (ds.Tables[0].Rows[j].ItemArray[1].ToString() == "dlcm_AdditionalManipul114") dbsq = ds.Tables[0].Rows[j].ItemArray[0].ToString();
                 }
 
                 //don't use 
@@ -803,10 +807,9 @@ namespace RocksmithToolkitGUI.DLCManager
                     for (int j = 0; j < norec; j++)
                         //{
                         if (ds.Tables[0].Rows[j].ItemArray[1].ToString() == "dlcm_Configurations")
-                            //{
                             ConfigRepository.Instance()["dlcm_Configurations"] = chbx_Configurations.Text;
-                        //    tst = chbx_Configurations.Text;
-                        //}
+                        else if (ds.Tables[0].Rows[j].ItemArray[1].ToString() == "dlcm_AdditionalManipul114")
+                         { ConfigRepository.Instance()["dlcm_AdditionalManipul114"] = dbsq; setAdManipul(dbsq=="Yes"?true:false, "114"); }
                         else
                             ConfigRepository.Instance()[ds.Tables[0].Rows[j].ItemArray[1].ToString()] = ds.Tables[0].Rows[j].ItemArray[0].ToString();
                 //}
@@ -3674,11 +3677,11 @@ namespace RocksmithToolkitGUI.DLCManager
                                     ErrorWindow frm2 = new ErrorWindow("In order to use decompress Songs for listening/previewing purposes, " +
                                         "please Install Wwise Launcher then Wwise v: " +
                                         "v2013.2.x, v2014.1.x, 2015.1.x, 2016.2.xx or 2017.1.xx, 2018.1.x, 2019.2.x, 2021.1.13(latest w CLI support)" +
-                                        ", 2022.1.x or 2023.1.beta series , with Authoring binaries!"
+                                        ", 2022.1.x or 2023.1, 2024.1.x or 2025 beta series , with Authoring binaries!"
                                         + Environment.NewLine + "A restart is required for the Conversion to WEM, process to be successful," +
                                         " else the errors can be captured through the Missing Files Query" + Environment.NewLine + Environment.NewLine +
                                         "(generically) Expected path: " + ConfigRepository.Instance()["general_wwisepath"] + " + Environment.NewLine"
-                                        , "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true, true, "", "", "", false);
+                                        , "https://www.audiokinetic.com/download/", "Error at WEM Creation", true, true, true, "Install AudioKinetic", "Stop Program", "Continue", false);
                                     frm2.ShowDialog();
                                     if (frm2.B1) break;
                                     if (frm2.B2) { j = 10; i = 9999; break; }
@@ -8098,33 +8101,34 @@ namespace RocksmithToolkitGUI.DLCManager
             if (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] != "Yes")
                 fielPath = MyAppWD + "\\Files.accdb";
             else
-                fielPath = MyAppWD + "\\SQLLite.db";
+                fielPath = MyAppWD + "\\SQLLiteDB.db";
             string dest = "";
 
             if (!DirectoryExists(txt_TempPath.Text)) Directory.CreateDirectory(txt_TempPath.Text);
             if (!DirectoryExists(txt_RocksmithDLCPath.Text)) Directory.CreateDirectory(txt_RocksmithDLCPath.Text);
-            if (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] != "Yes")
-                dest = txt_TempPath.Text + "\\AccessDB.accdb";
-            else
-                dest = txt_TempPath.Text + "\\SQLLiteDB.db";
+            if (ConfigRepository.Instance()["dlcm_AdditionalManipul114"] != "Yes" || txt_TempPath.Text.Contains(".accdb")) { dest = txt_TempPath.Text + "\\AccessDB.accdb"; cnb.Close(); }
+            else  { dest = txt_TempPath.Text + "\\SQLLiteDB.db"; cnc.Close(); }
             //if (DirectoryExists(txt_DBFolder.Text) || DirectoryExists(Path.GetDirectoryName(txt_DBFolder.Text))) dest = txt_DBFolder.Text.Replace("\\AccessDB.accdb","") + "\\AccessDB.accdb";
+            
             if (File.Exists(fielPath))
                 try
                 {
                     if (File.Exists(dest))
                     {
                         //MessageBox.Show("Remove/rename MANUALLY Existing File at " + dest);
-                        DialogResult result1 = DialogResult.No;
-                        result1 = MessageBox.Show("Do you want to automatically Save a copy of existing DB or MANUALLY move Existing File and restart. " + dest + "", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-                        if (result1 == DialogResult.Yes)
-                        //    ;
-                        //else
-                        {
+                        //DialogResult result1 = DialogResult.No;
+                        //result1 = MessageBox.Show("Do you want to automatically Save a copy of existing DB or MANUALLY move Existing File and restart. " + dest + "", MESSAGEBOX_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                        //if (result1 == DialogResult.Yes)
+                        ////    ;
+                        ////else
+                        //{
                             //cnb.Close(); //Prb doesnt as cnb exsts only in utlities fucntions
                             //DeleteFile(dest + "old", true);
-                            File.Move(dest, dest + System.DateTime.Now.ToString().Replace(":", "").Replace("/", "") + "old");
+                            File.Move(dest, dest + System.DateTime.Now.ToString().Replace(":", "").Replace("/", "") + ".old");
                             File.Copy(fielPath, dest, false);
-                        }
+                        MessageBox.Show(dest+" File saved to: " + dest + System.DateTime.Now.ToString().Replace(":", "").Replace("/", "") + ".old"
+                            + "\n\n" + fielPath + " Empty DB copied to "+ dest, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        //}
                     }
                     else File.Copy(fielPath, dest, false);
                     txt_DBFolder.Text = dest;
@@ -8137,6 +8141,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     var tsst = "Error ..." + ex.Message; timestamp = UpdateLog(timestamp, tsst, false, ConfigRepository.Instance()["dlcm_TempPath"], "", "", null, null);
                     MessageBox.Show(fielPath + "----" + dest + "Error at copy OLD " + ex.Message);
                 }
+            else MessageBox.Show(fielPath + "----" + dest + "Error at copy OLD. Mssing: "+ fielPath);
         }
 
         private void btn_Param_Click(object sender, EventArgs e)

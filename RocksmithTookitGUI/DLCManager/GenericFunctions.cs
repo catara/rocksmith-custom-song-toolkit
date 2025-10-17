@@ -5296,7 +5296,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                                 dataPs3.SongInfo.SongYear = song.Year.ToInt32();
                                                 dataPs3.SongInfo.Artist = song.Artist;
                                                 dataPs3.SongInfo.ArtistSort = song.ArtistSort;
-                                                songInfo += String.Format("[{0}]  {1} - {2}  ({3}, {4})  {{{5}}}", song.Identifier,
+                                                songInfo += System.String.Format("[{0}]  {1} - {2}  ({3}, {4})  {{{5}}}", song.Identifier,
                                                                           song.Artist, song.Title, song.Album, song.Year,
                                                                           string.Join(", ", song.Arrangements));
                                                 songInfo += Environment.NewLine;

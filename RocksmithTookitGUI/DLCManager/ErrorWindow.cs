@@ -1,21 +1,21 @@
-﻿using System;
+﻿using Ookii.Dialogs;
+using RocksmithToolkitGUI;
+using RocksmithToolkitGUI.DLCManager;
+using RocksmithToolkitLib.Extensions; //dds
+using RocksmithToolkitLib.XmlRepository; //cue text
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+//bcapi
+using System.Data.OleDb;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-
-//bcapi
-using System.Data.OleDb;
-using RocksmithToolkitGUI;
-using RocksmithToolkitGUI.DLCManager;
-using RocksmithToolkitLib.Extensions; //dds
-using System.Diagnostics;
-using Ookii.Dialogs;
-using RocksmithToolkitLib.XmlRepository; //cue text
 using static RocksmithToolkitGUI.DLCManager.UtilitiesFunctions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -30,7 +30,7 @@ namespace RocksmithToolkitGUI.DLCManager
             , bool wordwrap)//string txt_DBFolder,string txt_TempPath, string txt_RocksmithDLCPath, bool AllowEncript, bool AllowORIGDelete
         {
             InitializeComponent();
-            var link1 = link;var link2 = "";
+            var link1 = link; var link2 = "";
             if (link.Contains(";")) link2 = link.Split(';')[1];
             lbl_Link1.Text = link1; if (link1 != "" && link1 is not null) lbl_Link1.Visible = true; else lbl_Link1.Visible = false;
             lbl_Link2.Text = link2; if (link2 != "" && link2 is not null) lbl_Link2.Visible = true; else lbl_Link2.Visible = false;
@@ -47,13 +47,13 @@ namespace RocksmithToolkitGUI.DLCManager
             if (wordwrap)
             {
                 txt_Description.WordWrap = false;
-                txt_Description.Font = new Font("Courier New", 9);
+                txt_Description.Font = new System.Drawing.Font("Courier New", 9);
                 //txt_Description.Font. = "Courier New";
             }
             else
             {
                 txt_Description.WordWrap = true;
-                txt_Description.Font = new Font("Segoe UI", 9);
+                txt_Description.Font = new System.Drawing.Font("Segoe UI", 9);
             }
             //MessageBox.Show("test0");
             //DB_Path = txt_DBFolder;
@@ -104,7 +104,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             txt_Description.BorderStyle = BorderStyle.None;
             txt_Description.Dock = DockStyle.Fill;
-            txt_Description.Font = new Font("Courier New", 9F);
+            txt_Description.Font = new System.Drawing.Font("Courier New", 9F);
             txt_Description.Location = new Point(0, 0);
             txt_Description.Margin = new Padding(4, 5, 4, 5);
             txt_Description.Name = "txt_Description";
@@ -161,7 +161,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_B3
             // 
             btn_B3.Dock = DockStyle.Bottom;
-            btn_B3.Font = new Font("Segoe UI", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_B3.Font = new System.Drawing.Font("Segoe UI", 10.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btn_B3.Location = new Point(0, 95);
             btn_B3.Name = "btn_B3";
             btn_B3.Size = new Size(1105, 42);
@@ -216,13 +216,15 @@ namespace RocksmithToolkitGUI.DLCManager
         private void Lbl_Link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // Send the URL to the operating system.
-            Process.Start(lbl_Link1.Text as string);
+            //Process.Start(lbl_Link1.Text as string);
+            OpenLink(lbl_Link1.Text);
         }
 
         private void lbl_Link2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // Send the URL to the operating system.
-            Process.Start(lbl_Link2.Text as string);
+            //Process.Start(lbl_Link2.Text as string);
+            OpenLink(lbl_Link2.Text);
         }
     }
 }

@@ -206,7 +206,7 @@
   <Config Key="dlcm_javaARM" Value="DLCManager\external_tools\microsoft-jdk-21.0.6-windows-aarch64.msi" Descr="" />;
   <Config Key="dlcm_timestamp" Value="26.04.2021" Descr="not used atm" />;
   <Config Key="dlcm_StartInDLCM" Value="Yes" Descr="" />;
-  <Config Key="dlcm_DLCManager_Release_DBVersion" Value="2.7" Descr="" />;
+  <Config Key="dlcm_DLCManager_Release_DBVersion" Value="2.8" Descr="" />;
   <Config Key="dlcm_DBCurrentVersion" Value="2.7" Descr="" />;
   <Config Key="dlcm_ThreadNo" Value="" Descr="not used at split4pack is used insted" />;
   <Config Key="dlcm_ShowConenctivityOnce" Value="No" Descr="Only show no Provider conenctivity plugin installed ONLY once." />;
@@ -233,7 +233,7 @@
   <Config Key="dlcm_CustomToAtribute_5" Value="" Descr="" />;
   <Config Key="dlcm_chosendb" Value="" Descr="" />;
   <Config Key="dlcm_errorsstring" Value="" Descr="" />;
-  <Config Key="dlcm_ShowMessages" Value="ATOMMAN;20250921" Descr="" />;
+  <Config Key="dlcm_ShowMessages" Value="W11-ARM-LATEST;20251017" Descr="" />;
   <Config Key="dlcm_InitialChecks" Value="Yes" Descr="" />;
   <Config Key="dlcm_ExportValue" Value="HTML for a CustomForge upload" Descr="" />;
   <Config Key="dlcm_LocalHost" Value="https://capi.ro:91/" Descr="" />;

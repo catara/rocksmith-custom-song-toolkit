@@ -270,6 +270,17 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_Hide = new CheckBox();
             btn_TuxGuitar = new Button();
             chbx_A_ProductionReady = new CheckBox();
+            chbx_A_HasAITracksAvail = new CheckBox();
+            chbx_ANDArtist = new CheckBox();
+            chbx_ORArtist = new CheckBox();
+            chbx_ORAlbum = new CheckBox();
+            chbx_ANDAlbum = new CheckBox();
+            chbx_ORFileName = new CheckBox();
+            chbx_ANDFileName = new CheckBox();
+            txt_Duplicate_Of = new TextBox();
+            btn_Export2Tab = new Button();
+            chbx_DateSorteredGrp = new CheckBox();
+            btn_AddTabbingInfo = new Button();
             splitContainer2 = new SplitContainer();
             tabControl = new TabControl();
             tabPage1 = new TabPage();
@@ -337,7 +348,6 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_PreviewEnd = new NumericUpDown();
             btn_SelectPreview = new Button();
             groupBox3 = new GroupBox();
-            txt_Duplicate_Of = new TextBox();
             label8 = new Label();
             gbox_Groups = new GroupBox();
             chbx_AllGroups = new CheckedListBox();
@@ -402,6 +412,7 @@ namespace RocksmithToolkitGUI.DLCManager
             label33 = new Label();
             label32 = new Label();
             btn_Encrypt = new TabPage();
+            label31 = new Label();
             chbx_RebuildField = new ComboBox();
             btn_RebuildIndivFields = new Button();
             btn_EncryptManipulFolder = new Button();
@@ -837,7 +848,7 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_GarageBand.Size = new System.Drawing.Size(66, 20);
             btn_GarageBand.TabIndex = 333;
             btn_GarageBand.Text = "GarageBand";
-            toolTip1.SetToolTip(btn_GarageBand, "Generates a GarageBand compatible AudioFile to load as a additional track to the intruments and mic tracks.");
+            toolTip1.SetToolTip(btn_GarageBand, "Generates a GarageBand compatible Audio (.wav)File to load as a additional track to the intruments and mic tracks.");
             btn_GarageBand.UseVisualStyleBackColor = true;
             btn_GarageBand.Click += btn_GarageBand_Click;
             // 
@@ -932,7 +943,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_RemoveMultiPacksinstances
             // 
             btn_RemoveMultiPacksinstances.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            btn_RemoveMultiPacksinstances.Location = new System.Drawing.Point(274, 190);
+            btn_RemoveMultiPacksinstances.Location = new System.Drawing.Point(274, 131);
             btn_RemoveMultiPacksinstances.Margin = new Padding(2);
             btn_RemoveMultiPacksinstances.Name = "btn_RemoveMultiPacksinstances";
             btn_RemoveMultiPacksinstances.Size = new System.Drawing.Size(22, 20);
@@ -1047,10 +1058,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_ExportGuitarPro
             // 
-            btn_ExportGuitarPro.Location = new System.Drawing.Point(682, 138);
+            btn_ExportGuitarPro.Location = new System.Drawing.Point(4, 258);
             btn_ExportGuitarPro.Margin = new Padding(2);
             btn_ExportGuitarPro.Name = "btn_ExportGuitarPro";
-            btn_ExportGuitarPro.Size = new System.Drawing.Size(140, 20);
+            btn_ExportGuitarPro.Size = new System.Drawing.Size(118, 20);
             btn_ExportGuitarPro.TabIndex = 364;
             btn_ExportGuitarPro.Text = "Export 2 Tabs";
             toolTip1.SetToolTip(btn_ExportGuitarPro, "Export to tabs txt/gp5");
@@ -1879,6 +1890,7 @@ namespace RocksmithToolkitGUI.DLCManager
             toolTip1.SetToolTip(chbx_A_IsInTheWorks, "In the works");
             chbx_A_IsInTheWorks.UseVisualStyleBackColor = true;
             chbx_A_IsInTheWorks.Visible = false;
+            chbx_A_IsInTheWorks.CheckedChanged += chbx_A_IsInTheWorks_CheckedChanged_1;
             chbx_A_IsInTheWorks.Click += chbx_IntheWorks_CheckedChanged;
             // 
             // chbx_A_IsUncensored
@@ -1913,7 +1925,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // chbx_Instances
             // 
             chbx_Instances.AutoSize = true;
-            chbx_Instances.Location = new System.Drawing.Point(162, 211);
+            chbx_Instances.Location = new System.Drawing.Point(162, 152);
             chbx_Instances.Margin = new Padding(2);
             chbx_Instances.Name = "chbx_Instances";
             chbx_Instances.Size = new System.Drawing.Size(165, 19);
@@ -2144,7 +2156,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Order
             // 
-            txt_Order.Location = new System.Drawing.Point(108, 18);
+            txt_Order.Location = new System.Drawing.Point(108, 17);
             txt_Order.Margin = new Padding(2);
             txt_Order.Maximum = new decimal(new int[] { 99, 0, 0, 0 });
             txt_Order.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
@@ -2955,7 +2967,7 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_AddAudioaMultitrack.Size = new System.Drawing.Size(18, 18);
             btn_AddAudioaMultitrack.TabIndex = 439;
             btn_AddAudioaMultitrack.Text = "+";
-            toolTip1.SetToolTip(btn_AddAudioaMultitrack, "Shift Track Notes/Lyrics");
+            toolTip1.SetToolTip(btn_AddAudioaMultitrack, "Import Multitracks from a folder (they will be indexed and moved inside the \"0_data\" song's folder)");
             btn_AddAudioaMultitrack.UseVisualStyleBackColor = true;
             btn_AddAudioaMultitrack.Click += btn_AddAudioaMultitrack_Click;
             // 
@@ -3208,7 +3220,7 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_A_CatchAllAtributte.DropDownWidth = 150;
             chbx_A_CatchAllAtributte.Font = new System.Drawing.Font("Segoe UI", 8F);
             chbx_A_CatchAllAtributte.FormattingEnabled = true;
-            chbx_A_CatchAllAtributte.Items.AddRange(new object[] { "IntheWorks", "Is_Instrumental", "Is_Single", "Is_Medley", "Is_MultiStrings", "Is_Soundtrack", "Is_EP", "Is_Uncensored", "Is_Censored", "Is_FullAlbum", "Has_Featuring", "Is_Cover", "Is_Deluxe", "Is_GreatestHits", "Is_Midi", "Is_MetalCover", "Is_GameSoundtrack", "Is_Ukulele", "Is_TVTheme", "Is_AmateurCover", "Is_Demo", "Is_Karaoke", "Is_Remix", "Is_Remastered", "Is_Live", "Is_Acoustic", "Has_Slide" });
+            chbx_A_CatchAllAtributte.Items.AddRange(new object[] { "IntheWorks", "Is_Instrumental", "Is_Single", "Is_Medley", "Is_MultiStrings", "Is_Soundtrack", "Is_EP", "Is_Uncensored", "Is_Censored", "Is_FullAlbum", "Has_Featuring", "Is_Cover", "Is_Deluxe", "Is_GreatestHits", "Is_Midi", "Is_MetalCover", "Is_GameSoundtrack", "Is_Ukulele", "Is_TVTheme", "Is_AmateurCover", "Is_Demo", "Is_Karaoke", "Is_Remix", "Is_Remastered", "Is_Live", "Is_Acoustic", "Has_Slide", "Has_Acoustic", "ProductionReady" });
             chbx_A_CatchAllAtributte.Location = new System.Drawing.Point(191, 31);
             chbx_A_CatchAllAtributte.Margin = new Padding(2);
             chbx_A_CatchAllAtributte.Name = "chbx_A_CatchAllAtributte";
@@ -3263,13 +3275,13 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_Gen_Orig_Audio
             // 
             btn_Gen_Orig_Audio.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.6F);
-            btn_Gen_Orig_Audio.Location = new System.Drawing.Point(64, 262);
+            btn_Gen_Orig_Audio.Location = new System.Drawing.Point(61, 262);
             btn_Gen_Orig_Audio.Margin = new Padding(2);
             btn_Gen_Orig_Audio.Name = "btn_Gen_Orig_Audio";
             btn_Gen_Orig_Audio.Size = new System.Drawing.Size(91, 20);
             btn_Gen_Orig_Audio.TabIndex = 438;
             btn_Gen_Orig_Audio.Text = "Gen Orig Audio";
-            toolTip1.SetToolTip(btn_Gen_Orig_Audio, "Open Song Editor (EoF/Editor on Fire))");
+            toolTip1.SetToolTip(btn_Gen_Orig_Audio, "Upnacks the original Imported psarc and make available the \"original\" audio not downbitrarted cut etc with DLCMManager");
             btn_Gen_Orig_Audio.UseVisualStyleBackColor = true;
             btn_Gen_Orig_Audio.Click += btn_Gen_Orig_Audio_Click;
             // 
@@ -3452,7 +3464,7 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_RemoveMultiTracks.Size = new System.Drawing.Size(22, 20);
             btn_RemoveMultiTracks.TabIndex = 446;
             btn_RemoveMultiTracks.Text = "-";
-            toolTip1.SetToolTip(btn_RemoveMultiTracks, "Deeltes the imported multitracks");
+            toolTip1.SetToolTip(btn_RemoveMultiTracks, "Deletes the imported multitracks");
             btn_RemoveMultiTracks.UseVisualStyleBackColor = true;
             btn_RemoveMultiTracks.Click += btn_RemoveMultiTracks_Click;
             // 
@@ -3618,12 +3630,157 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_A_ProductionReady.Location = new System.Drawing.Point(90, 53);
             chbx_A_ProductionReady.Margin = new Padding(2);
             chbx_A_ProductionReady.Name = "chbx_A_ProductionReady";
-            chbx_A_ProductionReady.Size = new System.Drawing.Size(92, 18);
+            chbx_A_ProductionReady.Size = new System.Drawing.Size(110, 18);
             chbx_A_ProductionReady.TabIndex = 461;
             chbx_A_ProductionReady.Text = "ProductionReady";
             toolTip1.SetToolTip(chbx_A_ProductionReady, "Has a track that seems to be an Acoustic Guitar");
             chbx_A_ProductionReady.UseVisualStyleBackColor = true;
             chbx_A_ProductionReady.Visible = false;
+            // 
+            // chbx_A_HasAITracksAvail
+            // 
+            chbx_A_HasAITracksAvail.Appearance = Appearance.Button;
+            chbx_A_HasAITracksAvail.Font = new System.Drawing.Font("Segoe UI", 7F);
+            chbx_A_HasAITracksAvail.Location = new System.Drawing.Point(185, 49);
+            chbx_A_HasAITracksAvail.Margin = new Padding(2);
+            chbx_A_HasAITracksAvail.Name = "chbx_A_HasAITracksAvail";
+            chbx_A_HasAITracksAvail.Size = new System.Drawing.Size(110, 18);
+            chbx_A_HasAITracksAvail.TabIndex = 462;
+            chbx_A_HasAITracksAvail.Text = "Has AI Tracks Avail";
+            toolTip1.SetToolTip(chbx_A_HasAITracksAvail, "Has a track that seems to be an Acoustic Guitar");
+            chbx_A_HasAITracksAvail.UseVisualStyleBackColor = true;
+            chbx_A_HasAITracksAvail.Visible = false;
+            // 
+            // chbx_ANDArtist
+            // 
+            chbx_ANDArtist.Font = new System.Drawing.Font("Calibri", 8F);
+            chbx_ANDArtist.Location = new System.Drawing.Point(260, 24);
+            chbx_ANDArtist.Margin = new Padding(2);
+            chbx_ANDArtist.Name = "chbx_ANDArtist";
+            chbx_ANDArtist.Size = new System.Drawing.Size(46, 18);
+            chbx_ANDArtist.TabIndex = 460;
+            chbx_ANDArtist.Text = "AND";
+            toolTip1.SetToolTip(chbx_ANDArtist, "Availability of originally Imported file.");
+            chbx_ANDArtist.UseVisualStyleBackColor = true;
+            chbx_ANDArtist.Visible = false;
+            chbx_ANDArtist.CheckedChanged += chbx_ANDArtist_CheckedChanged;
+            // 
+            // chbx_ORArtist
+            // 
+            chbx_ORArtist.Font = new System.Drawing.Font("Calibri", 8F);
+            chbx_ORArtist.Location = new System.Drawing.Point(311, 24);
+            chbx_ORArtist.Margin = new Padding(2);
+            chbx_ORArtist.Name = "chbx_ORArtist";
+            chbx_ORArtist.Size = new System.Drawing.Size(40, 18);
+            chbx_ORArtist.TabIndex = 461;
+            chbx_ORArtist.Text = "OR";
+            toolTip1.SetToolTip(chbx_ORArtist, "Availability of originally Imported file.");
+            chbx_ORArtist.UseVisualStyleBackColor = true;
+            chbx_ORArtist.Visible = false;
+            chbx_ORArtist.CheckedChanged += chbx_ORArtist_CheckedChanged;
+            // 
+            // chbx_ORAlbum
+            // 
+            chbx_ORAlbum.Font = new System.Drawing.Font("Calibri", 8F);
+            chbx_ORAlbum.Location = new System.Drawing.Point(311, 65);
+            chbx_ORAlbum.Margin = new Padding(2);
+            chbx_ORAlbum.Name = "chbx_ORAlbum";
+            chbx_ORAlbum.Size = new System.Drawing.Size(40, 18);
+            chbx_ORAlbum.TabIndex = 463;
+            chbx_ORAlbum.Text = "OR";
+            toolTip1.SetToolTip(chbx_ORAlbum, "Availability of originally Imported file.");
+            chbx_ORAlbum.UseVisualStyleBackColor = true;
+            chbx_ORAlbum.Visible = false;
+            chbx_ORAlbum.CheckedChanged += chbx_ORAlbum_CheckedChanged;
+            // 
+            // chbx_ANDAlbum
+            // 
+            chbx_ANDAlbum.Font = new System.Drawing.Font("Calibri", 8F);
+            chbx_ANDAlbum.Location = new System.Drawing.Point(260, 65);
+            chbx_ANDAlbum.Margin = new Padding(2);
+            chbx_ANDAlbum.Name = "chbx_ANDAlbum";
+            chbx_ANDAlbum.Size = new System.Drawing.Size(46, 18);
+            chbx_ANDAlbum.TabIndex = 462;
+            chbx_ANDAlbum.Text = "AND";
+            toolTip1.SetToolTip(chbx_ANDAlbum, "Availability of originally Imported file.");
+            chbx_ANDAlbum.UseVisualStyleBackColor = true;
+            chbx_ANDAlbum.Visible = false;
+            chbx_ANDAlbum.CheckedChanged += chbx_ANDAlbum_CheckedChanged;
+            // 
+            // chbx_ORFileName
+            // 
+            chbx_ORFileName.Font = new System.Drawing.Font("Calibri", 8F);
+            chbx_ORFileName.Location = new System.Drawing.Point(505, 286);
+            chbx_ORFileName.Margin = new Padding(2);
+            chbx_ORFileName.Name = "chbx_ORFileName";
+            chbx_ORFileName.Size = new System.Drawing.Size(40, 18);
+            chbx_ORFileName.TabIndex = 465;
+            chbx_ORFileName.Text = "OR";
+            toolTip1.SetToolTip(chbx_ORFileName, "Availability of originally Imported file.");
+            chbx_ORFileName.UseVisualStyleBackColor = true;
+            chbx_ORFileName.Visible = false;
+            chbx_ORFileName.CheckedChanged += chbx_ORFileName_CheckedChanged;
+            // 
+            // chbx_ANDFileName
+            // 
+            chbx_ANDFileName.Font = new System.Drawing.Font("Calibri", 8F);
+            chbx_ANDFileName.Location = new System.Drawing.Point(454, 286);
+            chbx_ANDFileName.Margin = new Padding(2);
+            chbx_ANDFileName.Name = "chbx_ANDFileName";
+            chbx_ANDFileName.Size = new System.Drawing.Size(46, 18);
+            chbx_ANDFileName.TabIndex = 464;
+            chbx_ANDFileName.Text = "AND";
+            toolTip1.SetToolTip(chbx_ANDFileName, "Availability of originally Imported file.");
+            chbx_ANDFileName.UseVisualStyleBackColor = true;
+            chbx_ANDFileName.Visible = false;
+            chbx_ANDFileName.CheckedChanged += chbx_ANDFileName_CheckedChanged;
+            // 
+            // txt_Duplicate_Of
+            // 
+            txt_Duplicate_Of.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
+            txt_Duplicate_Of.ForeColor = System.Drawing.Color.Gray;
+            txt_Duplicate_Of.Location = new System.Drawing.Point(147, 115);
+            txt_Duplicate_Of.Margin = new Padding(2);
+            txt_Duplicate_Of.Name = "txt_Duplicate_Of";
+            txt_Duplicate_Of.Size = new System.Drawing.Size(40, 17);
+            txt_Duplicate_Of.TabIndex = 448;
+            toolTip1.SetToolTip(txt_Duplicate_Of, "Duplicate OF");
+            // 
+            // btn_Export2Tab
+            // 
+            btn_Export2Tab.Location = new System.Drawing.Point(157, 261);
+            btn_Export2Tab.Margin = new Padding(2);
+            btn_Export2Tab.Name = "btn_Export2Tab";
+            btn_Export2Tab.Size = new System.Drawing.Size(44, 20);
+            btn_Export2Tab.TabIndex = 466;
+            btn_Export2Tab.Text = "Tab";
+            toolTip1.SetToolTip(btn_Export2Tab, "Export to tabs ASCII-txt and gp5");
+            btn_Export2Tab.UseVisualStyleBackColor = true;
+            btn_Export2Tab.Click += btn_Export2Tab_Click;
+            // 
+            // chbx_DateSorteredGrp
+            // 
+            chbx_DateSorteredGrp.Enabled = false;
+            chbx_DateSorteredGrp.Location = new System.Drawing.Point(145, 41);
+            chbx_DateSorteredGrp.Margin = new Padding(2);
+            chbx_DateSorteredGrp.Name = "chbx_DateSorteredGrp";
+            chbx_DateSorteredGrp.Size = new System.Drawing.Size(45, 18);
+            chbx_DateSorteredGrp.TabIndex = 443;
+            chbx_DateSorteredGrp.Text = "DS";
+            toolTip1.SetToolTip(chbx_DateSorteredGrp, "Indivates thta this Group's Addin g timestamp can be sed later to oder it ");
+            chbx_DateSorteredGrp.UseVisualStyleBackColor = true;
+            // 
+            // btn_AddTabbingInfo
+            // 
+            btn_AddTabbingInfo.Location = new System.Drawing.Point(138, 258);
+            btn_AddTabbingInfo.Margin = new Padding(2);
+            btn_AddTabbingInfo.Name = "btn_AddTabbingInfo";
+            btn_AddTabbingInfo.Size = new System.Drawing.Size(174, 20);
+            btn_AddTabbingInfo.TabIndex = 450;
+            btn_AddTabbingInfo.Text = "Add Tabbing Info";
+            toolTip1.SetToolTip(btn_AddTabbingInfo, "Export to tabs txt/gp5");
+            btn_AddTabbingInfo.UseVisualStyleBackColor = true;
+            btn_AddTabbingInfo.Click += btn_AddTabbingInfo_Click;
             // 
             // splitContainer2
             // 
@@ -3695,6 +3852,13 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // Panel1
             // 
+            Panel1.Controls.Add(btn_Export2Tab);
+            Panel1.Controls.Add(chbx_ORFileName);
+            Panel1.Controls.Add(chbx_ANDFileName);
+            Panel1.Controls.Add(chbx_ORAlbum);
+            Panel1.Controls.Add(chbx_ANDAlbum);
+            Panel1.Controls.Add(chbx_ORArtist);
+            Panel1.Controls.Add(chbx_ANDArtist);
             Panel1.Controls.Add(btn_SetSpecificFN);
             Panel1.Controls.Add(btn_Gen_Orig_Audio);
             Panel1.Controls.Add(btn_EOF);
@@ -4235,6 +4399,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // gbox_QualityChecks
             // 
+            gbox_QualityChecks.Controls.Add(chbx_A_HasAITracksAvail);
             gbox_QualityChecks.Controls.Add(chbx_A_ProductionReady);
             gbox_QualityChecks.Controls.Add(chbx_A_HasAcoustic);
             gbox_QualityChecks.Controls.Add(chbx_A_IsCensored);
@@ -4702,16 +4867,6 @@ namespace RocksmithToolkitGUI.DLCManager
             groupBox3.TabStop = false;
             groupBox3.Text = "Audit Trail";
             // 
-            // txt_Duplicate_Of
-            // 
-            txt_Duplicate_Of.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            txt_Duplicate_Of.ForeColor = System.Drawing.Color.Gray;
-            txt_Duplicate_Of.Location = new System.Drawing.Point(147, 115);
-            txt_Duplicate_Of.Margin = new Padding(2);
-            txt_Duplicate_Of.Name = "txt_Duplicate_Of";
-            txt_Duplicate_Of.Size = new System.Drawing.Size(40, 17);
-            txt_Duplicate_Of.TabIndex = 448;
-            // 
             // label8
             // 
             label8.Enabled = false;
@@ -4726,6 +4881,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // gbox_Groups
             // 
+            gbox_Groups.Controls.Add(chbx_DateSorteredGrp);
             gbox_Groups.Controls.Add(txt_Order);
             gbox_Groups.Controls.Add(btn_ADD2HOT);
             gbox_Groups.Controls.Add(chbx_AllGroups);
@@ -5484,6 +5640,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // btn_Encrypt
             // 
+            btn_Encrypt.Controls.Add(btn_AddTabbingInfo);
+            btn_Encrypt.Controls.Add(label31);
             btn_Encrypt.Controls.Add(btn_TuxGuitar);
             btn_Encrypt.Controls.Add(chbx_OnlyNo);
             btn_Encrypt.Controls.Add(btn_CleanAllBroken);
@@ -5552,6 +5710,16 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_Encrypt.Text = "GameData";
             btn_Encrypt.UseVisualStyleBackColor = true;
             // 
+            // label31
+            // 
+            label31.AutoSize = true;
+            label31.Location = new System.Drawing.Point(224, 55);
+            label31.Margin = new Padding(2, 0, 2, 0);
+            label31.Name = "label31";
+            label31.Size = new System.Drawing.Size(61, 15);
+            label31.TabIndex = 449;
+            label31.Text = "Repacked:";
+            // 
             // chbx_RebuildField
             // 
             chbx_RebuildField.FormattingEnabled = true;
@@ -5565,10 +5733,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_RebuildIndivFields
             // 
             btn_RebuildIndivFields.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            btn_RebuildIndivFields.Location = new System.Drawing.Point(395, 269);
+            btn_RebuildIndivFields.Location = new System.Drawing.Point(4, 232);
             btn_RebuildIndivFields.Margin = new Padding(2);
             btn_RebuildIndivFields.Name = "btn_RebuildIndivFields";
-            btn_RebuildIndivFields.Size = new System.Drawing.Size(139, 22);
+            btn_RebuildIndivFields.Size = new System.Drawing.Size(118, 22);
             btn_RebuildIndivFields.TabIndex = 425;
             btn_RebuildIndivFields.Text = "Regather Attribute";
             btn_RebuildIndivFields.UseVisualStyleBackColor = true;
@@ -5577,7 +5745,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_EncryptManipulFolder
             // 
             btn_EncryptManipulFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            btn_EncryptManipulFolder.Location = new System.Drawing.Point(682, 244);
+            btn_EncryptManipulFolder.Location = new System.Drawing.Point(173, 191);
             btn_EncryptManipulFolder.Margin = new Padding(2);
             btn_EncryptManipulFolder.Name = "btn_EncryptManipulFolder";
             btn_EncryptManipulFolder.Size = new System.Drawing.Size(140, 22);
@@ -5589,10 +5757,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_GatherAttributes
             // 
             btn_GatherAttributes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            btn_GatherAttributes.Location = new System.Drawing.Point(969, 218);
+            btn_GatherAttributes.Location = new System.Drawing.Point(4, 212);
             btn_GatherAttributes.Margin = new Padding(2);
             btn_GatherAttributes.Name = "btn_GatherAttributes";
-            btn_GatherAttributes.Size = new System.Drawing.Size(284, 22);
+            btn_GatherAttributes.Size = new System.Drawing.Size(308, 22);
             btn_GatherAttributes.TabIndex = 406;
             btn_GatherAttributes.Text = "Gather Song Side Attributes and run Clean algorithms";
             btn_GatherAttributes.UseVisualStyleBackColor = true;
@@ -5602,10 +5770,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_RunExternalProgramsChecks.Enabled = false;
             btn_RunExternalProgramsChecks.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            btn_RunExternalProgramsChecks.Location = new System.Drawing.Point(826, 114);
+            btn_RunExternalProgramsChecks.Location = new System.Drawing.Point(138, 233);
             btn_RunExternalProgramsChecks.Margin = new Padding(2);
             btn_RunExternalProgramsChecks.Name = "btn_RunExternalProgramsChecks";
-            btn_RunExternalProgramsChecks.Size = new System.Drawing.Size(172, 22);
+            btn_RunExternalProgramsChecks.Size = new System.Drawing.Size(174, 22);
             btn_RunExternalProgramsChecks.TabIndex = 405;
             btn_RunExternalProgramsChecks.Text = "Run External Programs Checks";
             btn_RunExternalProgramsChecks.UseVisualStyleBackColor = true;
@@ -5614,7 +5782,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_MKlink
             // 
             btn_MKlink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            btn_MKlink.Location = new System.Drawing.Point(1002, 114);
+            btn_MKlink.Location = new System.Drawing.Point(4, 191);
             btn_MKlink.Margin = new Padding(2);
             btn_MKlink.Name = "btn_MKlink";
             btn_MKlink.Size = new System.Drawing.Size(165, 22);
@@ -5626,7 +5794,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label10
             // 
             label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            label10.Location = new System.Drawing.Point(162, 192);
+            label10.Location = new System.Drawing.Point(162, 133);
             label10.Margin = new Padding(2, 0, 2, 0);
             label10.Name = "label10";
             label10.Size = new System.Drawing.Size(32, 20);
@@ -5636,7 +5804,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label7
             // 
             label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            label7.Location = new System.Drawing.Point(230, 192);
+            label7.Location = new System.Drawing.Point(230, 133);
             label7.Margin = new Padding(2, 0, 2, 0);
             label7.Name = "label7";
             label7.Size = new System.Drawing.Size(38, 20);
@@ -5646,7 +5814,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label3
             // 
             label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            label3.Location = new System.Drawing.Point(208, 232);
+            label3.Location = new System.Drawing.Point(208, 173);
             label3.Margin = new Padding(2, 0, 2, 0);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(38, 20);
@@ -5655,7 +5823,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_No4Splitting
             // 
-            txt_No4Splitting.Location = new System.Drawing.Point(194, 190);
+            txt_No4Splitting.Location = new System.Drawing.Point(194, 131);
             txt_No4Splitting.Margin = new Padding(2);
             txt_No4Splitting.Maximum = new decimal(new int[] { 50, 0, 0, 0 });
             txt_No4Splitting.Name = "txt_No4Splitting";
@@ -5712,7 +5880,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_OpenMulti
             // 
             btn_OpenMulti.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F);
-            btn_OpenMulti.Location = new System.Drawing.Point(250, 226);
+            btn_OpenMulti.Location = new System.Drawing.Point(250, 167);
             btn_OpenMulti.Margin = new Padding(2);
             btn_OpenMulti.Name = "btn_OpenMulti";
             btn_OpenMulti.Size = new System.Drawing.Size(140, 22);
@@ -5747,7 +5915,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_NoOfSplits
             // 
-            txt_NoOfSplits.Location = new System.Drawing.Point(162, 228);
+            txt_NoOfSplits.Location = new System.Drawing.Point(162, 169);
             txt_NoOfSplits.Margin = new Padding(2);
             txt_NoOfSplits.Maximum = new decimal(new int[] { 20000, 0, 0, 0 });
             txt_NoOfSplits.Name = "txt_NoOfSplits";
@@ -5759,10 +5927,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_AddPackSplit
             // 
             btn_AddPackSplit.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F);
-            btn_AddPackSplit.Location = new System.Drawing.Point(4, 190);
+            btn_AddPackSplit.Location = new System.Drawing.Point(4, 131);
             btn_AddPackSplit.Margin = new Padding(2);
             btn_AddPackSplit.Name = "btn_AddPackSplit";
-            btn_AddPackSplit.Size = new System.Drawing.Size(154, 56);
+            btn_AddPackSplit.Size = new System.Drawing.Size(150, 56);
             btn_AddPackSplit.TabIndex = 349;
             btn_AddPackSplit.Text = "Add a Pack-Split Number for MassPacking, from multiple instances of the DLCManager";
             btn_AddPackSplit.UseVisualStyleBackColor = true;
@@ -5839,10 +6007,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             cmb_Packed.Enabled = false;
             cmb_Packed.FormattingEnabled = true;
-            cmb_Packed.Location = new System.Drawing.Point(224, 50);
+            cmb_Packed.Location = new System.Drawing.Point(287, 50);
             cmb_Packed.Margin = new Padding(2);
             cmb_Packed.Name = "cmb_Packed";
-            cmb_Packed.Size = new System.Drawing.Size(686, 23);
+            cmb_Packed.Size = new System.Drawing.Size(985, 23);
             cmb_Packed.TabIndex = 341;
             // 
             // txt_CoundofPacked
@@ -5909,7 +6077,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_RemotePath.Name = "txt_RemotePath";
             txt_RemotePath.ReadOnly = true;
             txt_RemotePath.ScrollBars = ScrollBars.Horizontal;
-            txt_RemotePath.Size = new System.Drawing.Size(452, 20);
+            txt_RemotePath.Size = new System.Drawing.Size(1107, 20);
             txt_RemotePath.TabIndex = 335;
             // 
             // tabPage4
@@ -7073,5 +7241,16 @@ namespace RocksmithToolkitGUI.DLCManager
         private CheckBox chbx_Hide;
         private Button btn_TuxGuitar;
         private CheckBox chbx_A_ProductionReady;
+        private CheckBox chbx_A_HasAITracksAvail;
+        private CheckBox chbx_ORArtist;
+        private CheckBox chbx_ANDArtist;
+        private CheckBox chbx_ORAlbum;
+        private CheckBox chbx_ANDAlbum;
+        private CheckBox chbx_ORFileName;
+        private CheckBox chbx_ANDFileName;
+        private Button btn_Export2Tab;
+        private CheckBox chbx_DateSorteredGrp;
+        private Label label31;
+        private Button btn_AddTabbingInfo;
     }
 }

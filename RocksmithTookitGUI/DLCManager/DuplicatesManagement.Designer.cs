@@ -976,10 +976,10 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // lbl_Toolkit
             // 
-            lbl_Toolkit.Location = new System.Drawing.Point(66, 216);
+            lbl_Toolkit.Location = new System.Drawing.Point(3, 216);
             lbl_Toolkit.Margin = new Padding(2, 0, 2, 0);
             lbl_Toolkit.Name = "lbl_Toolkit";
-            lbl_Toolkit.Size = new System.Drawing.Size(42, 15);
+            lbl_Toolkit.Size = new System.Drawing.Size(45, 15);
             lbl_Toolkit.TabIndex = 318;
             lbl_Toolkit.Text = "Toolkit";
             // 
@@ -4447,7 +4447,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_ToolkitNew.Enabled = false;
             txt_ToolkitNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             txt_ToolkitNew.ForeColor = System.Drawing.Color.Gray;
-            txt_ToolkitNew.Location = new System.Drawing.Point(113, 214);
+            txt_ToolkitNew.Location = new System.Drawing.Point(52, 214);
             txt_ToolkitNew.Margin = new Padding(4, 6, 4, 6);
             txt_ToolkitNew.Name = "txt_ToolkitNew";
             txt_ToolkitNew.Size = new System.Drawing.Size(117, 20);
@@ -5159,12 +5159,12 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // label8
             // 
-            label8.Location = new System.Drawing.Point(6, 216);
+            label8.Location = new System.Drawing.Point(171, 215);
             label8.Margin = new Padding(2, 0, 2, 0);
             label8.Name = "label8";
             label8.Size = new System.Drawing.Size(63, 15);
             label8.TabIndex = 505;
-            label8.Text = "Platform/";
+            label8.Text = "Platform";
             // 
             // label22
             // 

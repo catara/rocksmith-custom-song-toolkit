@@ -9,7 +9,7 @@ using ICSharpCode.SharpZipLib.BZip2;
 using ICSharpCode.SharpZipLib.Tar;
 using System.Diagnostics;
 using RocksmithToolkitLib.XmlRepository;
-using Windows.Networking.Sockets;
+//using Windows.Networking.Sockets;
 
 namespace RocksmithToolkitLib.Ogg
 {

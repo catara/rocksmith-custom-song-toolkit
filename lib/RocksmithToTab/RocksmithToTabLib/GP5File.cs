@@ -44,7 +44,7 @@ namespace RocksmithToTabLib
 
         public void ExportScore(Score score, Stream stream)
         {
-            using (var writer = new BinaryWriter(stream, Encoding.GetEncoding(1252)))
+            using (var writer = new BinaryWriter(stream, Encoding.GetEncoding("utf-8")))
             {
                 ExportScore(score, writer);
             }

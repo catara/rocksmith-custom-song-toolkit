@@ -264,9 +264,12 @@ namespace RocksmithToolkitLib.Extensions
                         FileName = procez,
                         WorkingDirectory = Path.GetDirectoryName(procez)
                     };
+                    var env = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture;
+                    bool e64b = env.ToString() != "X64" ? true : false;
                     Process DDC = new Process();
                     startInfo.Arguments = attbute;
-                    startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true;
+                    startInfo.UseShellExecute = e64b;
+                    startInfo.CreateNoWindow = true;
 
                     if (Directory.Exists(procez) || File.Exists(procez))
                     {

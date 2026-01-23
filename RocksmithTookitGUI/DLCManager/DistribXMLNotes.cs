@@ -105,7 +105,6 @@ namespace RocksmithToolkitGUI.DLCManager
             button4 = new Button();
             btn_RestoreXML = new Button();
             cmb_Sections = new ComboBox();
-            cmb_Tracks = new CheckedListBox();
             label1 = new Label();
             label13 = new Label();
             txt_Description = new RichTextBox();
@@ -161,12 +160,15 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_SyncPh2Sect = new Button();
             btn_Reload = new Button();
             toolTip1 = new ToolTip(components);
+            chbx_IgnorePhaseSync = new CheckBox();
+            checkBox1 = new CheckBox();
             btn_VisualDistrib = new Button();
             txt_Backup = new TextBox();
             label23 = new Label();
             label24 = new Label();
             label25 = new Label();
             button2 = new Button();
+            cmb_Tracks = new CheckedListBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -252,7 +254,7 @@ namespace RocksmithToolkitGUI.DLCManager
             label2.Location = new Point(2, 41);
             label2.Margin = new Padding(2, 0, 2, 0);
             label2.Name = "label2";
-            label2.Size = new Size(129, 15);
+            label2.Size = new Size(130, 15);
             label2.TabIndex = 445;
             label2.Text = "Audio Track's first Note";
             // 
@@ -263,7 +265,7 @@ namespace RocksmithToolkitGUI.DLCManager
             label3.Location = new Point(2, 66);
             label3.Margin = new Padding(2, 0, 2, 0);
             label3.Name = "label3";
-            label3.Size = new Size(127, 15);
+            label3.Size = new Size(128, 15);
             label3.TabIndex = 446;
             label3.Text = "Audio Track's last Note";
             // 
@@ -292,7 +294,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_EOF
             // 
             btn_EOF.Font = new Font("Microsoft Sans Serif", 6.6F);
-            btn_EOF.Location = new Point(370, 644);
+            btn_EOF.Location = new Point(370, 572);
             btn_EOF.Margin = new Padding(2);
             btn_EOF.Name = "btn_EOF";
             btn_EOF.Size = new Size(87, 22);
@@ -304,7 +306,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_OpenGP5
             // 
             btn_OpenGP5.Font = new Font("Microsoft Sans Serif", 6F);
-            btn_OpenGP5.Location = new Point(370, 664);
+            btn_OpenGP5.Location = new Point(370, 592);
             btn_OpenGP5.Margin = new Padding(2, 3, 2, 3);
             btn_OpenGP5.Name = "btn_OpenGP5";
             btn_OpenGP5.Size = new Size(88, 18);
@@ -316,7 +318,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_OpenXML
             // 
             btn_OpenXML.Font = new Font("Microsoft Sans Serif", 6F);
-            btn_OpenXML.Location = new Point(370, 680);
+            btn_OpenXML.Location = new Point(370, 608);
             btn_OpenXML.Margin = new Padding(2, 3, 2, 3);
             btn_OpenXML.Name = "btn_OpenXML";
             btn_OpenXML.Size = new Size(87, 18);
@@ -330,10 +332,10 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_BassToo.AutoCheck = false;
             chbx_BassToo.AutoSize = true;
             chbx_BassToo.Enabled = false;
-            chbx_BassToo.Location = new Point(378, 493);
+            chbx_BassToo.Location = new Point(378, 421);
             chbx_BassToo.Margin = new Padding(2);
             chbx_BassToo.Name = "chbx_BassToo";
-            chbx_BassToo.Size = new Size(114, 19);
+            chbx_BassToo.Size = new Size(115, 19);
             chbx_BassToo.TabIndex = 452;
             chbx_BassToo.Text = "Incl. other Tracks";
             chbx_BassToo.UseVisualStyleBackColor = true;
@@ -353,7 +355,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_XMLPath
             // 
-            txt_XMLPath.Location = new Point(1, 676);
+            txt_XMLPath.Location = new Point(1, 604);
             txt_XMLPath.Margin = new Padding(2);
             txt_XMLPath.Name = "txt_XMLPath";
             txt_XMLPath.Size = new Size(370, 23);
@@ -363,7 +365,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_Ttime
             // 
             txt_Ttime.Enabled = false;
-            txt_Ttime.Location = new Point(378, 454);
+            txt_Ttime.Location = new Point(378, 382);
             txt_Ttime.Margin = new Padding(2);
             txt_Ttime.Name = "txt_Ttime";
             txt_Ttime.Size = new Size(74, 23);
@@ -376,7 +378,7 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_TempFolders.AutoSize = true;
             lbl_TempFolders.Enabled = false;
             lbl_TempFolders.ForeColor = SystemColors.ControlText;
-            lbl_TempFolders.Location = new Point(378, 475);
+            lbl_TempFolders.Location = new Point(378, 403);
             lbl_TempFolders.Margin = new Padding(2, 0, 2, 0);
             lbl_TempFolders.Name = "lbl_TempFolders";
             lbl_TempFolders.Size = new Size(134, 15);
@@ -387,7 +389,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_GP5
             // 
-            txt_GP5.Location = new Point(1, 654);
+            txt_GP5.Location = new Point(1, 582);
             txt_GP5.Margin = new Padding(2);
             txt_GP5.Name = "txt_GP5";
             txt_GP5.Size = new Size(370, 23);
@@ -399,7 +401,7 @@ namespace RocksmithToolkitGUI.DLCManager
             label8.AutoSize = true;
             label8.Enabled = false;
             label8.ForeColor = SystemColors.ControlText;
-            label8.Location = new Point(326, 701);
+            label8.Location = new Point(317, 720);
             label8.Margin = new Padding(2, 0, 2, 0);
             label8.Name = "label8";
             label8.Size = new Size(63, 15);
@@ -487,7 +489,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_CorrectionMili
             // 
             txt_CorrectionMili.Enabled = false;
-            txt_CorrectionMili.Location = new Point(324, 718);
+            txt_CorrectionMili.Location = new Point(276, 721);
             txt_CorrectionMili.Margin = new Padding(2);
             txt_CorrectionMili.Name = "txt_CorrectionMili";
             txt_CorrectionMili.Size = new Size(37, 23);
@@ -526,7 +528,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_RestoreXML
             // 
             btn_RestoreXML.ForeColor = Color.Green;
-            btn_RestoreXML.Location = new Point(286, 280);
+            btn_RestoreXML.Location = new Point(286, 208);
             btn_RestoreXML.Margin = new Padding(2);
             btn_RestoreXML.Name = "btn_RestoreXML";
             btn_RestoreXML.Size = new Size(86, 55);
@@ -547,26 +549,14 @@ namespace RocksmithToolkitGUI.DLCManager
             cmb_Sections.TabIndex = 1;
             cmb_Sections.SelectedIndexChanged += cmb_Sections_SelectedIndexChanged;
             // 
-            // cmb_Tracks
-            // 
-            cmb_Tracks.CheckOnClick = true;
-            cmb_Tracks.FormattingEnabled = true;
-            cmb_Tracks.HorizontalScrollbar = true;
-            cmb_Tracks.Location = new Point(0, 354);
-            cmb_Tracks.Margin = new Padding(0);
-            cmb_Tracks.Name = "cmb_Tracks";
-            cmb_Tracks.Size = new Size(370, 94);
-            cmb_Tracks.TabIndex = 23;
-            cmb_Tracks.UseWaitCursor = true;
-            // 
             // label1
             // 
             label1.AutoSize = true;
             label1.ForeColor = SystemColors.ControlText;
-            label1.Location = new Point(0, 338);
+            label1.Location = new Point(0, 266);
             label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new Size(166, 15);
+            label1.Size = new Size(167, 15);
             label1.TabIndex = 488;
             label1.Text = "Other Tracks available for sync";
             // 
@@ -574,7 +564,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             label13.AutoSize = true;
             label13.ForeColor = SystemColors.ControlText;
-            label13.Location = new Point(292, 450);
+            label13.Location = new Point(292, 378);
             label13.Margin = new Padding(2, 0, 2, 0);
             label13.Name = "label13";
             label13.Size = new Size(66, 15);
@@ -583,7 +573,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Description
             // 
-            txt_Description.Location = new Point(0, 448);
+            txt_Description.Location = new Point(0, 376);
             txt_Description.Margin = new Padding(2);
             txt_Description.Name = "txt_Description";
             txt_Description.Size = new Size(370, 102);
@@ -593,7 +583,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_Save
             // 
             btn_Save.ForeColor = Color.Green;
-            btn_Save.Location = new Point(377, 552);
+            btn_Save.Location = new Point(377, 480);
             btn_Save.Margin = new Padding(2);
             btn_Save.Name = "btn_Save";
             btn_Save.Size = new Size(82, 26);
@@ -605,7 +595,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_Distrib
             // 
             btn_Distrib.ForeColor = Color.Green;
-            btn_Distrib.Location = new Point(372, 354);
+            btn_Distrib.Location = new Point(372, 282);
             btn_Distrib.Margin = new Padding(2);
             btn_Distrib.Name = "btn_Distrib";
             btn_Distrib.Size = new Size(90, 43);
@@ -618,7 +608,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             label14.AutoSize = true;
             label14.ForeColor = SystemColors.ControlText;
-            label14.Location = new Point(292, 558);
+            label14.Location = new Point(292, 486);
             label14.Margin = new Padding(2, 0, 2, 0);
             label14.Name = "label14";
             label14.Size = new Size(51, 15);
@@ -627,7 +617,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // txt_Sections
             // 
-            txt_Sections.Location = new Point(1, 551);
+            txt_Sections.Location = new Point(1, 479);
             txt_Sections.Margin = new Padding(2);
             txt_Sections.Name = "txt_Sections";
             txt_Sections.Size = new Size(370, 102);
@@ -651,7 +641,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_backup.Font = new Font("Calibri", 9F);
             btn_backup.ForeColor = Color.DodgerBlue;
-            btn_backup.Location = new Point(373, 280);
+            btn_backup.Location = new Point(373, 208);
             btn_backup.Margin = new Padding(2);
             btn_backup.Name = "btn_backup";
             btn_backup.Size = new Size(86, 27);
@@ -664,7 +654,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_Close.BackColor = Color.LightSteelBlue;
             btn_Close.Font = new Font("Microsoft Sans Serif", 8.25F);
-            btn_Close.Location = new Point(373, 305);
+            btn_Close.Location = new Point(373, 233);
             btn_Close.Margin = new Padding(0);
             btn_Close.Name = "btn_Close";
             btn_Close.Size = new Size(88, 30);
@@ -676,7 +666,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_CleanDescr
             // 
             btn_CleanDescr.Font = new Font("Microsoft Sans Serif", 6.6F);
-            btn_CleanDescr.Location = new Point(377, 511);
+            btn_CleanDescr.Location = new Point(377, 439);
             btn_CleanDescr.Margin = new Padding(2);
             btn_CleanDescr.Name = "btn_CleanDescr";
             btn_CleanDescr.Size = new Size(78, 20);
@@ -704,7 +694,7 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_removehandshapes.AutoSize = true;
             chbx_removehandshapes.Checked = true;
             chbx_removehandshapes.CheckState = CheckState.Checked;
-            chbx_removehandshapes.Location = new Point(166, 336);
+            chbx_removehandshapes.Location = new Point(166, 264);
             chbx_removehandshapes.Margin = new Padding(2);
             chbx_removehandshapes.Name = "chbx_removehandshapes";
             chbx_removehandshapes.Size = new Size(292, 19);
@@ -724,7 +714,7 @@ namespace RocksmithToolkitGUI.DLCManager
             groupBox1.Controls.Add(label17);
             groupBox1.Controls.Add(btn_ApplyP3);
             groupBox1.Controls.Add(btn_AddSections);
-            groupBox1.Location = new Point(2, 258);
+            groupBox1.Location = new Point(2, 186);
             groupBox1.Margin = new Padding(2);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(2);
@@ -836,7 +826,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label20
             // 
             label20.ForeColor = SystemColors.ControlText;
-            label20.Location = new Point(215, 702);
+            label20.Location = new Point(240, 717);
             label20.Margin = new Padding(2, 0, 2, 0);
             label20.Name = "label20";
             label20.Size = new Size(25, 15);
@@ -847,7 +837,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_P3FNMili
             // 
             txt_P3FNMili.Enabled = false;
-            txt_P3FNMili.Location = new Point(178, 701);
+            txt_P3FNMili.Location = new Point(192, 717);
             txt_P3FNMili.Margin = new Padding(2);
             txt_P3FNMili.Name = "txt_P3FNMili";
             txt_P3FNMili.Size = new Size(38, 23);
@@ -860,7 +850,7 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_P3FN.CustomFormat = "hh:mm:ss";
             txt_P3FN.Enabled = false;
             txt_P3FN.Format = DateTimePickerFormat.Time;
-            txt_P3FN.Location = new Point(112, 703);
+            txt_P3FN.Location = new Point(118, 719);
             txt_P3FN.Margin = new Padding(2);
             txt_P3FN.Name = "txt_P3FN";
             txt_P3FN.ShowUpDown = true;
@@ -872,7 +862,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // label18
             // 
             label18.ForeColor = SystemColors.ControlText;
-            label18.Location = new Point(17, 704);
+            label18.Location = new Point(0, 724);
             label18.Margin = new Padding(2, 0, 2, 0);
             label18.Name = "label18";
             label18.Size = new Size(116, 16);
@@ -889,7 +879,7 @@ namespace RocksmithToolkitGUI.DLCManager
             groupBox2.Controls.Add(label6);
             groupBox2.Controls.Add(btn_ApplyP1);
             groupBox2.Controls.Add(button3);
-            groupBox2.Location = new Point(4, 190);
+            groupBox2.Location = new Point(4, 775);
             groupBox2.Margin = new Padding(2);
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(2);
@@ -985,7 +975,7 @@ namespace RocksmithToolkitGUI.DLCManager
             groupBox3.Controls.Add(txt_PercTime);
             groupBox3.Controls.Add(label15);
             groupBox3.Controls.Add(button5);
-            groupBox3.Location = new Point(286, 190);
+            groupBox3.Location = new Point(286, 775);
             groupBox3.Margin = new Padding(2);
             groupBox3.Name = "groupBox3";
             groupBox3.Padding = new Padding(2);
@@ -1090,7 +1080,7 @@ namespace RocksmithToolkitGUI.DLCManager
             label16.Location = new Point(363, 24);
             label16.Margin = new Padding(2, 0, 2, 0);
             label16.Name = "label16";
-            label16.Size = new Size(78, 15);
+            label16.Size = new Size(77, 15);
             label16.TabIndex = 516;
             label16.Text = "Diff (cur-exp)";
             toolTip1.SetToolTip(label16, "curent-expected");
@@ -1178,7 +1168,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // btn_SyncPh2Sect
             // 
             btn_SyncPh2Sect.ForeColor = Color.Green;
-            btn_SyncPh2Sect.Location = new Point(375, 579);
+            btn_SyncPh2Sect.Location = new Point(375, 507);
             btn_SyncPh2Sect.Margin = new Padding(2);
             btn_SyncPh2Sect.Name = "btn_SyncPh2Sect";
             btn_SyncPh2Sect.Size = new Size(88, 54);
@@ -1191,7 +1181,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             btn_Reload.Font = new Font("Calibri", 9F);
             btn_Reload.ForeColor = Color.DodgerBlue;
-            btn_Reload.Location = new Point(373, 253);
+            btn_Reload.Location = new Point(373, 181);
             btn_Reload.Margin = new Padding(2);
             btn_Reload.Name = "btn_Reload";
             btn_Reload.Size = new Size(86, 27);
@@ -1200,10 +1190,32 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_Reload.UseVisualStyleBackColor = true;
             btn_Reload.Click += btn_Reload_Click;
             // 
+            // chbx_IgnorePhaseSync
+            // 
+            chbx_IgnorePhaseSync.Location = new Point(3, 627);
+            chbx_IgnorePhaseSync.Margin = new Padding(2);
+            chbx_IgnorePhaseSync.Name = "chbx_IgnorePhaseSync";
+            chbx_IgnorePhaseSync.Size = new Size(217, 18);
+            chbx_IgnorePhaseSync.TabIndex = 533;
+            chbx_IgnorePhaseSync.Text = "Ignore Phase vs Section Sync check";
+            toolTip1.SetToolTip(chbx_IgnorePhaseSync, "Copy folder to remote location");
+            chbx_IgnorePhaseSync.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            checkBox1.Location = new Point(217, 628);
+            checkBox1.Margin = new Padding(2);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(217, 18);
+            checkBox1.TabIndex = 534;
+            checkBox1.Text = "Display Done Mss";
+            toolTip1.SetToolTip(checkBox1, "Copy folder to remote location");
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
             // btn_VisualDistrib
             // 
             btn_VisualDistrib.ForeColor = Color.Green;
-            btn_VisualDistrib.Location = new Point(373, 401);
+            btn_VisualDistrib.Location = new Point(373, 329);
             btn_VisualDistrib.Margin = new Padding(2);
             btn_VisualDistrib.Name = "btn_VisualDistrib";
             btn_VisualDistrib.Size = new Size(90, 43);
@@ -1215,7 +1227,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // txt_Backup
             // 
             txt_Backup.Enabled = false;
-            txt_Backup.Location = new Point(286, 255);
+            txt_Backup.Location = new Point(286, 183);
             txt_Backup.Margin = new Padding(2);
             txt_Backup.Name = "txt_Backup";
             txt_Backup.Size = new Size(86, 23);
@@ -1237,7 +1249,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             label24.AutoSize = true;
             label24.ForeColor = SystemColors.ControlText;
-            label24.Location = new Point(298, 357);
+            label24.Location = new Point(298, 285);
             label24.Margin = new Padding(2, 0, 2, 0);
             label24.Name = "label24";
             label24.Size = new Size(47, 15);
@@ -1258,7 +1270,7 @@ namespace RocksmithToolkitGUI.DLCManager
             // button2
             // 
             button2.Font = new Font("Microsoft Sans Serif", 6.6F);
-            button2.Location = new Point(378, 530);
+            button2.Location = new Point(378, 458);
             button2.Margin = new Padding(2);
             button2.Name = "button2";
             button2.Size = new Size(78, 20);
@@ -1267,13 +1279,27 @@ namespace RocksmithToolkitGUI.DLCManager
             button2.UseVisualStyleBackColor = true;
             button2.UseWaitCursor = true;
             // 
+            // cmb_Tracks
+            // 
+            cmb_Tracks.CheckOnClick = true;
+            cmb_Tracks.FormattingEnabled = true;
+            cmb_Tracks.HorizontalScrollbar = true;
+            cmb_Tracks.Location = new Point(0, 282);
+            cmb_Tracks.Margin = new Padding(0);
+            cmb_Tracks.Name = "cmb_Tracks";
+            cmb_Tracks.Size = new Size(370, 94);
+            cmb_Tracks.TabIndex = 23;
+            cmb_Tracks.UseWaitCursor = true;
+            // 
             // DistribXMLNotes
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(466, 725);
+            ClientSize = new Size(466, 655);
+            Controls.Add(checkBox1);
+            Controls.Add(chbx_IgnorePhaseSync);
             Controls.Add(button2);
             Controls.Add(label25);
             Controls.Add(label24);
@@ -1520,6 +1546,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (xmlContent.PhraseIterations.Length != xmlContent.Sections.Length) SaveSectionAndIntDescription();
             this.Text = Path.GetFileName(txt_XMLPath.Text + " with " + cmb_Sections.Items.Count + " sections.");
         }
+
         public ComboBox GenerateSectionsList(string newXMLFilePath, ComboBox cmb_Sections, string firstnote, string lastnote)
         {
             if (EoFPath == "") return cmb_Sections;
@@ -1984,7 +2011,7 @@ namespace RocksmithToolkitGUI.DLCManager
             var optionalfound = false; bool usephases = false;
             if (xmlContent.OptionalProperties is not null) optionalfound = true;
             var sect = "<sections count = \"" + xmlContent.Phrases.Length + "\">\n";
-            if (xmlContent.Phrases.Length != xmlContent.Sections.Length)/*btn_SyncPh2Sect.Enabled && */
+            if (xmlContent.Phrases.Length != xmlContent.Sections.Length && c("dlcm_AdditionalManipul130")=="No")/*btn_SyncPh2Sect.Enabled && */
             {
                 DialogResult result1 = MessageBox.Show("Discrepancy between Sections(" + xmlContent.Sections.Length + ") and phases ("
                     + xmlContent.Phrases.Length + ") has been observed. \n\n(Yes) Override no&Names of Sections with no&Names of Phrases\n\n(No) Override no&Names of Phrases with no&Names of Sectios?"
@@ -2639,7 +2666,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     tst += "\n" + "Distribution applied. " + cmb_Tracks.Items[i].ToString().Substring(0, cmb_Tracks.Items[i].ToString().IndexOf(" - "))
                         + " track: " + tt + "/" + tth + " ,notes: " + tj + "/" + tjh + ", cords: " + tn + "/" + tnh + ".";
                 }
-            MessageBox.Show(tst, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if(c("dlcm_AdditionalManipul131") =="Yes")MessageBox.Show(tst, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btn_Close_Click_3(object sender, EventArgs e)

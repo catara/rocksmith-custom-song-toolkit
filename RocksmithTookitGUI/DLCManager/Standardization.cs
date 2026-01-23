@@ -24,6 +24,7 @@ using System.IO;
 using System.Data.SQLite;
 using SQLite;
 using SpotifyApi.NetCore;
+using System.Diagnostics.Eventing.Reader;
 
 namespace RocksmithToolkitGUI.DLCManager
 {
@@ -70,6 +71,9 @@ namespace RocksmithToolkitGUI.DLCManager
 
         private void Standardization_Load(object sender, EventArgs e)
         {
+            var cmd = "UPDATE Standardization AS S SET Suspect=\"\", Suspect_Reason=\"\"";
+            dssx = SelectFromDB("Standardization", cmd, "", cnb, cnc);
+
             Populate(ref databox, ref Main);
             databox.EditingControlShowing += DataGridView1_EditingControlShowing;
             chbx_AutoSave.Checked = ConfigRepository.Instance()["dlcm_Autosave"] == "Yes" ? true : false;
@@ -1407,53 +1411,126 @@ namespace RocksmithToolkitGUI.DLCManager
 
             var tsst = ""; var timestamp = DateTime.Now; var i = 0;
 
-            DataSet dfz = UpdateDB("Standardization", "UPDATE Standardization SET suspect=\"\"", cnb, cnc);
+            // DataSet dfz = UpdateDB("Standardization", "UPDATE Standardization SET suspect=\"\"", cnb, cnc);
 
             var cmd = "SELECT ID, Artist, Artist_Correction, Album, Album_Correction, Suspect, Suspect_Reason FROM Standardization;";
+            cmd = "SELECT (Switch([S].[Artist_Correction] <> \"\", [S].[Artist_Correction], 1=1, [S].[Artist])) AS ArtistN," +
+                " (Switch(S.Album_Correction <> \"\", [S].[Album_Correction], 1=1, [S].[Album])) AS AlbumN" +
+                ",Artist, Album, Artist_Correction, Album_Correction, Suspect, Suspect_Reason, ID FROM Standardization AS S " +
+                "ORDER BY Switch([S].[Artist_Correction] <> \"\", [S].[Artist_Correction], 1=1, [S].[Artist]), " +
+                "Switch(S.Album_Correction <> \"\", [S].[Album_Correction], 1=1, [S].[Album]);";
 
-            dfz = new DataSet(); dfz = SelectFromDB("Standardization", cmd, "", cnb, cnc);
+            DataSet dfz = new DataSet(); dfz = SelectFromDB("Standardization", cmd, "", cnb, cnc);
             var norecs = GetNoRec(dfz, cnb, cnc);//dfz.Tables.Count > 0 ? dfz.Tables[0].Rows.Count : 0;
-            var tz = ""; pB_ReadDLCs.Maximum = norecs; pB_ReadDLCs.Step = 1; pB_ReadDLCs.Value = 0;
+            var tz = ""; var tt = ""; var tk = ""; var tj = ""; var tv = ""; var to = ""; pB_ReadDLCs.Maximum = norecs; pB_ReadDLCs.Step = 1; pB_ReadDLCs.Value = 0;
             if (norecs > 0)
-                for (var k = 0; k < norecs; k++)
+                for (var k = 0; k < norecs - 1; k++)
                 {
                     pB_ReadDLCs.Increment(1);
-                    var artistx = dfz.Tables[0].Rows[k].ItemArray[2].ToString() != "" ? dfz.Tables[0].Rows[k].ItemArray[2].ToString() : dfz.Tables[0].Rows[k].ItemArray[1].ToString();
-                    var albumx = dfz.Tables[0].Rows[k].ItemArray[4].ToString() != "" ? dfz.Tables[0].Rows[k].ItemArray[4].ToString() : dfz.Tables[0].Rows[k].ItemArray[3].ToString();
+                    var ar = dfz.Tables[0].Rows[k].ItemArray[0].ToString();
+                    var al = dfz.Tables[0].Rows[k].ItemArray[1].ToString();
+                    var id = dfz.Tables[0].Rows[k].ItemArray[8].ToString();
+                    var artist = dfz.Tables[0].Rows[k].ItemArray[2].ToString();// != "" ? dfz.Tables[0].Rows[k].ItemArray[2].ToString() : dfz.Tables[0].Rows[k].ItemArray[1].ToString();
+                    var album = dfz.Tables[0].Rows[k].ItemArray[3].ToString();// != "" ? dfz.Tables[0].Rows[k].ItemArray[3].ToString() : dfz.Tables[0].Rows[k].ItemArray[3].ToString();
+                    var artistc = dfz.Tables[0].Rows[k].ItemArray[4].ToString();// != "" ? dfz.Tables[0].Rows[k].ItemArray[4].ToString() : dfz.Tables[0].Rows[k].ItemArray[1].ToString();
+                    var albumc = dfz.Tables[0].Rows[k].ItemArray[5].ToString();// != "" ? dfz.Tables[0].Rows[k].ItemArray[5].ToString() : dfz.Tables[0].Rows[k].ItemArray[3].ToString();
+                                                                               // artist = artistc != "" || artistc is not null ? artistc : artist;
+                                                                               // album = albumc != "" || albumc is not null ? albumc : album;
                     for (var l = k + 1; l < norecs; l++)
                     {
-                        var idd = dfz.Tables[0].Rows[l].ItemArray[0].ToString();
-                        var artistt = dfz.Tables[0].Rows[l].ItemArray[2].ToString() != "" ? dfz.Tables[0].Rows[l].ItemArray[2].ToString() : dfz.Tables[0].Rows[l].ItemArray[1].ToString();
-                        var albumt = dfz.Tables[0].Rows[l].ItemArray[4].ToString() != "" ? dfz.Tables[0].Rows[l].ItemArray[4].ToString() : dfz.Tables[0].Rows[l].ItemArray[3].ToString();
+                        var arn = dfz.Tables[0].Rows[l].ItemArray[0].ToString();
+                        var aln = dfz.Tables[0].Rows[l].ItemArray[1].ToString();
+                        var idd = dfz.Tables[0].Rows[l].ItemArray[8].ToString();
+                        var artistn = dfz.Tables[0].Rows[l].ItemArray[2].ToString();// != "" ? dfz.Tables[0].Rows[l].ItemArray[2].ToString() : dfz.Tables[0].Rows[l].ItemArray[1].ToString();
+                        var albumn = dfz.Tables[0].Rows[l].ItemArray[3].ToString();// != "" ? dfz.Tables[0].Rows[l].ItemArray[3].ToString() : dfz.Tables[0].Rows[l].ItemArray[3].ToString();
+                        var artistcn = dfz.Tables[0].Rows[l].ItemArray[4].ToString();// != "" ? dfz.Tables[0].Rows[l].ItemArray[4].ToString() : dfz.Tables[0].Rows[l].ItemArray[1].ToString();
+                        var albumcn = dfz.Tables[0].Rows[l].ItemArray[5].ToString();// != "" ? dfz.Tables[0].Rows[l].ItemArray[5].ToString() : dfz.Tables[0].Rows[l].ItemArray[3].ToString();
+                        //artistn = artistcn != "" || artistcn is not null ? artistcn : artistn;
+                        //albumn = albumcn != "" || albumcn is not null ? albumcn : albumn;
 
+                        if (arn == "3 Doors Down")
+                            ;
 
-                        if (artistx != "" && albumx != "" && artistt != "" && albumt != "")
-                            if (artistx.Length > 4 && albumx.Length > 4 && artistt.Length > 4 && albumt.Length > 4)
+                        if (
+                            ar != arn && !(ar.ToLower().Trim() == arn.ToLower().Trim() || ar.ToLower().Trim().Contains(arn.ToLower().Trim())
+                            || arn.ToLower().Trim().Contains(ar.ToLower().Trim()))
+                            ) break;
+
+                        if (artist != "" && album != "" && artistn != "" && albumn != "")
+                            if (ar.Length > 4 && al.Length > 4 && arn.Length > 4 && aln.Length > 4)
                             {
-                                if (
-                                    (artistx != artistt && (artistx.ToLower().Trim() == artistt.ToLower().Trim() || artistx.ToLower().Trim().Contains(artistt.ToLower().Trim()) || artistt.ToLower().Trim().Contains(artistx.ToLower().Trim())))
-                                    ||
-                                    (albumx != albumt && artistx.ToLower().Trim() == artistt.ToLower().Trim() && (albumx.ToLower().Trim() == albumt.ToLower().Trim() || albumx.ToLower().Trim().Contains(albumt.ToLower().Trim()) || albumt.ToLower().Trim().Contains(albumx.ToLower().Trim())))
-                                   )
-                                {
-                                    tz += idd + ", ";
-                                    i++;
-                                    break;
+                                //if (artistc == "" && artistcn != "") continue;
 
-                                }
-                                else
+                                //variation in spacing
+                                if (ar != arn && ar.Trim() == arn.Trim())
                                 {
-                                    bool equal = String.Equals(albumt, albumx, StringComparison.InvariantCulture);
-                                    if (equal && albumx.ToLower().Trim() != albumt.ToLower().Trim())
-                                        cmd = idd;
+                                    to += idd + ", " + id + ", ";
+                                    continue;
                                 }
+                                if (al != aln && al.Trim() == aln.Trim())
+                                {
+                                    tj += idd + ", " + id + ", ";
+                                    continue;
+                                }
+
+                                //variation in capitalization
+                                if (ar != arn && ar.ToLower().Trim() == arn.ToLower().Trim())
+                                {
+                                    tz += idd + ", " + id + ", ";
+                                    continue;
+                                }
+                                if (al != aln && al.ToLower().Trim() == aln.ToLower().Trim())
+                                {
+                                    tk += idd + ", " + id + ", ";
+                                    continue;
+                                }
+
+                                //partial match
+                                if (ar.ToLower().Trim().Contains(arn.ToLower().Trim()) && ar.ToLower().Trim() != arn.ToLower().Trim())
+                                {
+                                    tt += idd + ", " + id + ", ";
+                                    continue;
+                                }
+                                if (al.ToLower().Trim().Contains(aln.ToLower().Trim()) && al.ToLower().Trim() != aln.ToLower().Trim())
+                                {
+                                    tv += idd + ", " + id + ", ";
+                                    continue;
+                                }
+
+                                i++;
+                                break;
+                                //if (
+                                //    (artistx != artistt && (artistx.ToLower().Trim() == artistt.ToLower().Trim() || artistx.ToLower().Trim().Contains(artistt.ToLower().Trim())
+                                //    || artistt.ToLower().Trim().Contains(artistx.ToLower().Trim())))
+                                //    ||
+                                //    (albumx != albumt && artistx.ToLower().Trim() == artistt.ToLower().Trim() && (albumx.ToLower().Trim() == albumt.ToLower().Trim()
+                                //    || albumx.ToLower().Trim().Contains(albumt.ToLower().Trim()) || albumt.ToLower().Trim().Contains(albumx.ToLower().Trim())))
+                                //   )
+                                //{
+                                //    tz += idd + ", ";
+                                //    i++;
+                                //    break;
+
+                                //}
+                                //else
+                                //{
+                                //    bool equal = String.Equals(albumt, albumx, StringComparison.InvariantCulture);
+                                //    if (equal && albumx.ToLower().Trim() != albumt.ToLower().Trim())
+                                //        cmd = idd;
+                                //}
                             }
                     }
                 }
-            else UpdateLog(timestamp, "no standardization to asses for supect as in need for correction" + cmd, false, c("dlcm_TempPath"), "", "", null, null);
-
-            if (tz.Contains(",")) tz = tz.Substring(0, tz.Length - 2);
-            if (tz != "") dfz = UpdateDB("Standardization", "UPDATE Standardization SET suspect=\"Yes\" WHERE ID IN (" + tz + ")", cnb, cnc);
+            else UpdateLog(timestamp, "no standardization to asses for suspect as in need for correction" + cmd, false, c("dlcm_TempPath"), "", "", null, null);
+            to += (to == "" ? "" : ",") + tj; to = to.Replace(", ,", "");
+            tt += (tt == "" ? "" : ",") + tv; tt = tt.Replace(", ,", "");
+            tz += (tz == "" ? "" : ",") + tk; tz = tz.Replace(", ,", "");
+            if (to.Contains(",") && to.Length > 2) to = to.Substring(0, to.Length - 2);
+            if (to != "" && to.Length > 2) dfz = UpdateDB("Standardization", "UPDATE Standardization SET suspect_reason=suspect_reason+\"extra space begining or end\", suspect=\"Yes\" WHERE ID IN (" + to + ")", cnb, cnc);
+            if (tt.Contains(",") && tt.Length > 2) tt = tt.Substring(0, tt.Length - 2);
+            if (tt != "" && tt.Length > 2) dfz = UpdateDB("Standardization", "UPDATE Standardization SET suspect_reason=suspect_reason+\"artist is a subset of other\", suspect=\"Yes\" WHERE ID IN (" + tt + ")", cnb, cnc);
+            if (tz.Contains(",") && tz.Length > 2) tz = tz.Substring(0, tz.Length - 2);
+            if (tz != "" && tz.Length > 2) dfz = UpdateDB("Standardization", "UPDATE Standardization SET suspect_reason=suspect_reason+\"capitalization suspect\", suspect=\"Yes\" WHERE ID IN (" + tz + ")", cnb, cnc);
 
             Populate(ref databox, ref Main);
             databox.Refresh();
@@ -1512,6 +1589,11 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             SearchCmd = "Select * FROM Standardization;";
             Standardization_Load(null, null);
+        }
+
+        private void ContextMenuMenu_Selected_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

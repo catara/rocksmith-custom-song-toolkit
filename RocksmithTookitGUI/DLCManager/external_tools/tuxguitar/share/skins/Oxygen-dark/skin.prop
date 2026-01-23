@@ -1,12 +1,10 @@
-#table.background.0=${uiWidgetLightBackground}
-#table.background.1=${uiWidgetHighlightBackground}
-#table.background.2=${uiWidgetSelectedBackground}
-#table.background.3=${uiWidgetSelectedBackground}
-#
-#table.foreground.0=${uiWidgetLightForeground}
-#table.foreground.1=${uiWidgetHighlightForeground}
-#table.foreground.2=${uiWidgetSelectedForeground}
-#table.foreground.3=${uiWidgetSelectedForeground}
+# tracks table configurable colors: R,G,B
+#table.even-line.background=
+#table.even-line.foreground=
+#table.odd-line.background=
+#table.odd-line.foreground=
+#table.cell.background=
+#table.cell.rest-measure=
 #
 #widget.chordEditor.backgroundColor=${uiInputBackground}
 #widget.chordEditor.foregroundColor=${uiInputForeground}
@@ -24,5 +22,5 @@
 #
 #widget.printPreview.backgroundColor=${uiWidgetBackground}
 #
-#widget.transport.backgroundColor=0,0,0
-#widget.transport.foregroundColor=0,0,128
+widget.transport.backgroundColor=240,240,240
+widget.transport.foregroundColor=0,0,0

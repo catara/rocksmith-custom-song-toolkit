@@ -89,7 +89,7 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_a3 = new System.Windows.Forms.CheckBox();
             chbx_a2 = new System.Windows.Forms.CheckBox();
             btn_StandCover = new System.Windows.Forms.Button();
-            btn_suspect = new System.Windows.Forms.Button();
+            btn_Suspect = new System.Windows.Forms.Button();
             btn_GoTo = new System.Windows.Forms.Button();
             btn_SearchReset = new System.Windows.Forms.Button();
             btn_Search = new System.Windows.Forms.Button();
@@ -100,6 +100,9 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_ApplyYear = new System.Windows.Forms.Button();
             databox = new System.Windows.Forms.DataGridView();
             toolTip1 = new System.Windows.Forms.ToolTip(components);
+            ContextMenuStrip_RightClick = new System.Windows.Forms.ContextMenuStrip(components);
+            ContextMenuMenu_Selected = new System.Windows.Forms.ToolStripMenuItem();
+            ContextMenuMenu_Refresh = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)picbx_AlbumArtPath).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pxbx_SavedSpotify).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -107,6 +110,7 @@ namespace RocksmithToolkitGUI.DLCManager
             splitContainer1.Panel2.SuspendLayout();
             splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)databox).BeginInit();
+            ContextMenuStrip_RightClick.SuspendLayout();
             SuspendLayout();
             // 
             // btn_ChangeCover
@@ -458,7 +462,7 @@ namespace RocksmithToolkitGUI.DLCManager
             splitContainer1.Panel1.Controls.Add(btn_CopyTitle2TitleSort);
             splitContainer1.Panel1.Controls.Add(btn_StandCover);
             splitContainer1.Panel1.Controls.Add(btn_Delete);
-            splitContainer1.Panel1.Controls.Add(btn_suspect);
+            splitContainer1.Panel1.Controls.Add(btn_Suspect);
             splitContainer1.Panel1.Controls.Add(btn_CopyArtist2ArtistSort);
             splitContainer1.Panel1.Controls.Add(btn_GoTo);
             splitContainer1.Panel1.Controls.Add(btn_SearchReset);
@@ -760,17 +764,19 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_StandCover.UseVisualStyleBackColor = true;
             btn_StandCover.Click += btn_StandCover_Click;
             // 
-            // btn_suspect
+            // btn_Suspect
             // 
-            btn_suspect.Location = new System.Drawing.Point(213, 76);
-            btn_suspect.Margin = new System.Windows.Forms.Padding(2);
-            btn_suspect.Name = "btn_suspect";
-            btn_suspect.Size = new System.Drawing.Size(82, 26);
-            btn_suspect.TabIndex = 435;
-            btn_suspect.Text = "Suspect";
-            toolTip1.SetToolTip(btn_suspect, "Mark as suspect any similar Artist (trimemd, lovercassed comparison, subset of the other name)(smilar album with same artist)");
-            btn_suspect.UseVisualStyleBackColor = true;
-            btn_suspect.Click += btn_suspect_Click;
+            btn_Suspect.BackColor = System.Drawing.SystemColors.WindowFrame;
+            btn_Suspect.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            btn_Suspect.Location = new System.Drawing.Point(213, 76);
+            btn_Suspect.Margin = new System.Windows.Forms.Padding(2);
+            btn_Suspect.Name = "btn_Suspect";
+            btn_Suspect.Size = new System.Drawing.Size(82, 26);
+            btn_Suspect.TabIndex = 435;
+            btn_Suspect.Text = "Suspect";
+            toolTip1.SetToolTip(btn_Suspect, "Mark as suspect any similar Artist (trimemd, lovercassed comparison, subset of the other name)(smilar album with same artist)");
+            btn_Suspect.UseVisualStyleBackColor = false;
+            btn_Suspect.Click += btn_suspect_Click;
             // 
             // btn_GoTo
             // 
@@ -909,6 +915,27 @@ namespace RocksmithToolkitGUI.DLCManager
             databox.RowLeave += databox_RowLeave;
             databox.SelectionChanged += databox_SelectionChanged;
             // 
+            // ContextMenuStrip_RightClick
+            // 
+            ContextMenuStrip_RightClick.ImageScalingSize = new System.Drawing.Size(32, 32);
+            ContextMenuStrip_RightClick.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { ContextMenuMenu_Selected, ContextMenuMenu_Refresh });
+            ContextMenuStrip_RightClick.Name = "cMS_RightClick";
+            ContextMenuStrip_RightClick.Size = new System.Drawing.Size(133, 48);
+            // 
+            // ContextMenuMenu_Selected
+            // 
+            ContextMenuMenu_Selected.CheckOnClick = true;
+            ContextMenuMenu_Selected.Name = "ContextMenuMenu_Selected";
+            ContextMenuMenu_Selected.Size = new System.Drawing.Size(132, 22);
+            ContextMenuMenu_Selected.Text = "(un)/Select";
+            ContextMenuMenu_Selected.Click += ContextMenuMenu_Selected_Click;
+            // 
+            // ContextMenuMenu_Refresh
+            // 
+            ContextMenuMenu_Refresh.Name = "ContextMenuMenu_Refresh";
+            ContextMenuMenu_Refresh.Size = new System.Drawing.Size(132, 22);
+            ContextMenuMenu_Refresh.Text = "Refresh";
+            // 
             // Standardization
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -930,6 +957,7 @@ namespace RocksmithToolkitGUI.DLCManager
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)databox).EndInit();
+            ContextMenuStrip_RightClick.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -1032,7 +1060,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Button btn_GoTo;
         private System.Windows.Forms.Button btn_SearchReset;
         private System.Windows.Forms.Button btn_Search;
-        private System.Windows.Forms.Button btn_suspect;
+        private System.Windows.Forms.Button btn_Suspect;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btn_StandCover;
         private System.Windows.Forms.CheckBox chbx_a5;
@@ -1048,5 +1076,8 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.CheckedListBox chbx_AllDfltGroups;
+        private System.Windows.Forms.ContextMenuStrip ContextMenuStrip_RightClick;
+        private System.Windows.Forms.ToolStripMenuItem ContextMenuMenu_Selected;
+        private System.Windows.Forms.ToolStripMenuItem ContextMenuMenu_Refresh;
     }
 }

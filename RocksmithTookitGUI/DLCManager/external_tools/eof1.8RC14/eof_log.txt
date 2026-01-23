@@ -1,0 +1,533 @@
+949: Logging started during program initialization at 12/08/25 14:46:28
+949: EOF v1.8RC14 (11-25-2025)
+949: eof_controller_load_config() entered
+949: eof_controller_read_button_names() entered
+949: eof_controller_load_config() entered
+949: eof_controller_read_button_names() entered
+949: Logging level set to normal
+949: 	Importing chord shape definitions
+949: eof_load_chord_shape_definitions() entered
+949: 	169 chord shape definitions imported
+949: eof_set_display_mode() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_load_data() entered
+949: eof_init_colors() entered
+949: eof_undo_reset() entered
+949: 	Initializing audio
+949: eof_mix_init() entered
+949: 	Loading audio samples
+949: 	Checking for crash recovery files
+949: 	Entering main program loop
+949: eof_menu_file_load() entered
+949: eof_destroy_ogg() entered
+949: 	Loading project
+949: eof_load_song() entered
+949: eof_create_song() entered
+949: eof_load_song_pf() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: 	Project loaded
+949: 	Set eof_song_path to "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Peaches - Boys Wanna Be Her\"
+949: eof_import_ini() entered
+949: 	Buffering INI file into memory
+949: 	Tokenizing INI file buffer
+949: 	Parsing INI file buffer
+949: 	Processing INI file contents
+949: 	Freeing INI buffer
+949: 	Attempting to load first OGG profile "guitar.ogg"
+949: eof_load_ogg_quick() entered
+949: eof_destroy_ogg() entered
+949: 	Loading OGG file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Peaches - Boys Wanna Be Her\guitar.ogg"
+949: eof_truncate_chart() entered
+949: 	Deleting beats
+949: eof_truncate_chart() exiting
+949: 	Initializing after load
+949: eof_init_after_load() entered
+949: eof_truncate_chart() entered
+949: 	Deleting beats
+949: eof_truncate_chart() exiting
+949: eof_select_beat() entered
+949: eof_undo_reset() entered
+949: eof_sort_notes() entered
+949: eof_fixup_notes() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_sort_events() entered
+949: eof_delete_blank_events() entered
+949: 	Removed 0 empty text events
+949: 	Lyrics OK
+949: 	Initialization after load complete
+949: eof_fixup_notes() entered
+949: Switching Notes Panel to Rocksmith.
+949: eof_set_display_mode() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: 	New notes panel window instance:  0x10E35E30
+949: Switching Notes Panel to Rocksmith.
+949: eof_window_destroy() entered
+949: eof_window_create() entered
+949: 	New notes panel window instance:  0x10E36290
+949: Browsing for Notes panel file
+949: 	Initializing browse dialog to ""
+949: 	Toggling x2 zoom
+949: eof_set_display_mode() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: 	New notes panel window instance:  0x10E360B0
+949: "File>Quick save" selected
+949: 	Quick saving chart
+949: eof_save_helper() entered
+949: eof_sort_notes() entered
+949: eof_fixup_notes() entered
+949: eof_copy_file() entered
+949: 	Copying file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Peaches - Boys Wanna Be Her\notes.eof" to "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Peaches - Boys Wanna Be Her\notes.previous_save.eof.bak"
+949: 	Buffer copying
+949: 	Copy successful
+949: 	Saving project
+949: 	Project saved at 12/08/25 15:12:30
+949: Exporting Rocksmith XML files
+949: eof_export_rocksmith_2_track() entered
+949: eof_truncate_chart() entered
+949: 	Deleting beats
+949: eof_truncate_chart() exiting
+949: 	! Adding missing COUNT phrase
+949: 	! Adding missing END phrase
+949: eof_sort_events() entered
+949: 	! Adding missing noguitar RS section
+949: eof_sort_events() entered
+949: eof_build_section_list() entered
+949: eof_rs_build_chord_list() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_sort_events() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_sort_events() entered
+949: eof_sort_events() entered
+949: 	Rocksmith 2 export completed in 0.01 seconds
+949: eof_export_rocksmith_2_track() entered
+949: Cannot export track "PART REAL_BASS_22" in Rocksmith format, it has no populated difficulties
+949: eof_export_rocksmith_2_track() entered
+949: eof_truncate_chart() entered
+949: 	Deleting beats
+949: eof_truncate_chart() exiting
+949: 	! Adding missing COUNT phrase
+949: 	! Adding missing END phrase
+949: eof_sort_events() entered
+949: 	! Adding missing noguitar RS section
+949: eof_sort_events() entered
+949: eof_build_section_list() entered
+949: eof_rs_build_chord_list() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_sort_events() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_sort_events() entered
+949: eof_sort_events() entered
+949: 	Rocksmith 2 export completed in 0.01 seconds
+949: eof_export_rocksmith_2_track() entered
+949: Cannot export track "PART REAL_GUITAR_22" in Rocksmith format, it has no populated difficulties
+949: eof_export_rocksmith_2_track() entered
+949: Cannot export track "PART REAL_GUITAR_BONUS" in Rocksmith format, it has no populated difficulties
+949: 	Save completed
+949: 	Importing Rocksmith file
+949: eof_load_rs() entered
+949: eof_prepare_undo() entered
+949: 		Processing <phrases> tag on line #21
+949: 			2 phrases loaded
+949: 		Processing <phraseIterations> tag on line #26
+949: 			2 phrase iterations loaded
+949: 		Processing <chordTemplates> tag on line #32
+949: 			5 chord templates loaded
+949: 		Processing <ebeats> tag on line #40
+949: 		Processing <tones> tag on line #580
+949: 			0 tones loaded
+949: 		Processing <sections> tag on line #584
+949: 			1 sections loaded
+949: 		Processing <events> tag on line #587
+949: 			1 events loaded
+949: 		Processing <levels> tag on line #596
+949: 			Processing <level> tag on line #597
+949: 				Processing <notes> tag on line #598
+949: 	Placed bend tech note at 3550ms
+949: 	Placed bend tech note at 3550ms
+949: 	Placed bend tech note at 3675ms
+949: 	Placed bend tech note at 11550ms
+949: 	Placed bend tech note at 11550ms
+949: 	Placed bend tech note at 11675ms
+949: 	Placed bend tech note at 34800ms
+949: 	Placed bend tech note at 34800ms
+949: 	Placed bend tech note at 34988ms
+949: 	Placed bend tech note at 42800ms
+949: 	Placed bend tech note at 42800ms
+949: 	Placed bend tech note at 42988ms
+949: 	Placed bend tech note at 50800ms
+949: 	Placed bend tech note at 50800ms
+949: 	Placed bend tech note at 50988ms
+949: 	Placed bend tech note at 100800ms
+949: 	Placed bend tech note at 100800ms
+949: 	Placed bend tech note at 100988ms
+949: 	Placed bend tech note at 108800ms
+949: 	Placed bend tech note at 108800ms
+949: 	Placed bend tech note at 108988ms
+949: 	Placed bend tech note at 151550ms
+949: 	Placed bend tech note at 151550ms
+949: 	Placed bend tech note at 151675ms
+949: 	Placed bend tech note at 159550ms
+949: 	Placed bend tech note at 159550ms
+949: 	Placed bend tech note at 159675ms
+949: 					Added 184 notes
+949: 				Processing <chords> tag on line #838
+949: 					Added 54 chords
+949: 				Processing <anchors> tag on line #1066
+949: 					Added 11 anchors
+949: 				Processing <handShapes> tag on line #1079
+949: 					Parsed 54 handshapes
+949: 	Parsing complete.  Finishing up
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_sort_events() entered
+949: Cleaning up beats
+949: eof_truncate_chart() entered
+949: 	Deleting beats
+949: eof_truncate_chart() exiting
+949: Cleaning up imported notes
+949: eof_sort_events() entered
+949: eof_delete_blank_events() entered
+949: 	Removed 0 empty text events
+949: eof_cleanup_beat_flags() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_prepare_undo() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_music_play() entered
+949: 	Starting playback
+949: eof_mix_start() entered
+949: eof_music_play() entered
+949: 	Stopping playback
+949: eof_music_play() entered
+949: 	Starting 25% speed time stretch playback
+949: eof_mix_start() entered
+949: eof_music_play() entered
+949: 	Stopping playback
+949: eof_window_destroy() entered
+949: eof_window_create() entered
+949: 	New notes panel window instance:  0x10E360B0
+949: eof_music_play() entered
+949: 	Starting 25% speed time stretch playback
+949: eof_mix_start() entered
+949: eof_music_play() entered
+949: 	Stopping playback
+949: eof_music_play() entered
+949: 	Starting 25% speed time stretch playback
+949: eof_mix_start() entered
+949: eof_music_play() entered
+949: 	Stopping playback
+949: eof_prepare_undo() entered
+949: eof_prepare_undo() entered
+949: eof_prepare_undo() entered
+949: eof_prepare_undo() entered
+949: eof_music_play() entered
+949: 	Starting 25% speed time stretch playback
+949: eof_mix_start() entered
+949: eof_music_play() entered
+949: 	Stopping playback
+949: eof_prepare_undo() entered
+949: eof_prepare_undo() entered
+949: eof_prepare_undo() entered
+949: eof_prepare_undo() entered
+949: 	Saving periodic backup
+949: eof_prepare_undo() entered
+949: eof_music_play() entered
+949: 	Starting 25% speed time stretch playback
+949: eof_mix_start() entered
+949: eof_music_play() entered
+949: 	Stopping playback
+949: eof_music_play() entered
+949: 	Starting 25% speed time stretch playback
+949: eof_mix_start() entered
+949: eof_music_play() entered
+949: 	Stopping playback
+949: eof_prepare_undo() entered
+949: eof_prepare_undo() entered
+949: eof_music_play() entered
+949: 	Starting 25% speed time stretch playback
+949: eof_mix_start() entered
+949: eof_music_play() entered
+949: 	Stopping playback
+949: "File>Quick save" selected
+949: 	Quick saving chart
+949: eof_save_helper() entered
+949: eof_sort_notes() entered
+949: eof_fixup_notes() entered
+949: eof_copy_file() entered
+949: 	Copying file "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Peaches - Boys Wanna Be Her\notes.eof" to "C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\eof1.8RC12\Peaches - Boys Wanna Be Her\notes.previous_save.eof.bak"
+949: 	Buffer copying
+949: 	Copy successful
+949: 	Saving project
+949: 	Project saved at 12/08/25 15:52:16
+949: Exporting Rocksmith XML files
+949: eof_export_rocksmith_2_track() entered
+949: eof_truncate_chart() entered
+949: 	Deleting beats
+949: eof_truncate_chart() exiting
+949: 	! Adding missing COUNT phrase
+949: 	! Adding missing END phrase
+949: eof_sort_events() entered
+949: 	! Adding missing noguitar RS section
+949: eof_sort_events() entered
+949: eof_build_section_list() entered
+949: eof_rs_build_chord_list() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_sort_events() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_sort_events() entered
+949: eof_sort_events() entered
+949: 	Rocksmith 2 export completed in 0.01 seconds
+949: eof_export_rocksmith_2_track() entered
+949: Cannot export track "PART REAL_BASS_22" in Rocksmith format, it has no populated difficulties
+949: eof_export_rocksmith_2_track() entered
+949: eof_truncate_chart() entered
+949: 	Deleting beats
+949: eof_truncate_chart() exiting
+949: eof_sort_events() entered
+949: eof_sort_events() entered
+949: eof_build_section_list() entered
+949: eof_rs_build_chord_list() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_sort_events() entered
+949: eof_song_delete_text_event() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_sort_events() entered
+949: eof_sort_events() entered
+949: 	Rocksmith 2 export completed in 0.01 seconds
+949: eof_export_rocksmith_2_track() entered
+949: Cannot export track "PART REAL_GUITAR_22" in Rocksmith format, it has no populated difficulties
+949: eof_export_rocksmith_2_track() entered
+949: Cannot export track "PART REAL_GUITAR_BONUS" in Rocksmith format, it has no populated difficulties
+949: 	Save completed
+949: eof_prepare_undo() entered
+949: eof_prepare_undo() entered
+949: eof_prepare_undo() entered
+949: eof_undo_apply() entered
+949: eof_undo_load_state() entered
+949: eof_create_song() entered
+949: eof_load_song_pf() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: 	Closing project
+949: eof_destroy_song() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_MIDI_empty_track_list() entered
+949: 	Project closed
+949: 	Initializing after load
+949: eof_init_after_load() entered
+949: eof_truncate_chart() entered
+949: 	Deleting beats
+949: eof_truncate_chart() exiting
+949: eof_sort_notes() entered
+949: eof_fixup_notes() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_sort_events() entered
+949: eof_delete_blank_events() entered
+949: 	Removed 0 empty text events
+949: 	Lyrics OK
+949: 	Initialization after load complete
+949: eof_select_beat() entered
+949: eof_fix_catalog_selection() entered
+949: eof_undo_apply() entered
+949: eof_undo_load_state() entered
+949: eof_create_song() entered
+949: eof_load_song_pf() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: 	Closing project
+949: eof_destroy_song() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_MIDI_empty_track_list() entered
+949: 	Project closed
+949: 	Initializing after load
+949: eof_init_after_load() entered
+949: eof_truncate_chart() entered
+949: 	Deleting beats
+949: eof_truncate_chart() exiting
+949: eof_sort_notes() entered
+949: eof_fixup_notes() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_sort_events() entered
+949: eof_delete_blank_events() entered
+949: 	Removed 0 empty text events
+949: 	Lyrics OK
+949: 	Initialization after load complete
+949: eof_select_beat() entered
+949: eof_fix_catalog_selection() entered
+949: eof_undo_apply() entered
+949: eof_undo_load_state() entered
+949: eof_create_song() entered
+949: eof_load_song_pf() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: eof_track_pro_guitar_sort_tone_changes() entered
+949: 	Closing project
+949: eof_destroy_song() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_MIDI_empty_track_list() entered
+949: 	Project closed
+949: 	Initializing after load
+949: eof_init_after_load() entered
+949: eof_truncate_chart() entered
+949: 	Deleting beats
+949: eof_truncate_chart() exiting
+949: eof_sort_notes() entered
+949: eof_fixup_notes() entered
+949: eof_cleanup_beat_flags() entered
+949: eof_sort_events() entered
+949: eof_delete_blank_events() entered
+949: 	Removed 0 empty text events
+949: 	Lyrics OK
+949: 	Initialization after load complete
+949: eof_select_beat() entered
+949: eof_fix_catalog_selection() entered
+949: eof_set_display_mode() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: eof_window_create() entered
+949: 	New notes panel window instance:  0x10E360B0
+949: eof_window_destroy() entered
+949: eof_window_create() entered
+949: 	New notes panel window instance:  0x10E360B0
+949: eof_restore_oggs_helper() entered
+949: eof_exit() entered
+949: eof_save_config() entered
+949: eof_controller_save_config() entered
+949: eof_controller_save_config() entered
+949: eof_mix_exit() entered
+949: eof_destroy_data() entered
+949: eof_destroy_ogg() entered
+949: 	Closing project
+949: eof_destroy_song() entered
+949: eof_destroy_waveform() entered
+949: eof_destroy_spectrogram() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_song_delete_track() entered
+949: eof_MIDI_empty_track_list() entered
+949: 	Project closed
+949: eof_destroy_waveform() entered
+949: eof_destroy_spectrogram() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: eof_window_destroy() entered
+949: Logging stopped during program completion at 12/08/25 19:31:45

@@ -1,27 +1,31 @@
-﻿using System;
+﻿using Ookii.Dialogs; //cue text
+using RocksmithToolkitGUI;
+using RocksmithToolkitGUI.DLCManager;
+using RocksmithToolkitLib;//config
+using RocksmithToolkitLib.DLCPackage; //4packing
+using RocksmithToolkitLib.DLCPackage.AggregateGraph;
+using RocksmithToolkitLib.DLCPackage.XBlock;
+using RocksmithToolkitLib.Extensions; //dds
+using RocksmithToolkitLib.XML;
+using RocksmithToolkitLib.XmlRepository;
+using SQLite;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-
 //bcapi
 using System.Data.OleDb;
-using System.IO; //file functions
-using RocksmithToolkitGUI;
-using RocksmithToolkitGUI.DLCManager;
-using RocksmithToolkitLib.Extensions; //dds
-using System.Diagnostics;
-using Ookii.Dialogs; //cue text
 using System.Data.SqlClient;
-using System.Net; //4ftp
-using RocksmithToolkitLib;//config
-using RocksmithToolkitLib.DLCPackage; //4packing
-using RocksmithToolkitLib.XmlRepository;
 using System.Data.SQLite;
-using SQLite;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO; //file functions
+using System.Linq;
+using System.Net; //4ftp
+using System.Security.Cryptography;
+using System.Text;
+using System.Windows.Forms;
+using X360.Other;
 using static RocksmithToolkitGUI.DLCManager.GenericFunctions;
 using static RocksmithToolkitGUI.DLCManager.UtilitiesFunctions;
 
@@ -51,7 +55,9 @@ namespace RocksmithToolkitGUI.DLCManager
         //private object cbx_Lead;
         //public DataAccess da = new DataAccess();
         //bcapi
-        public string SearchCmd = "";
+        public string SearchCmd = "SELECT ID, PSARCName, Artist, ArtistSort, Album, Title, AlbumYear, Arrangements, Removed, AlbumArtPath" +
+            ", Comments, Identifier, SongsHSANPath, Platform, AudioPath, AudioPreviewPath, Selected, PS3Region, PSACRBackupPath, PSARCHash, AudioHash, AudioPreviewHash" +
+            ", ArtHash, AudioPathWEM, AudioPreviewPathWEM, AlbumSort, CACHEPSARCName, Track_No FROM Cache";
         public bool GroupChanged = false;
         public string DB_Path = "";
         public string TempPath = "";
@@ -71,11 +77,11 @@ namespace RocksmithToolkitGUI.DLCManager
         {
             //DataAccess da = new DataAccess();
             //MessageBox.Show("test0");
-            SearchCmd = "SELECT * from Cache AS O";
+            SearchCmd = SearchCmd + " ";
             Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
             DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
             chbx_Autosave.Checked = ConfigRepository.Instance()["dlcm_Autosave"] == "Yes" ? true : false;
-            txt_FTPPath.Text = c("dlcm_FTP" + c("dlcm_MainDBFormat").Replace("PS3_", ""));// ConfigRepository.Instance()["dlcm_FTP" + chbx_PreSavedFTP.Text];
+            txt_FTPPath.Text = c("dlcm_MainDBFormat").Contains("PS3_") ? c("dlcm_FTP" + c("dlcm_MainDBFormat").Replace("PS3_", "")) : c("dlcm_PC");// ConfigRepository.Instance()["dlcm_FTP" + chbx_PreSavedFTP.Text];
             if (ConfigRepository.Instance()["dlcm_RemoveBassDD"] == "Yes") chbx_RemoveBassDD.Checked = true;
             else chbx_RemoveBassDD.Checked = false;
             if (ConfigRepository.Instance()["dlcm_Debug"] == "Yes")
@@ -174,7 +180,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //MAYBE HERE CAN ACTIVATE THE INDIV CELLS
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btn_OpenMainDB_Click(object sender, EventArgs e)
         {
             StartProcesss(@DB_Path, null);
             // DB_Path = DB_Path + "\\AccessDB.accdb"; //DLCManager.txt_DBFolder.Text
@@ -203,7 +209,7 @@ namespace RocksmithToolkitGUI.DLCManager
             {
                 i = DataGridView1.SelectedCells[0].RowIndex;
                 txt_ID.Text = DataGridView1.Rows[i].Cells[0].Value.ToString();
-                txt_Identifier.Text = DataGridView1.Rows[i].Cells[1].Value.ToString();
+                txt_PSARCName.Text = DataGridView1.Rows[i].Cells[1].Value.ToString();
                 txt_Artist.Text = DataGridView1.Rows[i].Cells[2].Value.ToString();
                 txt_ArtistSort.Text = DataGridView1.Rows[i].Cells[3].Value.ToString();
                 txt_Album.Text = DataGridView1.Rows[i].Cells[4].Value.ToString();
@@ -214,7 +220,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 else if (DataGridView1.Rows[i].Cells[8].Value.ToString() == "No") chbx_Removed.Checked = false;
                 txt_AlbumArtPath.Text = DataGridView1.Rows[i].Cells[9].Value.ToString();
                 rtxt_Comments.Text = DataGridView1.Rows[i].Cells[10].Value.ToString();
-                txt_PSARCName.Text = DataGridView1.Rows[i].Cells[11].Value.ToString();
+                txt_Identifier.Text = DataGridView1.Rows[i].Cells[11].Value.ToString();
                 txt_SongsHSANPath.Text = DataGridView1.Rows[i].Cells[12].Value.ToString();
                 txt_Platform.Text = DataGridView1.Rows[i].Cells[13].Value.ToString();
                 if (DataGridView1.Rows[i].Cells[14].Value != null) txt_AudioPath.Text = DataGridView1.Rows[i].Cells[14].Value.ToString();
@@ -294,7 +300,7 @@ namespace RocksmithToolkitGUI.DLCManager
             }
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void btn_Save_Click(object sender, EventArgs e)
         {
             SaveRecord();
         }
@@ -433,17 +439,17 @@ namespace RocksmithToolkitGUI.DLCManager
             //}
             //MessageBox.Show("test");
             DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn { DataPropertyName = "ID", HeaderText = "ID ", Width = 50 };
-            DataGridViewTextBoxColumn Identifier = new DataGridViewTextBoxColumn { DataPropertyName = "Identifier", HeaderText = "Identifier ", Width = 70 };
-            DataGridViewTextBoxColumn Artist = new DataGridViewTextBoxColumn { DataPropertyName = "Artist", HeaderText = "Artist ", Width = 155 };
-            DataGridViewTextBoxColumn ArtistSort = new DataGridViewTextBoxColumn { DataPropertyName = "ArtistSort", HeaderText = "ArtistSort ", Width = 155 };
-            DataGridViewTextBoxColumn Album = new DataGridViewTextBoxColumn { DataPropertyName = "Album", HeaderText = "Album ", Width = 175 };
-            DataGridViewTextBoxColumn Title = new DataGridViewTextBoxColumn { DataPropertyName = "Title", HeaderText = "Title ", Width = 175 };
-            DataGridViewTextBoxColumn AlbumYear = new DataGridViewTextBoxColumn { DataPropertyName = "AlbumYear", HeaderText = "AlbumYear ", Width = 50 };
-            DataGridViewTextBoxColumn Arrangements = new DataGridViewTextBoxColumn { DataPropertyName = "Arrangements", HeaderText = "Arrangements ", Width = 155 };
+            DataGridViewTextBoxColumn PSARCName = new DataGridViewTextBoxColumn { DataPropertyName = "PSARCName", HeaderText = "PSARCName ", Width = 350 };
+            DataGridViewTextBoxColumn Artist = new DataGridViewTextBoxColumn { DataPropertyName = "Artist", HeaderText = "Artist ", Width = 455 };
+            DataGridViewTextBoxColumn ArtistSort = new DataGridViewTextBoxColumn { DataPropertyName = "ArtistSort", HeaderText = "ArtistSort ", Width = 50 };
+            DataGridViewTextBoxColumn Album = new DataGridViewTextBoxColumn { DataPropertyName = "Album", HeaderText = "Album ", Width = 375 };
+            DataGridViewTextBoxColumn Title = new DataGridViewTextBoxColumn { DataPropertyName = "Title", HeaderText = "Title ", Width = 575 };
+            DataGridViewTextBoxColumn AlbumYear = new DataGridViewTextBoxColumn { DataPropertyName = "AlbumYear", HeaderText = "AlbumYear ", Width = 20 };
+            DataGridViewTextBoxColumn Arrangements = new DataGridViewTextBoxColumn { DataPropertyName = "Arrangements", HeaderText = "Arrangements ", Width = 555 };
             DataGridViewTextBoxColumn Removed = new DataGridViewTextBoxColumn { DataPropertyName = "Removed", HeaderText = "Removed ", Width = 50 };
             DataGridViewTextBoxColumn AlbumArtPath = new DataGridViewTextBoxColumn { DataPropertyName = "AlbumArtPath", HeaderText = "AlbumArtPath ", Width = 55 };
             DataGridViewTextBoxColumn Comments = new DataGridViewTextBoxColumn { DataPropertyName = "Comments", HeaderText = "Comments ", Width = 495 };
-            DataGridViewTextBoxColumn PSARCName = new DataGridViewTextBoxColumn { DataPropertyName = "PSARCName", HeaderText = "PSARCName ", Width = 195 };
+            DataGridViewTextBoxColumn Identifier = new DataGridViewTextBoxColumn { DataPropertyName = "Identifier", HeaderText = "Identifier ", Width = 70 };
             DataGridViewTextBoxColumn SongsHSANPath = new DataGridViewTextBoxColumn { DataPropertyName = "SongsHSANPath", HeaderText = "SongsHSANPath ", Width = 295 };
             DataGridViewTextBoxColumn Platform = new DataGridViewTextBoxColumn { DataPropertyName = "Platform", HeaderText = "Platform ", Width = 40 };
             DataGridViewTextBoxColumn AudioPath = new DataGridViewTextBoxColumn { DataPropertyName = "AudioPath", HeaderText = "AudioPath ", Width = 295 };
@@ -515,10 +521,10 @@ namespace RocksmithToolkitGUI.DLCManager
             bs.DataSource = dssx.Tables["Cache"];
             DataGridView.DataSource = bs;
             dssx.Dispose();
-            DataSet dooz = new DataSet(); dooz = SelectFromDB("Groups", "SELECT * from Cache AS O WHERE Removed=\"No\"", "", cnb, cnc);
+            DataSet dooz = new DataSet(); dooz = SelectFromDB("Groups", SearchCmd + "  WHERE Removed=\"No\"", "", cnb, cnc);
             //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
-            //    OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Cache AS O WHERE Removed=\"No\"", cn);
+            //    OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Cache  WHERE Removed=\"No\"", cn);
             //    da.Fill(dssx, "Cache");
             //    dssx.Dispose();
             //    //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
@@ -621,7 +627,7 @@ namespace RocksmithToolkitGUI.DLCManager
 
                     //rtxt_StatisticsOnReadDLCs.Text += "\n  a= " + i + MaximumSize+dataRow.ItemArray[0].ToString();
                     files[i].ID = dataRow.ItemArray[0].ToString().ToInt32();
-                    files[i].Identifier = dataRow.ItemArray[1].ToString();
+                    files[i].PSARCName = dataRow.ItemArray[1].ToString();
                     files[i].Artist = dataRow.ItemArray[2].ToString();
                     files[i].ArtistSort = dataRow.ItemArray[3].ToString();
                     files[i].Album = dataRow.ItemArray[4].ToString();
@@ -631,7 +637,7 @@ namespace RocksmithToolkitGUI.DLCManager
                     files[i].Removed = dataRow.ItemArray[8].ToString();
                     files[i].AlbumArtPath = dataRow.ItemArray[9].ToString();
                     files[i].Comments = dataRow.ItemArray[10].ToString();
-                    files[i].PSARCName = dataRow.ItemArray[11].ToString();
+                    files[i].Identifier = dataRow.ItemArray[11].ToString();
                     files[i].SongsHSANPath = dataRow.ItemArray[12].ToString();
                     files[i].Platform = dataRow.ItemArray[13].ToString();
                     files[i].AudioPath = dataRow.ItemArray[14].ToString();
@@ -682,10 +688,10 @@ namespace RocksmithToolkitGUI.DLCManager
         }
         public void generatehsan()
         {
-            DataSet drsx = new DataSet(); drsx = SelectFromDB("Cache", "SELECT DISTINCT SongsHSANPath, PSARCName, Platform from Cache AS O;", "", cnb, cnc);
+            DataSet drsx = new DataSet(); drsx = SelectFromDB("Cache", "SELECT DISTINCT SongsHSANPath, PSARCName, Platform from Cache ;", "", cnb, cnc);
             //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
             //{
-            //    OleDbDataAdapter da = new OleDbDataAdapter("SELECT DISTINCT SongsHSANPath, PSARCName, Platform from Cache AS O;", cn);
+            //    OleDbDataAdapter da = new OleDbDataAdapter("SELECT DISTINCT SongsHSANPath, PSARCName, Platform from Cache ;", cn);
             //    da.Fill(drsx, "Cache");
             pB_ReadDLCs.Value = 0;
             if (drsx.Tables[0].Rows.Count != 0)
@@ -979,8 +985,8 @@ namespace RocksmithToolkitGUI.DLCManager
                     songkey = "";
                     songkey = ((line.Trim().ToLower()).Replace("\"songkey\" : \"", "").Replace("\"", "")).Replace(",", "");
 
-                    DataSet disx = new DataSet(); disx = SelectFromDB("Groups", "SELECT Removed from Cache AS O WHERE LCASE(Identifier)=\"" + songkey + "\"", "", cnb, cnc);
-                    //cmd = "SELECT Removed from Cache AS O WHERE LCASE(Identifier)=\"" + songkey + "\"";
+                    DataSet disx = new DataSet(); disx = SelectFromDB("Groups", "SELECT Removed from Cache  WHERE LCASE(Identifier)=\"" + songkey + "\"", "", cnb, cnc);
+                    //cmd = "SELECT Removed from Cache  WHERE LCASE(Identifier)=\"" + songkey + "\"";
                     //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                     //{
                     //    DataSet disx = new DataSet();
@@ -1313,7 +1319,7 @@ namespace RocksmithToolkitGUI.DLCManager
             if (Pltfrm == "Platform") MessageBox.Show("Select 1 respresentative of THE desire Source plafrom");
             else
             {
-                var cmd = "SELECT Identifier, Removed,Selected, Comments FROM Cache AS O WHERE Platform=\"" + Pltfrm + "\"";
+                var cmd = "SELECT Identifier, Removed,Selected, Comments FROM Cache  WHERE Platform=\"" + Pltfrm + "\"";
                 using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft." + ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                 {
                     DataSet disx = new DataSet();
@@ -1585,7 +1591,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //DataSet dssx = new DataSet();
                 //using (OleDbConnection cn = new OleDbConnection("Provider=Microsoft."+ConfigRepository.Instance()["dlcm_AccessDLLVersion"] + ";Data Source=" + DB_Path))
                 //{
-                //    OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Cache AS O", cn);
+                //    OleDbDataAdapter da = new OleDbDataAdapter("SELECT * from Cache ", cn);
                 //    da.Fill(dssx, "Cache");
                 //    dssx.Dispose();
                 //    //da = new OleDbDataAdapter("SELECT Identifier,ContactPosition FROM PositionType;", cn);
@@ -1594,7 +1600,7 @@ namespace RocksmithToolkitGUI.DLCManager
                 //    //da.Fill(ds, "Badge");
                 //}
                 DeleteFromDB("Groups", "DELETE * FROM Groups WHERE Type=\"Retail\" AND Groupz= \"" + chbx_Group.Text + "\"", cnb, cnc);
-                DataSet ds = new DataSet(); ds = SelectFromDB("Cache", "SELECT * from Cache AS O", "", cnb, cnc);
+                DataSet ds = new DataSet(); ds = SelectFromDB("Cache", SearchCmd + " ", "", cnb, cnc);
                 var recs = GetNoRec(dssx, cnb, cnc);//dssx.Tables[0].Rows.Count;
                 pB_ReadDLCs.Value = 0;
                 if (recs != 0)
@@ -1740,7 +1746,7 @@ namespace RocksmithToolkitGUI.DLCManager
             //    Console.WriteLine(ee.Message);
             //    MessageBox.Show("Error at select filtered " + ee);
             //}
-            DataSet dxr = new DataSet(); dxr = UpdateDB("Cache", "SELECT * FROM Cache", cnb, cnc);
+            DataSet dxr = new DataSet(); dxr = UpdateDB("Cache", SearchCmd, cnb, cnc);
         }
 
         private void btn_SelectNone_Click(object sender, EventArgs e)
@@ -1784,7 +1790,7 @@ namespace RocksmithToolkitGUI.DLCManager
         {
 
             //MessageBox.Show(cmb_Filter.Text.ToString() + SearchCmd);
-            SearchCmd = "SELECT * FROM Cache WHERE ";
+            SearchCmd = SearchCmd + " WHERE ";
             var Filtertxt = cmb_Filter.Text;//cmb_Filter.SelectedValue.ToString();
 
             switch (Filtertxt)
@@ -1798,6 +1804,9 @@ namespace RocksmithToolkitGUI.DLCManager
                     break;
                 case "PS3":
                     SearchCmd += "Platform = 'PS3'";
+                    break;
+                case "PS4":
+                    SearchCmd += "Platform = 'PS4'";
                     break;
                 case "Mac":
                     SearchCmd += "Platform ='Mac'";
@@ -1852,51 +1861,54 @@ namespace RocksmithToolkitGUI.DLCManager
 
         }
 
-        private void cmb_Filter_SelectedValueChanged1(object sender, EventArgs e)
-        {
-            //MessageBox.Show(cmb_Filter.Text.ToString() + SearchCmd);
-            SearchCmd = "SELECT * FROM Cache u WHERE ";
-            var Filtertxt = cmb_Filter.Text;//cmb_Filter.SelectedValue.ToString();
+        //private void cmb_Filter_SelectedValueChanged1(object sender, EventArgs e)
+        //{
+        //    //MessageBox.Show(cmb_Filter.Text.ToString() + SearchCmd);
+        //    SearchCmd = "SELECT * FROM Cache u WHERE ";
+        //    var Filtertxt = cmb_Filter.Text;//cmb_Filter.SelectedValue.ToString();
 
-            switch (Filtertxt)
-            {
-                case "Mac":
-                    SearchCmd += "Has_Cover <> 'Yes'";// + (txt_Artist.Text != "" ? " Artist Like '%" + txt_Artist.Text + "%'" : "") + (txt_Artist.Text != "" ? (txt_Title.Text != "" ? " AND " : "") : "") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
-                    break;
-                case "PS3":
-                    SearchCmd += "Has_Cover <> 'Yes'";// + (txt_Artist.Text != "" ? " Artist Like '%" + txt_Artist.Text + "%'" : "") + (txt_Artist.Text != "" ? (txt_Title.Text != "" ? " AND " : "") : "") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
-                    break;
-                case "XBOX":
-                    SearchCmd += "Has_Cover <> 'Yes'";// + (txt_Artist.Text != "" ? " Artist Like '%" + txt_Artist.Text + "%'" : "") + (txt_Artist.Text != "" ? (txt_Title.Text != "" ? " AND " : "") : "") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
-                    break;
-                case "PC":
-                    SearchCmd += "Has_Cover <> 'Yes'";
-                    break;
-                default:
-                    break;
-            }
+        //    switch (Filtertxt)
+        //    {
+        //        case "Mac":
+        //            SearchCmd += "Has_Cover <> 'Yes'";// + (txt_Artist.Text != "" ? " Artist Like '%" + txt_Artist.Text + "%'" : "") + (txt_Artist.Text != "" ? (txt_Title.Text != "" ? " AND " : "") : "") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
+        //            break;
+        //        case "PS3":
+        //            SearchCmd += "Has_Cover <> 'Yes'";// + (txt_Artist.Text != "" ? " Artist Like '%" + txt_Artist.Text + "%'" : "") + (txt_Artist.Text != "" ? (txt_Title.Text != "" ? " AND " : "") : "") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
+        //            break;
+        //        case "XBOX":
+        //            SearchCmd += "Has_Cover <> 'Yes'";// + (txt_Artist.Text != "" ? " Artist Like '%" + txt_Artist.Text + "%'" : "") + (txt_Artist.Text != "" ? (txt_Title.Text != "" ? " AND " : "") : "") + (txt_Title.Text != "" ? " Song_Title Like '%" + txt_Title.Text + "%'" : "") + " ORDER BY Artist, Album_Year, Album, Song_Title ;";
+        //            break;
+        //        case "PC":
+        //            SearchCmd += "Has_Cover <> 'Yes'";
+        //            break;
+        //        case "PS4":
+        //            SearchCmd += "Has_Cover <> 'Yes'";
+        //            break;
+        //        default:
+        //            break;
+        //    }
 
-            SearchCmd += " ORDER BY Artist, Album_Year, Album, Song_Title ";
-            //MessageBox.Show(Filtertxt + SearchCmd);
-            //try
-            //{
-            this.DataGridView1.DataSource = null; //Then clear the rows:
+        //    SearchCmd += " ORDER BY Artist, Album_Year, Album, Song_Title ";
+        //    //MessageBox.Show(Filtertxt + SearchCmd);
+        //    //try
+        //    //{
+        //    this.DataGridView1.DataSource = null; //Then clear the rows:
 
-            this.DataGridView1.Rows.Clear();//                Then set the data source to the new list:
+        //    this.DataGridView1.Rows.Clear();//                Then set the data source to the new list:
 
-            //this.dataGridView.DataSource = this.GetNewValues();
-            dssx.Dispose();
-            Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
-            DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
-            DataGridView1.Refresh();
-            //}
-            //catch (System.IO.FileNotFoundException ee)
-            //{
-            //    MessageBox.Show(ee.Message + "Can't run Filter ! " + SearchCmd);
-            //    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+        //    //this.dataGridView.DataSource = this.GetNewValues();
+        //    dssx.Dispose();
+        //    Populate(ref DataGridView1, ref Main);//, ref bsPositions, ref bsBadges);
+        //    DataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
+        //    DataGridView1.Refresh();
+        //    //}
+        //    //catch (System.IO.FileNotFoundException ee)
+        //    //{
+        //    //    MessageBox.Show(ee.Message + "Can't run Filter ! " + SearchCmd);
+        //    //    //MessageBox.Show(ee.Message, MESSAGEBOX_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    //}
 
-        }
+        //}
 
         private void chbx_PreSavedFTP_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1917,6 +1929,205 @@ namespace RocksmithToolkitGUI.DLCManager
             if (chbx_Autosave.Checked) SaveRecord();
             chbx_Autosave.Checked = ConfigRepository.Instance()["dlcm_Autosave"] == "Yes" ? true : false;
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_Export2IndividualSong_Click(object sender, EventArgs e)
+        {
+            //1. Create temp folder based on artist title platform
+            //2. Create rs1compatibilitydisc_aggregategraph.nt
+            //3. create NamesBlock.bin
+            //5.copy appid file
+            //4. audio\windows or other based on platform           
+            //6. copy flatmodels\rs
+            //create rsenumerable_root.flat & rsenumerable_song.flat
+            //7. copy gamexblocks\nsongs
+            //copy .xblock file
+            //8. create gfxassets\album_art
+            //9. copy _64.dds, _128.dds, _256.dds
+            //10. create manifests\songs
+            //11. copy .json
+            //12. create .hsan
+            //13. create \songs\arr
+            //14. copy .xmls
+            //15. create songs\bin\generic
+            //16. copy .bin
+            //17. Load folder
+            //18. pack
+
+            //1. Create temp folder based on artist title platform
+            var folder = Path.Combine(c("dlcm_TempPath"), txt_Artist.Text + "-" + txt_Album.Text + "-" + txt_Title.Text + "_" + txt_Platform.Text);
+            if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+            var file = Path.GetFileName(txt_AlbumArtPath.Text).Replace(".dds", "").Replace("album_", "").Replace("_256", "");
+            var sfolder = Path.GetDirectoryName(txt_AlbumArtPath.Text).Replace("gfxassets\\album_art", "");
+
+            //3. create NamesBlock.bin
+            var line = "";
+            var NamesBlockbin = Path.Combine(folder, "NamesBlock.bin");
+            var info = File.OpenText(Path.Combine(sfolder, "NamesBlock.bin"));
+            using (StreamWriter sw = File.CreateText(NamesBlockbin))
+            {
+                while ((line = info.ReadLine()) != null)
+                {
+                    if (line.Contains(file)
+                        || line.Contains("aggregategraph.nt") || line.Contains("rsenumerable_song.flat") || line.Contains("rsenumerable_root.flat") || line.Contains("appid.appid"))
+                    {
+                        sw.WriteLine(line);
+                    }
+                }
+            }
+            info.Close();
+
+            //2. Create rs1compatibilitydisc_aggregategraph.nt
+            var songs_aggregategraph = Path.Combine(folder, file + "_aggregategraph.nt");
+            info = File.OpenText(Path.Combine(sfolder, "rs1compatibilitydlc_aggregategraph.nt"));
+            using (StreamWriter sw = File.CreateText(songs_aggregategraph))
+            {
+                while ((line = info.ReadLine()) != null)
+                {
+                    if (line.Contains(file) || line.Contains("songs_aggregategraph.nt"))
+                    {
+                        sw.WriteLine(line.Replace("songs_aggregategraph.nt", file + "_aggregategraph.nt"));
+                    }
+                }
+            }
+            info.Close();
+
+            var appid = Path.Combine(folder, "appid.appid");
+            File.Copy(Path.Combine(sfolder, "appid.appid"), appid, true);
+            //using (StreamWriter sw = File.CreateText(songs_aggregategraph))
+            //{
+            //    while ((line = info.ReadLine()) != null)
+            //    {
+            //        if (line.Contains(file) || line.Contains("songs_aggregategraph.nt"))
+            //        {
+            //            sw.WriteLine(line);
+            //        }
+            //    }
+
+            //}
+
+            //4. audio\windows or other based on platform
+            var audio = Path.Combine(folder, "audio");
+            if (!Directory.Exists(folder)) Directory.CreateDirectory(audio); audio = Path.Combine(audio, "windows");
+            if (!Directory.Exists(audio)) Directory.CreateDirectory(audio);
+
+            var audiof = Path.Combine(audio, Path.GetFileName(txt_AudioPreviewPath.Text));
+            File.Copy(txt_AudioPreviewPath.Text, audiof, true); File.Copy(txt_AudioPreviewPath.Text.Replace("_fixed.ogg", ".bnk"), audiof.Replace("_fixed.ogg", ".bnk"), true);
+            File.Copy(txt_AudioPreviewPath.Text.Replace("_fixed.ogg", ".wem"), audiof.Replace("_fixed.ogg", ".wem"), true);
+
+            audiof = Path.Combine(audio, Path.GetFileName(txt_AudioPath.Text));
+            File.Copy(txt_AudioPath.Text, audiof, true); File.Copy(txt_AudioPath.Text.Replace("_fixed.ogg", ".bnk"), audiof.Replace("_fixed.ogg", ".bnk"), true);
+            File.Copy(txt_AudioPath.Text.Replace("_fixed.ogg", ".wem"), audiof.Replace("_fixed.ogg", ".wem"), true);
+
+            //6. copy flatmodels\rs
+            var flatmodels = Path.Combine(folder, "flatmodels", "rs");
+            if (!Directory.Exists(flatmodels)) Directory.CreateDirectory(flatmodels); //flatmodels = Path.Combine(flatmodels, "rs");
+            if (!Directory.Exists(flatmodels))
+            {
+                File.Copy(Path.Combine(sfolder, "flatmodels", "rs", "rsenumerable_root.flat"), Path.Combine(flatmodels, "rsenumerable_root.flat"), true);
+                File.Copy(Path.Combine(sfolder, "flatmodels", "rs", "rsenumerable_song.flat"), Path.Combine(flatmodels, "rsenumerable_song.flat"), true);
+            }
+
+            //7. copy gamexblocks\nsongs
+            var gamexblocks = Path.Combine(folder, "gamexblocks");
+            if (!Directory.Exists(gamexblocks)) Directory.CreateDirectory(gamexblocks); gamexblocks = Path.Combine(gamexblocks, "nsongs");
+            if (!Directory.Exists(gamexblocks)) Directory.CreateDirectory(gamexblocks);
+            File.Copy(Path.Combine(sfolder, "gamexblocks", "nsongs", file + "_fcp_dlc.xblock"), Path.Combine(gamexblocks, file + "_fcp_dlc.xblock"), true);
+
+            //8. create gfxassets\album_art
+            //9. copy _64.dds, _128.dds, _256.dds
+            var gfxassets = Path.Combine(folder, "gfxassets");
+            if (!Directory.Exists(gfxassets)) Directory.CreateDirectory(gfxassets); gfxassets = Path.Combine(gfxassets, "album_art");
+            if (!Directory.Exists(gfxassets)) Directory.CreateDirectory(gfxassets); var gfxassetsf = Path.Combine(gfxassets, Path.GetFileName(txt_AlbumArtPath.Text));
+            File.Copy(txt_AlbumArtPath.Text, gfxassetsf, true); gfxassetsf = gfxassetsf.Replace("256", "64");
+            File.Copy(txt_AlbumArtPath.Text, gfxassetsf, true); gfxassetsf = gfxassetsf.Replace("256", "128");
+            File.Copy(txt_AlbumArtPath.Text, gfxassetsf, true);
+
+            //10. create manifests\songs
+            var manifests = Path.Combine(folder, "manifests");
+            if (!Directory.Exists(manifests)) Directory.CreateDirectory(manifests); manifests = Path.Combine(manifests, "songs_rs1dlc");
+            if (!Directory.Exists(manifests)) Directory.CreateDirectory(manifests);
+            //11. copy .json
+            if (txt_Arrangements.Text.Contains("combo")) File.Copy(Path.Combine(sfolder, "manifests", "songs_rs1dlc", file + "_combo.json"), Path.Combine(manifests, file + "_combo.json"), true);
+            if (txt_Arrangements.Text.Contains("bass")) File.Copy(Path.Combine(sfolder, "manifests", "songs_rs1dlc", file + "_bass.json"), Path.Combine(manifests, file + "_bass.json"), true);
+            if (txt_Arrangements.Text.Contains("rhythm")) File.Copy(Path.Combine(sfolder, "manifests", "songs_rs1dlc", file + "_rhythm.json"), Path.Combine(manifests, file + "_rhythm.json"), true);
+            if (txt_Arrangements.Text.Contains("lead")) File.Copy(Path.Combine(sfolder, "manifests", "songs_rs1dlc", file + "_lead.json"), Path.Combine(manifests, file + "_lead.json"), true);
+            File.Copy(Path.Combine(sfolder, "manifests", "songs_rs1dlc", file + "_vocals.json"), Path.Combine(manifests, file + "_vocals.json"), true);
+            //12. create .hsan            
+            File.Copy(Path.Combine(sfolder, "manifests", "songs_rs1dlc", "songs_rs1dlc.hsan"), Path.Combine(manifests, "songs_rs1dlc.hsan"), true);
+
+            //13. create \songs\arr
+            var songsarr = Path.Combine(folder, "songs");
+            if (!Directory.Exists(songsarr)) Directory.CreateDirectory(songsarr); songsarr = Path.Combine(songsarr, "arr");
+            if (!Directory.Exists(songsarr)) Directory.CreateDirectory(songsarr);
+            //14. copy .xmls
+            //"C:\t\0\0_dlcpacks\rs1compatibilitydlc_RS2014_PcPc\songs\bin\generic\clashshould_bass.sng"
+            if (txt_Arrangements.Text.Contains("combo")) File.Copy(Path.Combine(sfolder, "songs", "arr", file + "_combo.xml"), Path.Combine(songsarr, file + "_combo.xml"), true);
+            if (txt_Arrangements.Text.Contains("bass")) File.Copy(Path.Combine(sfolder, "songs", "arr", file + "_bass.xml"), Path.Combine(songsarr, file + "_bass.xml"), true);
+            if (txt_Arrangements.Text.Contains("rhythm")) File.Copy(Path.Combine(sfolder, "songs", "arr", file + "_rhythm.xml"), Path.Combine(songsarr, file + "_rhythm.xml"), true);
+            if (txt_Arrangements.Text.Contains("lead")) File.Copy(Path.Combine(sfolder, "songs", "arr", file + "_lead.xml"), Path.Combine(songsarr, file + "_lead.xml"), true);
+            File.Copy(Path.Combine(sfolder, "songs", "arr", file + "_vocals.xml"), Path.Combine(songsarr, file + "_vocals.xml"), true);
+            File.Copy(Path.Combine(sfolder, "songs", "arr", file + "_showlights.xml"), Path.Combine(songsarr, file + "_showlights.xml"), true);
+
+            //15. create songs\bin\generic
+            var songsbin = Path.Combine(folder, "songs");
+            if (!Directory.Exists(songsbin)) Directory.CreateDirectory(songsbin); songsbin = Path.Combine(songsbin, "bin");
+            if (!Directory.Exists(songsbin)) Directory.CreateDirectory(songsbin); songsbin = Path.Combine(songsbin, "generic");
+            if (!Directory.Exists(songsbin)) Directory.CreateDirectory(songsbin);
+            //16. copy .bin
+            //"C:\t\0\0_dlcpacks\rs1compatibilitydlc_RS2014_PcPc\songs\bin\generic\clashshould_bass.sng"
+            if (txt_Arrangements.Text.Contains("combo")) File.Copy(Path.Combine(sfolder, "songs", "bin", "generic", file + "_combo.sng"), Path.Combine(songsbin, file + "_combo.sng"), true);
+            if (txt_Arrangements.Text.Contains("bass")) File.Copy(Path.Combine(sfolder, "songs", "bin", "generic", file + "_bass.sng"), Path.Combine(songsbin, file + "_bass.sng"), true);
+            if (txt_Arrangements.Text.Contains("rhythm")) File.Copy(Path.Combine(sfolder, "songs", "bin", "generic", file + "_rhythm.sng"), Path.Combine(songsbin, file + "_rhythm.sng"), true);
+            if (txt_Arrangements.Text.Contains("lead")) File.Copy(Path.Combine(sfolder, "songs", "bin", "generic", file + "_lead.sng"), Path.Combine(songsbin, file + "_lead.sng"), true);
+            File.Copy(Path.Combine(sfolder, "songs", "bin", "generic", file + "_vocals.sng"), Path.Combine(songsbin, file + "_vocals.sng"), true);
+            // File.Copy(Path.Combine(sfolder, "songs", "bin", file + "_showlights.json"), Path.Combine(songsbin, file + "_showlights.sng"), true);
+
+            //17. Load folder
+            var data = DLCPackageData.LoadFromFolder(folder, TargetPlatform, TargetPlatform);
+
+            //18. pack
+            // Update AppID
+            TargetPlatform = new Platform((cbx_Format.Text == "PC" ? "Pc" : (cbx_Format.Text == "MAC" ? "Mac" : (cbx_Format.Text == "PS4" ? "Pc" : (cbx_Format.Text == "PS3" ? "PS3" : cbx_Format.Text)))), GameVersion.RS2014.ToString());
+            if (!TargetPlatform.IsConsole || TargetPlatform.platform.ToString() == "PS4")
+                data.AppId = "248750";
+
+            // Build
+            var targetFileName = Path.Combine(c("dlcm_TempPath"), file);
+            data.SongInfo.Album += " [Retail]"; data.SongInfo.Artist += " [Retail]"; data.SongInfo.SongDisplayName += " [Retail]";
+            data.Name = data.SongInfo.SongDisplayName.Replace(" ", "") + "248750";
+            //MainDBfields SongRecord = new MainDBfields[1];
+            // SongRecord[0].Album = data.SongInfo.Album;
+            //SongRecord[0].Artist = data.SongInfo.Artist.ToString();
+            //SongRecord[0].Artist_Sort = data.SongInfo.ArtistSort;
+            //SongRecord[0].Song_Title = data.SongInfo.SongDisplayName;
+            //SongRecord[0].Song_Title_Sort = data.SongInfo.SongDisplayNameSort;
+            //SongRecord[0].Album_Year = data.SongInfo.SongYear.ToString();
+            //SongRecord[0].Is_Original = data.ToolkitInfo.ToolkitVersion == "" ? "Yes" : "No";
+            //SongRecord[0].Track_No = "00";
+            //SongRecord[0].Author = "Repackaed by catara";
+            ////SongRecord[0].Groups = Groupss;
+            //if (ConfigRepository.Instance()["dlcm_Activ_FileName"] == "Yes" && c("dlcm_AdditionalManipul102") != "Yes")/*repacked_Path + "\\" + */
+            //    targetFileName = Manipulate_strings(ConfigRepository.Instance()["dlcm_File_Name"], 0, false, false, false, SongRecord, "", "", false, true, false, cnc);//, ConfigRepository.Instance()["dlcm_AdditionalManipul87"], ConfigRepository.Instance()["dlcm_AdditionalManipul88"]);
+
+            RocksmithToolkitLib.DLCPackage.DLCPackageCreator.Generate(targetFileName, data, new Platform(TargetPlatform.platform, GameVersion.RS2014));
+            MessageBox.Show("Retail song extracted:\n -" + targetFileName + "\n -" + cbx_Format.Text + "\n -" + data.SongInfo.Artist + "\n -" + data.SongInfo.Album
+                + "\n -" + data.SongInfo.SongDisplayName + "\n -" + data.Name);
+        }
+
+        //private void txt_Artist_TextChanged(object sender, EventArgs e)
+        //{
+
+        //}
+
+        //private void txt_AudioPreviewPath_TextChanged(object sender, EventArgs e)
+        //{
+
+        //}
     }
 }
 

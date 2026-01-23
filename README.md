@@ -1,11 +1,11 @@
-﻿		# Date: 17.10.2025
+﻿		# Date: 23.01.2026
 		# Document Name: Rocksmith 2014 RM DLC Management tool README
 						(fork of rocksmith-custom-song-toolkit)
 		# Document purpose: To describe the project and capture a developmental history
 
-## Rocksmith 2014 RM DLC Library Manager v1 b8 r2 (compiled beta available in https://github.com/catara/rocksmith-custom-song-toolkit/tree/Main/RocksmithTookitGUI/bin/Debug_Lite.7z )
-*(forever to be unreleased version- for my own sake)*
-# App Description: MASS Manipulation of Rocksmith 2014 RM DLC Library
+##  Rocksmith 2014 RM DLC Library Manager v1 b9 (compiled beta available in https://github.com/catara/rocksmith-custom-song-toolkit/tree/Main/RocksmithTookitGUI/bin/Debug_Lite.7z )
+*(forever to be unreleased version - for my own sake -)*
+# App Description: .Net10 MASS Manipulation of Rocksmith 2014 RM DLC Library
 
 #Main Features:
 - Gather all Songs metadata into 1 Microsoft Access/SQLite3 DB
@@ -17,10 +17,11 @@
 		- Lyrics
 		- the standard sufficient Audio quality (>128kb bitrate)
 	- Listen to songs Audio / Preview
-	- Gathers Track No./Cover/Year from Spotify & original video and playthrough from Youtube (NEW: not working due to multiple spotify api updates and youtube qouta policies :))
+	- Gathers Track No./Cover/Year from Spotify & original video and playthrough from Youtube (NEW: not working due to multiple spotify api updates/google and youtube qouta policies :))
 - Mass Modify SongDetails / Metadata @repack per each Rocksmith song
 	*e.g. Album Field: "<Broken><Year> - <Album> - r<Rating> - <Avail. Instr.> - <DD> - <Tuning>"
 	- Copies songs/packs directly to the PS3 by means of FTP
+- Migrated from Framework 3.5 to .Net 10 for potential multiplatform support (MAUI) in future
 - Mass add/remove DD @repack (inc. Bass only option)(incl. Official DLCs)
 - Setlists/Groups (incl. grouping by multitrack, acoustic, tuning, soundtrack  NEW: midi,game soundtrack etc.)
 - Read Current Game Library and match it to the DLCManager Library (incl. PS3)
@@ -30,8 +31,9 @@
 - Songbuilder References When building new DLC save some links to source files/todo/release notes etc
 - Export HTML (web server ready) setlist
 - Shift Notes (NEW'early 24: Manipulate Arrangements to be distributed along a specific timeline from a GuitarPro file that is not time-synced)
-- NEW(NEW'mid 24): Export all metadata in HTML format for CustomFoge Upload
-- NEW-latest: Import ASCII multitrack in ready to Guitar Pro import formats
+- NEW (NEW'mid 24): Export all metadata in HTML format for CustomFoge Upload (incl AI separated independent audio version)
+- NEW (Eo25): PoC Import ASCII multitrack in ready to Guitar Pro import formats
+- NEW (start '26): Export Retails songs as single .psarc (e.g. with changed metadata name, sorting tags, explicit lyrics)
 
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot1.png" alt="Rocksmith DLC Library Manager Import&Pack"/>
 <img src="/RocksmithTookitGUI/DLCManager/Screenshot2.png" alt="Song Metadata DB Screen"/>
@@ -50,7 +52,10 @@
 - when using ACCDB 64b 3rd-party Access DB viewer not available unless 32b plugin is installed(.msi) using /passive
 - no Youtube parsing of links due to "no quota" Corona ggl lockdown
 - no Spotify track&cover retrieval due to api change and not yet catchup w latest 3rd-party implementation
-- inserting songs directly in game files is still beta (PC should work, ps3/ps4/iOS pending)
+- inserting songs directly in game files is still PoC only (PC should work, ps3/ps4/iOS pending)
+- ASCII to GuitarPRO still PoC only
+- Export to individual pacakges out of the Retail(CD) files still PoC only (the clash should i stay of should i go requires songs.pscarc audio files)
+- PS4 packing still PoC only (e.g. repack of official doc only possible atm)
 - SQLITE3 is beta (there might be 1-2 more functions not ported to be compatible with both ACCDB & DB formats)
 
 ## ACCDB to SQL-Lite3 migration steps:
@@ -476,11 +481,67 @@ Big topics:
 - [ ] think to elongate all lyrics
 - [ ] think to check if guitar and bass notes align :)
 - [ ] improve copy eof song folder copy if imported from psarc song or from eof
+- [ ] re-Release(2) for PS4 individual DLC prep
 
 ## WiP:
 (next release) 
-1.0 b9 (20.12.2025) Pre-Release(1) for PS4 individual DLC prep
+1.0 b9 (23.01.2026) Pacakge Retail tracks out of DLC mass pacs
+- [x] Pacakge Retail tracks out of DLC mass pacs
+	- [-] pack single retail (e.g. clash)
+	- [-] made the list of fields part of the select as not hardcoded to the table structure	
+- [x] add notproductive actor and intheworks 
+- [x] add vocals text and packagecomment into pack audit trail
+- [x] add pading in header of after pack
+- [x] add latest fields in Meta filter
+- [x] started Improvements Assurance Recommendations
+	- [x] add check if others have instruments song doenst
+- [x] fixed regression on size of albumart
+- [x] add empty lyrics w meta based informative stuff
+- [x] add nice window to search again window
+- [x] check gp5&ASCII not being creted at export (restored prev project as hard to make it use psarc.cs of rocksmithtoolkit)
+- [x] fix album looking weird
+- [x] improved fix preview and limited to last imported dlc if at end of import
+- [x] improved the fixing audio issues/downstreaming to take in consideration the platform if x64 or arm
+- [-] fix standardization
+	- [ ] fix save
+	- [ ] fix distribution
+	- [-] improve suggestion for fixes
+		- [ ] Year
+		- [-] Capitalisation
+	- [-] add context menu for quick standardization
+- [-] improve multitrack import (incl windowss filename formating of stemroller and 6 track mode piano&guitar extra tracks)
+- [x] sort by catara(current author)
+- [x] fix search album or
+- [x] adding AND/or on search
+- [-] DBstore and multiply meta dropdown
+- [-] improve indicating preffered track
+- [x] adding DAte_Added from groups ordering
+	- [ ] rename to group added
+	- [ ] refresh updatedate if overriten w new version
+	- [ ] add field indicating that
+	- [ ] add date when sorting such :)
+- [-] add ref of Retail id etc when searched
+
+- [ ] add copy dupli button
+- [ ] where is ftp-ed
+- [ ] add all new song fields call from existing song
+- [ ] indicate albums with diff years
+- [ ] process audicity opevivino lyrics export to cml feature
+	- [ ] add isntructions how to use
+	- [ ] give an option to chose between DB manipualtion software
+	- [ ] process vocals from AI fromn txt to XML
+- [ ] add a param for cache/standardization, arrangements etc. select order
+- [ ] DEbug_Lite why install tuxguitar if you wann use it
+- [ ] DEbug_Lite finished installing is hard to read and twice
+- [ ] DEbug_Lite why audiokinetic is missing if locally is instaled
+	
 - Improve track align
+	- dont lose sustain on cords
+	- comments still dont save :)
+- Improve duplic
+	- what is tr in duplic
+	- where is platform
+	- FN=Filename
 - update update log for all instances
 - ps4
 
@@ -494,15 +555,15 @@ Big topics:
 - [ ] restoring adding comments when distributing notes
 - [ ] improve audiokinetik discov as standard install is missed
 - [ ] improve dlc builder opening ()
-- [ ] slecting xmass,sandat adding query and button
-- [ ] adding or on search
+- [ ] selecting xmass,sandat adding query and button
+
 - [-] Add tool pkg,
 	- [ ] add description
 - [ ] Add de
 - [ ] clean exercise duplicatesscription on enabling win
 - [ ] fixed mass update a s2,64 s
 - [ ] if album contains rockmith add author :) ubisoft
-- [ ] erge DBs
+- [ ] merge DBs
 - [-] updated rocksmith to tab to latest libs and .net 10
 	-[ ]  read non pc too
 - [ ] improve no accdb found mss (also add sqlite default if indicated as such)
@@ -596,9 +657,10 @@ Big topics:
 	1.0 b6 (12.04.2024) Prototyping GuitarPro to Rocksmith workflow for simple time distribution for new songs
 	1.0 b7 (05.10.2024) Improvements to Audio conversion, audio trail, Export for CustomForge and HTML page, ai track splitter better integration
 	1.0 b8 (10.10.2025) Improvement Export for ASCII Import, TRack sync, ExportCustomForge and HTML page,etc. 
-	1.0 b9 (tbc 20.12.2025) (Pre1) Ps4 packaging as single track
-	1.1(xx.11.2024) Released on Customforge and GitHub Release "tab" (2 versions one w all 3rd party software, one without; can be installed/decompressed and quickly used; 1 60sec video describing why you should use this)
-	1.1 (xx.12.2024) Reactivating Spotify checks
+	1.0 b9 (23.01.2026) Pacakge Retail tracks out of DLC mass pacs
+	1.1 (xx.11.2026) Ps4 packaging as single track
+	1.2 (xx.11.2026) Released on Customforge and GitHub Release "tab" (2 versions one w all 3rd party software, one without; can be installed/decompressed and quickly used; 1 60sec video describing why you should use this)
+	1.3 (xx.12.2026) Reactivating Spotify checks
 
 # Implementation Tracking for the Main Features:
 		+1. Ability to Generate a Database with all DLC
@@ -780,22 +842,23 @@ of this folder should be directed to the respective developer.
 		http://fishcodelib.com/Database.htm 
 
 		-DevOnly additional software
-			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC12(26-09-2020) http://ignition.customsforge.com/eof http://customsforge.com/topic/1529-latest-eof-releases-5-19-2016/page-86 https://github.com/raynebc/editor-on-fire -4 transforming lyrics into RS Vocals
+			EOF v1.8b (c)2008-2010 T³ Software eof1.8RC14(25-11-2025) http://ignition.customsforge.com/eof http://customsforge.com/topic/1529-latest-eof-releases-5-19-2016/page-86 https://github.com/raynebc/editor-on-fire -4 transforming lyrics into RS Vocals
 			UltraStar Creator 1.3.1 https://github.com/UltraStar-Deluxe/UltraStar-Creator/releases - 4 QUICKLY creating lyrics files to import in EoF
 			TotalCommander v11b1 x64 (doubleckick on zip to install plugin, pack with no compression for cache.ps3) https://gisler.com -4Encripting PS3 Retail Sog PSARCS (0 encription level only avail here)
 			MediaInfo CLI v25.4 x64 https://mediaarea.net/en/MediaInfo/Download/Windows -4checking wem bitrate
 			WinMerge v2.16.28 x64 http://winmerge.org/?lang=en -used in comparing duplicates (and their respecitve differential track)
 			C3 Tools 4.1 https://rhythmgamingworld.com/forums/topic/c3-con-tools-v401-8142020-weve-only-just-begun/ -used to decompress songs made for Rockband to quickly copy their vocal track to Rocksmith
-			Rocksmith Mods 1.2.8.0 - for tweaking e.g. remove UI elements to allow streaming of overlay-ing of videos trough OBC https://github.com/Lovrom8/RSMods
+			Rocksmith Mods 1.2.8.2 - for tweaking e.g. remove UI elements to allow streaming of overlay-ing of videos trough OBC https://github.com/Lovrom8/RSMods
 				RS2014-Mod-Installer - Mods for RS2024 for win (e.g. clean UI  elements for OBS recording)
 			Custom DLC enabler OSX - only way to play songs not sold by Ubioft/Rocksmith-store on Mac https://github.com/aik002/RSBypass
 			Custom DLC enabler PC - only way to play songs not sold by Ubioft/Rocksmith-store on Windows https://customsforge.com/index.php?/topic/901-how-to-use-custom-dlcs-in-rs2014-remastered/
 			SQLite3 3.43.2 driver x64 0.99991 - for reading .db slq-lite-3 (windows 64 ONLY) database by commandLine or ODBC through Microsoft Access UI http://www.ch-werner.de/sqliteodbc/
 			DLC builder 3.50 - usefuly for generating a notes/EoF-file out a psarc https://github.com/iminashi/Rocksmith2014.NET
-			StemRoller 2.2.3 - AI splitting of tracks https://github.com/stemrollerapp
+			StemRoller 3.0.1 - AI splitting of tracks https://github.com/stemrollerapp
 			PKG Editor & Tool -  GUI & CLI PS4 fakepackage creator https://github.com/maxton/LibOrbisPkg
-			TUX Guitar 1.6.6 - Convert GP into GP5 https://github.com/helge17/tuxguitar
+			TUX Guitar 2.0 - Convert GP into GP5 https://github.com/helge17/tuxguitar
 			OBS
+			Audicity 3.75 with plugin for stem splitting
 			Open JDK - (part of TuxGuitar) to Convert/opackage for PS3/PS4
 			
 ## Contact

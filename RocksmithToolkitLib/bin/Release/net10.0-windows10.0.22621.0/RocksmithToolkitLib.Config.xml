@@ -65,8 +65,8 @@
   <Config Key="dlcm_MainDBFormat" Value="PS3_US" Descr="" />;
   <Config Key="dlcm_FTPEU" Value="ftp://192.168.1.14/dev_hdd0/game/BLES01862/USRDIR/DLC/" Descr="" />;
   <Config Key="dlcm_FTPUS" Value="ftp://192.168.1.14/dev_hdd0/game/BLUS31182/USRDIR/DLC/" Descr="" />;
-  <Config Key="dlcm_FTPJP" Value="ftp://192.168.1.14/dev_hdd0/game/BLJM61049/USRDIR/DLC/" Descr="" />;
-  <Config Key="dlcm_Mac" Value="\\Mac\Home\SteamLibrary\steamapps\common\Rocksmith2014\dlc" Descr="" />;
+	<Config Key="dlcm_FTPJP" Value="ftp://192.168.1.14/dev_hdd0/game/BLJM61049/USRDIR/DLC/" Descr="" />;
+	<Config Key="dlcm_Mac" Value="\\Mac\Home\SteamLibrary\steamapps\common\Rocksmith2014\dlc" Descr="" />;
   <Config Key="dlcm_PC" Value="\\Mac\Home\SteamLibrary\steamapps\common\Rocksmith2014\dlc" Descr="" />;
   <Config Key="dlcm_XBOX" Value="" Descr="" />;
   <Config Key="dlcm_PS4" Value="C:\t\0\0_to_import" Descr="" />;
@@ -112,7 +112,7 @@
   <Config Key="dlcm_Global2TempVariable" Value="44000" Descr="" />;
   <Config Key="dlcm_SoX" Value="DLCManager\external_tools\sox-14-4-2\sox.exe" Descr="" />;
   <Config Key="dlcm_SoX_www" Value="https://sourceforge.net/projects/sox/" Descr="" />;
-  <Config Key="dlcm_EoFPath" Value="DLCManager\external_tools\eof1.8RC12\eof.exe" Descr="" />;
+  <Config Key="dlcm_EoFPath" Value="DLCManager\external_tools\eof1.8RC14\eof.exe" Descr="" />;
   <Config Key="dlcm_EoFPath_www" Value="http://ignition.customsforge.com/eof" Descr="" />;
   <Config Key="dlcm_UltraStarCreator" Value="DLCManager\external_tools\UltraStar Creator\usc.exe" Descr="" />;
   <Config Key="dlcm_UltraStarCreator_www" Value="https://sourceforge.net/projects/usc/" Descr="" />;
@@ -206,8 +206,8 @@
   <Config Key="dlcm_javaARM" Value="DLCManager\external_tools\microsoft-jdk-21.0.6-windows-aarch64.msi" Descr="" />;
   <Config Key="dlcm_timestamp" Value="26.04.2021" Descr="not used atm" />;
   <Config Key="dlcm_StartInDLCM" Value="Yes" Descr="" />;
-  <Config Key="dlcm_DLCManager_Release_DBVersion" Value="2.8" Descr="" />;
-  <Config Key="dlcm_DBCurrentVersion" Value="2.7" Descr="" />;
+  <Config Key="dlcm_DLCManager_Release_DBVersion" Value="2.9" Descr="" />;
+  <Config Key="dlcm_DBCurrentVersion" Value="2.9" Descr="" />;
   <Config Key="dlcm_ThreadNo" Value="" Descr="not used at split4pack is used insted" />;
   <Config Key="dlcm_ShowConenctivityOnce" Value="No" Descr="Only show no Provider conenctivity plugin installed ONLY once." />;
   <Config Key="dlcm_MoreWEMBNK" Value="Yes" Descr="When loading DLC packs load more WEMs and BNKs wo throwing an error" />;
@@ -233,7 +233,7 @@
   <Config Key="dlcm_CustomToAtribute_5" Value="" Descr="" />;
   <Config Key="dlcm_chosendb" Value="" Descr="" />;
   <Config Key="dlcm_errorsstring" Value="" Descr="" />;
-  <Config Key="dlcm_ShowMessages" Value="W11-ARM-LATEST;20251017" Descr="" />;
+  <Config Key="dlcm_ShowMessages" Value="ATOMMAN;20260122" Descr="" />;
   <Config Key="dlcm_InitialChecks" Value="Yes" Descr="" />;
   <Config Key="dlcm_ExportValue" Value="HTML for a CustomForge upload" Descr="" />;
   <Config Key="dlcm_LocalHost" Value="https://capi.ro:91/" Descr="" />;

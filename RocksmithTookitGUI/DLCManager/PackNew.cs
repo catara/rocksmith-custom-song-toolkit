@@ -102,6 +102,8 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_PackageDate = new CueTextBox();
             txt_EoFPath = new CueTextBox();
             txt_PrevDate = new CueTextBox();
+            chbx_Has_Acoustic = new CheckBox();
+            chbx_ProductionReady = new CheckBox();
             chbx_RequiresSlide = new CheckBox();
             txt_RemoteFolder = new TextBox();
             btn_Cancel = new Button();
@@ -115,8 +117,6 @@ namespace RocksmithToolkitGUI.DLCManager
             lbl_LinkYB = new LinkLabel();
             btn_B3 = new Button();
             toolTip1 = new ToolTip(components);
-            this.chbx_ProductionReady = new CheckBox();
-            this.chbx_Has_Acoustic = new CheckBox();
             ((ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -172,8 +172,8 @@ namespace RocksmithToolkitGUI.DLCManager
             // 
             // splitContainer1.Panel2
             // 
-            splitContainer1.Panel2.Controls.Add(this.chbx_Has_Acoustic);
-            splitContainer1.Panel2.Controls.Add(this.chbx_ProductionReady);
+            splitContainer1.Panel2.Controls.Add(chbx_Has_Acoustic);
+            splitContainer1.Panel2.Controls.Add(chbx_ProductionReady);
             splitContainer1.Panel2.Controls.Add(chbx_RequiresSlide);
             splitContainer1.Panel2.Controls.Add(txt_RemoteFolder);
             splitContainer1.Panel2.Controls.Add(btn_Cancel);
@@ -585,6 +585,30 @@ namespace RocksmithToolkitGUI.DLCManager
             txt_PrevDate.Size = new Size(73, 20);
             txt_PrevDate.TabIndex = 448;
             // 
+            // chbx_Has_Acoustic
+            // 
+            chbx_Has_Acoustic.Location = new Point(275, 70);
+            chbx_Has_Acoustic.Margin = new Padding(2);
+            chbx_Has_Acoustic.Name = "chbx_Has_Acoustic";
+            chbx_Has_Acoustic.Size = new Size(144, 18);
+            chbx_Has_Acoustic.TabIndex = 442;
+            chbx_Has_Acoustic.Text = "Has Acoustic";
+            toolTip1.SetToolTip(chbx_Has_Acoustic, "Copy folder to remote location");
+            chbx_Has_Acoustic.UseVisualStyleBackColor = true;
+            // 
+            // chbx_ProductionReady
+            // 
+            chbx_ProductionReady.Checked = true;
+            chbx_ProductionReady.CheckState = CheckState.Checked;
+            chbx_ProductionReady.Location = new Point(275, 86);
+            chbx_ProductionReady.Margin = new Padding(2);
+            chbx_ProductionReady.Name = "chbx_ProductionReady";
+            chbx_ProductionReady.Size = new Size(144, 18);
+            chbx_ProductionReady.TabIndex = 441;
+            chbx_ProductionReady.Text = "Production Ready";
+            toolTip1.SetToolTip(chbx_ProductionReady, "Copy folder to remote location");
+            chbx_ProductionReady.UseVisualStyleBackColor = true;
+            // 
             // chbx_RequiresSlide
             // 
             chbx_RequiresSlide.Location = new Point(275, 55);
@@ -688,7 +712,7 @@ namespace RocksmithToolkitGUI.DLCManager
             chbx_SaveInDB.Name = "chbx_SaveInDB";
             chbx_SaveInDB.Size = new Size(122, 18);
             chbx_SaveInDB.TabIndex = 28;
-            chbx_SaveInDB.Text = "<Save in DB>?";
+            chbx_SaveInDB.Text = "Save in DB";
             chbx_SaveInDB.UseVisualStyleBackColor = true;
             // 
             // chbx_SaveInVerisonInfo
@@ -726,30 +750,6 @@ namespace RocksmithToolkitGUI.DLCManager
             btn_B3.Text = "OK (PackNow!)";
             btn_B3.UseVisualStyleBackColor = true;
             btn_B3.Click += btn_OK_Click;
-            // 
-            // chbx_ProductionReady
-            // 
-            this.chbx_ProductionReady.Checked = true;
-            this.chbx_ProductionReady.CheckState = CheckState.Checked;
-            this.chbx_ProductionReady.Location = new Point(275, 86);
-            this.chbx_ProductionReady.Margin = new Padding(2);
-            this.chbx_ProductionReady.Name = "chbx_ProductionReady";
-            this.chbx_ProductionReady.Size = new Size(144, 18);
-            this.chbx_ProductionReady.TabIndex = 441;
-            this.chbx_ProductionReady.Text = "Requires slide";
-            toolTip1.SetToolTip(this.chbx_ProductionReady, "Copy folder to remote location");
-            this.chbx_ProductionReady.UseVisualStyleBackColor = true;
-            // 
-            // chbx_Has_Acoustic
-            // 
-            this.chbx_Has_Acoustic.Location = new Point(275, 70);
-            this.chbx_Has_Acoustic.Margin = new Padding(2);
-            this.chbx_Has_Acoustic.Name = "chbx_Has_Acoustic";
-            this.chbx_Has_Acoustic.Size = new Size(144, 18);
-            this.chbx_Has_Acoustic.TabIndex = 442;
-            this.chbx_Has_Acoustic.Text = "Has Acoustic";
-            toolTip1.SetToolTip(this.chbx_Has_Acoustic, "Copy folder to remote location");
-            this.chbx_Has_Acoustic.UseVisualStyleBackColor = true;
             // 
             // PackNew
             // 
@@ -822,11 +822,12 @@ namespace RocksmithToolkitGUI.DLCManager
             }
             if (chbx_SaveInDB.Checked)
             {
+                chbx_SaveInDB.Enabled = true;
                 //var ccrf = c("dlcm_0_temp") + "\\0_temp\\" + Path.GetDirectoryName(txt_E		endt	144	floatoFPath.Text);
                 //var er=CopyFolder(txt_EoFPath.Text, ccrf);
                 //MessageBox.Show("Also Copied: " + Directory.Exists(ccrf) + " - " + ccrf);
                 ////timestamp = UpdateLog(timestamp, ccrf + " Remote copied zip: " + File.Exists(ccrf), true, c("dlcm_TempPath"), "", "DLCManager", null, null);
-            }
+            } else chbx_SaveInDB.Enabled = false;
             //exit();
             this.Hide();
         }
@@ -863,7 +864,7 @@ namespace RocksmithToolkitGUI.DLCManager
                         txt_Author.Text = ag[0].Replace("Repacked by ", "");//\" Value=\"Repacked by catara\"
                         if (ag.Length >= 20)
                         {
-                            if (!ag[ag.Length - 4].ToLower().Contains("author") || ag[0].Contains("Yes"))
+                            if (!ag[ag.Length - 2].ToLower().Contains("author") || ag[0].Contains("Yes"))
                             {
                                 string[] a = ag[ag.Length - 2].Split(',');
                                 var a1 = ""; var a2 = ""; var a3 = ""; var a4 = ""; var a5 = "";
@@ -882,7 +883,7 @@ namespace RocksmithToolkitGUI.DLCManager
                                 decimal d = decimal.Parse(ag[3]);
                                 d = IncrementLastDigit(d);
                                 txt_Version.Text = d.ToString(); txt_CDLCID.Text = ag[4];
-                                txt_EoFPath.Text = Path.GetDirectoryName(info.Arrangements[0].SongXml.File.ToString()); txt_YBLink.Text = ag[6]; txt_BasedOnYB.Text = ag[7];
+                                txt_EoFPath.Text = txt_EoFPath.Text==""?Path.GetDirectoryName(info.Arrangements[0].SongXml.File.ToString()): txt_EoFPath.Text; txt_YBLink.Text = ag[6]; txt_BasedOnYB.Text = ag[7];
                                 txt_BasedOnCF.Text = ag[8]; txt_TabLinks.Text = ag[9]; txt_Spotify.Text = ag[10]; txt_Description.Text = ag[11]; txt_toDos.Text = ag[12]; txt_ToneDetails.Text = ag[13];
                                 chbx_SaveInVerisonInfo.Checked = ag[14] == "Yes" ? true : false; chbx_SaveInDB.Checked = ag[15] == "Yes" ? true : false; chbx_SaveRemotely.Checked = ag[16] == "Yes" ? true : false;
                                 //txt_PackageDate.Text = ag[18];

@@ -113,7 +113,6 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Button btn_Close;
         private System.Windows.Forms.Button btn_CleanDescr;
         private System.Windows.Forms.Button btn_CleanStartSong;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox chbx_;
         private System.Windows.Forms.CheckBox chbx_removehandshapes;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -165,5 +164,7 @@ namespace RocksmithToolkitGUI.DLCManager
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.CheckBox chbx_IgnorePhaseSync;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

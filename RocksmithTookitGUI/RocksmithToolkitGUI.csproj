@@ -70,15 +70,19 @@
     </Content> 
 </ItemGroup>
 <ItemGroup>
+  <Compile Remove="DLCManager\external_tools\eof1.8RC12\**" />
   <Compile Remove="DLCManager\external_tools\jre\**" />
   <Compile Remove="DLCManager\external_tools\UltraStar Creator\**" />
   <Compile Remove="DLCManager\Temp\**" />
+  <EmbeddedResource Remove="DLCManager\external_tools\eof1.8RC12\**" />
   <EmbeddedResource Remove="DLCManager\external_tools\jre\**" />
   <EmbeddedResource Remove="DLCManager\external_tools\UltraStar Creator\**" />
   <EmbeddedResource Remove="DLCManager\Temp\**" />
+  <None Remove="DLCManager\external_tools\eof1.8RC12\**" />
   <None Remove="DLCManager\external_tools\jre\**" />
   <None Remove="DLCManager\external_tools\UltraStar Creator\**" />
   <None Remove="DLCManager\Temp\**" />
+  <Page Remove="DLCManager\external_tools\eof1.8RC12\**" />
   <Page Remove="DLCManager\external_tools\jre\**" />
   <Page Remove="DLCManager\external_tools\UltraStar Creator\**" />
   <Page Remove="DLCManager\Temp\**" />
@@ -147,6 +151,18 @@
     </None>
     <None Update="AccessDBDataSet.xss">
       <DependentUpon>AccessDBDataSet.xsd</DependentUpon>
+    </None>
+    <None Update="DLCManager\album_dflt_128.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\album_dflt_256.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\album_dflt_256.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\album_dflt_64.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="DLCManager\external_tools\AccessDatabaseEngine.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1372,37 +1388,553 @@
     <None Update="DLCManager\external_tools\dlcbuilder-win-3.4.0.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="DLCManager\external_tools\eof1.8RC12\AVDelay\guitar.ogg">
+    <None Update="DLCManager\external_tools\eof1.8RC14\alleg44.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="DLCManager\external_tools\eof1.8RC12\AVDelay\notes.eof">
+    <None Update="DLCManager\external_tools\eof1.8RC14\AVDelay\guitar.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="DLCManager\external_tools\eof1.8RC12\eof.cfg">
+    <None Update="DLCManager\external_tools\eof1.8RC14\AVDelay\notes.eof">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="DLCManager\external_tools\eof1.8RC12\eof.dat">
+    <None Update="DLCManager\external_tools\eof1.8RC14\bgd.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="DLCManager\external_tools\eof1.8RC12\Example Song\guitar.ogg">
+    <None Update="DLCManager\external_tools\eof1.8RC14\check.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="DLCManager\external_tools\eof1.8RC12\Example Song\notes.eof">
+    <None Update="DLCManager\external_tools\eof1.8RC14\chordshapes.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="DLCManager\external_tools\eof1.8RC12\mp3toogg.bat">
+    <None Update="DLCManager\external_tools\eof1.8RC14\clone_hero.panel.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="DLCManager\external_tools\eof1.8RC12\percussion.dat">
+    <None Update="DLCManager\external_tools\eof1.8RC14\eof.cfg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="DLCManager\external_tools\eof1.8RC12\second_of_silence.ogg">
+    <None Update="DLCManager\external_tools\eof1.8RC14\eof.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="DLCManager\external_tools\eof1.8RC12\tutorial.ogg">
+    <None Update="DLCManager\external_tools\eof1.8RC14\eof.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="DLCManager\external_tools\eof1.8RC12\wavtoogg.bat">
+    <None Update="DLCManager\external_tools\eof1.8RC14\eof.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\EOF20.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\eof_log.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\Example Song\guitar.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\Example Song\notes.backup.eof.bak">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\Example Song\notes.eof">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\FFTW.wisdom">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\gas1.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\gas2.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\gas3.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\GPL_license.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\grabber.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\history.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrock.panel.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Adding_to_headset.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Chart_delay.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\DD_list.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Default_chart.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Delete_second_sync.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Delete_third_sync.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Derived_fingering.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\DLCB.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Editing_fingering.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Edit_fingering.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Estimated_BPM.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Fingering_view.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Finger_placement.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\First_sync.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Fixed_MIDI_import.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Flat_DD_view_after.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Flat_DD_view_before.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\GPA.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\guitar_pro_import.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\immerrock_export.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\IMMERROCK_panel.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\index.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Lyric_line.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Messy_MIDI_import.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\midi_import.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\New_song.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Normalization.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Phrase_Refiner.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Quest_link.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\rocksmith_import.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\RS_import.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\RS_sections.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Secondary_piano_roll.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Second_sync.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Sections_list.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Select_a_song.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Song_catalog_example.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Song_Properties.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Tab_example.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Third_sync.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Zoomed_out.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\immerrocktutorial\Zoomed_out_scaled.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\info.panel.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\keys.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\lame.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\libfftw3-3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\libgcc_s_dw2-1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\libogg-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\libsamplerate-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\libstdc++-6.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\libvorbis-0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\libvorbisfile-3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\libwinpthread-1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\license.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\about.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\cfgimage1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\cfgimage2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\cimage1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\cimage2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\cimage3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\cimage4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\cimage5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\cimage6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\cimage7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\cimage8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\command.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\configure.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\contact.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\credits.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\edit.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\functions.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\index.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\license.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\macros.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\manual\problems.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\memwatch.log">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\mp3toogg.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\notes.panel.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\note_controls.panel.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\note_counts.panel.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\oggCat.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\oggenc2.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\percussion.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\proguitartutorial\image1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\proguitartutorial\image10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\proguitartutorial\image2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\proguitartutorial\image3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\proguitartutorial\image4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\proguitartutorial\image5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\proguitartutorial\image6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\proguitartutorial\image7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\proguitartutorial\image8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\proguitartutorial\image9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\proguitartutorial\index.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\proguitartutorial\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\resources\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\rocksmith.panel.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\rocksmith_keys.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\second_of_silence.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image12.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image13.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image14.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image15.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image16.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image17.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image18.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image19.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image20.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image21.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image22.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image23.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image24.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image25.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image26.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image27.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image28.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image29.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image30.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image31.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image33.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image34.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image35.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\image9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\index.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\tutorial\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\index.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\voximage1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\voximage10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\voximage11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\voximage12.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\voximage13.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\voximage14.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\voximage15.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\voximage16.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\voximage17.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\voximage18.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\voximage2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\voximage3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\voximage4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\voximage5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\voximage6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\voximage7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\voximage8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\vocaltutorial\voximage9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\external_tools\eof1.8RC14\wavtoogg.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="DLCManager\external_tools\ErrorLog.TXT">
@@ -5845,7 +6377,16 @@
     <None Update="DLCManager\LinkDB.accdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="DLCManager\No_vocals.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="DLCManager\README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\song_dflt.wem">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DLCManager\song_dflt_preview.wem">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="DLCManager\SQLLiteDB.db">
@@ -5885,9 +6426,6 @@
     <Content Include="DLCManager\external_tools\AccessDB.accdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\index.htm"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\notes.panel.txt"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\note_controls.panel.txt"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
     <Content Include="DLCManager\external_tools\java\java.exe"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
     <Content Include="DLCManager\external_tools\java\javaw.exe"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
     <Content Include="DLCManager\external_tools\java\javaws.exe"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
@@ -5917,11 +6455,6 @@
     <Content Include="DLCManager\external_tools\bpr_v0.3\bpr.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\clone_hero.panel.txt"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\grabber.exe"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\info.panel.txt"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\macros.htm"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\resources\readme.txt"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
     <Content Include="DLCManager\external_tools\PKG_Linker_V2.0\bin\bin\pkg_exdata.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -7691,343 +8224,7 @@
     <Content Include="DLCManager\external_tools\D3DX9_42.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\alleg44.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\bgd.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\check.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\chordshapes.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="DLCManager\external_tools\CDLCEnablers\D3DX9_42.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\eof.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\eof.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\EOF20.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\eof_log.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\GPL_license.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\history.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\keys.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\lame.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\libfftw3-3.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\libgcc_s_dw2-1.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\libogg-0.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\libsamplerate-0.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\libstdc++-6.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\libvorbis-0.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\libvorbisfile-3.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\libwinpthread-1.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\license.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\about.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\cfgimage1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\cfgimage2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\cimage1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\cimage2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\cimage3.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\cimage4.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\cimage5.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\cimage6.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\cimage7.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\cimage8.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\command.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\configure.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\contact.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\credits.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\edit.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\functions.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\index.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\license.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\logo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\manual\problems.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\oggCat.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\oggenc2.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\proguitartutorial\image1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\proguitartutorial\image10.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\proguitartutorial\image2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\proguitartutorial\image3.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\proguitartutorial\image4.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\proguitartutorial\image5.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\proguitartutorial\image6.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\proguitartutorial\image7.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\proguitartutorial\image8.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\proguitartutorial\image9.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\proguitartutorial\index.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\proguitartutorial\logo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\readme.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image10.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image11.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image12.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image13.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image14.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image15.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image16.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image17.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image18.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image19.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image20.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image21.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image22.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image23.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image24.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image25.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image26.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image27.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image28.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image29.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image3.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image30.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image31.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image32.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image33.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image34.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image35.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image4.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image5.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image6.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image7.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image8.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\image9.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\index.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\tutorial\logo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\index.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\logo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\voximage1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\voximage10.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\voximage11.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\voximage12.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\voximage13.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\voximage14.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\voximage15.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\voximage16.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\voximage17.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\voximage18.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\voximage2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\voximage3.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\voximage4.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\voximage5.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\voximage6.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\voximage7.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\voximage8.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLCManager\external_tools\eof1.8RC12\vocaltutorial\voximage9.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DLCManager\external_tools\Files.accdb">
@@ -8174,7 +8371,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
-    <Folder Include="DLCManager\external_tools\eof1.8RC12\temp\" />
     <Folder Include="DLCManager\external_tools\PKG_Linker_V2.0\bin\raps\" />
     <Folder Include="DLCManager\external_tools\PKG_Linker_V2.0\bin\UniServerZ\db_backup_restore\" />
     <Folder Include="DLCManager\external_tools\PKG_Linker_V2.0\bin\UniServerZ\tmp\" />
@@ -8227,9 +8423,9 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.5.1" />
-    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.70.0.3847" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.0-rc.2.25502.107" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="10.0.0-rc.2.25502.107" />
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.73.0.4029" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.2" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="10.0.2" />
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="8.0.0-preview.7.23375.6" />
     <PackageReference Include="Rocksmith2014.XML" Version="1.1.1" />
     <PackageReference Include="SpotifyApi.NetCore" Version="3.5.0" />
@@ -8237,7 +8433,7 @@
     <PackageReference Include="SpotifyAPI.Web.Auth" Version="7.2.1" />
     <PackageReference Include="SQLite" Version="3.13.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.10.196-beta" />
-    <PackageReference Include="System.Data.OleDb" Version="10.0.0-rc.2.25502.107" />
+    <PackageReference Include="System.Data.OleDb" Version="10.0.2" />
     <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
     <PackageReference Include="Unosquare.Swan.Lite" Version="3.1.0" />

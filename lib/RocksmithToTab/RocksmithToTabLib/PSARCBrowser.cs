@@ -22,7 +22,7 @@ namespace RocksmithToTabLib
     /// </summary>
     public class PsarcBrowser
     {
-        private PSARC archive;
+        private PSARCLocalibrary.PSARC archive;
 
         /// <summary>
         /// Create a new PsarcBrowser from a specified archive file.
@@ -30,7 +30,7 @@ namespace RocksmithToTabLib
         /// <param name="fileName">Path of the .psarc file to open.</param>
         public PsarcBrowser(string fileName)
         {
-            archive = new PSARC();
+            archive = new PSARCLocalibrary.PSARC();
             var stream = File.OpenRead(fileName);
             archive.Read(stream);
         }
@@ -67,7 +67,7 @@ namespace RocksmithToTabLib
                 if (currentSong == null || currentSong.Identifier != identifier)
                 {
                     // extract song info from the .json file
-                    using (var reader = new StreamReader(entry.Data.OpenStream()))
+                    using (var reader = new StreamReader(entry.Data.OpenStream())) 
                     {
                         try
                         {

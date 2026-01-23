@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DatabaseNET>
-  <License LicenseCode="" />
-  <Settings ResultsFont="Segoe UI" ResultsFontSize="8.25" DefaultFont="Segoe UI" DefaultFontSize="9" Language="english.xml" CheckDate="2" ExecCount="1" LastAccessed="2" Maximize="True" pnlCodeHeight="400" TabsMode="False" pnlControlLeftWidth="560" ToolStrip1Left="3" ToolStrip1Top="0" ToolStrip2Left="610" ToolStrip2Top="0" ToolStrip3Left="1590" ToolStrip3Top="0" ToolStrip4Left="1870" ToolStrip4Top="0" CodeDir="Database_Files" CheckedVersion="35.3.8558.1" Left="590" Top="1035" Width="2000" Height="1200" SearchSubObjects="True" SearchObjectsMatchCase="True">
+  <License LicenseCode="" LicenseCode2="" />
+  <Settings ResultsFont="Segoe UI" ResultsFontSize="8.25" DefaultFont="Segoe UI" DefaultFontSize="9" Language="english.xml" CheckDate="23" ExecCount="1" LastAccessed="23" Maximize="True" pnlCodeHeight="400" TabsMode="False" pnlControlLeftWidth="560" ToolStrip1Left="3" ToolStrip1Top="0" ToolStrip2Left="610" ToolStrip2Top="0" ToolStrip3Left="1590" ToolStrip3Top="0" ToolStrip4Left="1870" ToolStrip4Top="0" CodeDir="Database_Files" CheckedVersion="36.5.9491.1" Left="590" Top="1035" Width="2000" Height="1200" SearchSubObjects="True" SearchObjectsMatchCase="True" fishDBMigration="" CheckDate2="23" CheckedVersion2="17.4.9491.1" Maximize2="True" ExecCount2="1" TD="2026.01.23 18:19:02">
     <Additional2FB DatabaseEngine="Default">
     </Additional2FB>
     <Additional2OLEDB>
@@ -18,10 +18,10 @@
   </mru>
   <mru type="SQLite" value="\\192.168.1.100\PlexData\Plex Media Server\Plug-in Support\Databases\com.plexapp.plugins.library.db" v="2" l="0" e="" a="0" d="03/01/2024" b="" z="TABLES (80)\media_parts|1|">
   </mru>
-  <mru type="Access" value="C:\t\0\AccessDB.accdb" v="2" l="0" e="" a="" d="07/04/2024" b="" z="TABLES (17)\Main|1|">
+  <mru type="Access" value="C:\GitHub\rocksmith-custom-song-toolkit\RocksmithTookitGUI\DLCManager\external_tools\AccessDB.accdb" v="2" l="0" e="" a="" d="07/04/2024" b="" z="TABLES (17)\Main|1|" r2="AccessDB.accdb">
   </mru>
-  <mru type="Access" value="C:\t\AccessDB.accdb" v="2" l="0" e="" a="" d="07/04/2024" b="" z="TABLES (17)\Main|1|">
+  <mru type="Access" value="C:\t\0\SQLLiteDB.db" v="2" l="0" e="" a="" d="23.01.2026" b="">
   </mru>
-  <mru type="SQLite" value="C:\t\0\SQLLiteDB.db" v="2" l="0" e="" a="0" d="31.03.2025" b="" z="TABLES (18)\Groups|1|">
+  <mru type="SQLite" value="C:\t\0\SQLLiteDB.db" v="2" l="0" e="" a="0" d="23.01.2026" b="" z="TABLES (18)\Groups|1|">
   </mru>
 </DatabaseNET>

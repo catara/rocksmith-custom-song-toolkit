@@ -92,7 +92,7 @@ namespace RocksmithToTabGUI
             string songsPsarc = Path.Combine(RocksmithFolder.Text, "songs.psarc");
 
             //bcapi debug
-            var browser = new PsarcBrowser("C:\\t\\0\\0_repacked\\PS3\\CDLC-Bowling_For_Soup-2005-Disneymania,_Vol_3-The_Bare_Necessities_ps3.psarc.edat");
+            var browser = new PsarcBrowser("C:\\t\\0\\0_repacked\\PC\\CDLC-Wet_Leg-2025-Moisturizer-03-catch_these_fists_[Bass_newer]_p.psarc");
             var songList = browser.GetSongList();
             var songInfo = "";
             DLCPackageData dataPs3 = new DLCPackageData();
@@ -101,17 +101,18 @@ namespace RocksmithToTabGUI
                 //                        data.SongInfo.SongDisplayName + "\",\"" + data.SongInfo.SongDisplayNameSort + "\"" +
                 //",\"" + data.SongInfo.Album + "\",\"" + data.SongInfo.AlbumSort + "\",\"" + data.SongInfo.Artist + "\",\""
                 //+ data.SongInfo.ArtistSort + "\"";
-                dataPs3.SongInfo.SongDisplayName = song.Title;
-                dataPs3.SongInfo.SongDisplayNameSort = song.TitleSort;
-                dataPs3.SongInfo.Album = song.Album;
-                dataPs3.SongInfo.AlbumSort = song.AlbumSort;
-                dataPs3.SongInfo.SongYear = song.Year.ToString().ToInt32();
-                dataPs3.SongInfo.Artist = song.Artist;
-                dataPs3.SongInfo.ArtistSort = song.ArtistSort;
-                songInfo += String.Format("[{0}]  {1} - {2}  ({3}, {4})  {{{5}}}", song.Identifier,
-                                          song.Artist, song.Title, song.Album, song.Year,
-                                          string.Join(", ", song.Arrangements));
-                songInfo += Environment.NewLine;
+
+                //dataPs3.SongInfo.SongDisplayName = song.Title;
+                //dataPs3.SongInfo.SongDisplayNameSort = song.TitleSort;
+                //dataPs3.SongInfo.Album = song.Album;
+                //dataPs3.SongInfo.AlbumSort = song.AlbumSort;
+                //dataPs3.SongInfo.SongYear = song.Year.ToString().ToInt32();
+                //dataPs3.SongInfo.Artist = song.Artist;
+                //dataPs3.SongInfo.ArtistSort = song.ArtistSort;
+                //songInfo += String.Format("[{0}]  {1} - {2}  ({3}, {4})  {{{5}}}", song.Identifier,
+                //                          song.Artist, song.Title, song.Album, song.Year,
+                //                          string.Join(", ", song.Arrangements));
+                //songInfo += Environment.NewLine;
             }
 
             if (!File.Exists(songsPsarc))

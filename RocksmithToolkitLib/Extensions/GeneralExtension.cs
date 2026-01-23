@@ -286,6 +286,8 @@ namespace RocksmithToolkitLib.Extensions
             }
             else
             {
+                var env = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture;
+                bool e64b = env.ToString() != "X64" ? true : false;
                 try
                 {
                     // use custom Third Party Application Process window
@@ -295,7 +297,7 @@ namespace RocksmithToolkitLib.Extensions
                         WorkingDirectory = rootPath,
                         CreateNoWindow = true,
                         //RedirectStandardOutput = true, //bcapi only way to work in arm64
-                        UseShellExecute = true //bcapi only way to work in arm64
+                        UseShellExecute = e64b //bcapi only way to work in arm64
                     };
 
                     if (!String.IsNullOrEmpty(arguments))

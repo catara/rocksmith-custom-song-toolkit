@@ -104,7 +104,58 @@ namespace RocksmithToTabGUI
                 this.Text = "Converting tabs... Done.";
             });
             // also, let's open the folder where the tabs were stored
-            Process.Start(OutputPath);
+            StartProcesss(OutputPath,null);
+        }
+
+        public static void StartProcesss(string procez, string attbute)
+        {
+            var starttmp = DateTime.Now;
+            var env = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture;
+            bool e64b = env.ToString() != "X64" ? true : false;
+            try
+            {
+                if (attbute == "" || attbute == null)
+                {
+                    var startInfo = new ProcessStartInfo
+                    {
+                        FileName = procez,
+                        WorkingDirectory = System.IO.Path.GetDirectoryName(procez)
+                    };
+                    Process DDC = new Process();
+                    //startInfo.Arguments = "";
+                    startInfo.UseShellExecute = e64b; startInfo.CreateNoWindow = true;
+
+                    if (Directory.Exists(procez) || File.Exists(procez))
+                    {
+                        DDC.StartInfo = startInfo;
+                        DDC.Start(); DDC.WaitForExit(1000 * 60 * 2); //wait 1min"Error ..." + 
+                        if (DDC.ExitCode > 0) ;
+                    }
+                }
+                else
+                {
+                    var startInfo = new ProcessStartInfo
+                    {
+                        FileName = procez,
+                        WorkingDirectory = System.IO.Path.GetDirectoryName(procez)
+                    };
+                    Process DDC = new Process();
+                    startInfo.Arguments = attbute;
+                    startInfo.UseShellExecute = true; startInfo.CreateNoWindow = true;
+
+                    if (Directory.Exists(procez) || File.Exists(procez))
+                    {
+                        DDC.StartInfo = startInfo;
+                        DDC.Start(); DDC.WaitForExit(1000 * 60 * 4); //wait 1min"Error ..." + 
+                        if (DDC.ExitCode > 0) ;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var tsst = "Erro ..." + ex.Message;
+                ;
+            }
         }
 
 
